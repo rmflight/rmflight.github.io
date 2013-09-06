@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head title="Deciphering life: One bit at a time"><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Using Samatha</h1>
+
+<p>So I decided to try out David Springates Samatha package for statically building this blog. If you decide to use it, be warned, right now it is a little rough around the edges, and needs some work. David created his own blog using it, and has been using that as a test case. Unfortunately, that has meant that there are bugs that haven&#39;t been caught. So we&#39;ll hopefully be finding bugs and squashing them.</p>
+
+<h2>Installing &amp; Using</h2>
+
+<p>Right now (Sept 6, 2013) the easiest way to use it is by cloning the repo, and then using <code>devtools</code> to load the functions:</p>
+
+<p><strong>Outside of <code>R</code></strong></p>
+
+<pre><code>git clone https://github.com/DASpringate/samatha.git
+</code></pre>
+
+<p><strong>in <code>R</code></strong></p>
+
+<pre><code class="r"># navigate to samatha directory
+library(devtools)
+load_all(&quot;.&quot;)
+</code></pre>
+
+<h2>Setting Up</h2>
+
+<p>To set up a site, David has helpfully created two functions, <code>skeleton</code> and <code>setup_example_site</code> to essentially instantiate a fully functional site with a first post, etc.</p>
+
+<pre><code class="r">site &lt;- &quot;dirToHoldBlog&quot;
+skeleton(site)
+setup_example_site(site)
+
+samatha(site, rss = FALSE, initial = T)
+samatha(site, rss = FALSE, initial = T)
+</code></pre>
+
+<p>This is nice, because some of the way the site works were not quite intuitive to me, and it wasn&#39;t clear from his own setup where everything went. So starting from this site, it gets a little clearer how everything works, and then subsequently start modifying things.</p>
+
+<h2>Posts</h2>
+
+<p>Posts are kept in the <code>template/posts</code> directory.</p>
+
+<h2>Changes</h2>
+
+<p>The first things you will definitely want to change are in the <code>template/layouts/default_template.R</code> to reflect the title of your actual blog, and the links.</p>
+
+<h2>Themes</h2>
+
+<p>Haven&#39;t quite figured this out yet. Will update when I do.</p>
+
+<h2>Bugs</h2>
+
+<ul>
+<li><p>I haven&#39;t got the <code>RSS</code> properly working yet, so I don&#39;t know if that is really a bug, but I get an error if I don&#39;t call <code>samatha</code> with <code>rss=FALSE</code>.</p></li>
+<li><p>The index page doesn&#39;t update properly when you just have a new post, or change the name of a post. My current workaround is to change something minor on the index page when I want the new post to show up.</p></li>
+</ul>
+<h6>Posted on 2013-09-06</h6></div><div class="span2"><h3>Tags</h3><ul><li><a href="/tags/moving.html">moving (1)</a></li><li><a href="/tags/R.html">R (2)</a></li><li><a href="/tags/setup.html">setup (1)</a></li><li><a href="/tags/Samatha.html">Samatha (2)</a></li><li><a href="/tags/tutorial.html">tutorial (1)</a></li></ul><h3>Blogs</h3><ul><li><a href="http://www.r-bloggers.com/">R bloggers</a></li></ul></div></div><div class="span12"><div class="span2"></div><div class="span8"><footer class="footer"><p class="right back_to_top"><a href="#">&uArr; Page Top</a></p><p><a href="https://github.com/DASpringate/samatha">Built in R with Samatha</a></p></footer></div></div></div></body></html>
