@@ -7,58 +7,20 @@
 ga('create', 'UA-43966261-1', 'rmflight.github.io');
 ga('send', 'pageview');
 
-</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>R, RStudio, and release and dev Bioconductor</h1>
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>K-12 Wants Scientists!!</h1>
 
-<p>I have one <a href="http://bioconductor.org/packages/release/bioc/html/categoryCompare.html"><code>Bioconductor</code> package</a> that I am currently responsible for. Each <a href="http://master.bioconductor.org/developers/release-schedule/">bi-annual release</a> of <code>Bioconductor</code> requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of <code>R</code> and multiple versions of <code>Bioconductor</code> libraries on a single system (assuming that you do production work and development on the same machine, right?).</p>
+<p>It seems that the PostDoc committee here at UK has an interest in providing some information on alternative careers for PostDocs outside of academia. We all know that there are not enough PI slots at universities for all of the PhDs who are going on to do PostDocs, and many will end up in <em>alternative</em> (I use that term loosely) careers.</p>
 
-<p>I really, really like <a href="http://rstudio.org"><code>RStudio</code></a> as my working <code>R</code> environment, as some of you have read before. So how do we get <code>RStudio</code> on our Linux system to respect which version of <code>R</code> and libraries we want to use?</p>
+<p>Yesterday (2013-09-18), Scott Diamond gave a <em>seminar</em> to PostDocs in the Medical Center at UK on getting involved in teaching science at the K-12 and college level. Scott was previously a professor here at UK, who got involved in science teaching at local schools, saw how miserable many students were in science classes, and wanted to change that. So he quit academia, got his teaching certification, and is now teaching science at a school for high-risk youth, <a href="http://www.tlc.fcps.net/">The Learning Center</a>, here in Fayette County. </p>
 
-<h2>Setup</h2>
+<p>This school takes 180 of the kids who are extremely truant, i.e. they like to skip school. Of course, we know that poverty is a big factor in the decision to skip school, but so is boredom from lack of engagement with the material. At The Learning Center they have been finding that if you find ways to make the material engaging (especially science), then the kids will <em>want</em> to be at school, learning, and they will still do well on the standard testing. Scott mentioned that these kids in regular school were truant at least 50% of the time, and at The Learning Center they have an attendance rate of 95%.</p>
 
-<p>This assumes that you have your <code>R</code> installs set somewhere properly, and a <strong>normal</strong> library for production level packages. You should install whichever <code>Bioconductor</code> packages you want into the <strong>normal</strong> library, and then make a copy of that. This copy will be your <strong>development</strong> library.</p>
+<p>As scientists, we are out to make discoveries. We look at something happening in the natural world, make hypotheses, and test them. Even in bioinformatics, the goal is to use computers to analyze biological data so we can understand better how these biological systems work, and make better hypotheses and test them. This is not how science is taught in K-12 right now here in the US. In many school systems, it is merely recitation of science facts, with no actual &ldquo;investigational&rdquo; science going on. </p>
 
-<pre><code>cp -R productionLibrary developmentLibrary
-</code></pre>
+<p>Scott (and others) are working to change this. But to do it right, they need trained scientists in the system. So if you are thinking about doing something other than academia following your PostDoc, and want to help kids be truly interested in science and how it works, maybe you should consider going into teaching K-12??</p>
 
-<p>I also assume that you are using a local (i.e. sits in your <em>home</em> directory) <code>.Renviron</code> file to control where <code>R</code> installs the packages.</p>
-
-<h2>Changing Versions</h2>
-
-<p><code>RStudio</code> really needs the environment variable <code>RSTUDIO_WHICH_R</code> set to know where <code>R</code> is, and <code>R</code> looks at <code>R_LIBS</code> in the <code>.Renviron</code> file. So I simply create two shell scripts that get sourced.</p>
-
-<h3>useRDev.sh</h3>
-
-<pre><code>#!/bin/sh
-export RSTUDIO_WHICH_R=/pathToDevR/bin/R
-echo &quot;R_LIBS=pathtoDevLibs&quot; &gt; .Renviron
-</code></pre>
-
-<p>Then I can simply do <code>source useRDev.sh</code> when I need to use the development <code>R</code> and library. <strong>Note</strong> that you will need to start <code>RStudio</code> from the shell for it to respect this environment variable. <code>RStudio</code> generally seems to install to <code>/usr/lib/rstudio/bin/rstudio</code>.</p>
-
-<h3>resetR.sh</h3>
-
-<pre><code>#!/bin/sh
-export RSTUDIO_WHICH_R=/pathtoReleaseR/bin/R
-echo &quot;R_LIBS=pathtoReleaseLibs&quot; &gt; .Renviron
-</code></pre>
-
-<p>This resets my variables by doint <code>source resetR.sh</code>.</p>
-
-<h2>Bioconductor Dev Version</h2>
-
-<p>To setup <code>Bioconductor</code> to use the develoment version, simply:</p>
-
-<pre><code>source useRDev.sh
-rstudio
-
-# once in RStudio
-library(BiocInstaller)
-useDev()
-biocLite(ask=F) # this will update all the installed bioconductor packages
-</code></pre>
-
-<p>I know this is not the most ideal situation, because I am rewriting over files, but it is working for me, and I thought it might help somone else.</p>
-<h6>Posted on 2013-09-17</h6><div id="disqus_thread"></div>
+<p>If you want more info about The Learning Center, about their model, or about getting into teaching at this level, you can reach Scott at <code>scott</code> dot <code>diamond</code> near <code>uky</code> circular shape <code>edu</code>.</p>
+<h6>Posted on 2013-09-19</h6><div id="disqus_thread"></div>
   <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
   var disqus_shortname = 'decipheringlife'; // required: replace example with your forum shortname
