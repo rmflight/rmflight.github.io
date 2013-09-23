@@ -5,6 +5,22 @@
     <description>Robert M Flight's personal blog :: R</description>
     <category>R</category>
     <item>
+  <title>Portable, personal packages</title>
+  <link>https://rmflight.github.io/posts/2013/09/github_packages.html</link>
+  <category>R</category>
+  <category>packages</category>
+  <description>&lt;h1&gt;Portable, personal packages&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href="http://www.programmingr.com/"&gt;ProgrammingR&lt;/a&gt; had an interesting &lt;a href="http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/"&gt;post&lt;/a&gt; recently about keeping a set of &lt;code&gt;R&lt;/code&gt; functions that are used often as a &lt;a href="https://gist.github.com/discover"&gt;&lt;code&gt;gist&lt;/code&gt;&lt;/a&gt; on &lt;a href="https://github.com"&gt;Github&lt;/a&gt;, and &lt;code&gt;source&lt;/code&gt;ing that file at the beginning of &lt;code&gt;R&lt;/code&gt; analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement &lt;a href="http://cran.r-project.org/web/packages/testthat/index.html"&gt;unit testing&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;However, the best way to have &lt;strong&gt;sets&lt;/strong&gt; of &lt;code&gt;R&lt;/code&gt; functions is as a &lt;a href="http://adv-r.had.co.nz/Package-basics.html"&gt;&lt;code&gt;package&lt;/code&gt;&lt;/a&gt;, that can then be installed and loaded by anyone. Normally packages are compiled and hosted on &lt;a href="http://cran.r-project.org/"&gt;&lt;code&gt;CRAN&lt;/code&gt;&lt;/a&gt;, &lt;a href="http://r-forge.r-project.org/"&gt;&lt;code&gt;R-forge&lt;/code&gt;&lt;/a&gt;, or &lt;a href="http://bioconductor.org"&gt;&lt;code&gt;Bioconductor&lt;/code&gt;&lt;/a&gt;. However, Github is becoming a common place to host packages, and thanks to Hadley Wickham&amp;#39;s &lt;a href="http://www.rdocumentation.org/packages/devtools/functions/install_github"&gt;&lt;code&gt;install_github&lt;/code&gt;&lt;/a&gt; function in the &lt;a href="http://www.rdocumentation.org/packages/devtools"&gt;&lt;code&gt;devtools&lt;/code&gt; package&lt;/a&gt;, it is rather easy to install a package directly from Github. This does require that you have &lt;a href="http://cran.r-project.org/bin/windows/Rtools/"&gt;r-tools&lt;/a&gt; installed if you are using Windows (I know that can take a bit of work, but it&amp;#39;s not impossible), and do some extra work to create a &lt;a href="http://adv-r.had.co.nz/Package-basics.html"&gt;proper package&lt;/a&gt;, but the overhead is probably worth it if you are using these functions all the time. &lt;/p&gt;
+
+&lt;p&gt;Once you have the package created and hosted on Github, it is simple to install it once, and load it when needed. If there is a particular version of the package that is required, it is even possible to tell &lt;code&gt;install_github&lt;/code&gt; to install a particular version based on the &lt;em&gt;commit&lt;/em&gt;, or a &lt;em&gt;tag&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some examples of this type of package can be found on Github: &lt;a href="https://github.com/kbroman/broman"&gt;1&lt;/a&gt; &lt;a href="https://github.com/childsish/lhc-R"&gt;2&lt;/a&gt; &lt;a href="https://github.com/juba/r-perso"&gt;3&lt;/a&gt;&lt;/p&gt;
+</description>
+</item>
+    <item>
   <title>R, RStudio, and release and dev Bioconductor</title>
   <link>https://rmflight.github.io/posts/2013/09/bioconductorDevLibs.html</link>
   <category>R</category>
