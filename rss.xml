@@ -869,5 +869,358 @@ by RCy.&lt;/p&gt;
 ## [10] stats4_3.0.0       tcltk_3.0.0        tkrgl_0.7
 &lt;/code&gt;&lt;/pre&gt;
 </description></item>
+    <item><title>Writing papers using R Markdown</title><link>https://rmflight.github.io/posts/2012/10/papersinRmd.html</link><category>R</category><category>openscience</category><category>reproducibility</category><category>tutorial</category><category>science</category><description>&lt;h1&gt;Writing papers using R Markdown&lt;/h1&gt;
+
+&lt;p&gt;I have been watching the activity in &lt;a href=&quot;http://rstudio.org&quot;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;http://yihui.name/knitr/&quot;&gt;&lt;code&gt;knitr&lt;/code&gt;&lt;/a&gt; for a while, and
+have even been using &lt;code&gt;Rmd&lt;/code&gt; (R markdown) files in my own work as a way to easily provide commentary on an actual dataset
+analysis. Yihui has proposed &lt;a href=&quot;http://yihui.name/en/2012/03/a-really-fast-statistics-journal/&quot;&gt;writing papers&lt;/a&gt; in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using &lt;code&gt;knitr&lt;/code&gt; as a way
+to create reproducible blog posts that include code (including yours truly).&lt;/p&gt;
+
+&lt;p&gt;The idea of writing a paper that actually includes the necessary code to perform the analysis, and is actually readable
+in its raw form, and that someone else could actually run was pretty appealing. Unfortunately, I had not had the time
+or opportunity to actually try it, until recently our group submitted a conference paper that included a lot of analysis in &lt;code&gt;R&lt;/code&gt; that seemed like the perfect opportunity to try this. 
+(I will link to the paper here when I hear more, or get clearance from my PI). Originally we wrote the paper in Microsoft&amp;reg; Word, but after submission I decided to see what it would have taken to write it as an &lt;code&gt;Rmd&lt;/code&gt; document that could
+then generate &lt;code&gt;markdown&lt;/code&gt; or &lt;code&gt;html&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;It turned out that it was not that hard, but it did force me to do some things differently. This is what I want to 
+discuss here.&lt;/p&gt;
+
+&lt;h2&gt;Advantages&lt;/h2&gt;
+
+&lt;p&gt;I actually found it much easier to have the text with the analysis (in contrast to having to be separate in a Word 
+document), and upon doing the conversion, discovered some possible numerical errors that crept in because of having
+to copy numerical results separately (that is the nice thing about being able to insert variable directly into the text). 
+In addition, the Word template for the submission didn&amp;#39;t play nice with automatic table and figure numbering, so our
+table and figure numbering got messed up in the submission. So overall, I&amp;#39;d say it worked out better with the &lt;code&gt;Rmd&lt;/code&gt; file
+overall, even with the having to create functions to handle table and figure numbering properly myself (see below).&lt;/p&gt;
+
+&lt;h2&gt;Tables and Figures&lt;/h2&gt;
+
+&lt;p&gt;As I&amp;#39;m sure most of you know, Word (and other WYSIWYG editors) have ability to keep track of your object numbers, this
+is especially nice for keeping your figure and table numbers straight. Of course, there is no such ability built into
+a static text file, but I found it was easy to write a couple of functions for this. The way I came up with is to have
+a variable that contains a label for the figure or table, a function that increments the counter when new figures or 
+tables are added, and a function that prints the associated number for a particular label. This does require a bit of 
+forethought on the part of the writer, because you may have to add a table or figure label to the variable long before
+you actually create it, but as long as you use sane (i.e. descriptive) labels, it shouldn&amp;#39;t be a big deal. Let me show
+you what I mean.&lt;/p&gt;
+
+&lt;h3&gt;Counting&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;incCount &amp;lt;- function(inObj, useName) {
+    nObj &amp;lt;- length(inObj)
+    useNum &amp;lt;- max(inObj) + 1
+    inObj &amp;lt;- c(inObj, useNum)
+    names(inObj)[nObj + 1] &amp;lt;- useName
+    inObj
+}
+figCount &amp;lt;- c(`_` = 0)
+tableCount &amp;lt;- c(`_` = 0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;incCount&lt;/code&gt; function is very simple, it takes an object, checks the maximum count, and then adds an incremental value
+with the supplied name. In this example, I initialized the &lt;code&gt;figCount&lt;/code&gt; and &lt;code&gt;tableCount&lt;/code&gt; objects with a non-sensical named
+value of zero. &lt;/p&gt;
+
+&lt;p&gt;Now in the process of writing, I decide I&amp;#39;m going to need a table on the amount of time spent by post-docs writing blog
+posts in different years of their post-doc training. Lets call this &lt;code&gt;t.blogPostDocs&lt;/code&gt;. Notice that this is a fairly 
+descriptive name. We can assign it a number like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;tableCount &amp;lt;- incCount(tableCount, &amp;quot;t.blogPostDocs&amp;quot;)
+tableCount
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##              _ t.blogPostDocs 
+##              0              1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Inserting&lt;/h3&gt;
+
+&lt;p&gt;So now we have a variable with a named number we can refer to. But how do we insert it into the text? We are going to
+use another function that will let us insert either the text with a link, or just the text itself.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;pasteLabel &amp;lt;- function(preText, inObj, objName, insLink = TRUE) {
+    objNum &amp;lt;- inObj[objName]
+
+    useText &amp;lt;- paste(preText, objNum, sep = &amp;quot; &amp;quot;)
+    if (insLink) {
+        useText &amp;lt;- paste(&amp;quot;[&amp;quot;, useText, &amp;quot;](#&amp;quot;, objName, &amp;quot;)&amp;quot;, sep = &amp;quot;&amp;quot;)
+    }
+    useText
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This function allows us to insert the table number like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;r I(pasteLabel(&amp;quot;Table&amp;quot;, tableCount, &amp;quot;t.blogPostDocs&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This would be inserted into a normal &lt;code&gt;inline&lt;/code&gt; code block. The &lt;code&gt;I&lt;/code&gt; makes sure that the text will appear as normal text,
+and not get formatted as a code block. The default behavior is to insert as a relative link, thereby enabling the use
+of relative links to link where a table / figure is mentioned to its actual location. For example, we can insert the 
+anchor link like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;a id=&amp;quot;t.blogPostDocs&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Markdown Tables&lt;/h3&gt;
+
+&lt;p&gt;Followed by the actual table text. This brings up the subject of &lt;code&gt;markdown&lt;/code&gt; tables. I also wrote a function (thanks to
+Yihui again) that transforms a normal &lt;code&gt;R&lt;/code&gt; &lt;code&gt;data.frame&lt;/code&gt; to a &lt;code&gt;markdown&lt;/code&gt; table.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;tableCat &amp;lt;- function(inFrame) {
+    outText &amp;lt;- paste(names(inFrame), collapse = &amp;quot; | &amp;quot;)
+    outText &amp;lt;- c(outText, paste(rep(&amp;quot;---&amp;quot;, ncol(inFrame)), collapse = &amp;quot; | &amp;quot;))
+    invisible(apply(inFrame, 1, function(inRow) {
+        outText &amp;lt;&amp;lt;- c(outText, paste(inRow, collapse = &amp;quot; | &amp;quot;))
+    }))
+    return(outText)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lets see it in action.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;postDocBlogs &amp;lt;- data.frame(PD = c(&amp;quot;p1&amp;quot;, &amp;quot;p2&amp;quot;, &amp;quot;p3&amp;quot;), NBlog = c(4, 10, 2), Year = c(1, 
+    4, 2))
+postDocBlogs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##   PD NBlog Year
+## 1 p1     4    1
+## 2 p2    10    4
+## 3 p3     2    2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;
+postDocInsert &amp;lt;- tableCat(postDocBlogs)
+postDocInsert
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;PD | NBlog | Year&amp;quot; &amp;quot;--- | --- | ---&amp;quot;   &amp;quot;p1 |  4 | 1&amp;quot;      
+## [4] &amp;quot;p2 | 10 | 4&amp;quot;       &amp;quot;p3 |  2 | 2&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To actually insert it into the text, use a code chunk with &lt;code&gt;results=&amp;#39;asis&amp;#39;&lt;/code&gt; and &lt;code&gt;echo=FALSE&lt;/code&gt;. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;cat(postDocInsert, sep = &amp;quot;\n&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;PD&lt;/th&gt;
+&lt;th&gt;NBlog&lt;/th&gt;
+&lt;th&gt;Year&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;p1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p2&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p3&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;p&gt;Before inserting the table though, you might want an inline code with the table number and caption, like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;I(pasteLabel(&amp;quot;Table&amp;quot;, tableCount, &amp;quot;t.blogPostDocs&amp;quot;, FALSE))&lt;/code&gt; This is the number of blog posts and year of training for post-docs.&lt;/p&gt;
+
+&lt;p&gt;Table 1 This is the number of blog posts and year of training for post-docs.&lt;/p&gt;
+
+&lt;p&gt;Remember for captions to set the &lt;code&gt;insLink&lt;/code&gt; variable to &lt;code&gt;FALSE&lt;/code&gt; so that you don&amp;#39;t generate a link from the caption.&lt;/p&gt;
+
+&lt;h3&gt;Figures&lt;/h3&gt;
+
+&lt;p&gt;Oftentimes, you will have code that generates the figure, and then you want to insert the figure at a different point.
+This is accomplished by the judicious use of &lt;code&gt;echo&lt;/code&gt; and &lt;code&gt;include&lt;/code&gt; chunk options.&lt;/p&gt;
+
+&lt;p&gt;For example, we can create a &lt;code&gt;ggplot2&lt;/code&gt; figure and store it in a variable in one chunk, and then &lt;code&gt;print&lt;/code&gt; it in a later
+chunk to actually insert it into the text body.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;plotData &amp;lt;- data.frame(x = rnorm(1000, 1, 5), y = rnorm(1000, 0, 2))
+plotKeep &amp;lt;- ggplot(plotData, aes(x = x, y = y)) + geom_point()
+figCounts &amp;lt;- incCount(figCount, &amp;quot;f.randomFigure&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And now we decide to actually insert it using &lt;code&gt;print(plotKeep)&lt;/code&gt; with the option of &lt;code&gt;echo=FALSE&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;data:image/png;base64,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&quot; alt=&quot;plot of chunk figureInsert&quot;/&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;#f.randomFigure&quot;&gt;Figure 1&lt;/a&gt;. A random figure.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2&gt;Numerical result formatting&lt;/h2&gt;
+
+&lt;p&gt;When &lt;code&gt;R&lt;/code&gt; prints a number, it normally likes to do so with lots of digits. This is not probably what you want either in
+a table or when reporting a number in a sentence. You can control that by using the &lt;code&gt;format&lt;/code&gt; function. When generating
+a new variable, the number of digits to display when printing will be saved, and when used on a variable directly,
+only the defined number of digits will display.&lt;/p&gt;
+
+&lt;h2&gt;Echo and Include&lt;/h2&gt;
+
+&lt;p&gt;This brings up the issue of how to keep the code from appearing in the text body. I found depending on the particulars,
+either using &lt;code&gt;echo=FALSE&lt;/code&gt; or &lt;code&gt;include=FALSE&lt;/code&gt; would do the job. This is meant to be a paper, a reproducible one, but a 
+paper nonetheless, and therefore the code should not end up in the text body. &lt;/p&gt;
+
+&lt;h2&gt;References&lt;/h2&gt;
+
+&lt;p&gt;One thing I haven&amp;#39;t done yet is convert all the references. I am planning to try using the &lt;a href=&quot;https://github.com/cboettig/knitcitations/&quot;&gt;knitcitations&lt;/a&gt; package. I will probably post on that experience.&lt;/p&gt;
+
+&lt;h2&gt;HTML generation&lt;/h2&gt;
+
+&lt;p&gt;Because I use &lt;code&gt;RStudio&lt;/code&gt;, I set up a modified function For generating a full &lt;code&gt;html&lt;/code&gt; version of the paper, changing the 
+default &lt;code&gt;RStudio&lt;/code&gt; &lt;code&gt;markdown&lt;/code&gt; render options like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;htmlOptions &amp;lt;- markdownHTMLOptions(defaults=TRUE)
+htmlOptions &amp;lt;- htmlOptions[htmlOptions != &amp;quot;hard_wrap&amp;quot;]
+markdownToHTML(inputFile, outputFile, options = htmlOptions)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should be added to a &lt;code&gt;.Rprofile&lt;/code&gt; file either in your &lt;code&gt;home&lt;/code&gt; directory or in the directory you start &lt;code&gt;R&lt;/code&gt; in (this
+is especially useful for modification on a per project basis).&lt;/p&gt;
+
+&lt;p&gt;I do this because when I write my documents, I want the source to be readable online. If this is a &lt;code&gt;github&lt;/code&gt; hosted repo,
+that means being displayed in the &lt;code&gt;github&lt;/code&gt; file browser, which does not do line wrapping. So I set up a 120 character
+line in my editor, and try very hard to stick to that. &lt;/p&gt;
+
+&lt;h2&gt;Function source&lt;/h2&gt;
+
+&lt;p&gt;You can find the previously mentioned functions in a github gist &lt;a href=&quot;https://gist.github.com/3858973&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Post source&lt;/h2&gt;
+
+&lt;p&gt;The source files for this blog post can be found at: &lt;a href=&quot;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.Rmd&quot;&gt;&lt;code&gt;Rmd&lt;/code&gt;&lt;/a&gt;, &lt;a href=&quot;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.md&quot;&gt;&lt;code&gt;md&lt;/code&gt;&lt;/a&gt;, and &lt;a href=&quot;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.html&quot;&gt;&lt;code&gt;html&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Posted on October 9, 2012, at &lt;a href=&quot;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&quot;&gt;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Edit: added section on formatting numerical results&lt;/p&gt;
+
+&lt;p&gt;Edit: added session info&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;R version 3.0.1 (2013-05-16)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=C                 LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] tools     stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] ggplot2_0.9.3.1 samatha_0.3     XML_3.98-1.1    RJSONIO_1.0-3  
+[5] markdown_0.6.3  knitr_1.4.12    stringr_0.6.2  
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.2-3   dichromat_2.0-0    digest_0.6.3      
+ [4] evaluate_0.4.7     formatR_0.9        grid_3.0.1        
+ [7] gtable_0.1.2       labeling_0.2       MASS_7.3-29       
+[10] munsell_0.4.2      plyr_1.8           proto_0.3-10      
+[13] RColorBrewer_1.0-5 reshape2_1.2.2     scales_0.2.3      
+&lt;/code&gt;&lt;/pre&gt;
+</description></item>
+    <item><title>Journal Club: 15.08.12</title><link>https://rmflight.github.io/posts/2012/08/jc_150812.html</link><description>&lt;h1&gt;Journal Club: 15.08.12&lt;/h1&gt;
+
+&lt;p&gt;I just came back from our Bioinformatic group (a rather loose association of various
+researchers at UofL interested in and doing bioinformatics) journal club, where we 
+discussed this recent paper:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002511&quot;&gt;Google Goes Cancer: Improving Outcome Prediction for Cancer Patients by Network-Based Ranking of Marker Genes&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Besides the catchy title that makes one believe that perhaps Google is getting into
+cancer research (maybe they are and we don&amp;#39;t know it yet), there were some interesting
+aspects to this paper. &lt;/p&gt;
+
+&lt;h2&gt;Premise&lt;/h2&gt;
+
+&lt;p&gt;The premise is that they can combine gene expression data and network data to find 
+better associations between gene expression data and a particular disease endpoint.
+The way this is carried out is through the use of the TRANSFAC transcription factor -
+gene target database for the network, the correlation of the gene expression with
+the disease status as the importance of a gene with the disease, and the Google
+&lt;a href=&quot;http://en.wikipedia.org/wiki/PageRank&quot;&gt;PageRank&lt;/a&gt; as the means to transfer the network knowledge to the gene expression
+data. They call their method &lt;strong&gt;NetRank&lt;/strong&gt;. &lt;/p&gt;
+
+&lt;p&gt;Note that the general idea had already been tried in this paper on &lt;a href=&quot;http://dx.doi.org/10.1186/1471-2105-6-233&quot;&gt;GeneRank&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Implementation&lt;/h2&gt;
+
+&lt;p&gt;Rank the genes with disease status (poor or good prognosis) using a method (SAM,
+t-test, fold-change, correlation, NetRank). Pick &lt;em&gt;n&lt;/em&gt; top genes, and develop a
+predictive model using a support vector machine. Wash, rinse, repeat several times
+to find the best set, varying the number of top genes, and the number of samples used
+in the training set.&lt;/p&gt;
+
+&lt;p&gt;For &lt;strong&gt;NetRank&lt;/strong&gt;, the top genes were decided by using a sub-optimization based on
+varying &lt;em&gt;d&lt;/em&gt;, the dampening factor in the PageRank algorithm that determines how
+much information can be transferred to other genes. The best value of &lt;em&gt;d&lt;/em&gt; determined
+in this study was 0.3.&lt;/p&gt;
+
+&lt;p&gt;All other methods used just the 8000 genes that passed filtering, but NetRank used
+all the genes on the array, with those that were filtered out had their initial
+correlations set to 0, so that they were still in the network representation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g001&amp;amp;representation=PNG_I&quot; alt=&quot;Monte Carlo cross-validation&quot;/&gt;&lt;/p&gt;
+
+&lt;h2&gt;Did it work?&lt;/h2&gt;
+
+&lt;p&gt;From the paper, it appears to have worked. Using a monte-carlo cross-validation,
+they were able to achieve over 70% prediction rates. And this was better than any
+of the other methods they used to associate genes with the disease, including SAM,
+t-test, fold-change, and raw correlations.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g002&amp;amp;representation=PNG_I&quot; alt=&quot;NetRank feature selection performance&quot;/&gt;&lt;/p&gt;
+
+&lt;h2&gt;Issues&lt;/h2&gt;
+
+&lt;p&gt;As we discussed the article, some questions did come up.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;What was the variation in &lt;em&gt;d&lt;/em&gt; depending on the size of the training set?&lt;/li&gt;
+&lt;li&gt;How consistent were the genes that came out as biomarkers?
+
+&lt;ul&gt;
+&lt;li&gt;It would be nice to try this methodology on a series of independent, but
+related cancer datasets (ie breast or lung cancer) and see how consistent the lists
+are. This was done &lt;a href=&quot;http://www.biomedcentral.com/1471-2105/13/182/abstract&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What happens if the genes that don&amp;#39;t pass filtering are removed from the network
+entirely?&lt;/li&gt;
+&lt;li&gt;Were the problems reported with not-filtering genes due to having only two
+disease points (poor and good prognosis) to calculate a correlation of expression 
+with?&lt;/li&gt;
+&lt;li&gt;How many iterations does it take to achieve convergence?&lt;/li&gt;
+&lt;li&gt;The list of genes they come up with are fairly well known cancer genes. We
+were kindof surprised that they didn&amp;#39;t seem to come up novel genes associated
+directly with pancreatic cancer.&lt;/li&gt;
+&lt;li&gt;Why is &lt;em&gt;d&lt;/em&gt; so variable depending on the cancer examined?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Things to try&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Could we improve on this by instead of taking just the top-ranked genes, look for 
+the top ranked cliques, i.e. take the top gene, remove anything in its immediate
+neighborhood, and then go to the next one?&lt;/li&gt;
+&lt;li&gt;What would happen if we used a directed network based on connected Reactome
+or KEGG pathways?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Find this post online at: &lt;a href=&quot;http://robertmflight.blogspot.com/2012/08/journal-club-150812.html&quot;&gt;http://robertmflight.blogspot.com/2012/08/journal-club-150812.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Authored using Markdown, and the R Markdown package. Published on 15.08.12&lt;/p&gt;
+</description></item>
   </channel>
 </rss>
