@@ -7,10 +7,6 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
-    <item><title>this is a test blog post</title><link>http://rmflight.github.io/posts/2013/09/testPost.html</link><category>testing</category><description>&lt;h1&gt;this is a test blog post&lt;/h1&gt;
-
-&lt;p&gt;This is me seeing what happens when I make a test post&lt;/p&gt;
-</description></item>
     <item><title>Portable, personal packages</title><link>http://rmflight.github.io/posts/2013/09/github_packages.html</link><category>R</category><category>packages</category><description>&lt;h1&gt;Portable, personal packages&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.programmingr.com/&quot;&gt;ProgrammingR&lt;/a&gt; had an interesting &lt;a href=&quot;http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/&quot;&gt;post&lt;/a&gt; recently about keeping a set of &lt;code&gt;R&lt;/code&gt; functions that are used often as a &lt;a href=&quot;https://gist.github.com/discover&quot;&gt;&lt;code&gt;gist&lt;/code&gt;&lt;/a&gt; on &lt;a href=&quot;https://github.com&quot;&gt;Github&lt;/a&gt;, and &lt;code&gt;source&lt;/code&gt;ing that file at the beginning of &lt;code&gt;R&lt;/code&gt; analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement &lt;a href=&quot;http://cran.r-project.org/web/packages/testthat/index.html&quot;&gt;unit testing&lt;/a&gt;. &lt;/p&gt;
