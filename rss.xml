@@ -7,22 +7,6 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
-    <item><title>Open VS Closed</title><link>http://rmflight.github.io/posts/2013/10/openvsclosed.html</link><category>openlanguage</category><description>&lt;h1&gt;Open VS Closed&lt;/h1&gt;
-
-&lt;p&gt;This was sparked by a comment on twitter suggesting that data scientists and analysts need to be &lt;em&gt;polyglots&lt;/em&gt;, that they should know more than &lt;strong&gt;one&lt;/strong&gt; programming language or analysis framework. The commenter suggested knowing at least two of:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;R&lt;/li&gt;
-&lt;li&gt;Python&lt;/li&gt;
-&lt;li&gt;Matlab&lt;/li&gt;
-&lt;li&gt;SPSS&lt;/li&gt;
-&lt;li&gt;SAS&lt;/li&gt;
-&lt;li&gt;Julia&lt;/li&gt;
-&lt;li&gt;Octave&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;My comment back was that one should really evaluate whether SPSS, SAS and Matlab should be on this list, as they are &lt;em&gt;closed&lt;/em&gt; languages, not open source. I want to expand on &lt;em&gt;why&lt;/em&gt; I made that comment. Let me be forthright, I have not used SPSS, nor SAS, but I have programmed in MatLab and R extensively.&lt;/p&gt;
-</description></item>
     <item><title>this is a test blog post</title><link>http://rmflight.github.io/posts/2013/09/testPost.html</link><category>testing</category><description>&lt;h1&gt;this is a test blog post&lt;/h1&gt;
 
 &lt;p&gt;This is me seeing what happens when I make a test post&lt;/p&gt;
