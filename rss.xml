@@ -7,6 +7,81 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Open VS Closed Analysis Languages</title><link>http://rmflight.github.io/posts/2013/10/openvsclosed.html</link><category>openscience</category><category>R</category><category>python</category><description>&lt;h1&gt;Open VS Closed Analysis Languages&lt;/h1&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;I think data scientists should choose to learn &lt;strong&gt;open&lt;/strong&gt; languages such as &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;python&lt;/code&gt; because they are &lt;strong&gt;open&lt;/strong&gt; in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.&lt;/p&gt;
+
+&lt;h2&gt;Why the debate?&lt;/h2&gt;
+
+&lt;p&gt;This was sparked by a comment on twitter suggesting that data scientists and analysts need to be &lt;em&gt;polyglots&lt;/em&gt;, that they should know more than &lt;strong&gt;one&lt;/strong&gt; programming language or analysis framework (the full conversation of tweets can be found &lt;a href=&quot;https://twitter.com/rmflight/status/387910932250517504&quot;&gt;here&lt;/a&gt;)&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p&gt;Data Scientists need to be Polyglots - know 2 or more of &lt;a href=&quot;https://twitter.com/search?q=%23python&amp;amp;src=hash&quot;&gt;#python&lt;/a&gt; &lt;a href=&quot;https://twitter.com/search?q=%23rstats&amp;amp;src=hash&quot;&gt;#rstats&lt;/a&gt; &lt;a href=&quot;https://twitter.com/search?q=%23sas&amp;amp;src=hash&quot;&gt;#sas&lt;/a&gt; &lt;a href=&quot;https://twitter.com/search?q=%23spss&amp;amp;src=hash&quot;&gt;#spss&lt;/a&gt; &lt;a href=&quot;https://twitter.com/search?q=%23matlab&amp;amp;src=hash&quot;&gt;#matlab&lt;/a&gt; &lt;a href=&quot;https://twitter.com/search?q=%23julia&amp;amp;src=hash&quot;&gt;#julia&lt;/a&gt; &lt;a href=&quot;https://twitter.com/search?q=%23octave&amp;amp;src=hash&quot;&gt;#octave&lt;/a&gt; &lt;a href=&quot;http://t.co/LtzIOzZ4XH&quot;&gt;http://t.co/LtzIOzZ4XH&lt;/a&gt;&lt;/p&gt;&amp;mdash; Gregory Piatetsky (@kdnuggets) &lt;a href=&quot;https://twitter.com/kdnuggets/statuses/387706109509005312&quot;&gt;October 8, 2013&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;http://rmflight.github.io//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;The commenter suggested knowing at least two of:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R&lt;/li&gt;
+&lt;li&gt;Python&lt;/li&gt;
+&lt;li&gt;Matlab&lt;/li&gt;
+&lt;li&gt;SPSS&lt;/li&gt;
+&lt;li&gt;SAS&lt;/li&gt;
+&lt;li&gt;Julia&lt;/li&gt;
+&lt;li&gt;Octave&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;My comment back was that one should really evaluate whether &lt;code&gt;SPSS&lt;/code&gt;, &lt;code&gt;SAS&lt;/code&gt; and &lt;code&gt;Matlab&lt;/code&gt; should be on this list, as they are &lt;em&gt;closed&lt;/em&gt; languages, not open, or free.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://twitter.com/kdnuggets&quot;&gt;@kdnuggets&lt;/a&gt; &lt;a href=&quot;https://twitter.com/data_nerd&quot;&gt;@data_nerd&lt;/a&gt; I would remove &lt;a href=&quot;https://twitter.com/search?q=%23matlab&amp;amp;src=hash&quot;&gt;#matlab&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/search?q=%23sas&amp;amp;src=hash&quot;&gt;#sas&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/search?q=%23spss&amp;amp;src=hash&quot;&gt;#spss&lt;/a&gt; off the list, just because they are proprietary languages&lt;/p&gt;&amp;mdash; Robert M Flight (@rmflight) &lt;a href=&quot;https://twitter.com/rmflight/statuses/387906638713081856&quot;&gt;October 9, 2013&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;http://rmflight.github.io//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;I want to expand on &lt;em&gt;why&lt;/em&gt; I made that comment. Let me be forthright, I have not used &lt;code&gt;SPSS&lt;/code&gt;, nor &lt;code&gt;SAS&lt;/code&gt;, but I have programmed in &lt;code&gt;MatLab&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; extensively, and dabbled in &lt;code&gt;Python&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;I also think it is a good thing for data scientists to know more than one language.&lt;/strong&gt; Just to be clear, I am &lt;strong&gt;NOT&lt;/strong&gt; arguing that point.&lt;/p&gt;
+
+&lt;h2&gt;Closed&lt;/h2&gt;
+
+&lt;p&gt;What is a closed analysis language? I would say that there are three types of closed languages:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;those that are not free (but still may their source code openly available)&lt;/li&gt;
+&lt;li&gt;those where the underlying engine is closed source&lt;/li&gt;
+&lt;li&gt;those where one cannot write their own functions to expand on what is already available&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Now, &lt;code&gt;MatLab&lt;/code&gt; fits the first two categories. It is rather expensive to get a license for, the license &lt;strong&gt;can&lt;/strong&gt; be restrictive (I know they have had a lot of abuse of licenses in the past, and they are trying to avoid that), and you are not expected to poke around in the internals of the &lt;code&gt;MatLab&lt;/code&gt; engine. Oh, and if you want more than the base engine, expect to pay heavily for add-on packages.&lt;/p&gt;
+
+&lt;p&gt;However, it is possible to write add-on&amp;#39;s for &lt;code&gt;MatLab&lt;/code&gt;. I have previously &lt;a href=&quot;http://www.mathworks.com/matlabcentral/fileexchange/authors/19294&quot;&gt;written a few&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Closed problem: Checking results&lt;/h3&gt;
+
+&lt;p&gt;So why are closed languages a problem? A closed language that does not make it &lt;strong&gt;possible&lt;/strong&gt; to examine the underlying functionality of the analysis engine has two problems:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;surety that calculations are done correctly&lt;/li&gt;
+&lt;li&gt;the ability of others to run and check results&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Both of these are issues that are really important in &lt;strong&gt;science&lt;/strong&gt;. I would consider a &lt;strong&gt;data scientist&lt;/strong&gt; to be doing actual &lt;strong&gt;science&lt;/strong&gt;, so others should be able to scrutinize their work. The best scrutiny, is for others to be able to actually run their code. If I can&amp;#39;t run your code, then how do I know what you did is right?? If I can&amp;#39;t afford a copy of &lt;code&gt;MatLab&lt;/code&gt; to run your code (assuming you made it available, you did provide the source for the analysis, right?), that is a bad thing.&lt;/p&gt;
+
+&lt;h3&gt;Closed problem: Re-using code&lt;/h3&gt;
+
+&lt;p&gt;Of course, the other problem is that with a closed language you have made it impossible for others to easily make use of your analysis. Sure, they could code it up in another language, but unless it is the be-all and end-all of analysis methods, I&amp;#39;m not going to bother. I don&amp;#39;t have a license for &lt;code&gt;MatLab&lt;/code&gt;, or &lt;code&gt;SPSS&lt;/code&gt;, or &lt;code&gt;SAS&lt;/code&gt;, and I can&amp;#39;t afford it; therefore I&amp;#39;m not going to use your method / code nor give you a citation or credit.&lt;/p&gt;
+
+&lt;h2&gt;Solution: Open languages&lt;/h2&gt;
+
+&lt;p&gt;Languages like &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;python&lt;/code&gt;, they don&amp;#39;t have these problems. If I wonder how a function in the base distribution of &lt;code&gt;R&lt;/code&gt; or &lt;code&gt;python&lt;/code&gt; works, I can go look at the source. If I find a bug, I can suggest a fix, or fix it myself and tell others about it. In addition, if I write code to do an analysis, I can make it available and know that others &lt;strong&gt;should&lt;/strong&gt; have the ability to examine it, including re-running it, in addition to using it for themselves, if it is licensed appropriately. This is the way science should work.&lt;/p&gt;
+
+&lt;h2&gt;What should you use?&lt;/h2&gt;
+
+&lt;p&gt;Some would argue that you should use &lt;code&gt;MatLab&lt;/code&gt;, &lt;code&gt;SAS&lt;/code&gt;, and &lt;code&gt;SPSS&lt;/code&gt; because they have been around for a while, and are the standard. I would argue that you should not use them because they are controlled by single corporate entities, who are only interested in what will get people to buy their product and use it. You should use software that &lt;a href=&quot;http://r4stats.com/articles/popularity/&quot;&gt;others are using&lt;/a&gt;, and that others will be able to use, regardless of income.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;R&lt;/code&gt; is being used in lots of different places, by lots of different people for statistics, bioinformatics, visualization, and as a general functional language. &lt;code&gt;Python&lt;/code&gt; is a great general purpose language that provides a lot of &lt;strong&gt;functional&lt;/strong&gt; glue for doing lots of different things. &lt;/p&gt;
+</description></item>
     <item><title>Pre-calculating large tables of values</title><link>http://rmflight.github.io/posts/2013/10/precalcLookup.html</link><category>R</category><category>precalculate</category><category>hpc</category><description>&lt;h1&gt;Pre-calculating large tables of values&lt;/h1&gt;
 
 &lt;p&gt;I&amp;#39;m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. &lt;em&gt;i.e.&lt;/em&gt; given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a &lt;strong&gt;chi-square&lt;/strong&gt; distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.&lt;/p&gt;

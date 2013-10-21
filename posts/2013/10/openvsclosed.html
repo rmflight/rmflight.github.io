@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>Open VS Closed</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><script>
+<!DOCTYPE html><html><head><title>Open VS Closed Analysis Languages</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -53,9 +53,21 @@ hljs.initHighlightingOnLoad();
     '//cdn.krxd.net/static/socialtag/widget.js';
   var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); 
 })();
-</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Open VS Closed</h1>
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Open VS Closed Analysis Languages</h1>
 
-<p>This was sparked by a comment on twitter suggesting that data scientists and analysts need to be <em>polyglots</em>, that they should know more than <strong>one</strong> programming language or analysis framework. The commenter suggested knowing at least two of:</p>
+<h2>TL;DR</h2>
+
+<p>I think data scientists should choose to learn <strong>open</strong> languages such as <code>R</code> and <code>python</code> because they are <strong>open</strong> in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.</p>
+
+<h2>Why the debate?</h2>
+
+<p>This was sparked by a comment on twitter suggesting that data scientists and analysts need to be <em>polyglots</em>, that they should know more than <strong>one</strong> programming language or analysis framework (the full conversation of tweets can be found <a href="https://twitter.com/rmflight/status/387910932250517504">here</a>)</p>
+
+<blockquote class="twitter-tweet"><p>Data Scientists need to be Polyglots - know 2 or more of <a href="https://twitter.com/search?q=%23python&amp;src=hash">#python</a> <a href="https://twitter.com/search?q=%23rstats&amp;src=hash">#rstats</a> <a href="https://twitter.com/search?q=%23sas&amp;src=hash">#sas</a> <a href="https://twitter.com/search?q=%23spss&amp;src=hash">#spss</a> <a href="https://twitter.com/search?q=%23matlab&amp;src=hash">#matlab</a> <a href="https://twitter.com/search?q=%23julia&amp;src=hash">#julia</a> <a href="https://twitter.com/search?q=%23octave&amp;src=hash">#octave</a> <a href="http://t.co/LtzIOzZ4XH">http://t.co/LtzIOzZ4XH</a></p>&mdash; Gregory Piatetsky (@kdnuggets) <a href="https://twitter.com/kdnuggets/statuses/387706109509005312">October 8, 2013</a></blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>The commenter suggested knowing at least two of:</p>
 
 <ul>
 <li>R</li>
@@ -67,8 +79,55 @@ hljs.initHighlightingOnLoad();
 <li>Octave</li>
 </ul>
 
-<p>My comment back was that one should really evaluate whether SPSS, SAS and Matlab should be on this list, as they are <em>closed</em> languages, not open source. I want to expand on <em>why</em> I made that comment. Let me be forthright, I have not used SPSS, nor SAS, but I have programmed in MatLab and R extensively.</p>
-<h6>Posted on 2013-10-09</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
+<p>My comment back was that one should really evaluate whether <code>SPSS</code>, <code>SAS</code> and <code>Matlab</code> should be on this list, as they are <em>closed</em> languages, not open, or free.</p>
+
+<blockquote class="twitter-tweet"><p><a href="https://twitter.com/kdnuggets">@kdnuggets</a> <a href="https://twitter.com/data_nerd">@data_nerd</a> I would remove <a href="https://twitter.com/search?q=%23matlab&amp;src=hash">#matlab</a>, <a href="https://twitter.com/search?q=%23sas&amp;src=hash">#sas</a> and <a href="https://twitter.com/search?q=%23spss&amp;src=hash">#spss</a> off the list, just because they are proprietary languages</p>&mdash; Robert M Flight (@rmflight) <a href="https://twitter.com/rmflight/statuses/387906638713081856">October 9, 2013</a></blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I want to expand on <em>why</em> I made that comment. Let me be forthright, I have not used <code>SPSS</code>, nor <code>SAS</code>, but I have programmed in <code>MatLab</code> and <code>R</code> extensively, and dabbled in <code>Python</code>. </p>
+
+<p><strong>I also think it is a good thing for data scientists to know more than one language.</strong> Just to be clear, I am <strong>NOT</strong> arguing that point.</p>
+
+<h2>Closed</h2>
+
+<p>What is a closed analysis language? I would say that there are three types of closed languages:</p>
+
+<ol>
+<li>those that are not free (but still may their source code openly available)</li>
+<li>those where the underlying engine is closed source</li>
+<li>those where one cannot write their own functions to expand on what is already available</li>
+</ol>
+
+<p>Now, <code>MatLab</code> fits the first two categories. It is rather expensive to get a license for, the license <strong>can</strong> be restrictive (I know they have had a lot of abuse of licenses in the past, and they are trying to avoid that), and you are not expected to poke around in the internals of the <code>MatLab</code> engine. Oh, and if you want more than the base engine, expect to pay heavily for add-on packages.</p>
+
+<p>However, it is possible to write add-on&#39;s for <code>MatLab</code>. I have previously <a href="http://www.mathworks.com/matlabcentral/fileexchange/authors/19294">written a few</a>.</p>
+
+<h3>Closed problem: Checking results</h3>
+
+<p>So why are closed languages a problem? A closed language that does not make it <strong>possible</strong> to examine the underlying functionality of the analysis engine has two problems:</p>
+
+<ol>
+<li>surety that calculations are done correctly</li>
+<li>the ability of others to run and check results</li>
+</ol>
+
+<p>Both of these are issues that are really important in <strong>science</strong>. I would consider a <strong>data scientist</strong> to be doing actual <strong>science</strong>, so others should be able to scrutinize their work. The best scrutiny, is for others to be able to actually run their code. If I can&#39;t run your code, then how do I know what you did is right?? If I can&#39;t afford a copy of <code>MatLab</code> to run your code (assuming you made it available, you did provide the source for the analysis, right?), that is a bad thing.</p>
+
+<h3>Closed problem: Re-using code</h3>
+
+<p>Of course, the other problem is that with a closed language you have made it impossible for others to easily make use of your analysis. Sure, they could code it up in another language, but unless it is the be-all and end-all of analysis methods, I&#39;m not going to bother. I don&#39;t have a license for <code>MatLab</code>, or <code>SPSS</code>, or <code>SAS</code>, and I can&#39;t afford it; therefore I&#39;m not going to use your method / code nor give you a citation or credit.</p>
+
+<h2>Solution: Open languages</h2>
+
+<p>Languages like <code>R</code> and <code>python</code>, they don&#39;t have these problems. If I wonder how a function in the base distribution of <code>R</code> or <code>python</code> works, I can go look at the source. If I find a bug, I can suggest a fix, or fix it myself and tell others about it. In addition, if I write code to do an analysis, I can make it available and know that others <strong>should</strong> have the ability to examine it, including re-running it, in addition to using it for themselves, if it is licensed appropriately. This is the way science should work.</p>
+
+<h2>What should you use?</h2>
+
+<p>Some would argue that you should use <code>MatLab</code>, <code>SAS</code>, and <code>SPSS</code> because they have been around for a while, and are the standard. I would argue that you should not use them because they are controlled by single corporate entities, who are only interested in what will get people to buy their product and use it. You should use software that <a href="http://r4stats.com/articles/popularity/">others are using</a>, and that others will be able to use, regardless of income.</p>
+
+<p><code>R</code> is being used in lots of different places, by lots of different people for statistics, bioinformatics, visualization, and as a general functional language. <code>Python</code> is a great general purpose language that provides a lot of <strong>functional</strong> glue for doing lots of different things. </p>
+<h6>Posted on 2013-10-21</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
   <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -85,4 +144,4 @@ dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div><div class="span2"><a class="twitter-timeline" href="https://twitter.com/rmflight" data-widget-id="368415899268558848">Tweets by @rmflight</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<h3>Tags</h3><ul><li><a href="/tags/R.html">R (9)</a></li><li><a href="/tags/openscience.html">openscience (2)</a></li><li><a href="/tags/reproducibility.html">reproducibility (2)</a></li><li><a href="/tags/tutorial.html">tutorial (2)</a></li><li><a href="/tags/science.html">science (2)</a></li><li><a href="/tags/hiveplot.html">hiveplot (1)</a></li><li><a href="/tags/cytoscape.html">cytoscape (1)</a></li><li><a href="/tags/literateprogramming.html">literateprogramming (1)</a></li><li><a href="/tags/writing.html">writing (1)</a></li><li><a href="/tags/package.html">package (1)</a></li><li><a href="/tags/timhortons.html">timhortons (1)</a></li><li><a href="/tags/mapping.html">mapping (1)</a></li><li><a href="/tags/teaching.html">teaching (1)</a></li><li><a href="/tags/notebook.html">notebook (1)</a></li><li><a href="/tags/moving.html">moving (2)</a></li><li><a href="/tags/setup.html">setup (1)</a></li><li><a href="/tags/Samatha.html">Samatha (3)</a></li><li><a href="/tags/twitter.html">twitter (1)</a></li><li><a href="/tags/bioconductor.html">bioconductor (1)</a></li><li><a href="/tags/rstudio.html">rstudio (1)</a></li><li><a href="/tags/postdoc.html">postdoc (1)</a></li><li><a href="/tags/academia.html">academia (1)</a></li><li><a href="/tags/packages.html">packages (1)</a></li><li><a href="/tags/testing.html">testing (1)</a></li><li><a href="/tags/openlanguage.html">openlanguage (1)</a></li></ul><h3>Blog Roll</h3><ul><li><a href="http://www.r-bloggers.com/">R bloggers</a></li><li><a href="http://ivory.idyll.org/blog/">Living in an Ivory Basement</a></li><li><a href="http://bytesizebio.net/">Byte Size Biology</a></li><li><a href="http://robjhyndman.com/hyndsight/">Hyndsight</a></li><li><a href="http://solomonmessing.wordpress.com/blog/">Solomon Messing</a></li><li><a href="http://nsaunders.wordpress.com/">What You're Doing Is Rather Desperate</a></li><li><a href="http://yihui.name/en/">Yihui Xie's Blog</a></li><li><a href="http://simplystatistics.org/">Simply Statistics</a></li><li><a href="http://software-carpentry.org/">Software carpentry</a></li></ul></div></div><div class="span12"><div class="span2"></div><div class="span8"><footer class="footer"><p class="right back_to_top"><a href="#">&uArr; Page Top</a></p><p><a href="https://github.com/DASpringate/samatha">Built in R with Samatha</a></p></footer></div></div></div></body></html>
+<h3>Tags</h3><ul><li><a href="/tags/R.html">R (10)</a></li><li><a href="/tags/openscience.html">openscience (2)</a></li><li><a href="/tags/reproducibility.html">reproducibility (2)</a></li><li><a href="/tags/tutorial.html">tutorial (2)</a></li><li><a href="/tags/science.html">science (2)</a></li><li><a href="/tags/hiveplot.html">hiveplot (1)</a></li><li><a href="/tags/cytoscape.html">cytoscape (1)</a></li><li><a href="/tags/literateprogramming.html">literateprogramming (1)</a></li><li><a href="/tags/writing.html">writing (1)</a></li><li><a href="/tags/package.html">package (1)</a></li><li><a href="/tags/timhortons.html">timhortons (1)</a></li><li><a href="/tags/mapping.html">mapping (1)</a></li><li><a href="/tags/teaching.html">teaching (1)</a></li><li><a href="/tags/notebook.html">notebook (1)</a></li><li><a href="/tags/moving.html">moving (2)</a></li><li><a href="/tags/setup.html">setup (1)</a></li><li><a href="/tags/Samatha.html">Samatha (3)</a></li><li><a href="/tags/twitter.html">twitter (1)</a></li><li><a href="/tags/bioconductor.html">bioconductor (1)</a></li><li><a href="/tags/rstudio.html">rstudio (1)</a></li><li><a href="/tags/postdoc.html">postdoc (1)</a></li><li><a href="/tags/academia.html">academia (1)</a></li><li><a href="/tags/packages.html">packages (1)</a></li><li><a href="/tags/precalculate.html">precalculate (1)</a></li><li><a href="/tags/hpc.html">hpc (1)</a></li></ul><h3>Blog Roll</h3><ul><li><a href="http://www.r-bloggers.com/">R bloggers</a></li><li><a href="http://ivory.idyll.org/blog/">Living in an Ivory Basement</a></li><li><a href="http://bytesizebio.net/">Byte Size Biology</a></li><li><a href="http://robjhyndman.com/hyndsight/">Hyndsight</a></li><li><a href="http://solomonmessing.wordpress.com/blog/">Solomon Messing</a></li><li><a href="http://nsaunders.wordpress.com/">What You're Doing Is Rather Desperate</a></li><li><a href="http://yihui.name/en/">Yihui Xie's Blog</a></li><li><a href="http://simplystatistics.org/">Simply Statistics</a></li><li><a href="http://software-carpentry.org/">Software carpentry</a></li></ul></div></div><div class="span12"><div class="span2"></div><div class="span8"><footer class="footer"><p class="right back_to_top"><a href="#">&uArr; Page Top</a></p><p><a href="https://github.com/DASpringate/samatha">Built in R with Samatha</a></p></footer></div></div></div></body></html>
