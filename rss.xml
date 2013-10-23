@@ -274,26 +274,6 @@ sys 0m0.001s
 
 &lt;p&gt;So bypassing &lt;code&gt;boost&lt;/code&gt; in this case is a good thing, we get some extra speed, and reduce a dependency. We have to generate the lookup table first, but the &lt;code&gt;cpp&lt;/code&gt; file can be generated once, with a static variable in a class that is initialized to the lookup values. We do have some error, but in our case we can live with it, as the relative rankings should still be pretty good.&lt;/p&gt;
 </description></item>
-    <item><title>Open VS Closed</title><link>http://rmflight.github.io/posts/2013/10/openvsclosed.html</link><category>openlanguage</category><description>&lt;h1&gt;Open VS Closed&lt;/h1&gt;
-
-&lt;p&gt;This was sparked by a comment on twitter suggesting that data scientists and analysts need to be &lt;em&gt;polyglots&lt;/em&gt;, that they should know more than &lt;strong&gt;one&lt;/strong&gt; programming language or analysis framework. The commenter suggested knowing at least two of:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;R&lt;/li&gt;
-&lt;li&gt;Python&lt;/li&gt;
-&lt;li&gt;Matlab&lt;/li&gt;
-&lt;li&gt;SPSS&lt;/li&gt;
-&lt;li&gt;SAS&lt;/li&gt;
-&lt;li&gt;Julia&lt;/li&gt;
-&lt;li&gt;Octave&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;My comment back was that one should really evaluate whether SPSS, SAS and Matlab should be on this list, as they are &lt;em&gt;closed&lt;/em&gt; languages, not open source. I want to expand on &lt;em&gt;why&lt;/em&gt; I made that comment. Let me be forthright, I have not used SPSS, nor SAS, but I have programmed in MatLab and R extensively.&lt;/p&gt;
-</description></item>
-    <item><title>this is a test blog post</title><link>http://rmflight.github.io/posts/2013/09/testPost.html</link><category>testing</category><description>&lt;h1&gt;this is a test blog post&lt;/h1&gt;
-
-&lt;p&gt;This is me seeing what happens when I make a test post&lt;/p&gt;
-</description></item>
     <item><title>Portable, personal packages</title><link>http://rmflight.github.io/posts/2013/09/github_packages.html</link><category>R</category><category>packages</category><description>&lt;h1&gt;Portable, personal packages&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.programmingr.com/&quot;&gt;ProgrammingR&lt;/a&gt; had an interesting &lt;a href=&quot;http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/&quot;&gt;post&lt;/a&gt; recently about keeping a set of &lt;code&gt;R&lt;/code&gt; functions that are used often as a &lt;a href=&quot;https://gist.github.com/discover&quot;&gt;&lt;code&gt;gist&lt;/code&gt;&lt;/a&gt; on &lt;a href=&quot;https://github.com&quot;&gt;Github&lt;/a&gt;, and &lt;code&gt;source&lt;/code&gt;ing that file at the beginning of &lt;code&gt;R&lt;/code&gt; analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement &lt;a href=&quot;http://cran.r-project.org/web/packages/testthat/index.html&quot;&gt;unit testing&lt;/a&gt;. &lt;/p&gt;
@@ -381,37 +361,6 @@ biocLite(ask=F) # this will update all the installed bioconductor packages
     <item><title>Moved!</title><link>http://rmflight.github.io/posts/2013/09/Moved.html</link><category>moving</category><description>&lt;h1&gt;Moved!&lt;/h1&gt;
 
 &lt;p&gt;OK, if you can see this, then it is official, my blog has moved to static hosting on github pages. We&amp;#39;ll see how this works out!&lt;/p&gt;
-</description></item>
-    <item><title>Test post</title><link>http://rmflight.github.io/posts/2013/09/Test_post.html</link><category>R</category><category>setup</category><category>Samatha</category><description>&lt;h1&gt;Test post&lt;/h1&gt;
-
-&lt;p&gt;Here is a summary of the &lt;code&gt;cars&lt;/code&gt; dataset:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;summary(cars)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;##      speed           dist    
-##  Min.   : 4.0   Min.   :  2  
-##  1st Qu.:12.0   1st Qu.: 26  
-##  Median :15.0   Median : 36  
-##  Mean   :15.4   Mean   : 43  
-##  3rd Qu.:19.0   3rd Qu.: 56  
-##  Max.   :25.0   Max.   :120
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And here is a graph:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;plot(cars)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmflight.github.io/mlab/data/rmflight/Documents/researchBlog//researchBlog/img/unnamed-chunk-2.png&quot; alt=&quot;plot of chunk unnamed-chunk-2&quot;/&gt; &lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;r&quot;&gt;library(ggplot2)
-ggplot(cars, aes(x = speed, y = dist)) + geom_point()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmflight.github.io/mlab/data/rmflight/Documents/researchBlog//researchBlog/img/gCars.png&quot; alt=&quot;plot of chunk gCars&quot;/&gt; &lt;/p&gt;
-
-&lt;p&gt;Adding some text to test something.&lt;/p&gt;
 </description></item>
     <item><title>Using Samatha</title><link>http://rmflight.github.io/posts/2013/09/Using_samatha.html</link><category>Samatha</category><category>R</category><category>tutorial</category><description>&lt;h1&gt;Using Samatha&lt;/h1&gt;
 
@@ -813,9 +762,9 @@ install_github(&amp;quot;timmysDensity&amp;quot;, &amp;quot;rmflight&amp;quot;)
 
 &lt;p&gt;Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify. You get a space to put package specific stuff, the user can&amp;#39;t see it or modify it directly, and you just need to write functions that do the appropriate things to that environment (adding variables, reading them, etc). This sounds great in practice, but I wasn&amp;#39;t clear on how to do this, even after reading the &lt;a href=&quot;http://stat.ethz.ch/R-manual/R-devel/library/base/html/environment.html&quot;&gt;help page on environments&lt;/a&gt;, the &lt;a href=&quot;http://cran.r-project.org/doc/manuals/r-release/R-intro.html&quot;&gt;R documentation&lt;/a&gt;, or even &lt;a href=&quot;https://github.com/hadley/devtools/wiki/Environments&quot;&gt;Hadley&amp;#39;s excellent writeup&lt;/a&gt;. From all these sources, I could glean that one can create environments, name them, modify them, etc, but wasn&amp;#39;t sure how to work with this within a package.&lt;/p&gt;
 
-&lt;p&gt;I checked out the &lt;code&gt;[knitcitations](https://github.com/cboettig/knitcitations)&lt;/code&gt; package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In &lt;code&gt;zzz.R&lt;/code&gt;, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the &lt;code&gt;get&lt;/code&gt; and &lt;code&gt;assign&lt;/code&gt; functions like you would if you were doing anything on the command line.&lt;/p&gt;
+&lt;p&gt;I checked out the &lt;a href=&quot;https://github.com/cboettig/knitcitations&quot;&gt;&lt;code&gt;knitcitations&lt;/code&gt;&lt;/a&gt; package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In &lt;code&gt;zzz.R&lt;/code&gt;, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the &lt;code&gt;get&lt;/code&gt; and &lt;code&gt;assign&lt;/code&gt; functions like you would if you were doing anything on the command line.&lt;/p&gt;
 
-&lt;p&gt;To make sure I had it figured out, I created a very &lt;a href=&quot;https://github.com/rmflight/testEnvironment&quot;&gt;tiny package&lt;/a&gt; to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using &lt;code&gt;[devtools](https://github.com/hadley/devtools)]&lt;/code&gt;) and see for yourself.&lt;/p&gt;
+&lt;p&gt;To make sure I had it figured out, I created a very &lt;a href=&quot;https://github.com/rmflight/testEnvironment&quot;&gt;tiny package&lt;/a&gt; to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using &lt;a href=&quot;https://github.com/hadley/devtools&quot;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt;]) and see for yourself.&lt;/p&gt;
 
 &lt;p&gt;I have at least two projects where I know I will use this, and I&amp;#39;m sure others might find it useful as well.&lt;/p&gt;
 </description></item>

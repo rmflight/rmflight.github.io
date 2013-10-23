@@ -343,44 +343,6 @@ biocLite(ask=F) # this will update all the installed bioconductor packages
 </description>
 </item>
     <item>
-  <title>Test post</title>
-  <link>http://rmflight.github.io/posts/2013/09/Test_post.html</link>
-  <category>R</category>
-  <category>setup</category>
-  <category>Samatha</category>
-  <description>&lt;h1&gt;Test post&lt;/h1&gt;
-
-&lt;p&gt;Here is a summary of the &lt;code&gt;cars&lt;/code&gt; dataset:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="r"&gt;summary(cars)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;##      speed           dist    
-##  Min.   : 4.0   Min.   :  2  
-##  1st Qu.:12.0   1st Qu.: 26  
-##  Median :15.0   Median : 36  
-##  Mean   :15.4   Mean   : 43  
-##  3rd Qu.:19.0   3rd Qu.: 56  
-##  Max.   :25.0   Max.   :120
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And here is a graph:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="r"&gt;plot(cars)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src="http://rmflight.github.io/mlab/data/rmflight/Documents/researchBlog//researchBlog/img/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"/&gt; &lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="r"&gt;library(ggplot2)
-ggplot(cars, aes(x = speed, y = dist)) + geom_point()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src="http://rmflight.github.io/mlab/data/rmflight/Documents/researchBlog//researchBlog/img/gCars.png" alt="plot of chunk gCars"/&gt; &lt;/p&gt;
-
-&lt;p&gt;Adding some text to test something.&lt;/p&gt;
-</description>
-</item>
-    <item>
   <title>Using Samatha</title>
   <link>http://rmflight.github.io/posts/2013/09/Using_samatha.html</link>
   <category>Samatha</category>
@@ -766,9 +728,9 @@ install_github(&amp;quot;timmysDensity&amp;quot;, &amp;quot;rmflight&amp;quot;)
 
 &lt;p&gt;Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify. You get a space to put package specific stuff, the user can&amp;#39;t see it or modify it directly, and you just need to write functions that do the appropriate things to that environment (adding variables, reading them, etc). This sounds great in practice, but I wasn&amp;#39;t clear on how to do this, even after reading the &lt;a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/environment.html"&gt;help page on environments&lt;/a&gt;, the &lt;a href="http://cran.r-project.org/doc/manuals/r-release/R-intro.html"&gt;R documentation&lt;/a&gt;, or even &lt;a href="https://github.com/hadley/devtools/wiki/Environments"&gt;Hadley&amp;#39;s excellent writeup&lt;/a&gt;. From all these sources, I could glean that one can create environments, name them, modify them, etc, but wasn&amp;#39;t sure how to work with this within a package.&lt;/p&gt;
 
-&lt;p&gt;I checked out the &lt;code&gt;[knitcitations](https://github.com/cboettig/knitcitations)&lt;/code&gt; package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In &lt;code&gt;zzz.R&lt;/code&gt;, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the &lt;code&gt;get&lt;/code&gt; and &lt;code&gt;assign&lt;/code&gt; functions like you would if you were doing anything on the command line.&lt;/p&gt;
+&lt;p&gt;I checked out the &lt;a href="https://github.com/cboettig/knitcitations"&gt;&lt;code&gt;knitcitations&lt;/code&gt;&lt;/a&gt; package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In &lt;code&gt;zzz.R&lt;/code&gt;, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the &lt;code&gt;get&lt;/code&gt; and &lt;code&gt;assign&lt;/code&gt; functions like you would if you were doing anything on the command line.&lt;/p&gt;
 
-&lt;p&gt;To make sure I had it figured out, I created a very &lt;a href="https://github.com/rmflight/testEnvironment"&gt;tiny package&lt;/a&gt; to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using &lt;code&gt;[devtools](https://github.com/hadley/devtools)]&lt;/code&gt;) and see for yourself.&lt;/p&gt;
+&lt;p&gt;To make sure I had it figured out, I created a very &lt;a href="https://github.com/rmflight/testEnvironment"&gt;tiny package&lt;/a&gt; to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using &lt;a href="https://github.com/hadley/devtools"&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt;]) and see for yourself.&lt;/p&gt;
 
 &lt;p&gt;I have at least two projects where I know I will use this, and I&amp;#39;m sure others might find it useful as well.&lt;/p&gt;
 </description>
