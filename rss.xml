@@ -7,6 +7,27 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Motivated Learning</title><link>http://rmflight.github.io/posts/2014/01/motivational_learning_stories.html</link><category>learning</category><category>softwarecarpentry</category><description>&lt;h1&gt;Motivated Learning&lt;/h1&gt;
+
+&lt;p&gt;As part of the instructor training of Software-Carpentry, we were asked to write a blog post about two things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A story about a time you were motivated/demotivated to learn&lt;/li&gt;
+&lt;li&gt;A story that will help motivate our learners drawn from personal experience&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here are mine. I thought others who read my ramblings might find them useful. Note that these are cross-posted on the Software-Carpentry &lt;a href=&quot;http://teaching.software-carpentry.org/2014/01/28/learning-calculus-and-why-one-should-learn-git/&quot;&gt;teaching blog&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Being Motivated to Learn Calculus&lt;/h2&gt;
+
+&lt;p&gt;As part of my undergraduate degree, I was required to take higher level mathematics, either calculus or linear algebra. I had previously taken introductory calculus in high school, that consisted mainly in learning how to do derivatives of functions. Unfortunately, I tended to coast in high school, and my first year of university I did the same. I got a C in my first semester of calculus (differential calculus), and then a D in my second (integral calculus). I tried a different course, and recieved an F. This was my first (and thankfully my only) F in all of my school years. By this time I was in my third year, and was slowly starting to figure out how to study effectively. However, this class was required if I was to be awarded my degree in my chosen majors (biology and chemistry double major). So, I buckled down, and started truly trying to understand the material. I did the problems, and when I couldn&amp;#39;t figure them out, I went and got help. I asked questions, I worked with others in the class, and I kept trying, and trying, and really trying to understand the material. I finally finished that class with I think a B grade, and a much better understanding of why integrals, and calculus, is important.&lt;/p&gt;
+
+&lt;h2&gt;Personal Experience with Git&lt;/h2&gt;
+
+&lt;p&gt;I do bioinformatics type research for a living, which necessarily means writing code, because I need code to do my analyses. As part of writing code, in the last year I have started heavily using the &lt;code&gt;git&lt;/code&gt; revision control system. This past year, I was co-author on a publication about software that I had written. That software project is in a &lt;code&gt;git&lt;/code&gt; repo, and I am very glad it is. The reviewers of my manuscript requested many changes to the underlying software package. Because I had it in &lt;code&gt;git&lt;/code&gt;, I was able to create a new branch and start making requested changes, all without worrying about breaking the current codebase. Due to keeping the code on &lt;strong&gt;GitHub&lt;/strong&gt;, I was also able to point to actual commits that address the reviewers concerns. &lt;/p&gt;
+
+&lt;p&gt;In addition, some of the reviewer points required writing entirely new analyses. As I worked on this, I needed to write over 500 lines of new functionality, as well as the new analyses. All of this went into the &lt;code&gt;git&lt;/code&gt; repo, allowing me to keep track of progress, and easily revert or branch off as necessary when things went wrong. I don&amp;#39;t think I could have done the work that I did in a timely manner without version control.&lt;/p&gt;
+</description></item>
     <item><title>PubmedCommons API</title><link>http://rmflight.github.io/posts/2013/10/pubmedComonsAPI.html</link><category>openscience</category><category>pubmedcommons</category><description>&lt;h1&gt;PubmedCommons API&lt;/h1&gt;
 
 &lt;p&gt;The announcements are out, Pubmed is introducing a commenting system &lt;a href=&quot;http://www.ncbi.nlm.nih.gov/pubmedcommons/&quot;&gt;pubmedcommons&lt;/a&gt;, theoretically providing a single location for true post-publication peer review. This is a really good idea, as NCBI is likely to be around for a lot longer than a given publisher, and the requirement for all NIH funded research to be deposited into Pubmed.&lt;/p&gt;
