@@ -5,6 +5,101 @@
     <description>Robert M Flight's personal blog :: R</description>
     <category>R</category>
     <item>
+  <title>Package Version Increment Pre- and Post-commit Hooks</title>
+  <link>http://rmflight.github.io/posts/2014/02/incrementalVersionCommitHooks.html</link>
+  <category>R</category>
+  <category>git</category>
+  <description>&lt;h1&gt;Package Version Increment Pre- and Post-commit Hooks&lt;/h1&gt;
+
+&lt;p&gt;If you just want the hook scripts, check &lt;a href="https://gist.github.com/rmflight/8863882"&gt;this gist&lt;/a&gt;. If you want to know some of the motivation behind writing them, and about the internals, then read on.&lt;/p&gt;
+
+&lt;h2&gt;Package Version Incrementing&lt;/h2&gt;
+
+&lt;p&gt;A good practice to get into is incrementing the minor version number (i.e. going from 0.0.1 to 0.0.2) after each &lt;code&gt;git&lt;/code&gt; commit when developing packages (this is recommended by the &lt;a href="http://bioconductor.org/developers/package-guidelines/#versions"&gt;Bioconductor devs&lt;/a&gt; as well ). This makes it very easy to know what changes are in your currently installed version, and if you remembered to actually install the most recent version for testing.&lt;/p&gt;
+
+&lt;p&gt;If you are like me, this is a hard habit to get into, especially because I have to manually remember to go over to the &lt;code&gt;DESCRIPTION&lt;/code&gt; file and up the version number when I make a commit. It seems I am not the only one according to this tweet from Kevin Ushey:&lt;/p&gt;
+
+&lt;blockquote class="twitter-tweet" data-partner="tweetdeck"&gt;&lt;p&gt;Is there a git hook / alias that can auto-increment a package patch number (in DESCRIPTION) with each commit? &lt;a href="https://twitter.com/search?q=%23rstats&amp;amp;src=hash"&gt;#rstats&lt;/a&gt; &lt;a href="https://twitter.com/search?q=%23lazyweb&amp;amp;src=hash"&gt;#lazyweb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Kevin Ushey (@kevin_ushey) &lt;a href="https://twitter.com/kevin_ushey/statuses/431504619668140032"&gt;February 6, 2014&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src="http://rmflight.github.io//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+
+&lt;p&gt;I thought it sounded like a good idea, and got to work.&lt;/p&gt;
+
+&lt;h2&gt;Git Hooks&lt;/h2&gt;
+
+&lt;p&gt;For those who don&amp;#39;t know, &lt;code&gt;git&lt;/code&gt; allows you to have custom scripts (&lt;a href="http://git-scm.com/book/en/Customizing-Git-Git-Hooks"&gt;hooks&lt;/a&gt;) that are run at different steps in an overall &lt;code&gt;git&lt;/code&gt; workflow. These are essentially executable scripts stored in the &lt;code&gt;.git/hooks/&lt;/code&gt; folder of an individual repo.&lt;/p&gt;
+
+&lt;p&gt;For our purposes, we would want something that runs either just before &lt;code&gt;commit&lt;/code&gt; (pre-commit hook) or just after (post-commit hook), because we want to make modifications that are associated with &lt;code&gt;commit&lt;/code&gt;s themselves. The pre-commit hook is most appropriate, because we can make file modifications before our actual commit. However, if the user is already using a validation pre-commit hook, or wants the version change separate, a post-commit hook might be better. Both are available in the &lt;a href="https://gist.github.com/rmflight/8863882"&gt;gist&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;I suppose this could have been done using an &lt;code&gt;alias&lt;/code&gt; to run a script, but the nice thing about commit hooks is they are tied to the action of committing itself, instead of as a separate action.&lt;/p&gt;
+
+&lt;h2&gt;Rscript &amp;amp; read and write.dcf&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;R&lt;/code&gt; already has some nice functionality for reading and writing the &lt;code&gt;debian control format&lt;/code&gt; (dcf) DESCRIPTION files that are required at the root of an &lt;code&gt;R&lt;/code&gt; package. So ideally we could write our script in &lt;code&gt;R&lt;/code&gt; and not have to do parsing from the &lt;code&gt;bash&lt;/code&gt; shell. &lt;a href="http://stat.ethz.ch/R-manual/R-devel/library/utils/html/Rscript.html"&gt;&lt;code&gt;Rscript&lt;/code&gt;&lt;/a&gt; lets us do this easily by defining in the shebang (#!) where to find the executable to run the script. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/path/2/Rscript
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The rest is simply reading the DESCRIPTION file (&lt;code&gt;read.dcf&lt;/code&gt;), getting the current version, incrementing, writing a new DESCRIPTION file (&lt;code&gt;write.dcf&lt;/code&gt;), and making the changes to the &lt;code&gt;git&lt;/code&gt; commit.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;currDCF &amp;lt;- read.dcf(&amp;quot;DESCRIPTION&amp;quot;)
+currVersion &amp;lt;- currDCF[1, &amp;quot;Version&amp;quot;]
+splitVersion &amp;lt;- strsplit(currVersion, &amp;quot;.&amp;quot;, fixed = TRUE)[[1]]
+nVer &amp;lt;- length(splitVersion)
+currEndVersion &amp;lt;- as.integer(splitVersion[nVer])
+newEndVersion &amp;lt;- as.character(currEndVersion + 1)
+splitVersion[nVer] &amp;lt;- newEndVersion
+newVersion &amp;lt;- paste(splitVersion, collapse = &amp;quot;.&amp;quot;)
+currDCF[1, &amp;quot;Version&amp;quot;] &amp;lt;- newVersion
+write.dcf(currDCF, &amp;quot;DESCRIPTION&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In order to add the new DESCRIPTION file (pre-commit), or do a subsequent commit, we do need a couple of system calls to &lt;code&gt;git&lt;/code&gt; itself.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;system(&amp;quot;git add DESCRIPTION&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We also need to check that there are files to actually be commited (for the pre-commit) before we go ahead and increment the version. The &lt;code&gt;git&lt;/code&gt; diff command will tell us if there is anything or not.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;fileDiff &amp;lt;- system(&amp;quot;git diff HEAD --name-only&amp;quot;, intern = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Overriding Increment&lt;/h2&gt;
+
+&lt;p&gt;There is two wrinkles to this process. What if you don&amp;#39;t want to increment the version of your package for a good reason, like you&amp;#39;ve just changed the major version number? Or, in the case of the post-commit, you don&amp;#39;t want to end up in an infinite loop of incrementing.&lt;/p&gt;
+
+&lt;p&gt;But you can&amp;#39;t pass arguments from the &lt;code&gt;git&lt;/code&gt; call to the script. It turns out we can prepend an environment variable definition, and then get it using &lt;code&gt;Sys.getenv&lt;/code&gt;. So our script checks for the environment variable, and if it is defined, sets it. Otherwise it uses the default that is initialized at the beginning of the script.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;doIncrement &amp;lt;- TRUE  # default
+
+# get the environment variable and modify if necessary
+tmpEnv &amp;lt;- as.logical(Sys.getenv(&amp;quot;doIncrement&amp;quot;))
+if (!is.na(tmpEnv)) {
+    doIncrement &amp;lt;- tmpEnv
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So to change the default value of &lt;code&gt;doIncrement&lt;/code&gt;, you make your commit like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;doIncrement=FALSE git commit -m &amp;quot;commit message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This same behavior is used to keep from making an infinite number of increments in the post-commit script.&lt;/p&gt;
+
+&lt;h2&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;To install the hooks, create the &lt;code&gt;pre-commit&lt;/code&gt; or &lt;code&gt;post-commit&lt;/code&gt; file in your &lt;code&gt;.git/hooks&lt;/code&gt; directory, paste in the commands from the appropriate one in the &lt;a href="https://gist.github.com/rmflight/8863882"&gt;gist&lt;/a&gt;, save the file, and make it executable (&lt;code&gt;chmod&lt;/code&gt; on &amp;#39;nix systems). I have been able to use both of these on &amp;#39;nix and Windows systems. Also don&amp;#39;t forget to provide the path to your &lt;code&gt;Rscript&lt;/code&gt; executable (either in the same directory as your &lt;code&gt;R&lt;/code&gt; binary, or at /usr/bin/Rscript).&lt;/p&gt;
+
+&lt;p&gt;Just in testing these scripts I have become surprised at the potential utility, and I hope you find them useful as well if you are developing &lt;code&gt;R&lt;/code&gt; packages (which you should be if you are writing any analysis).&lt;/p&gt;
+
+&lt;p&gt;If you have comments, suggestions, or improvements feel free to modify the gist, or leave a comment, contact me on &lt;a href="https://twitter.com/rmflight"&gt;twitter&lt;/a&gt;, or send me an email (check the About link above).&lt;/p&gt;
+
+&lt;h2&gt;Caveats&lt;/h2&gt;
+
+&lt;p&gt;The script &lt;em&gt;assumes&lt;/em&gt; the version separator is &amp;ldquo;.&amp;rdquo;, and that you always are incrementing the last value. If you don&amp;#39;t like it, feel free to change it.&lt;/p&gt;
+</description>
+</item>
+    <item>
   <title>Open VS Closed Analysis Languages</title>
   <link>http://rmflight.github.io/posts/2013/10/openvsclosed.html</link>
   <category>openscience</category>
