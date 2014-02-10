@@ -7,6 +7,45 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Installing MatLab vs Installing R</title><link>http://rmflight.github.io/posts/2014/02/installingRMatlab.html</link><category>R</category><category>matlab</category><category>openscience</category><description>&lt;h1&gt;Installing MatLab vs Installing R&lt;/h1&gt;
+
+&lt;p&gt;I retweeted this a few days ago:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-partner=&quot;tweetdeck&quot;&gt;&lt;p&gt;1. Open MATLAB for first time in a few years after using &lt;a href=&quot;https://twitter.com/search?q=%23rstats&amp;amp;src=hash&quot;&gt;#rstats&lt;/a&gt;. 2. Site license doesn&amp;#39;t work right. 3. F*** MATLAB, I&amp;#39;ll try to do it in R&lt;/p&gt;&amp;mdash; Andrew D. Steen (@drdrewsteen) &lt;a href=&quot;https://twitter.com/drdrewsteen/statuses/431543752419577856&quot;&gt;February 6, 2014&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;http://rmflight.github.io//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;And as I have started the process of installing &lt;code&gt;MatLab&lt;/code&gt; on my own machine because I want to translate a published &lt;code&gt;MatLab&lt;/code&gt; package into &lt;code&gt;R&lt;/code&gt;, I am reminded of how painful the process can be.&lt;/p&gt;
+
+&lt;p&gt;As Andrew noted above, often times a university will have a site license for &lt;code&gt;MatLab&lt;/code&gt;, and the license server will be local, and your installation must just contact the license server to know it is legit and run. However, if the server crashes (which they seem to be prone to in my experience), then you can&amp;#39;t run &lt;code&gt;MatLab&lt;/code&gt; at all.&lt;/p&gt;
+
+&lt;h2&gt;Installing MatLab&lt;/h2&gt;
+
+&lt;p&gt;At my university, the process for even getting and installing a copy of &lt;code&gt;MatLab&lt;/code&gt; is rather tedious. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Prove you are someone who is in a position to be allowed to install it&lt;/li&gt;
+&lt;li&gt;Receive email with license file and further instructions&lt;/li&gt;
+&lt;li&gt;Open an IT ticket to have an account created at MathWorks&lt;/li&gt;
+&lt;li&gt;Login to MathWorks and download MatLab&lt;/li&gt;
+&lt;li&gt;Install&lt;/li&gt;
+&lt;li&gt;Give license key&lt;/li&gt;
+&lt;li&gt;Save license file&lt;/li&gt;
+&lt;li&gt;Run MatLab&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now, I understand that MathWorks wants to protect their intellectual property, and I also understand that they have previously been ripped off rather badly in the past (having a company purchase a single license and run a hundred copies). But this process is not conducive to getting research done.&lt;/p&gt;
+
+&lt;h2&gt;Installing R&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Download appropriate &lt;code&gt;R&lt;/code&gt; installer from &lt;a href=&quot;http://r-project.org&quot;&gt;http://r-project.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install&lt;/li&gt;
+&lt;li&gt;Install desired packages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Which one of these is going to make it easiest to actually get coding and getting stuff done?&lt;/p&gt;
+</description></item>
     <item><title>Package Version Increment Pre- and Post-commit Hooks</title><link>http://rmflight.github.io/posts/2014/02/incrementalVersionCommitHooks.html</link><category>R</category><category>git</category><description>&lt;h1&gt;Package Version Increment Pre- and Post-commit Hooks&lt;/h1&gt;
 
 &lt;p&gt;If you just want the hook scripts, check &lt;a href=&quot;https://gist.github.com/rmflight/8863882&quot;&gt;this gist&lt;/a&gt;. If you want to know some of the motivation behind writing them, and about the internals, then read on.&lt;/p&gt;

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>Moved!</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
+<!DOCTYPE html><html><head><title>Installing MatLab vs Installing R</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -53,10 +53,45 @@ hljs.initHighlightingOnLoad();
     '//cdn.krxd.net/static/socialtag/widget.js';
   var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); 
 })();
-</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Moved!</h1>
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Installing MatLab vs Installing R</h1>
 
-<p>OK, if you can see this, then it is official, my blog has moved to static hosting on github pages. We&#39;ll see how this works out!</p>
-<h5>Tagged in: <a href="/tags/moving.html">moving</a></h5><h6>Posted on 2013-09-06</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
+<p>I retweeted this a few days ago:</p>
+
+<blockquote class="twitter-tweet" data-partner="tweetdeck"><p>1. Open MATLAB for first time in a few years after using <a href="https://twitter.com/search?q=%23rstats&amp;src=hash">#rstats</a>. 2. Site license doesn&#39;t work right. 3. F*** MATLAB, I&#39;ll try to do it in R</p>&mdash; Andrew D. Steen (@drdrewsteen) <a href="https://twitter.com/drdrewsteen/statuses/431543752419577856">February 6, 2014</a></blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>And as I have started the process of installing <code>MatLab</code> on my own machine because I want to translate a published <code>MatLab</code> package into <code>R</code>, I am reminded of how painful the process can be.</p>
+
+<p>As Andrew noted above, often times a university will have a site license for <code>MatLab</code>, and the license server will be local, and your installation must just contact the license server to know it is legit and run. However, if the server crashes (which they seem to be prone to in my experience), then you can&#39;t run <code>MatLab</code> at all.</p>
+
+<h2>Installing MatLab</h2>
+
+<p>At my university, the process for even getting and installing a copy of <code>MatLab</code> is rather tedious. </p>
+
+<ul>
+<li>Prove you are someone who is in a position to be allowed to install it</li>
+<li>Receive email with license file and further instructions</li>
+<li>Open an IT ticket to have an account created at MathWorks</li>
+<li>Login to MathWorks and download MatLab</li>
+<li>Install</li>
+<li>Give license key</li>
+<li>Save license file</li>
+<li>Run MatLab</li>
+</ul>
+
+<p>Now, I understand that MathWorks wants to protect their intellectual property, and I also understand that they have previously been ripped off rather badly in the past (having a company purchase a single license and run a hundred copies). But this process is not conducive to getting research done.</p>
+
+<h2>Installing R</h2>
+
+<ul>
+<li>Download appropriate <code>R</code> installer from <a href="http://r-project.org">http://r-project.org</a></li>
+<li>Install</li>
+<li>Install desired packages</li>
+</ul>
+
+<p>Which one of these is going to make it easiest to actually get coding and getting stuff done?</p>
+<h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/matlab.html">matlab</a>, <a href="/tags/openscience.html">openscience</a></h5><h6>Posted on 2014-02-10</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
   <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
