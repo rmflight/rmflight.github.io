@@ -5,6 +5,60 @@
     <description>Robert M Flight's personal blog :: R</description>
     <category>R</category>
     <item>
+  <title>Self-written function help</title>
+  <link>http://rmflight.github.io/posts/2014/02/package_dev_documentation.html</link>
+  <category>R</category>
+  <category>package</category>
+  <category>documentation</category>
+  <category>help</category>
+  <description>&lt;h1&gt;Self-written function help&lt;/h1&gt;
+
+&lt;p&gt;I have noted at least one &lt;a href="http://www.activeanalytics.co.uk/blog/rvspythonwhyrisstillthekingofstatisticalcomputing"&gt;instance&lt;/a&gt; (and there are probably others) about how &lt;code&gt;Python&lt;/code&gt;&amp;#39;s &lt;a href="http://en.wikipedia.org/wiki/Docstring#Python"&gt;docStrings&lt;/a&gt; are so great, and wouldn&amp;#39;t it be nice to have a similar system in &lt;code&gt;R&lt;/code&gt;. Especially when you can have your new function tab completion available depending on your development environment.&lt;/p&gt;
+
+&lt;p&gt;This is a false statement, however. If you set up your &lt;code&gt;R&lt;/code&gt; development environment properly, you can have these features available in &lt;code&gt;R&lt;/code&gt;. It will take a little bit of work, however.&lt;/p&gt;
+
+&lt;p&gt;This approach heavily depends on &lt;code&gt;devtools&lt;/code&gt; and &lt;code&gt;roxygen2&lt;/code&gt;. &lt;/p&gt;
+
+&lt;h2&gt;RStudio&lt;/h2&gt;
+
+&lt;p&gt;I do recommend using the &lt;a href="http://rstudio.org"&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; IDE, as much of what I am discussing is very much integrated into the IDE itself. However, much of what I discuss is applicable regardless of what development environment you use.&lt;/p&gt;
+
+&lt;h2&gt;Packages&lt;/h2&gt;
+
+&lt;p&gt;First off, you probably want to put your functions into &lt;a href="http://cran.r-project.org/doc/manuals/R-exts.html#Package-structure"&gt;packages&lt;/a&gt;. Really, it&amp;#39;s not that hard. A &lt;a href="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file"&gt;&lt;code&gt;DESCRIPTION&lt;/code&gt;&lt;/a&gt; file, &lt;a href="http://cran.r-project.org/doc/manuals/R-exts.html#Package-namespaces"&gt;&lt;code&gt;NAMESPACE&lt;/code&gt;&lt;/a&gt;, and an &lt;code&gt;R&lt;/code&gt; directory with your function definitions. If you are using &lt;code&gt;RStudio&lt;/code&gt;, then you can create a new &lt;strong&gt;project&lt;/strong&gt; as a package. Alternatively, you can set up a new package directory using &lt;code&gt;package.skeleton&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;If you are using &lt;code&gt;RStudio&lt;/code&gt;, I recommend setting your package options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Generate package documentation with &lt;code&gt;roxygen&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Select all the options (especially regenerate &lt;code&gt;Rd&lt;/code&gt; files on &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Whenever you make changes to your package functions, you simply &lt;code&gt;commit&lt;/code&gt; (you are using version control, right??), and then &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt; (if using &lt;code&gt;RStudio&lt;/code&gt;) or &lt;code&gt;install()&lt;/code&gt; if using &lt;code&gt;devtools&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Roxygen Documentation&lt;/h2&gt;
+
+&lt;p&gt;For documentation that lives with your functions, I heavily recommend &lt;a href="http://adv-r.had.co.nz/Documenting-functions.html"&gt;&lt;code&gt;roxygen&lt;/code&gt;&lt;/a&gt;. Although the normal way to document stuff in &lt;code&gt;R&lt;/code&gt; is through the use of &lt;code&gt;Rd&lt;/code&gt; files, &lt;code&gt;roxygen&lt;/code&gt; allows you to put the following in your &lt;code&gt;R\functions.r&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;#&amp;#39; this is a silly function
+#&amp;#39; @param input1 this is an input to our function
+#&amp;#39; @param input2 this is another input
+#&amp;#39; @return some value
+#&amp;#39; @export
+sillyFunction &amp;lt;- function(input1, input2){
+  FunctionBody
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you do &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt; (or &lt;code&gt;install&lt;/code&gt;), the required &lt;code&gt;Rd&lt;/code&gt; file will be generated automatically, and upon &lt;code&gt;Reload&lt;/code&gt;ing the package, you will have full access to your documentation, and tab completion of your new function, along with descriptions of the parameters if you are using &lt;code&gt;RStudio&lt;/code&gt;. Note, if you are not using &lt;code&gt;RStudio&lt;/code&gt;, then you should do &lt;code&gt;document&lt;/code&gt; to re-generate &lt;code&gt;Rd&lt;/code&gt; files prior to doing &lt;code&gt;install&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This particular workflow is how I now work in &lt;code&gt;R&lt;/code&gt;, for almost every project that includes &lt;strong&gt;any&lt;/strong&gt; self written functions, including analysis projects. Why I use this (and not another format such as &lt;a href="http://www.johnmyleswhite.com/notebook/2010/08/26/projecttemplate/"&gt;ProjectTemplate&lt;/a&gt;) is another post, hopefully soon.&lt;/p&gt;
+</description>
+</item>
+    <item>
   <title>Installing MatLab vs Installing R</title>
   <link>http://rmflight.github.io/posts/2014/02/installingRMatlab.html</link>
   <category>R</category>
