@@ -72,7 +72,7 @@ hljs.initHighlightingOnLoad();
 <p>If you are using <code>RStudio</code>, I recommend setting your package options:</p>
 
 <ul>
-<li>Generate package documentation with <code>roxygen</code>
+<li>Generate package documentation with <code>roxygen</code> (roxygen2)
 
 <ul>
 <li>Select all the options (especially regenerate <code>Rd</code> files on <code>Build &amp; Reload</code>)</li>
@@ -81,9 +81,9 @@ hljs.initHighlightingOnLoad();
 
 <p>Whenever you make changes to your package functions, you simply <code>commit</code> (you are using version control, right??), and then <code>Build &amp; Reload</code> (if using <code>RStudio</code>) or <code>install()</code> if using <code>devtools</code>.</p>
 
-<h2>Roxygen Documentation</h2>
+<h2>Roxygen2 Documentation</h2>
 
-<p>For documentation that lives with your functions, I heavily recommend <a href="http://adv-r.had.co.nz/Documenting-functions.html"><code>roxygen</code></a>. Although the normal way to document stuff in <code>R</code> is through the use of <code>Rd</code> files, <code>roxygen</code> allows you to put the following in your <code>R\functions.r</code> file:</p>
+<p>For documentation that lives with your functions, I heavily recommend using <a href="http://adv-r.had.co.nz/Documenting-functions.html"><code>roxygen2</code></a>. Although the normal way to document stuff in <code>R</code> is through the use of <code>Rd</code> files, <code>roxygen2</code> allows you to put the following in your <code>R\functions.r</code> file:</p>
 
 <pre><code class="r">#&#39; this is a silly function
 #&#39; @param input1 this is an input to our function
@@ -98,6 +98,8 @@ sillyFunction &lt;- function(input1, input2){
 <p>When you do <code>Build &amp; Reload</code> (or <code>install</code>), the required <code>Rd</code> file will be generated automatically, and upon <code>Reload</code>ing the package, you will have full access to your documentation, and tab completion of your new function, along with descriptions of the parameters if you are using <code>RStudio</code>. Note, if you are not using <code>RStudio</code>, then you should do <code>document</code> to re-generate <code>Rd</code> files prior to doing <code>install</code>.</p>
 
 <p>This particular workflow is how I now work in <code>R</code>, for almost every project that includes <strong>any</strong> self written functions, including analysis projects. Why I use this (and not another format such as <a href="http://www.johnmyleswhite.com/notebook/2010/08/26/projecttemplate/">ProjectTemplate</a>) is another post, hopefully soon.</p>
+
+<p>Updated 2014.02.21: Note that the original post mentioned <code>roxygen</code> instead of <code>roxygen2</code>. Thanks Carl for pointing that out. You should use <code>roxygen2</code> for documentation.</p>
 <h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/package.html">package</a>, <a href="/tags/documentation.html">documentation</a>, <a href="/tags/help.html">help</a></h5><h6><a href="/posts/2014/02/package_dev_documentation.html">Posted on 2014-02-20</a></h6><h2>Recent Posts:</h2><ul><li><a href="/posts/2014/02/package_dev_documentation.html">Self-written function help (2014-02-20)</a></li><li><a href="/posts/2014/02/installingRMatlab.html">Installing MatLab vs Installing R (2014-02-10)</a></li><li><a href="/posts/2014/02/incrementalVersionCommitHooks.html">Package Version Increment Pre- and Post-commit Hooks (2014-02-07)</a></li><li><a href="/posts/2014/01/motivational_learning_stories.html">Motivated Learning (2014-01-28)</a></li><li><a href="/posts/2013/10/pubmedComonsAPI.html">PubmedCommons API (2013-10-22)</a></li></ul>
 </div><div class="span2"><a class="twitter-timeline" href="https://twitter.com/rmflight" data-widget-id="368415899268558848">Tweets by @rmflight</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

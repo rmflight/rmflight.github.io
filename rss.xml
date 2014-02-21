@@ -26,7 +26,7 @@
 &lt;p&gt;If you are using &lt;code&gt;RStudio&lt;/code&gt;, I recommend setting your package options:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Generate package documentation with &lt;code&gt;roxygen&lt;/code&gt;
+&lt;li&gt;Generate package documentation with &lt;code&gt;roxygen&lt;/code&gt; (roxygen2)
 
 &lt;ul&gt;
 &lt;li&gt;Select all the options (especially regenerate &lt;code&gt;Rd&lt;/code&gt; files on &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt;)&lt;/li&gt;
@@ -35,9 +35,9 @@
 
 &lt;p&gt;Whenever you make changes to your package functions, you simply &lt;code&gt;commit&lt;/code&gt; (you are using version control, right??), and then &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt; (if using &lt;code&gt;RStudio&lt;/code&gt;) or &lt;code&gt;install()&lt;/code&gt; if using &lt;code&gt;devtools&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2&gt;Roxygen Documentation&lt;/h2&gt;
+&lt;h2&gt;Roxygen2 Documentation&lt;/h2&gt;
 
-&lt;p&gt;For documentation that lives with your functions, I heavily recommend &lt;a href=&quot;http://adv-r.had.co.nz/Documenting-functions.html&quot;&gt;&lt;code&gt;roxygen&lt;/code&gt;&lt;/a&gt;. Although the normal way to document stuff in &lt;code&gt;R&lt;/code&gt; is through the use of &lt;code&gt;Rd&lt;/code&gt; files, &lt;code&gt;roxygen&lt;/code&gt; allows you to put the following in your &lt;code&gt;R\functions.r&lt;/code&gt; file:&lt;/p&gt;
+&lt;p&gt;For documentation that lives with your functions, I heavily recommend using &lt;a href=&quot;http://adv-r.had.co.nz/Documenting-functions.html&quot;&gt;&lt;code&gt;roxygen2&lt;/code&gt;&lt;/a&gt;. Although the normal way to document stuff in &lt;code&gt;R&lt;/code&gt; is through the use of &lt;code&gt;Rd&lt;/code&gt; files, &lt;code&gt;roxygen2&lt;/code&gt; allows you to put the following in your &lt;code&gt;R\functions.r&lt;/code&gt; file:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;r&quot;&gt;#&amp;#39; this is a silly function
 #&amp;#39; @param input1 this is an input to our function
@@ -52,6 +52,8 @@ sillyFunction &amp;lt;- function(input1, input2){
 &lt;p&gt;When you do &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt; (or &lt;code&gt;install&lt;/code&gt;), the required &lt;code&gt;Rd&lt;/code&gt; file will be generated automatically, and upon &lt;code&gt;Reload&lt;/code&gt;ing the package, you will have full access to your documentation, and tab completion of your new function, along with descriptions of the parameters if you are using &lt;code&gt;RStudio&lt;/code&gt;. Note, if you are not using &lt;code&gt;RStudio&lt;/code&gt;, then you should do &lt;code&gt;document&lt;/code&gt; to re-generate &lt;code&gt;Rd&lt;/code&gt; files prior to doing &lt;code&gt;install&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;This particular workflow is how I now work in &lt;code&gt;R&lt;/code&gt;, for almost every project that includes &lt;strong&gt;any&lt;/strong&gt; self written functions, including analysis projects. Why I use this (and not another format such as &lt;a href=&quot;http://www.johnmyleswhite.com/notebook/2010/08/26/projecttemplate/&quot;&gt;ProjectTemplate&lt;/a&gt;) is another post, hopefully soon.&lt;/p&gt;
+
+&lt;p&gt;Updated 2014.02.21: Note that the original post mentioned &lt;code&gt;roxygen&lt;/code&gt; instead of &lt;code&gt;roxygen2&lt;/code&gt;. Thanks Carl for pointing that out. You should use &lt;code&gt;roxygen2&lt;/code&gt; for documentation.&lt;/p&gt;
 </description></item>
     <item><title>Installing MatLab vs Installing R</title><link>http://rmflight.github.io/posts/2014/02/installingRMatlab.html</link><category>R</category><category>matlab</category><category>openscience</category><description>&lt;h1&gt;Installing MatLab vs Installing R&lt;/h1&gt;
 
