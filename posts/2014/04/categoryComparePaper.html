@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>Self-written function help</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
+<!DOCTYPE html><html><head><title>categoryCompare Paper Finally Out!</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -53,54 +53,137 @@ hljs.initHighlightingOnLoad();
     '//cdn.krxd.net/static/socialtag/widget.js';
   var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); 
 })();
-</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Self-written function help</h1>
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>categoryCompare Paper Finally Out!</h1>
 
-<p>I have noted at least one <a href="http://www.activeanalytics.co.uk/blog/rvspythonwhyrisstillthekingofstatisticalcomputing">instance</a> (and there are probably others) about how <code>Python</code>&#39;s <a href="http://en.wikipedia.org/wiki/Docstring#Python">docStrings</a> are so great, and wouldn&#39;t it be nice to have a similar system in <code>R</code>. Especially when you can have your new function tab completion available depending on your development environment.</p>
+<p>I can finally say that the publication on my <a href="http://bioconductor.org/packages/release/bioc/html/categoryCompare.html"><code>Bioconductor</code> package <code>categoryCompare</code></a> is <a href="http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00098/abstract">finally published</a> in the <strong>Bioinformatics and Computational Biology</strong> section of <strong>Frontiers in Genetics</strong>. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.</p>
 
-<p>This is a false statement, however. If you set up your <code>R</code> development environment properly, you can have these features available in <code>R</code>. It will take a little bit of work, however.</p>
+<h2>TL;DR</h2>
 
-<p>This approach heavily depends on <code>devtools</code> and <code>roxygen2</code>. </p>
+<p>The software package has been in development in one form or another since 2010, released to <code>Bioconductor</code> in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you. All of the supplementary data and methods are available as an <code>R</code> package on <a href="https://github.com/rmflight/ccPaper">github</a>. Version control using <code>git</code> was instrumental in getting this work out in a timely manner. There is still a bunch of work to do on the package.</p>
 
-<h2>RStudio</h2>
-
-<p>I do recommend using the <a href="http://rstudio.org"><code>RStudio</code></a> IDE, as much of what I am discussing is very much integrated into the IDE itself. However, much of what I discuss is applicable regardless of what development environment you use.</p>
-
-<h2>Packages</h2>
-
-<p>First off, you probably want to put your functions into <a href="http://cran.r-project.org/doc/manuals/R-exts.html#Package-structure">packages</a>. Really, it&#39;s not that hard. A <a href="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file"><code>DESCRIPTION</code></a> file, <a href="http://cran.r-project.org/doc/manuals/R-exts.html#Package-namespaces"><code>NAMESPACE</code></a>, and an <code>R</code> directory with your function definitions. If you are using <code>RStudio</code>, then you can create a new <strong>project</strong> as a package. Alternatively, you can set up a new package directory using <code>package.skeleton</code>. </p>
-
-<p>If you are using <code>RStudio</code>, I recommend setting your package options:</p>
+<p>If I did it again, I would:</p>
 
 <ul>
-<li>Generate package documentation with <code>roxygen</code> (roxygen2)
-
-<ul>
-<li>Select all the options (especially regenerate <code>Rd</code> files on <code>Build &amp; Reload</code>)</li>
-</ul></li>
+<li>Write the manuscript using <code>R</code> markdown, as a vignette in a package</li>
+<li>Ask to be able to make reviewer points issues on Github</li>
+<li>Submit a preprint with submission</li>
 </ul>
 
-<p>Whenever you make changes to your package functions, you simply <code>commit</code> (you are using version control, right??), and then <code>Build &amp; Reload</code> (if using <code>RStudio</code>) or <code>install()</code> if using <code>devtools</code>.</p>
+<h2>Inspiration</h2>
 
-<h2>Roxygen2 Documentation</h2>
+<p>In spring of 2010 I started as a PostDoc with <a href="http://bioinformatics.louisville.edu/lab/index.php">Eric Rouchka</a>. One of his collaborators, <a href="http://louisville.edu/kscirc/bios/jeffrey-petruska-ph-d.html">Jeff Petruska</a> is interested in the process of <a href="http://www.ncbi.nlm.nih.gov/pubmed/16629616">collateral sprouting of neurons</a>, especially as it compares to regeneration. Early in my PostDoc, Jeff wanted to do a gene-level comparison of his microarray data of collateral sprouting in skin compared to previously published studies with muscle. </p>
 
-<p>For documentation that lives with your functions, I heavily recommend using <a href="http://adv-r.had.co.nz/Documenting-functions.html"><code>roxygen2</code></a>. Although the normal way to document stuff in <code>R</code> is through the use of <code>Rd</code> files, <code>roxygen2</code> allows you to put the following in your <code>R\functions.r</code> file:</p>
+<p>Combing through the literature produced a number of genes differentially expressed in denervated muscle. However, when comparing with the genes resulting from the skin data, there was almost nothing in common and nothing that made sense from a functional standpoint. Skimming around the <code>Bioconductor</code> literature in <a href="http://bioconductor.org/packages/release/bioc/vignettes/GOstats/inst/doc/GOvis.pdf"><code>GOStats</code></a>, I was struck by Robert Gentleman&#39;s example of coloring Gene Ontology nodes by which data set they originated from. This is a very simple meta-analysis and visualization. When I tried it with the skin - muscle comparison, I got some very interesting (i.e. the Petruska group thought the results were very interpretable) results.</p>
 
-<pre><code class="r">#&#39; this is a silly function
-#&#39; @param input1 this is an input to our function
-#&#39; @param input2 this is another input
-#&#39; @return some value
-#&#39; @export
-sillyFunction &lt;- function(input1, input2){
-  FunctionBody
-}
-</code></pre>
+<p><strong>Note:</strong> At this point, because of the data sources (gene lists from publications with little to no original data), I was using the hypergeometric enrichment test in <code>Category</code> to determine significant GO terms from the two tissues.</p>
 
-<p>When you do <code>Build &amp; Reload</code> (or <code>install</code>), the required <code>Rd</code> file will be generated automatically, and upon <code>Reload</code>ing the package, you will have full access to your documentation, and tab completion of your new function, along with descriptions of the parameters if you are using <code>RStudio</code>. Note, if you are not using <code>RStudio</code>, then you should do <code>document</code> to re-generate <code>Rd</code> files prior to doing <code>install</code>.</p>
+<h2>V 0.0000001</h2>
 
-<p>This particular workflow is how I now work in <code>R</code>, for almost every project that includes <strong>any</strong> self written functions, including analysis projects. Why I use this (and not another format such as <a href="http://www.johnmyleswhite.com/notebook/2010/08/26/projecttemplate/">ProjectTemplate</a>) is another post, hopefully soon.</p>
+<p>I started developing this idea into a simple package (i.e. collection of <code>R</code> scripts), that was able to do at least GO term enrichment, and that could be hosted on our group webserver to enable others to make use of it. Visualization and interrogation used the <code>imageMaps</code> function in Robert Gentleman&#39;s original demonstration, however any number of data sets could now be compared.</p>
 
-<p>Updated 2014.02.21: Note that the original post mentioned <code>roxygen</code> instead of <code>roxygen2</code>. Thanks Carl for pointing that out. You should use <code>roxygen2</code> for documentation.</p>
-<h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/package.html">package</a>, <a href="/tags/documentation.html">documentation</a>, <a href="/tags/help.html">help</a></h5><h6>Posted on 2014-02-20</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
+<h2>categoryCompare Method &ndash; Summary</h2>
+
+<p>The basic method is to take gene (or really any annotated feature) lists from multiple experiments, and perform annotation (Gene Ontology Terms, KEGG Pathways, etc) enrichment (either hypergeometric or GSEA type) on each gene list, determine significant annotations from each list, and then examine which annotations come from which list. </p>
+
+<p>Because this results in a lot of data to parse through, exploration of the results is facilitated by considering the annotations as a network of annotations related by the number of shared genes between them, and interacting with the networks in <a href="http://www.cytoscape.org/">Cytoscape</a>.</p>
+
+<p>If you want to know more, check out the <a href="http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00098/abstract">paper</a>, or the <a href="http://bioconductor.org/packages/release/bioc/vignettes/categoryCompare/inst/doc/categoryCompare_vignette.pdf">vignette</a> in the <code>Bioconductor</code> package</p>
+
+<h2>Others</h2>
+
+<p>As I developed this idea, I also started looking into other possible software implementations. </p>
+
+<ul>
+<li><p>Shen &amp; Tseng (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865865/">Shen &amp; Tseng, 2010</a>) had recently published similar work in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865865/">MAPE-I</a>, but at my level of understanding it required the same identifiers. In retrospect, I should have read the paper better. However, they also did not have a released implementation with their publication. </p></li>
+<li><p><a href="http://conceptgen.ncibi.org/core/conceptGen/index.jsp">ConceptGen</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2852214/">Sartor et al., 2010</a>) is another interesting application, that allows very similar analyses to <code>categoryCompare</code>, except that it is not possible to explore how the concepts map between multiple user supplied data sets. The only way one can relate multiple data sets is if the data sets map as a concept to another, but one cannot visualize the interrelated concepts between user supplied data sets.</p></li>
+<li><p><a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0013984">Enrichment Map</a> (<a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0013984">Merico et al., 2010</a>) was another alternative, but did all of comparison mathematics in Cytoscape itself, based on enrichments calculated outside of Cytoscape. The publication does give an example of a similar type of analysis as performed by <code>categoryCompare</code>. However, I wanted everything, from enrichment calculation to visualization controlled by <code>R</code>. I did use their method of weighting the edges between annotations, however, ditching the GO directed acyclic graph (DAG) view I used initially.</p></li>
+</ul>
+
+<h2>Bioconductor Package</h2>
+
+<p>About this time I realized that I wanted the package to fit into the <a href="http://bioconductor.org"><code>Bioconductor</code></a> ecosystem. This required a complete redesign and rewrite of the code, as I moved to actually used some sort of OOP model (S4 in this case), and creating an actual package.</p>
+
+<p>The package was released to the wild in the fall of 2012, as part of <code>Bioconductor</code> v 2.10. Of course, this was the last <code>Bioconductor</code> release based on R 2.15, which brought some particular challenges in <code>namespaces</code> with the switch in R 3.0.0 the next year. </p>
+
+<h3>Graphviz to RCytoscape</h3>
+
+<p>The original code used the <code>graphviz</code> package to do layouts for visualization, but it was difficult to install, and did not work the way I wanted. Thankfully Paul Shannon had just developed the <code>RCytoscape</code> package the year previous (<a href="http://www.biomedcentral.com/1471-2105/14/217">Shannon et al., 2013</a>), and this enabled truly interactive visualization and passing data back and forth between <code>R</code> and <code>Cytoscape</code>. </p>
+
+<p>My use of <code>RCytoscape</code> has actually lead to finding improvements in the package, and better use of it. I am also hoping to make much more use of <code>RCytoscape</code> and the <code>igraph</code> package and combining them in novel ways.</p>
+
+<h2>First Publication Attempt</h2>
+
+<p>Our first attempt at publication focussed on the original data that inspired the method, and comparing it with gene-gene comparisons directly. We submitted to <strong>BMC Bioinformatics</strong>, and the reviews were not favorable, and took forever to get back. We actually wondered if the reviewers had read the paper that we submitted. We gave up on this venue. BTW, our last <strong>three</strong> publications have been submitted there, and the publication process has gotten worse and worse with every submission there. I don&#39;t think our papers are getting worse over the years. I don&#39;t know if we will bother submitting to <strong>BMC Bioinformatics</strong> again.</p>
+
+<h2>Second Publication Attempt</h2>
+
+<p>The second attempt was submitting to the current home in the <strong>Bioinformatics and Computational Biology</strong> section of <strong>Frontiers in Genetics</strong>. This time, although the reviews were harsh (i.e. they were not immediately favorable), they were <em>fair</em>, and actually contained <strong>useful</strong> critique, and pointed to a way forward.</p>
+
+<p>Unfortunately for me, revising the manuscript to address the reviewers criticisms meant a lot of work to construct theoretical examples, as well as a lot of thought in order to pare the manuscript down to make sure our primary message was clearly communicated. </p>
+
+<h3>Frontiers Interactive Review</h3>
+
+<p>I would like to note that the Frontiers interactive review system, with the ability to discuss individual points with the reviewers (still anonymously) really helped make it possible to determine which points were make or break, and discuss different ways to approach things. This was the best review experience I have ever had, and a large part of that I think was due to being able to interact with the reviewers directly, and not just through letters mediated by the editor.</p>
+
+<p>I think it would be nice if Frontiers had an option for making the review history available if the authors and reviewers were agreeable to it.</p>
+
+<h2>Github package of supplementary materials</h2>
+
+<p>In the initial publication, I had included the set of scripts used for analysis, data files, results, etc. However, the amount of work required in the rewrite was so substantial, that I created an <a href="https://github.com/rmflight/ccPaper"><code>R</code> package specifically</a> for the analyses that went into the paper, with separate <code>R</code> markdown vignettes for each result type (hypothetical, two different experimental comparisons). This package has documents on how raw data was processed, as well as the semi-processed experimental data.</p>
+
+<h3>Publication specific branch</h3>
+
+<p>Due to specific changes to the <code>categoryCompare</code> software needed to address the reviewer comments, a publication specific branch of the development version was created (<a href="https://github.com/rmflight/categoryCompare/tree/paper">paper</a>). This allowed me to quickly introduce code and features that the reviewers had asked for, without worrying about breaking the current development version that will be released in Bioconductor shortly. </p>
+
+<h2>To Do</h2>
+
+<p>As with most software projects, there is still plenty to be done. </p>
+
+<ul>
+<li><p>Incorporate new functionality from <code>paper</code> branch into <code>dev</code></p>
+
+<ul>
+<li>Specifically ability to do <code>GSEA</code> built in (probably using <code>limma</code>&#39;s <code>romer</code> and <code>roast</code>
+functions), and new visualization options</li>
+</ul></li>
+<li><p>Change from <code>latex</code> vignette to <code>R</code> markdown (this is technically done, but hasn&#39;t made it into the dev branch)</p></li>
+<li><p>Switch to <code>roxygen2</code> documentation (will be interesting due to use of S4 objects and methods)</p></li>
+<li><p>Implement proper testing using <code>testthat</code></p></li>
+<li><p>Refactor a lot of code to improve speed, use <code>R</code> conventions</p>
+
+<ul>
+<li>I was still a relatively <code>R</code> newbie when I wrote the package, and as I looked at the code while making changes for the reviewers, I noticed some places where I had done some silly things, mainly because I didn&#39;t know better when I did it.</li>
+</ul></li>
+<li><p>Consider splitting visualization into its own package</p>
+
+<ul>
+<li>Although I developed the visualization specifically for <code>categoryCompare</code>, I think it is generic enough that others might benefit from having it available separately. Therefore I need to think about separating it out, and how best to go about it without making it hard for <code>categoryCompare</code> to keep working as it already does.</li>
+</ul></li>
+<li><p>Make it easy to investigate the actual genes with particularly interesting annotations, and how they are linked together by annotations or other data sources, as well as their original expression levels in the experiments.</p></li>
+</ul>
+
+<h2>Side Effects</h2>
+
+<p>A nice side effect of the package is that any annotation enrichment I do now, I almost always do it in the framework of <code>categoryCompare</code>, just because it is a lot easier to make sense of using the visualization capabilities and coupling with <code>Cytoscape</code>.</p>
+
+<h2>What Would I Do Differently?</h2>
+
+<p>Keeping in mind that I started this work almost 4 years ago, when I still didn&#39;t know any <code>R</code>, and had yet to be exposed to the reproducibility and open science movements, or <code>knitr</code>, or <code>pandoc</code>, here are some things that if I started today I would do differently (you can probably guess some of these from above):</p>
+
+<ul>
+<li><p>Put the package under version control immediately! Thankfully I didn&#39;t have any moments early in the process when things were not in a <code>git</code> repo, but I am very thankful later on I was able to do <code>diff</code> and <code>branch</code> on my code to figure out where things broke and introduce new features.</p></li>
+<li><p>Start thinking of the analysis as a standalone package from the very beginning, instead of a directory of data and scripts. This is what I do now (blogpost to come), and it makes it much easier if I come up with novel methods to spin them off into a fully fledged <code>R</code> / <code>Bioconductor</code> package</p></li>
+<li><p>Don&#39;t underestimate the novelty of something as simple as visualization, and how much it may make or break your method. We ended up adding a good chunk of text to the manuscript on the visualization because we realized how important it was, but only after the reviewers pointed it out to us.</p></li>
+<li><p>Write the paper as a vignette of the ccPaper package itself, and generate Word documents for collaborators who insist on Word docs using Pandoc</p></li>
+<li><p>Start a github repo for the paper, and ask collaborators to try and work on it there</p></li>
+<li><p>Submit a preprint when submitted, so that we start getting feedback on the manuscript early</p></li>
+<li><p>Ask for permission to set up reviewer comments as issues on the github repo to easily track how well we are addressing them. </p>
+
+<ul>
+<li>Wouldn&#39;t it be cool in a totally open peer review journal to actually do all of the peer review on a service like Github, and have reviewers leave issues, tag them, and comment directly on the text of the publication using the commenting feature of commenting on commits?</li>
+</ul></li>
+</ul>
+<h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/bioconductor.html">bioconductor</a>, <a href="/tags/meta-analysis.html">meta-analysis</a>, <a href="/tags/publication.html">publication</a></h5><h6>Posted on 2014-04-08</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
   <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */

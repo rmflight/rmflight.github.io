@@ -5,6 +5,145 @@
     <description>Robert M Flight's personal blog :: R</description>
     <category>R</category>
     <item>
+  <title>categoryCompare Paper Finally Out!</title>
+  <link>http://rmflight.github.io/posts/2014/04/categoryComparePaper.html</link>
+  <category>R</category>
+  <category>bioconductor</category>
+  <category>meta-analysis</category>
+  <category>publication</category>
+  <description>&lt;h1&gt;categoryCompare Paper Finally Out!&lt;/h1&gt;
+
+&lt;p&gt;I can finally say that the publication on my &lt;a href="http://bioconductor.org/packages/release/bioc/html/categoryCompare.html"&gt;&lt;code&gt;Bioconductor&lt;/code&gt; package &lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt; is &lt;a href="http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00098/abstract"&gt;finally published&lt;/a&gt; in the &lt;strong&gt;Bioinformatics and Computational Biology&lt;/strong&gt; section of &lt;strong&gt;Frontiers in Genetics&lt;/strong&gt;. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.&lt;/p&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;The software package has been in development in one form or another since 2010, released to &lt;code&gt;Bioconductor&lt;/code&gt; in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you. All of the supplementary data and methods are available as an &lt;code&gt;R&lt;/code&gt; package on &lt;a href="https://github.com/rmflight/ccPaper"&gt;github&lt;/a&gt;. Version control using &lt;code&gt;git&lt;/code&gt; was instrumental in getting this work out in a timely manner. There is still a bunch of work to do on the package.&lt;/p&gt;
+
+&lt;p&gt;If I did it again, I would:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Write the manuscript using &lt;code&gt;R&lt;/code&gt; markdown, as a vignette in a package&lt;/li&gt;
+&lt;li&gt;Ask to be able to make reviewer points issues on Github&lt;/li&gt;
+&lt;li&gt;Submit a preprint with submission&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Inspiration&lt;/h2&gt;
+
+&lt;p&gt;In spring of 2010 I started as a PostDoc with &lt;a href="http://bioinformatics.louisville.edu/lab/index.php"&gt;Eric Rouchka&lt;/a&gt;. One of his collaborators, &lt;a href="http://louisville.edu/kscirc/bios/jeffrey-petruska-ph-d.html"&gt;Jeff Petruska&lt;/a&gt; is interested in the process of &lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/16629616"&gt;collateral sprouting of neurons&lt;/a&gt;, especially as it compares to regeneration. Early in my PostDoc, Jeff wanted to do a gene-level comparison of his microarray data of collateral sprouting in skin compared to previously published studies with muscle. &lt;/p&gt;
+
+&lt;p&gt;Combing through the literature produced a number of genes differentially expressed in denervated muscle. However, when comparing with the genes resulting from the skin data, there was almost nothing in common and nothing that made sense from a functional standpoint. Skimming around the &lt;code&gt;Bioconductor&lt;/code&gt; literature in &lt;a href="http://bioconductor.org/packages/release/bioc/vignettes/GOstats/inst/doc/GOvis.pdf"&gt;&lt;code&gt;GOStats&lt;/code&gt;&lt;/a&gt;, I was struck by Robert Gentleman&amp;#39;s example of coloring Gene Ontology nodes by which data set they originated from. This is a very simple meta-analysis and visualization. When I tried it with the skin - muscle comparison, I got some very interesting (i.e. the Petruska group thought the results were very interpretable) results.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; At this point, because of the data sources (gene lists from publications with little to no original data), I was using the hypergeometric enrichment test in &lt;code&gt;Category&lt;/code&gt; to determine significant GO terms from the two tissues.&lt;/p&gt;
+
+&lt;h2&gt;V 0.0000001&lt;/h2&gt;
+
+&lt;p&gt;I started developing this idea into a simple package (i.e. collection of &lt;code&gt;R&lt;/code&gt; scripts), that was able to do at least GO term enrichment, and that could be hosted on our group webserver to enable others to make use of it. Visualization and interrogation used the &lt;code&gt;imageMaps&lt;/code&gt; function in Robert Gentleman&amp;#39;s original demonstration, however any number of data sets could now be compared.&lt;/p&gt;
+
+&lt;h2&gt;categoryCompare Method &amp;ndash; Summary&lt;/h2&gt;
+
+&lt;p&gt;The basic method is to take gene (or really any annotated feature) lists from multiple experiments, and perform annotation (Gene Ontology Terms, KEGG Pathways, etc) enrichment (either hypergeometric or GSEA type) on each gene list, determine significant annotations from each list, and then examine which annotations come from which list. &lt;/p&gt;
+
+&lt;p&gt;Because this results in a lot of data to parse through, exploration of the results is facilitated by considering the annotations as a network of annotations related by the number of shared genes between them, and interacting with the networks in &lt;a href="http://www.cytoscape.org/"&gt;Cytoscape&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you want to know more, check out the &lt;a href="http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00098/abstract"&gt;paper&lt;/a&gt;, or the &lt;a href="http://bioconductor.org/packages/release/bioc/vignettes/categoryCompare/inst/doc/categoryCompare_vignette.pdf"&gt;vignette&lt;/a&gt; in the &lt;code&gt;Bioconductor&lt;/code&gt; package&lt;/p&gt;
+
+&lt;h2&gt;Others&lt;/h2&gt;
+
+&lt;p&gt;As I developed this idea, I also started looking into other possible software implementations. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Shen &amp;amp; Tseng (&lt;a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865865/"&gt;Shen &amp;amp; Tseng, 2010&lt;/a&gt;) had recently published similar work in &lt;a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865865/"&gt;MAPE-I&lt;/a&gt;, but at my level of understanding it required the same identifiers. In retrospect, I should have read the paper better. However, they also did not have a released implementation with their publication. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="http://conceptgen.ncibi.org/core/conceptGen/index.jsp"&gt;ConceptGen&lt;/a&gt; (&lt;a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2852214/"&gt;Sartor et al., 2010&lt;/a&gt;) is another interesting application, that allows very similar analyses to &lt;code&gt;categoryCompare&lt;/code&gt;, except that it is not possible to explore how the concepts map between multiple user supplied data sets. The only way one can relate multiple data sets is if the data sets map as a concept to another, but one cannot visualize the interrelated concepts between user supplied data sets.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0013984"&gt;Enrichment Map&lt;/a&gt; (&lt;a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0013984"&gt;Merico et al., 2010&lt;/a&gt;) was another alternative, but did all of comparison mathematics in Cytoscape itself, based on enrichments calculated outside of Cytoscape. The publication does give an example of a similar type of analysis as performed by &lt;code&gt;categoryCompare&lt;/code&gt;. However, I wanted everything, from enrichment calculation to visualization controlled by &lt;code&gt;R&lt;/code&gt;. I did use their method of weighting the edges between annotations, however, ditching the GO directed acyclic graph (DAG) view I used initially.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Bioconductor Package&lt;/h2&gt;
+
+&lt;p&gt;About this time I realized that I wanted the package to fit into the &lt;a href="http://bioconductor.org"&gt;&lt;code&gt;Bioconductor&lt;/code&gt;&lt;/a&gt; ecosystem. This required a complete redesign and rewrite of the code, as I moved to actually used some sort of OOP model (S4 in this case), and creating an actual package.&lt;/p&gt;
+
+&lt;p&gt;The package was released to the wild in the fall of 2012, as part of &lt;code&gt;Bioconductor&lt;/code&gt; v 2.10. Of course, this was the last &lt;code&gt;Bioconductor&lt;/code&gt; release based on R 2.15, which brought some particular challenges in &lt;code&gt;namespaces&lt;/code&gt; with the switch in R 3.0.0 the next year. &lt;/p&gt;
+
+&lt;h3&gt;Graphviz to RCytoscape&lt;/h3&gt;
+
+&lt;p&gt;The original code used the &lt;code&gt;graphviz&lt;/code&gt; package to do layouts for visualization, but it was difficult to install, and did not work the way I wanted. Thankfully Paul Shannon had just developed the &lt;code&gt;RCytoscape&lt;/code&gt; package the year previous (&lt;a href="http://www.biomedcentral.com/1471-2105/14/217"&gt;Shannon et al., 2013&lt;/a&gt;), and this enabled truly interactive visualization and passing data back and forth between &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;Cytoscape&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;My use of &lt;code&gt;RCytoscape&lt;/code&gt; has actually lead to finding improvements in the package, and better use of it. I am also hoping to make much more use of &lt;code&gt;RCytoscape&lt;/code&gt; and the &lt;code&gt;igraph&lt;/code&gt; package and combining them in novel ways.&lt;/p&gt;
+
+&lt;h2&gt;First Publication Attempt&lt;/h2&gt;
+
+&lt;p&gt;Our first attempt at publication focussed on the original data that inspired the method, and comparing it with gene-gene comparisons directly. We submitted to &lt;strong&gt;BMC Bioinformatics&lt;/strong&gt;, and the reviews were not favorable, and took forever to get back. We actually wondered if the reviewers had read the paper that we submitted. We gave up on this venue. BTW, our last &lt;strong&gt;three&lt;/strong&gt; publications have been submitted there, and the publication process has gotten worse and worse with every submission there. I don&amp;#39;t think our papers are getting worse over the years. I don&amp;#39;t know if we will bother submitting to &lt;strong&gt;BMC Bioinformatics&lt;/strong&gt; again.&lt;/p&gt;
+
+&lt;h2&gt;Second Publication Attempt&lt;/h2&gt;
+
+&lt;p&gt;The second attempt was submitting to the current home in the &lt;strong&gt;Bioinformatics and Computational Biology&lt;/strong&gt; section of &lt;strong&gt;Frontiers in Genetics&lt;/strong&gt;. This time, although the reviews were harsh (i.e. they were not immediately favorable), they were &lt;em&gt;fair&lt;/em&gt;, and actually contained &lt;strong&gt;useful&lt;/strong&gt; critique, and pointed to a way forward.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately for me, revising the manuscript to address the reviewers criticisms meant a lot of work to construct theoretical examples, as well as a lot of thought in order to pare the manuscript down to make sure our primary message was clearly communicated. &lt;/p&gt;
+
+&lt;h3&gt;Frontiers Interactive Review&lt;/h3&gt;
+
+&lt;p&gt;I would like to note that the Frontiers interactive review system, with the ability to discuss individual points with the reviewers (still anonymously) really helped make it possible to determine which points were make or break, and discuss different ways to approach things. This was the best review experience I have ever had, and a large part of that I think was due to being able to interact with the reviewers directly, and not just through letters mediated by the editor.&lt;/p&gt;
+
+&lt;p&gt;I think it would be nice if Frontiers had an option for making the review history available if the authors and reviewers were agreeable to it.&lt;/p&gt;
+
+&lt;h2&gt;Github package of supplementary materials&lt;/h2&gt;
+
+&lt;p&gt;In the initial publication, I had included the set of scripts used for analysis, data files, results, etc. However, the amount of work required in the rewrite was so substantial, that I created an &lt;a href="https://github.com/rmflight/ccPaper"&gt;&lt;code&gt;R&lt;/code&gt; package specifically&lt;/a&gt; for the analyses that went into the paper, with separate &lt;code&gt;R&lt;/code&gt; markdown vignettes for each result type (hypothetical, two different experimental comparisons). This package has documents on how raw data was processed, as well as the semi-processed experimental data.&lt;/p&gt;
+
+&lt;h3&gt;Publication specific branch&lt;/h3&gt;
+
+&lt;p&gt;Due to specific changes to the &lt;code&gt;categoryCompare&lt;/code&gt; software needed to address the reviewer comments, a publication specific branch of the development version was created (&lt;a href="https://github.com/rmflight/categoryCompare/tree/paper"&gt;paper&lt;/a&gt;). This allowed me to quickly introduce code and features that the reviewers had asked for, without worrying about breaking the current development version that will be released in Bioconductor shortly. &lt;/p&gt;
+
+&lt;h2&gt;To Do&lt;/h2&gt;
+
+&lt;p&gt;As with most software projects, there is still plenty to be done. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Incorporate new functionality from &lt;code&gt;paper&lt;/code&gt; branch into &lt;code&gt;dev&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Specifically ability to do &lt;code&gt;GSEA&lt;/code&gt; built in (probably using &lt;code&gt;limma&lt;/code&gt;&amp;#39;s &lt;code&gt;romer&lt;/code&gt; and &lt;code&gt;roast&lt;/code&gt;
+functions), and new visualization options&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Change from &lt;code&gt;latex&lt;/code&gt; vignette to &lt;code&gt;R&lt;/code&gt; markdown (this is technically done, but hasn&amp;#39;t made it into the dev branch)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Switch to &lt;code&gt;roxygen2&lt;/code&gt; documentation (will be interesting due to use of S4 objects and methods)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Implement proper testing using &lt;code&gt;testthat&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Refactor a lot of code to improve speed, use &lt;code&gt;R&lt;/code&gt; conventions&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I was still a relatively &lt;code&gt;R&lt;/code&gt; newbie when I wrote the package, and as I looked at the code while making changes for the reviewers, I noticed some places where I had done some silly things, mainly because I didn&amp;#39;t know better when I did it.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Consider splitting visualization into its own package&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Although I developed the visualization specifically for &lt;code&gt;categoryCompare&lt;/code&gt;, I think it is generic enough that others might benefit from having it available separately. Therefore I need to think about separating it out, and how best to go about it without making it hard for &lt;code&gt;categoryCompare&lt;/code&gt; to keep working as it already does.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Make it easy to investigate the actual genes with particularly interesting annotations, and how they are linked together by annotations or other data sources, as well as their original expression levels in the experiments.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Side Effects&lt;/h2&gt;
+
+&lt;p&gt;A nice side effect of the package is that any annotation enrichment I do now, I almost always do it in the framework of &lt;code&gt;categoryCompare&lt;/code&gt;, just because it is a lot easier to make sense of using the visualization capabilities and coupling with &lt;code&gt;Cytoscape&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;What Would I Do Differently?&lt;/h2&gt;
+
+&lt;p&gt;Keeping in mind that I started this work almost 4 years ago, when I still didn&amp;#39;t know any &lt;code&gt;R&lt;/code&gt;, and had yet to be exposed to the reproducibility and open science movements, or &lt;code&gt;knitr&lt;/code&gt;, or &lt;code&gt;pandoc&lt;/code&gt;, here are some things that if I started today I would do differently (you can probably guess some of these from above):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Put the package under version control immediately! Thankfully I didn&amp;#39;t have any moments early in the process when things were not in a &lt;code&gt;git&lt;/code&gt; repo, but I am very thankful later on I was able to do &lt;code&gt;diff&lt;/code&gt; and &lt;code&gt;branch&lt;/code&gt; on my code to figure out where things broke and introduce new features.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Start thinking of the analysis as a standalone package from the very beginning, instead of a directory of data and scripts. This is what I do now (blogpost to come), and it makes it much easier if I come up with novel methods to spin them off into a fully fledged &lt;code&gt;R&lt;/code&gt; / &lt;code&gt;Bioconductor&lt;/code&gt; package&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Don&amp;#39;t underestimate the novelty of something as simple as visualization, and how much it may make or break your method. We ended up adding a good chunk of text to the manuscript on the visualization because we realized how important it was, but only after the reviewers pointed it out to us.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Write the paper as a vignette of the ccPaper package itself, and generate Word documents for collaborators who insist on Word docs using Pandoc&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Start a github repo for the paper, and ask collaborators to try and work on it there&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Submit a preprint when submitted, so that we start getting feedback on the manuscript early&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Ask for permission to set up reviewer comments as issues on the github repo to easily track how well we are addressing them. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Wouldn&amp;#39;t it be cool in a totally open peer review journal to actually do all of the peer review on a service like Github, and have reviewers leave issues, tag them, and comment directly on the text of the publication using the commenting feature of commenting on commits?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+</item>
+    <item>
   <title>Self-written function help</title>
   <link>http://rmflight.github.io/posts/2014/02/package_dev_documentation.html</link>
   <category>R</category>
