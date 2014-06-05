@@ -7,6 +7,22 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Bioinformatics Presentations that Lack Results (or Biological Relevance)</title><link>http://rmflight.github.io/posts/2014/06/lack_of_results.html</link><category>bioinformatics</category><description>&lt;h1&gt;Bioinformatics Presentations that Lack Results (or Biological Relevance)&lt;/h1&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;In bioinformatics research we need to show validated results (if doing classification or discovery of new things), or show biological relevance. If you do neither of those things in a paper or presentation, then I&amp;#39;m not going to believe your method is worth anything.&lt;/p&gt;
+
+&lt;h2&gt;Seminar Without Results&lt;/h2&gt;
+
+&lt;p&gt;I attended a seminar yesterday (I&amp;#39;m not going to comment on who gave the seminar or what it was about, so please don&amp;#39;t ask) where the presenter had a distinct lack of any useful results. Their presentation consisted almost entirely of methods description, with various discussions of why they did what they did, with the only result being:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;We found X number of known things, and predicted Y number of novel things&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Just to clarify, they had a methodology that generated classifiers based on features from known items to find novel items, and then associate both known and novel with biological conditions (e.g. disease vs non-disease). &lt;/p&gt;
+
+&lt;p&gt;In all of the slides shown, there was no discussion of whether the features in the classifier were relevant, how well the classifier worked when splitting the known stuff into &lt;em&gt;training&lt;/em&gt; / &lt;em&gt;test&lt;/em&gt; data sets, and whether anything discovered (both of the known and unknown) had any biological relevance or had been validated by wet-lab collaborators. This is the worst kind of bioinformatics communication, because the audience had no idea in the end if &lt;strong&gt;the method was actually useful or generated biologically relevant results&lt;/strong&gt;. This is really the point of bioinformatics and more broadly systems biology research, is making something that helps us decipher biological systems, even in some small way. If you don&amp;#39;t have any data on either the accuracy of classification (in this case finding novel things that were unknown) or the biological relevance of things found to be different, not even one data point, then you should not be giving the talk or writing the paper. Period.&lt;/p&gt;
+</description></item>
     <item><title>categoryCompare Paper Finally Out!</title><link>http://rmflight.github.io/posts/2014/04/categoryComparePaper.html</link><category>R</category><category>bioconductor</category><category>meta-analysis</category><category>publication</category><description>&lt;h1&gt;categoryCompare Paper Finally Out!&lt;/h1&gt;
 
 &lt;p&gt;I can finally say that the publication on my &lt;a href=&quot;http://bioconductor.org/packages/release/bioc/html/categoryCompare.html&quot;&gt;&lt;code&gt;Bioconductor&lt;/code&gt; package &lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt; is &lt;a href=&quot;http://journal.frontiersin.org/Journal/10.3389/fgene.2014.00098/abstract&quot;&gt;finally published&lt;/a&gt; in the &lt;strong&gt;Bioinformatics and Computational Biology&lt;/strong&gt; section of &lt;strong&gt;Frontiers in Genetics&lt;/strong&gt;. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.&lt;/p&gt;
