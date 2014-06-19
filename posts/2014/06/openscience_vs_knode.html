@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>R Interface for Teaching</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
+<!DOCTYPE html><html><head><title>Researcher Discoverability</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -53,54 +53,38 @@ hljs.initHighlightingOnLoad();
     '//cdn.krxd.net/static/socialtag/widget.js';
   var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); 
 })();
-</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>R Interface for Teaching</h1>
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Researcher Discoverability</h1>
 
-<p><a href="https://twitter.com/intent/user?screen_name=kaythaney&amp;tw_i=354635159447941120&amp;tw_p=tweetembed">Kaitlin Thaney</a> asked on Twitter last week about using <a href="https://twitter.com/intent/user?screen_name=ramnath_vaidya&amp;tw_i=354599459868508160&amp;tw_p=tweetembed">Ramnath Vaidyanathan&#39;s</a> new <code>interactive R notebook</code> <a href="http://ramnathv.github.io/rNotebook/">1</a> <a href="https://github.com/ramnathv/rNotebook">2</a> for teaching.</p>
+<p>University of Kentucky (UK) recently partnered with the discovery portal <a href="https://search.knodeinc.com/ukentucky/index.action">KNODE</a>, for helping others to discover potential collaborators at UK. KNODE looks like a large corporate venture, that is probably costing a large amount of capital to the university (and other places that use it). I wonder if the universities money would be better spent on encouraging submission of preprints, a <a href="https://github.com">Github</a> Enterprise/Education package and teaching researchers and faculty how to use social media like <a href="https://twitter.com">twitter</a>. Here is why I think that.</p>
 
-<blockquote class="twitter-tweet"><p>Liking the look of interactive R notebook by <a href="https://twitter.com/ramnath_vaidya">@ramnath_vaidya</a>. Any success stories in using to teach? <a href="http://t.co/wmVuFM2Rst">http://t.co/wmVuFM2Rst</a> (HT <a href="https://twitter.com/_inundata">@_inundata</a>)</p>&mdash; Kaitlin Thaney (@kaythaney) <a href="https://twitter.com/kaythaney/statuses/354635159447941120">July 9, 2013</a></blockquote>
+<h2>Preprints</h2>
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Submitting manuscripts to a preprint server such as <a href="http://arxiv.org/">arxiv</a>, <a href="http://biorxiv.org/">biorxiv</a> or <a href="https://peerj.com/preprints/">peerj</a> gives a researchers work possible visibility, and can result in immediate feedback to improve a work prior to submission, or as part of the peer review.</p>
 
-<p>Now, to be clear up front, I am <strong>not</strong> trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don&#39;t really think it is the right interface for teaching <code>R</code>. I would argue that the best interface for teaching <code>R</code> right now is <a href="http://www.rstudio.com/">RStudio</a>. Keep reading to find out why.</p>
+<h2>Github</h2>
 
-<h2>iPython Notebook</h2>
+<p>Much of our scientific output is generated as text. Whether it is lab notes, tables of data, draft manuscripts, or scientific scripts and programs, a lot of it is text. The Git version control system is well placed to handle iterations of text, and Github has become the defacto location for sharing version controlled text with others, and collaborating on it. Although I would imagine that it would take some encouragement, I think more researchers would use Git and Github if they knew about it, and had easy options to make Github repos private until they were ready to share their work. </p>
 
-<p>First, I believe Ramnath when he says he was inspired by the <a href="http://ipython.org/notebook.html"><code>iPython Notebook</code></a> that makes it so very nice to do interactive, reproducible Python coding. Software Carpentry has been very successfully using them for helping to teach Python to scientists.</p>
+<p>In addition to putting general text under version control, more researchers should be encouraged to use version control on any analysis scripts / programs that they write. This is becoming important across disciplines, not just in STEM fields. There is also more and more encouragement from journals and funding bodies to make underlying data and the processing of the data available. By putting data, and code on Github, moving from private collaboration to fully shared can be changed with the flick of a switch. Furthermore, <code>master</code> branches of repos are crawled by Google, making your text discoverable, making webpages for a group and on a project basis is relatively painless using <a href="https://pages.github.com">github-pages</a>, and repos can also have a wiki associated with them to allow further documentation.</p>
 
-<p>However, the iPython Notebook is an interesting beast for this purpose. You are able to mix <code>markdown</code> blocks and <code>code</code> blocks. In addition, it is extremely simple to break up your calculations into <strong>units</strong> of related code, and re-run those units as needed. This is particularly useful when writing new functions, because you can write the function definition, and a test that displays output in one block, and then the actual computations in subsequent blocks. It makes it very easy to keep re-running the same block of code over and over until it is correct, which allows one to interactively explore changes to functions. This is <strong>awesome</strong> for learning Python and prototyping functions.</p>
+<h2>Twitter</h2>
 
-<p>In addition to being able to repeatedly <code>write -&gt; run -&gt; modify</code> in a loop, you can also insert prose describing what is going on in the form of <code>markdown</code>. This is a nice lightweight syntax that generates html. So it becomes relatively easy to document the <em>why</em> of something.</p>
+<p>I&#39;m going to use <a href="https://twitter.com">twitter</a> as a proxy for social media in general (blogs, facebook, twitter, and others), although I believe twitter combined with a blog is probably the best combination for science outreach. </p>
 
-<h2>R Notebook</h2>
+<p>Having a blog to put announcements about when a new publication comes out, when a new presentation has been done (you are putting presentations on <a href="https://figshare.com">figshare</a> or <a href="www.slideshare.net">slideshare</a>), with links to the work in question. Twitter (and other social media platforms) allow quick communication to a wide audience that your research group has a new research output, and can allow engagement with other researchers in the field as well as non-experts, all of which improve ones visibility and provide opportunities for collaboration.</p>
 
-<p>Unfortunately, the <code>R notebook</code> that Ramnath has put up is not quite the same beast. It is an <a href="http://ajaxorg.github.io/ace/#nav=about">Ace editor</a> window coupled to an R process that knits the markdown and displays the resultant html. This is really cool, and I think will be useful in many other applications, but <strong>not</strong> for teaching in an interactive environment. </p>
+<p>By the way, github-pages as mentioned above, also makes it easy to set up a <a href="http://codecondo.com/7-static-site-generators-for-building-websites-blogs/">static blog</a> (non database blog site) for rather easy blogging.</p>
 
-<h2>RStudio as a Teaching Environment</h2>
+<h2>Open Science</h2>
 
-<p>Lets think. We want something that lets us repeatedly <code>write -&gt; run -&gt; modify</code> <strong>on small code blocks</strong> in <code>R</code>, but would be great if it was some kind of document that could be shared, and re-run.</p>
+<p>All of the above encourages open science, sharing of results early and often. It does not have to, but as people get used to being able to share their work early and often, one would hope that this would become the norm, and it would lead to other researchers and possibly interested companies discovering applicable research for either collaboration, licensing, or simply re-use.</p>
 
-<p>I would argue that the editor environment in <a href="http://www.rstudio.com/">RStudio</a> when writing <a href="http://www.rstudio.com/ide/docs/authoring/using_markdown">R markdown (Rmd)</a> files is the solution. <code>R</code> code blocks behave much the same as in iPython notebook, in that they are colored differently, set apart, have syntax highlighting, and can be easily repeatedly run using the <code>code chunk</code> menu. Outside of code blocks is assumed to be markdown, making it easy to insert documentation and explanation. The code from the code blocks is sent to an attached <code>R</code> session, where objects can be further investigated if required, and results are displayed.</p>
+<h2>How to implement</h2>
 
-<p>This infrastructure supplies an interactive back and forth between editor and execution environment, with the ability to easily group together units of code.</p>
+<p>Now, if you&#39;ve read this and you are not already doing these things, you might think this is all a lot of effort. Well, yes, it is. It takes time. This blog post didn&#39;t write itself, you know. My twitter use sometimes gets a bit excessive and addictive. And some of what I have described is rather technical in nature, and might take training to implement. For example, best practices around code and version control. I&#39;m sure <a href="http://software-carpentry.org/">Software Carpentry</a> would love to do workshops at UK for researchers (disclaimer: I have done the SC training, but haven&#39;t done a workshop yet). But overall, I know for me all of this (I&#39;m speaking from experience and what I have observed in others) has been a plus to my research, not a minus.</p>
 
-<p>In addition, RStudio has git integration baked in, so it becomes easy to get started with some basic version control.</p>
-
-<p>Finally, RStudio is cross-platform, has tab completion among other standard IDE goodies, and its free.</p>
-
-<h2>Feedback</h2>
-
-<p>I&#39;ve gotten some feedback on twitter about this, and I want to update this post to address it.</p>
-
-<h3>Hard to Install</h3>
-
-<p>One comment was that installing R, RStudio and necessary packages might be hard. True, it might be. However, I have done multiple installs of R, RStudio, Python, and iPython Notebook in both Linux and Windows, and I would argue that the level of difficulty is at least the same.</p>
-
-<h3>Moving from Presentation to Coding</h3>
-
-<p>I think this is always difficult, especially if you have a powerpoint, and your code is in another application. However, the latest dev version of RStudio (<a href="http://www.rstudio.com/ide/download/preview">download</a>) now includes the ability to view markdown based presentations in an <a href="http://www.rstudio.com/ide/docs/presentations/overview">attached window</a>. This is probably one of the potentially nicest things for doing presentations that actually involve editing actual code.</p>
-
-<p>Edit: added download links for Rstudio preview</p>
-<h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/teaching.html">teaching</a>, <a href="/tags/notebook.html">notebook</a></h5><h6>Posted on 2013-07-11</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
+<p>So what say you, University of Kentucky? Why not try something different to make your researchers stand out to the world, and improve the scientific process?</p>
+<h5>Tagged in: <a href="/tags/github.html">github</a>, <a href="/tags/openscience.html">openscience</a>, <a href="/tags/twitter.html">twitter</a></h5><h6>Posted on 2014-06-19</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
   <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */

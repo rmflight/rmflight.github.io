@@ -7,6 +7,38 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Researcher Discoverability</title><link>http://rmflight.github.io/posts/2014/06/openscience_vs_knode.html</link><category>github</category><category>openscience</category><category>twitter</category><description>&lt;h1&gt;Researcher Discoverability&lt;/h1&gt;
+
+&lt;p&gt;University of Kentucky (UK) recently partnered with the discovery portal &lt;a href=&quot;https://search.knodeinc.com/ukentucky/index.action&quot;&gt;KNODE&lt;/a&gt;, for helping others to discover potential collaborators at UK. KNODE looks like a large corporate venture, that is probably costing a large amount of capital to the university (and other places that use it). I wonder if the universities money would be better spent on encouraging submission of preprints, a &lt;a href=&quot;https://github.com&quot;&gt;Github&lt;/a&gt; Enterprise/Education package and teaching researchers and faculty how to use social media like &lt;a href=&quot;https://twitter.com&quot;&gt;twitter&lt;/a&gt;. Here is why I think that.&lt;/p&gt;
+
+&lt;h2&gt;Preprints&lt;/h2&gt;
+
+&lt;p&gt;Submitting manuscripts to a preprint server such as &lt;a href=&quot;http://arxiv.org/&quot;&gt;arxiv&lt;/a&gt;, &lt;a href=&quot;http://biorxiv.org/&quot;&gt;biorxiv&lt;/a&gt; or &lt;a href=&quot;https://peerj.com/preprints/&quot;&gt;peerj&lt;/a&gt; gives a researchers work possible visibility, and can result in immediate feedback to improve a work prior to submission, or as part of the peer review.&lt;/p&gt;
+
+&lt;h2&gt;Github&lt;/h2&gt;
+
+&lt;p&gt;Much of our scientific output is generated as text. Whether it is lab notes, tables of data, draft manuscripts, or scientific scripts and programs, a lot of it is text. The Git version control system is well placed to handle iterations of text, and Github has become the defacto location for sharing version controlled text with others, and collaborating on it. Although I would imagine that it would take some encouragement, I think more researchers would use Git and Github if they knew about it, and had easy options to make Github repos private until they were ready to share their work. &lt;/p&gt;
+
+&lt;p&gt;In addition to putting general text under version control, more researchers should be encouraged to use version control on any analysis scripts / programs that they write. This is becoming important across disciplines, not just in STEM fields. There is also more and more encouragement from journals and funding bodies to make underlying data and the processing of the data available. By putting data, and code on Github, moving from private collaboration to fully shared can be changed with the flick of a switch. Furthermore, &lt;code&gt;master&lt;/code&gt; branches of repos are crawled by Google, making your text discoverable, making webpages for a group and on a project basis is relatively painless using &lt;a href=&quot;https://pages.github.com&quot;&gt;github-pages&lt;/a&gt;, and repos can also have a wiki associated with them to allow further documentation.&lt;/p&gt;
+
+&lt;h2&gt;Twitter&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#39;m going to use &lt;a href=&quot;https://twitter.com&quot;&gt;twitter&lt;/a&gt; as a proxy for social media in general (blogs, facebook, twitter, and others), although I believe twitter combined with a blog is probably the best combination for science outreach. &lt;/p&gt;
+
+&lt;p&gt;Having a blog to put announcements about when a new publication comes out, when a new presentation has been done (you are putting presentations on &lt;a href=&quot;https://figshare.com&quot;&gt;figshare&lt;/a&gt; or &lt;a href=&quot;www.slideshare.net&quot;&gt;slideshare&lt;/a&gt;), with links to the work in question. Twitter (and other social media platforms) allow quick communication to a wide audience that your research group has a new research output, and can allow engagement with other researchers in the field as well as non-experts, all of which improve ones visibility and provide opportunities for collaboration.&lt;/p&gt;
+
+&lt;p&gt;By the way, github-pages as mentioned above, also makes it easy to set up a &lt;a href=&quot;http://codecondo.com/7-static-site-generators-for-building-websites-blogs/&quot;&gt;static blog&lt;/a&gt; (non database blog site) for rather easy blogging.&lt;/p&gt;
+
+&lt;h2&gt;Open Science&lt;/h2&gt;
+
+&lt;p&gt;All of the above encourages open science, sharing of results early and often. It does not have to, but as people get used to being able to share their work early and often, one would hope that this would become the norm, and it would lead to other researchers and possibly interested companies discovering applicable research for either collaboration, licensing, or simply re-use.&lt;/p&gt;
+
+&lt;h2&gt;How to implement&lt;/h2&gt;
+
+&lt;p&gt;Now, if you&amp;#39;ve read this and you are not already doing these things, you might think this is all a lot of effort. Well, yes, it is. It takes time. This blog post didn&amp;#39;t write itself, you know. My twitter use sometimes gets a bit excessive and addictive. And some of what I have described is rather technical in nature, and might take training to implement. For example, best practices around code and version control. I&amp;#39;m sure &lt;a href=&quot;http://software-carpentry.org/&quot;&gt;Software Carpentry&lt;/a&gt; would love to do workshops at UK for researchers (disclaimer: I have done the SC training, but haven&amp;#39;t done a workshop yet). But overall, I know for me all of this (I&amp;#39;m speaking from experience and what I have observed in others) has been a plus to my research, not a minus.&lt;/p&gt;
+
+&lt;p&gt;So what say you, University of Kentucky? Why not try something different to make your researchers stand out to the world, and improve the scientific process?&lt;/p&gt;
+</description></item>
     <item><title>Bioinformatics Presentations that Lack Results (or Biological Relevance)</title><link>http://rmflight.github.io/posts/2014/06/lack_of_results.html</link><category>bioinformatics</category><description>&lt;h1&gt;Bioinformatics Presentations that Lack Results (or Biological Relevance)&lt;/h1&gt;
 
 &lt;h2&gt;TL;DR&lt;/h2&gt;
