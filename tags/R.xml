@@ -5,6 +5,120 @@
     <description>Robert M Flight's personal blog :: R</description>
     <category>R</category>
     <item>
+  <title>R Job Notifications Using Twitter</title>
+  <link>http://rmflight.github.io/posts/2014/06/r_job_notifications_twitter.html</link>
+  <category>R</category>
+  <category>twitter</category>
+  <description>&lt;h1&gt;R Job Notifications Using Twitter&lt;/h1&gt;
+
+&lt;p&gt;There has been some interesting activity about getting &lt;code&gt;R&lt;/code&gt; to send a notification somehow when a long running job is completed. The most notable entries I have seen in this category are &lt;a href="http://dirk.eddelbuettel.com/code/rpushbullet.html"&gt;&lt;code&gt;RPushBullet&lt;/code&gt;&lt;/a&gt; for web notifications and &lt;a href="http://www.sumsar.net/blog/2014/01/announcing-pingr/"&gt;&lt;code&gt;pingr&lt;/code&gt;&lt;/a&gt; for audio notifications. &lt;/p&gt;
+
+&lt;p&gt;Although &lt;code&gt;RPushBullet&lt;/code&gt; looks really cool (and Dirk does great work), I wondered if there was a way to do this using a free service that I already had access to, namely &lt;code&gt;twitter&lt;/code&gt;. See, &lt;code&gt;twitter&lt;/code&gt; will notify you when someone else uses your handle in a tweet. If you have &lt;code&gt;twitter&lt;/code&gt; notifications on your device, it should also appear on a mobile device, and if you are using &lt;code&gt;tweetdeck&lt;/code&gt; on a desktop or laptop machine, you can also set up to get notifications there. &lt;/p&gt;
+
+&lt;p&gt;However, the default method of authenticating and caching &lt;code&gt;oauth&lt;/code&gt; tokens for &lt;code&gt;twitteR&lt;/code&gt; does not seem to be really useful for job notifications. However, we will take some precautions so that it is not too big a deal, and still be really useful.&lt;/p&gt;
+
+&lt;h2&gt;How??&lt;/h2&gt;
+
+&lt;p&gt;In a nutshell, using a specific twitter account and app that have credentials stored in an &lt;code&gt;R&lt;/code&gt; package. Below are the steps I used to make this happen. You can see my job notification twitter user &lt;a href="https://twitter.com/rmf_notifier"&gt;rmf_notifier&lt;/a&gt; and the &lt;a href="https://github.com/rmflight/rmfNotifier"&gt;package I created&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Install twitteR&lt;/h3&gt;
+
+&lt;p&gt;Before you begin, you should have a modern version of &lt;code&gt;R&lt;/code&gt; (all of this was initially done using v 3.0.1), &lt;code&gt;devtools&lt;/code&gt;, and the &lt;a href="https://github.com/geoffjentry/twitteR"&gt;&lt;code&gt;twitteR&lt;/code&gt;&lt;/a&gt; package from github.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;library(devtools)
+install_github(&amp;#39;twitteR&amp;#39;, username=&amp;#39;goeffjentry&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Setup a new package&lt;/h3&gt;
+
+&lt;p&gt;We are going to create a personal package solely for sending &lt;code&gt;twitter&lt;/code&gt; notifications and storing the API credentials. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Hadley Wickham in the &lt;code&gt;httr&lt;/code&gt; token caching documentation advises against storing token caches in a package, but this is part of the reason we are creating a &lt;code&gt;twitter&lt;/code&gt; user and app solely for this purpose (this makes it easier to revoke tokens, or remove the app, delete the user, etc if something goes wrong). This package also should never be published with the &lt;code&gt;.rdata&lt;/code&gt; file included, and that file should never be under version control. If any of these things happen, someone else may be able to hijack this &lt;code&gt;twitter&lt;/code&gt; account.&lt;/p&gt;
+
+&lt;p&gt;You should create your package (create a directory with &lt;code&gt;DESCRIPTION&lt;/code&gt;, &lt;code&gt;R&lt;/code&gt; directory, &lt;code&gt;data&lt;/code&gt; directory, and &lt;code&gt;NAMESPACE&lt;/code&gt; file). Look up how to do this if you are not sure. Set your working directory to be your package base directory for all further steps.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;All following steps assume that you are working in the base package directory.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3&gt;Twitter Account&lt;/h3&gt;
+
+&lt;p&gt;We are going to create a &lt;code&gt;twitter&lt;/code&gt; &lt;em&gt;account&lt;/em&gt; and &lt;em&gt;app&lt;/em&gt; specifically for sending this one type of notification. You can register a new &lt;code&gt;twitter&lt;/code&gt; account using a new email (if you use &lt;code&gt;gmail&lt;/code&gt; you can add a dot (.) anywhere in your email address for a unique address that still reaches you) and setup a new user name. &lt;/p&gt;
+
+&lt;p&gt;After setting up your new account, log in to &lt;a href="https://apps.twitter.com"&gt;https://apps.twitter.com&lt;/a&gt;, and &lt;code&gt;create new app&lt;/code&gt;. Fill in all the necessary details, and when you have it up, &lt;code&gt;modify app permissions&lt;/code&gt; to be &lt;code&gt;Read and write&lt;/code&gt;. This will allow it to actually send messages on the accounts behalf. &lt;/p&gt;
+
+&lt;h3&gt;Credentials&lt;/h3&gt;
+
+&lt;p&gt;Click on the &lt;code&gt;API Keys&lt;/code&gt; tab, and set up your api data by copying the values into the code below. Note if you dont see a token and a secret, try hitting &lt;code&gt;test oauth&lt;/code&gt; to generate one.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;apikey &amp;lt;- &amp;quot;&amp;quot; #API Key
+apisecret &amp;lt;- &amp;quot;&amp;quot; #API Secret
+token &amp;lt;- &amp;quot;&amp;quot; #Access Token
+tokensecret &amp;lt;- &amp;quot;&amp;quot; #Access token secret
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And now we will authorize our app and make sure that it can tweet.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;library(twitteR)
+setup_twitter_oauth(apikey, apisecret, token, tokensecret)
+tweet(&amp;quot;this is a test&amp;quot;) # make sure you can see a tweet
+tweet(&amp;quot;@username this is a test&amp;quot;) # check that you see notifications, change @username to your own username
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then save the cache for later use.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;local_cache &amp;lt;- get(&amp;quot;oauth_tken&amp;quot;, twitteR:::oauth_cache) # saves the oauth token so we can reuse it
+save(local_cache, file=&amp;quot;data/oauth_cache.RData&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Using saved credentials&lt;/h3&gt;
+
+&lt;p&gt;To make sure that our package uses the saved credentials every time, we will include a &lt;code&gt;.onLoad&lt;/code&gt; function that sets the &lt;code&gt;oauth&lt;/code&gt; cache up properly. This should go in the file &lt;code&gt;R/zzz.R&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;.onLoad &amp;lt;- function(libname, pkgname){
+  cachedToken &amp;lt;- new.env()
+  dataFile &amp;lt;- system.file(&amp;quot;data/oauth_cache.RData&amp;quot;, package=&amp;quot;packageName&amp;quot;)
+  load(dataFile, cachedToken)
+  assign(&amp;quot;oauth_token&amp;quot;, cachedToken$local_cache, envir=twitteR:::oauth_cache)
+  rm(cachedToken)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that this function loads the credentials into a particular environment, and then sets the &lt;code&gt;oauth_token&lt;/code&gt; variable in the &lt;code&gt;twitteR:::oauth_cache&lt;/code&gt; environment to our saved credentials.&lt;/p&gt;
+
+&lt;h3&gt;Our Notifying Function&lt;/h3&gt;
+
+&lt;p&gt;Finally, we need a function that we can use to notify us when something happens. One could simply &lt;code&gt;importFrom(twitteR, tweet)&lt;/code&gt; and &lt;code&gt;export(tweet)&lt;/code&gt; in the namespace, but why should we have to type the &lt;code&gt;username&lt;/code&gt; every time? This should go in &lt;code&gt;R/packageFunction.R&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;#&amp;#39; notifies job status
+#&amp;#39; 
+#&amp;#39; sends a tweet to rmflight the job status
+#&amp;#39; 
+#&amp;#39; @param tweetText the text to include in the tweet
+#&amp;#39; @export
+#&amp;#39; @importFrom twitteR tweet
+jobNotify &amp;lt;- function(tweetText){
+  fullTweet &amp;lt;- paste(&amp;quot;@username&amp;quot;, tweetText, sep=&amp;quot; &amp;quot;) # change @username to where you want to recieve notifications
+  tweet(fullTweet)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Test it&lt;/h3&gt;
+
+&lt;p&gt;And there you go. After building and installing your new package and loading it, you should be able to do:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="r"&gt;library(packageName) # change to the name of your own package
+jobNotify(&amp;quot;this is a test&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And get a notification. Now you can simply put the above code at the end of any long running jobs, and voila, you are getting notifications from &lt;code&gt;twitter&lt;/code&gt; about your &lt;code&gt;R&lt;/code&gt; jobs. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;You are subject to &lt;code&gt;twitters&lt;/code&gt; app limits&lt;/strong&gt;, so be careful how you use this. If you had lots of mini jobs, you would want to put this after &lt;strong&gt;all&lt;/strong&gt; of them were finished, not have each one call this.&lt;/p&gt;
+
+&lt;h2&gt;Extensions&lt;/h2&gt;
+
+&lt;p&gt;I would like to find a way to extend this to &lt;code&gt;watching&lt;/code&gt; jobs and sending a notice at particular levels of completion, and also be able to have a try-catch that catches an error and can tweet that the job error&amp;#39;d out. But this level is still rather useful I think.&lt;/p&gt;
+</description>
+</item>
+    <item>
   <title>categoryCompare Paper Finally Out!</title>
   <link>http://rmflight.github.io/posts/2014/04/categoryComparePaper.html</link>
   <category>R</category>
