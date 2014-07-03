@@ -139,11 +139,20 @@ save(local_cache, file=&quot;data/oauth_cache.RData&quot;)
 #&#39; @param tweetText the text to include in the tweet
 #&#39; @export
 #&#39; @importFrom twitteR tweet
-jobNotify &lt;- function(tweetText){
-  fullTweet &lt;- paste(&quot;@username&quot;, tweetText, sep=&quot; &quot;) # change @username to where you want to recieve notifications
+#&#39; @importFrom lubridate now
+jobNotify &lt;- function(tweetText, addnow=TRUE){
+  t &lt;- &quot;&quot;
+  if (addnow){
+    t &lt;- now()
+  }
+  fullTweet &lt;- paste(&quot;@username&quot;, tweetText, t, sep=&quot; &quot;) # change @username to where you want to recieve notifications
   tweet(fullTweet)
 }
 </code></pre>
+
+<h4>Importance of Including Time</h4>
+
+<p>In my initial implementation, I did not include the date-time string. Upon actual usage, I noticed that <code>twitter</code> would reject subsequent tweets with identical text. The simplest way to get around this is to add the date-time string to the tweet, thereby making it unique.</p>
 
 <h3>Test it</h3>
 
@@ -160,6 +169,10 @@ jobNotify(&quot;this is a test&quot;)
 <h2>Extensions</h2>
 
 <p>I would like to find a way to extend this to <code>watching</code> jobs and sending a notice at particular levels of completion, and also be able to have a try-catch that catches an error and can tweet that the job error&#39;d out. But this level is still rather useful I think.</p>
+
+<h2>Edit</h2>
+
+<p>On July 3, 2014 I modified the <code>jobNotify</code> function to also include a date-time string, and added an explanation of why that was necessary.</p>
 <h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/twitter.html">twitter</a></h5><h6>Posted on 2014-06-30</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
   <script type="text/javascript">
