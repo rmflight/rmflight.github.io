@@ -185,6 +185,64 @@ Adding Rstudio project file to ismbTweetAnalysis
 &lt;p&gt;Now this was a simple example. Ideally I should have included tests for my functions, you can read up &lt;a href=&quot;https://github.com/hadley/testthat&quot;&gt;1&lt;/a&gt; &lt;a href=&quot;http://adv-r.had.co.nz/Testing.html&quot;&gt;2&lt;/a&gt; on how to do that. In addition, none of my functions use methods (&lt;a href=&quot;http://adv-r.had.co.nz/OO-essentials.html&quot;&gt;see why they are useful&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;I hope that you find this example useful, and will consider using &lt;code&gt;packages&lt;/code&gt; more often even for &lt;strong&gt;simple&lt;/strong&gt; analyses.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reproducibility: One issue that may come up is how to make sure that you or someone else can directly reproduce the work in your package. Again, Hadley Wickham and the &lt;code&gt;rstudio&lt;/code&gt; team have been thinking about this, and there is now the &lt;a href=&quot;http://rstudio.github.io/packrat/&quot;&gt;&lt;code&gt;packrat&lt;/code&gt; package&lt;/a&gt; to make a project completely self-contained with all of it&amp;#39;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Edit&lt;/em&gt; - added note on reproducibility at the end. &lt;/p&gt;
+</description></item>
+    <item><title>Packages vs ProjectTemplate</title><link>http://rmflight.github.io/posts/2014/07/zpackages_vs_projectTemplate.html</link><category>R</category><category>packages</category><description>&lt;h1&gt;Packages vs ProjectTemplate&lt;/h1&gt;
+
+&lt;h2&gt;tl;dr&lt;/h2&gt;
+
+&lt;p&gt;Imposing a different structure than &lt;code&gt;R&lt;/code&gt; packages for distributing &lt;code&gt;R&lt;/code&gt; code is a bad idea, especially now that &lt;code&gt;R&lt;/code&gt; package tools have gotten to the point where managing a package has become much easier.&lt;/p&gt;
+
+&lt;h2&gt;ProjectTemplate ??&lt;/h2&gt;
+
+&lt;p&gt;My last two posts (&lt;a href=&quot;/posts/2014/07/analyses_as_packages.html&quot;&gt;1&lt;/a&gt;, &lt;a href=&quot;/posts/2014/07/vignetteAnalysis.html&quot;&gt;2&lt;/a&gt;) provided an argument and an example of why one should use &lt;code&gt;R&lt;/code&gt; packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package &lt;a href=&quot;http://projecttemplate.net/index.html&quot;&gt;&lt;code&gt;ProjectTemplate&lt;/code&gt;&lt;/a&gt;. I was reminded about it thanks to Hadley Wickham:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-partner=&quot;tweetdeck&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://twitter.com/rmflight&quot;&gt;@rmflight&lt;/a&gt; would be interesting to see comparison to ProjectTemplate&lt;/p&gt;&amp;mdash; Hadley Wickham (@hadleywickham) &lt;a href=&quot;https://twitter.com/hadleywickham/statuses/493775065033371648&quot;&gt;July 28, 2014&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;http://rmflight.github.io//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.johnmyleswhite.com/&quot;&gt;John Myles White&lt;/a&gt; has an &lt;code&gt;R&lt;/code&gt; package, &lt;a href=&quot;http://projecttemplate.net/&quot;&gt;ProjectTemplate&lt;/a&gt; for handling analyses. In contrast to the package philosophy that I espoused previously, &lt;code&gt;ProjectTemplate&lt;/code&gt; has a large, logical folder layout (you can read all about each folder and why it &lt;a href=&quot;http://projecttemplate.net/architecture.html&quot;&gt;exists here&lt;/a&gt;). There is a folder for raw data, a folder for &lt;code&gt;R&lt;/code&gt; scripts, a folder for reports, etc.&lt;/p&gt;
+
+&lt;p&gt;Hadley probably wanted me to do the same analysis using &lt;code&gt;ProjectTemplate&lt;/code&gt;, but I don&amp;#39;t have the time for that. Instead I&amp;#39;m going to write below about the features &lt;code&gt;ProjectTemplate&lt;/code&gt; has, and why I think packages are a better general solution. So, just to be clear, I have not done any analyses using &lt;code&gt;ProjectTemplate&lt;/code&gt;, I have only the website descriptions to go on.&lt;/p&gt;
+
+&lt;p&gt;Now, I think I understand the philosophy of &lt;code&gt;ProjectTemplate&lt;/code&gt;, in that when writing a manuscript or report in an external editor such as LaTex, Word, LibreOffice (or even something else), you want a directory of outputs (graphs, tables, etc) resulting from applying a series of transformations on some data (&lt;code&gt;R&lt;/code&gt; scripts applied to &lt;code&gt;.txt&lt;/code&gt; or &lt;code&gt;.csv&lt;/code&gt;, etc). In addition, a &lt;code&gt;package&lt;/code&gt; is for storing &lt;strong&gt;general&lt;/strong&gt; functions that will work across multiple &lt;code&gt;projects&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Differences&lt;/h2&gt;
+
+&lt;h3&gt;Keeping Directories Straight&lt;/h3&gt;
+
+&lt;p&gt;I can understand this POV, and in the past would have largely agreed. However, with the development of &lt;code&gt;devtools&lt;/code&gt; and other tools that make managing &lt;code&gt;R&lt;/code&gt; packages rather easy, I think it makes more sense to use the &lt;code&gt;R&lt;/code&gt; package mechanism instead of a custom format. In the &lt;code&gt;ProjectTemplate&lt;/code&gt; you may write functions or code in the &lt;code&gt;/lib&lt;/code&gt;, &lt;code&gt;/munge&lt;/code&gt; or &lt;code&gt;/src&lt;/code&gt; directory depending on their purpose (general, data munging, actual analysis, respectively). Keeping all of this straight seems to me a waste of time from doing the actual analysis.&lt;/p&gt;
+
+&lt;p&gt;In a package, functions are in the &lt;code&gt;/R&lt;/code&gt; directory, and that is where they live. They may be organized into different files depending on their purpose, names, or methods and classes (not fun &lt;code&gt;S4&lt;/code&gt;, not fun), but at least I know where they are. &lt;/p&gt;
+
+&lt;h3&gt;Documentation&lt;/h3&gt;
+
+&lt;p&gt;This for me is the kicker. With packages (and &lt;code&gt;roxygen2&lt;/code&gt; and &lt;code&gt;devtools&lt;/code&gt;), I can document everything in such a way that the documentation is available &lt;strong&gt;without looking at the source file&lt;/strong&gt;; (i.e. &lt;code&gt;?function&lt;/code&gt;) be reminded of the various arguments, or look up the properties of my documented data set. &lt;/p&gt;
+
+&lt;h3&gt;Dependencies&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;R&lt;/code&gt; packages naturally tell you what other packages they depend on, and will try to resolve those dependencies when you install them. Now, granted, this isn&amp;#39;t a perfect process (anyone trying to upgrade their full &lt;code&gt;R&lt;/code&gt; package library knows this), and with the proliferation of packages on &lt;code&gt;github&lt;/code&gt; is likely to get more difficult (hmmm, would be nice to have a central registry of &lt;code&gt;github&lt;/code&gt; available packages), but in general it does work (for a different solution, check out &lt;a href=&quot;http://rstudio.github.io/packrat/&quot;&gt;packrat&lt;/a&gt;. This means that an analysis that is a package can naturally get it&amp;#39;s dependencies at install time (really try it, go ahead and install my &lt;a href=&quot;https://github.com/rmflight/ismbTweetAnalysis&quot;&gt;example package&lt;/a&gt; without having &lt;code&gt;stringr&lt;/code&gt; installed).&lt;/p&gt;
+
+&lt;p&gt;In contrast, &lt;code&gt;ProjectTemplate&lt;/code&gt; assumes all of the required packages are already installed, and if you shared your analysis directory with someone else, they have to look at the list and install everything before they are able to run it (although this is probably not  that bad).&lt;/p&gt;
+
+&lt;h2&gt;Package Reproducibility&lt;/h2&gt;
+
+&lt;p&gt;In this day and age of seeking to provide &lt;strong&gt;reproducible&lt;/strong&gt; analyses, having all of the entities (code, data, final report) in a container that knows how to install it&amp;#39;s dependencies, and that works within the language ecosystem to provide documentation on the functions used, seems really useful. I believe that &lt;code&gt;R&lt;/code&gt; packages provide that better than most other solutions I have seen lately.&lt;/p&gt;
+
+&lt;h2&gt;Outputs&lt;/h2&gt;
+
+&lt;p&gt;&amp;ldquo;But I don&amp;#39;t want to write my final report using Markdown or Latex&amp;rdquo; you cry! &amp;ldquo;How will I get my graphs or tables otherwise?&amp;rdquo; if using a package? I didn&amp;#39;t mention this in the previous posts, but it is possible to write the code in such a way to save graphics or write text files into a specific location (I would recommend &lt;code&gt;/inst/extdata/output&lt;/code&gt; if it was me).&lt;/p&gt;
+
+&lt;h2&gt;Final Thoughts&lt;/h2&gt;
+
+&lt;p&gt;As I said, I think I understand John&amp;#39;s thought process into designing &lt;code&gt;ProjectTemplate&lt;/code&gt;, but given how easy it is to work with packages in the current &lt;code&gt;R&lt;/code&gt; ecosystem, and that &lt;code&gt;R&lt;/code&gt; packages are the built-in way to share things, I think it is more natural to use packages directly with prose of the analysis as a package vignette. But everyone works differently. If you are writing analyses in &lt;code&gt;R&lt;/code&gt;, please use a sane directory setup (either packages, or &lt;code&gt;ProjectTemplate&lt;/code&gt; or something else), and use version control (really, please learn how to use &lt;code&gt;mercurial&lt;/code&gt; or &lt;code&gt;git&lt;/code&gt;, your future self will thank you for it).&lt;/p&gt;
+
+&lt;p&gt;Remember, when the reviewer (or your boss, or you) asks for something to be added, or to change something slightly in a figure, or add a new dataset, you want to be able to do it easily, and regenerate &lt;em&gt;all&lt;/em&gt; of your results without manual intervention.&lt;/p&gt;
 </description></item>
     <item><title>R Job Notifications Using Twitter</title><link>http://rmflight.github.io/posts/2014/06/r_job_notifications_twitter.html</link><category>R</category><category>twitter</category><description>&lt;h1&gt;R Job Notifications Using Twitter&lt;/h1&gt;
 
