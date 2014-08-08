@@ -202,7 +202,7 @@ Adding Rstudio project file to ismbTweetAnalysis
 &lt;li&gt;Reproducibility: One issue that may come up is how to make sure that you or someone else can directly reproduce the work in your package. Again, Hadley Wickham and the &lt;code&gt;rstudio&lt;/code&gt; team have been thinking about this, and there is now the &lt;a href="http://rstudio.github.io/packrat/"&gt;&lt;code&gt;packrat&lt;/code&gt; package&lt;/a&gt; to make a project completely self-contained with all of it&amp;#39;s dependencies.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;em&gt;Edit&lt;/em&gt; - added note on reproducibility at the end. &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Edit 2014-07-28&lt;/em&gt; - added note on reproducibility at the end. &lt;/p&gt;
 </description>
 </item>
     <item>
