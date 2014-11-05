@@ -7,6 +7,92 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Travis-CI to Github Pages</title><link>http://rmflight.github.io/posts/2014/11/travis_ci_gh_pages.html</link><category>R</category><description>&lt;h1&gt;Travis-CI to Github Pages&lt;/h1&gt;
+
+&lt;p&gt;I don&amp;#39;t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing &lt;code&gt;R&lt;/code&gt; package vignettes to the web after building and checking on &lt;em&gt;travis-ci&lt;/em&gt;. &lt;a href=&quot;https://twitter.com/hadleywickham&quot;&gt;Hadley Wickham&lt;/a&gt; pointed to using such a scheme to push the web version of his book after each update and the &lt;code&gt;S3&lt;/code&gt; deploy hooks on &lt;em&gt;travis-ci&lt;/em&gt;. Deploying your html content to &lt;code&gt;S3&lt;/code&gt; is great, but given the availability of the &lt;code&gt;gh-pages&lt;/code&gt; branch on GitHub, I thought it would be neat to work out how to deploy the html output from an &lt;code&gt;R&lt;/code&gt; package vignette to the &lt;code&gt;gh-pages&lt;/code&gt; branch on GitHub. This is useful because more and more packages are being hosted only on GitHub and building and testing use the &lt;em&gt;travis-ci&lt;/em&gt; service, and it takes work to remember to &lt;code&gt;knit&lt;/code&gt; and push stuff separately to the &lt;code&gt;gh-pages&lt;/code&gt; branch. In addition, although it is possible to &lt;code&gt;deploy&lt;/code&gt; one&amp;#39;s html output to other services from within &lt;em&gt;travis-ci&lt;/em&gt;, there is not an &lt;strong&gt;easy&lt;/strong&gt; pushbutton solution to deploying to GitHub pages. After some searching and looking, this is what I have come up with for my own package.&lt;/p&gt;
+
+&lt;p&gt;All subsequent steps assume that:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You are hosting your package development on GitHub&lt;/li&gt;
+&lt;li&gt;You have html content in the &lt;em&gt;gh-pages&lt;/em&gt; branch of your package repo (see more about &lt;em&gt;gh-pages&lt;/em&gt; &lt;a href=&quot;https://help.github.com/articles/creating-project-pages-manually/&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://help.github.com/categories/github-pages-basics/&quot;&gt;here&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;You already have your package doing building and testing using &lt;em&gt;travis-ci&lt;/em&gt;. See the &lt;a href=&quot;https://github.com/craigcitro/r-travis&quot;&gt;&lt;code&gt;r-travis&lt;/code&gt;&lt;/a&gt; project for more information on how to set this up.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;OAUTH&lt;/h2&gt;
+
+&lt;p&gt;To start, you will need to generate an &lt;code&gt;OAUTH&lt;/code&gt; token on GitHub that will be used to allow you to push back to your GitHub repo. This will be some really long alphanumeric string. You can generate one by going to &lt;code&gt;settings&lt;/code&gt; -&amp;gt; &lt;code&gt;applications&lt;/code&gt; -&amp;gt; &lt;code&gt;personal access tokens&lt;/code&gt; -&amp;gt; &lt;code&gt;generate new token&lt;/code&gt;. Make sure to copy this into a file that is &lt;strong&gt;not&lt;/strong&gt; under version control. &lt;/p&gt;
+
+&lt;p&gt;You will also need to install the &lt;code&gt;travis&lt;/code&gt; ruby framework.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gem install travis
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After installing, navigate to your &lt;code&gt;git&lt;/code&gt; repo for the project you want to enable automatic pushing of content for, and then login to &lt;em&gt;travis-ci&lt;/em&gt; and secure the GitHub token.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;travis login
+
+travis secure GH_TOKEN=&amp;quot;yourgithubtoken&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will generate output that should be copied to your &lt;code&gt;.travis.yml&lt;/code&gt; file. Essentially we have created an environment variable &lt;code&gt;GH_TOKEN&lt;/code&gt; with your actual GitHub token, that is encrypted on the &lt;em&gt;travis-ci&lt;/em&gt; servers. So this way you don&amp;#39;t expose your actual GitHub token to anyone who looks at your &lt;code&gt;.travis.yml&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;h2&gt;Deploy Script&lt;/h2&gt;
+
+&lt;p&gt;We also need a bash script that will actually push the content for us. As part of the &lt;code&gt;R&lt;/code&gt; process on &lt;em&gt;travis-ci&lt;/em&gt;, we get a &lt;code&gt;tar.gz&lt;/code&gt; file of the package with the compiled vignette. So we just need to &lt;code&gt;untar&lt;/code&gt; that file, copy the html file, and create the &lt;code&gt;git&lt;/code&gt; repo and push. The code below is what I have done for my own package, &lt;a href=&quot;https://github.com/rmflight/categoryCompare&quot;&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt;. I saved this code in the file &lt;code&gt;.push_gh_pages.sh&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+
+rm -rf out || exit 0;
+mkdir out;
+
+GH_REPO=&amp;quot;@github.com/rmflight/categoryCompare.git&amp;quot;
+
+FULL_REPO=&amp;quot;https://$GH_TOKEN$GH_REPO&amp;quot;
+
+for files in &amp;#39;*.tar.gz&amp;#39;; do
+        tar xfz $files
+done
+
+cd out
+git init
+git config user.name &amp;quot;rmflight-travis&amp;quot;
+git config user.email &amp;quot;travis&amp;quot;
+cp ../categoryCompare/inst/doc/categoryCompare_vignette.html index.html
+
+git add .
+git commit -m &amp;quot;deployed to github pages&amp;quot;
+git push --force --quiet $FULL_REPO master:gh-pages
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that we remove the directory where we want to create our &lt;code&gt;git&lt;/code&gt; repo, create it, setup the &lt;code&gt;remote&lt;/code&gt; repo with the token string, and then we &lt;code&gt;untar&lt;/code&gt; and &lt;code&gt;unzip&lt;/code&gt; the previously built package, and copy over the file that we want to be the index.html page on the &lt;code&gt;gh-pages&lt;/code&gt; branch. Finally we add it, commit it, and do a force push.&lt;/p&gt;
+
+&lt;p&gt;This script is actually part of the package repo, but does not get included in the built &lt;code&gt;tar.gz&lt;/code&gt; file (add it to &lt;code&gt;.Rbuildignore&lt;/code&gt;). This makes it easy to keep it in sync with any changes to the overall package itself. &lt;/p&gt;
+
+&lt;p&gt;Note that this is completely overriding the current contents of the &lt;code&gt;gh-pages&lt;/code&gt; branch. If you wanted to do something nicer (&lt;em&gt;i.e.&lt;/em&gt; preserving commits or working with an index page pointing to multiple vignettes), you could &lt;code&gt;pull&lt;/code&gt; just the &lt;code&gt;gh-pages&lt;/code&gt; branch first, and then make modifications.&lt;/p&gt;
+
+&lt;h2&gt;Modifying .travis.yml&lt;/h2&gt;
+
+&lt;p&gt;In addition, we need to add three lines to the &lt;code&gt;.travis.yml&lt;/code&gt; file. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# under env: global:
+  - secure: &amp;quot;dHknlaJtXultVqPvFRce3BdBa6gxgFNvaqN1k9rd0PAVSThOhKxPjQ9IYiINgYujtTCJXWFPKyyG76OoTlWfRsbV+XDieWu9TqQk96yTc8wi4p93RffsYJypg7qhy8lGc2rDqwge0f48v6IB0g6pIsHjWz6pq7nW+OBSUFvBGV4=&amp;quot;
+
+# under before_install:
+  - chmod 755 ./.push_gh_pages.sh
+
+# under after_success:
+  - ./.push_gh_pages.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Adding the &lt;code&gt;GH_TOKEN&lt;/code&gt; to the global environment variables&lt;/li&gt;
+&lt;li&gt;Making the deploy script executable&lt;/li&gt;
+&lt;li&gt;Adding the running of the deploy script &lt;code&gt;after_success&lt;/code&gt;, so only when build and check and tests run successfully&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And it seems to work quite nicely. As an example, my &lt;a href=&quot;https://github.com/rmflight/categoryCompare&quot;&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt; package now has it&amp;#39;s vignette on the &lt;a href=&quot;http://rmflight.github.io/categoryCompare/&quot;&gt;&lt;code&gt;gh-pages&lt;/code&gt; branch&lt;/a&gt;, and this will get updated every time I push a commit. &lt;/p&gt;
+</description></item>
     <item><title>My Career Goals</title><link>http://rmflight.github.io/posts/2014/08/postdoc2staff.html</link><category>postdoc</category><category>career</category><description>&lt;h1&gt;My Career Goals&lt;/h1&gt;
 
 &lt;h2&gt;TL;DR&lt;/h2&gt;
