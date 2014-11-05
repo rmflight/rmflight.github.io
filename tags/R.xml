@@ -77,7 +77,7 @@ git push --force --quiet $FULL_REPO master:gh-pages
 &lt;p&gt;In addition, we need to add three lines to the &lt;code&gt;.travis.yml&lt;/code&gt; file. &lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# under env: global:
-  - secure: &amp;quot;dHknlaJtXultVqPvFRce3BdBa6gxgFNvaqN1k9rd0PAVSThOhKxPjQ9IYiINgYujtTCJXWFPKyyG76OoTlWfRsbV+XDieWu9TqQk96yTc8wi4p93RffsYJypg7qhy8lGc2rDqwge0f48v6IB0g6pIsHjWz6pq7nW+OBSUFvBGV4=&amp;quot;
+  - secure: &amp;quot;yoursecurestring&amp;quot;
 
 # under before_install:
   - chmod 755 ./.push_gh_pages.sh
