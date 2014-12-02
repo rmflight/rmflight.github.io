@@ -33,7 +33,7 @@
 
 &lt;pre&gt;&lt;code&gt;travis login
 
-travis secure GH_TOKEN=&amp;quot;yourgithubtoken&amp;quot;
+travis encrypt GH_TOKEN=&amp;quot;yourgithubtoken&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This will generate output that should be copied to your &lt;code&gt;.travis.yml&lt;/code&gt; file. Essentially we have created an environment variable &lt;code&gt;GH_TOKEN&lt;/code&gt; with your actual GitHub token, that is encrypted on the &lt;em&gt;travis-ci&lt;/em&gt; servers. So this way you don&amp;#39;t expose your actual GitHub token to anyone who looks at your &lt;code&gt;.travis.yml&lt;/code&gt; file.&lt;/p&gt;
@@ -93,6 +93,10 @@ git push --force --quiet $FULL_REPO master:gh-pages
 &lt;/ul&gt;
 
 &lt;p&gt;And it seems to work quite nicely. As an example, my &lt;a href="https://github.com/rmflight/categoryCompare"&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt; package now has it&amp;#39;s vignette on the &lt;a href="http://rmflight.github.io/categoryCompare/"&gt;&lt;code&gt;gh-pages&lt;/code&gt; branch&lt;/a&gt;, and this will get updated every time I push a commit. &lt;/p&gt;
+
+&lt;h2&gt;Update&lt;/h2&gt;
+
+&lt;p&gt;As &lt;a href="https://twitter.com/cpsievert"&gt;Carson&lt;/a&gt; pointed out below, there was an error in the second code block. &lt;code&gt;travis secure&lt;/code&gt; should be &lt;code&gt;travis encrypt&lt;/code&gt;, as you are &lt;strong&gt;encrypting&lt;/strong&gt; the credentials. &lt;strong&gt;secure&lt;/strong&gt; is for decrypting something that was already encrypted. Thanks for catching it!&lt;/p&gt;
 </description>
 </item>
     <item>

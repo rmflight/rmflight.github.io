@@ -78,7 +78,7 @@ hljs.initHighlightingOnLoad();
 
 <pre><code>travis login
 
-travis secure GH_TOKEN=&quot;yourgithubtoken&quot;
+travis encrypt GH_TOKEN=&quot;yourgithubtoken&quot;
 </code></pre>
 
 <p>This will generate output that should be copied to your <code>.travis.yml</code> file. Essentially we have created an environment variable <code>GH_TOKEN</code> with your actual GitHub token, that is encrypted on the <em>travis-ci</em> servers. So this way you don&#39;t expose your actual GitHub token to anyone who looks at your <code>.travis.yml</code> file.</p>
@@ -138,6 +138,10 @@ git push --force --quiet $FULL_REPO master:gh-pages
 </ul>
 
 <p>And it seems to work quite nicely. As an example, my <a href="https://github.com/rmflight/categoryCompare"><code>categoryCompare</code></a> package now has it&#39;s vignette on the <a href="http://rmflight.github.io/categoryCompare/"><code>gh-pages</code> branch</a>, and this will get updated every time I push a commit. </p>
+
+<h2>Update</h2>
+
+<p>As <a href="https://twitter.com/cpsievert">Carson</a> pointed out below, there was an error in the second code block. <code>travis secure</code> should be <code>travis encrypt</code>, as you are <strong>encrypting</strong> the credentials. <strong>secure</strong> is for decrypting something that was already encrypted. Thanks for catching it!</p>
 <h5>Tagged in: <a href="/tags/R.html">R</a></h5><h6><a href="/posts/2014/11/travis_ci_gh_pages.html">Posted on 2014-11-05</a></h6><h2>Recent Posts:</h2><ul><li><a href="/posts/2014/11/travis_ci_gh_pages.html">Travis-CI to Github Pages (2014-11-05)</a></li><li><a href="/posts/2014/08/postdoc2staff.html">My Career Goals (2014-08-08)</a></li><li><a href="/posts/2014/07/analyses_as_packages.html">Analyses as Packages (2014-07-28)</a></li><li><a href="/posts/2014/07/vignetteAnalysis.html">Creating an analysis as a package and vignette (2014-07-28)</a></li><li><a href="/posts/2014/07/zpackages_vs_projectTemplate.html">Packages vs ProjectTemplate (2014-07-28)</a></li></ul>
 </div><div class="span2"><a class="twitter-timeline" href="https://twitter.com/rmflight" data-widget-id="368415899268558848">Tweets by @rmflight</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
