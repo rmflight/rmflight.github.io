@@ -7,6 +7,38 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>First Open Post-Publication Peer Review, with Credit!</title><link>http://rmflight.github.io/posts/2015/03/openpeerreview.html</link><category>openscience</category><description>&lt;h1&gt;First Open Post-Publication Peer Review, with Credit!&lt;/h1&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;Reviewed &lt;a href=&quot;https://twitter.com/@biodataganache&quot;&gt;Jason McDermott&amp;#39;s&lt;/a&gt; &lt;a href=&quot;http://f1000research.com/articles/4-60/v1&quot;&gt;MDRPred paper&lt;/a&gt; on F1000Research!, where my review is posted along side the paper, &lt;a href=&quot;http://f1000research.com/articles/4-60/v1#referee-response-7889&quot;&gt;with a DOI&lt;/a&gt;, completely in the open with my name attached. Was a pleasant experience, aided by the fact that Jason wrote a good paper.&lt;/p&gt;
+
+&lt;h2&gt;F1000Research!&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://f1000research.com/&quot;&gt;F1000Research!&lt;/a&gt; is a new publishing startup from F1000 that has a model of post-publication peer review, whereby upon submission the manuscript undergoes basic quality checks (no real editorial control), and then is published. Once the article is published, reviewers are invited to review, and they have 10 days to submit their review. Reviews are signed, and given a DOI. Reviewers are asked to assign one of &lt;strong&gt;Approved&lt;/strong&gt;, &lt;strong&gt;Approved with Reservations&lt;/strong&gt;, &lt;strong&gt;Not Approved&lt;/strong&gt; status to the article.&lt;/p&gt;
+
+&lt;p&gt;When the article gets two revieweres giving &lt;strong&gt;Approved&lt;/strong&gt; status (likely after at least one round of review and resubmission), then it will be submitted to PubMed for indexing. &lt;/p&gt;
+
+&lt;h2&gt;How Did I End Up Reviewing This??&lt;/h2&gt;
+
+&lt;p&gt;Long story short, I&amp;#39;ve been following Jason on twitter for a while, and I happened to see him tweet and blog about trying to get an F1000Research article up as a citeable supporting publication for a grant going in. I thought it was a nifty idea, and although I actually at the time did not have much of an idea of what Jason&amp;#39;s research actually involved, communicated with him that when the article went live I would be willing to be recommended as a reviewer. Imagine my surprise that I actually had enough domain knowledge that I could actually review the article. &lt;/p&gt;
+
+&lt;p&gt;That is saying something, given that the paper has a neat combination of genetic algorithms, regular expressions, and protein function prediction (really, you should go give it a read). By the way, this is also the first paper I&amp;#39;ve reviewed in a long time that did not have serious methodological problems, or where claims are made with no substantiation, and I could not identify any serious statistical issues.&lt;/p&gt;
+
+&lt;h2&gt;The Open Part&lt;/h2&gt;
+
+&lt;p&gt;Although I don&amp;#39;t do a lot of reviewing, I had to admit that this was one of the best reviewing assignments I&amp;#39;ve had in a while. Although I believe that peer review is essential to science, and it needs to be more open (I&amp;#39;ve started signing my reviews for other journals), this was the first time I knew my review was open (my name would be known to the authors&amp;#39; by default) and public. I have to say that this likely improved the care and thoroughness in doing the actual review as I went through the article, given that both the authors and anyone else who comes across the article and my review can see if the issues I raise are real, or if I&amp;#39;m trying to make myself look good. And my name will be publicly associated with it!&lt;/p&gt;
+
+&lt;p&gt;Note that this &lt;strong&gt;openness&lt;/strong&gt; did not keep me from criticizing particular aspects of the paper. There are lots of things that need to be changed in the article before I will give it an &lt;strong&gt;Approved&lt;/strong&gt; status, and I laid those out in my review.&lt;/p&gt;
+
+&lt;h2&gt;PostPublication&lt;/h2&gt;
+
+&lt;p&gt;I really appreciated that I get to review a &lt;strong&gt;published&lt;/strong&gt; article, because it means that the whole thing is typeset, figures and tables are in their logical place (not at the end of the document!!!), the line spacing is readable, etc. Note to other publishers, at least let authors put the figures in-line for review if you are not going to type-set the article before it goes to reviewers.&lt;/p&gt;
+
+&lt;h2&gt;Disclaimers&lt;/h2&gt;
+
+&lt;p&gt;I was given an F1000Research! t-shirt as a reward for commenting on a &lt;a href=&quot;http://blog.f1000research.com/2013/08/23/peer-review-credit-where-credits-due/#comment-1020559658&quot;&gt;blog-post&lt;/a&gt; regarding incentives for peer-review. I like the shirt. Having done my review, I am also eligible to get a 50% discount on the article processing charges if I submit an article to F1000Research in the next 12 months.&lt;/p&gt;
+</description></item>
     <item><title>Being a PhD Student and PostDoc with Migraines</title><link>http://rmflight.github.io/posts/2014/12/migraine_phdisabled.html</link><category>phdisabled</category><category>migraines</category><description>&lt;h1&gt;Being a PhD Student and PostDoc with Migraines&lt;/h1&gt;
 
 &lt;p&gt;A blog post on the &lt;a href=&quot;http://jabberwocky.weecology.org/2014/10/13/how-technology-can-help-scientists-with-chronic-illnesses-or-technology-ftw/&quot;&gt;Weecology group blog&lt;/a&gt; by &lt;a href=&quot;https://twitter.com/elitabaldridge&quot;&gt;Elita Baldridge&lt;/a&gt; on being a PhD student with fibromyalgia, and how they are working through that, caused me to pause and reflect on my experience as a PhD student and PostDoc with migraines. For those who haven&amp;#39;t read my blog, I do research in bioinformatics, specifically in transcriptomics and metabolomics. I spend almost all of my research hours in front of a computer writing code, generating plots, and trying to make sense of -omics level data.&lt;/p&gt;
