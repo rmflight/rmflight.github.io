@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>Optimization by Simulated Annealing Genetic Algorithm (SAGA)</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
+<!DOCTYPE html><html><head><title>Mouse / Human Transcriptomics and Batch Effects</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -53,28 +53,76 @@ hljs.initHighlightingOnLoad();
     '//cdn.krxd.net/static/socialtag/widget.js';
   var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); 
 })();
-</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li><li><a href="http://www.ncbi.nlm.nih.gov/myncbi/robert%20m.flight.1/comments/">PubmedCommons Comments</a></li><li><a href="/pages/cv.html">CV</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Optimization by Simulated Annealing Genetic Algorithm (SAGA)</h1>
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li><li><a href="http://www.ncbi.nlm.nih.gov/myncbi/robert%20m.flight.1/comments/">PubmedCommons Comments</a></li><li><a href="/pages/cv.html">CV</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Mouse / Human Transcriptomics and Batch Effects</h1>
 
-<p>There have been many attempts to combine optimization algorithms using a combined simulated annealing genetic algorithm (SAGA). In practice, this approach appears to improve the convergence of the solution and avoid getting trapped in local minima. The literature that is available appears to have two implementations, described below. In both cases however, new solutions are accepted if they result in lower cost functions (energy), or a probability of acceptance is defined based on the temperature using a Boltzmann type function incorporating the change of energy and the temperature.</p>
+<h2>TL;DR</h2>
 
-<h2>Interleaved GA / SA</h2>
+<p>This <a href="http://dx.doi.org/10.1073/pnas.1413624111">2014 PNAS paper by S. Lin et al (Lin et al., PNAS, 2014)</a> that compares transcription of tissues between species has a flawed experimental design, where species is almost perfectly confounded with machine / lane on which the sequencing was done. Y. Golad and O. Mizrahi-Man have <a href="http://f1000research.com/articles/4-121/v1">published a manuscript</a> describing the confounding and the results of removing it. This was possible because the original authors supplied the information about which publically available files were used in the original analysis. The data from this experiment is probably only suitable as an example of what not to do in high-throughput biology experimental design, and that there <em>may</em> be similarities in human and mouse transcriptional programs.</p>
 
-<p>Given a population of individuals (chromosomes), apply genetic operators (crossover, mutation) to selected individuals to create a new population. This is followed by applying simulated annealing to selected individual(s). Lower temperature and repeat. This methodology and variants thereof has been used as a general strategy for inverse problems (<a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=00497490">Renyuan et al., 1996, paywall</a>), designing damping control in electrical transmission systems (<a href="http://cdn.intechopen.com/pdfs-wm/38522.pdf">Xie, 2012</a>), job shop scheduling (<a href="http://www.ijest-ng.com/ijest-ng-vol2-no1-pp144-151.pdf">Tamilarasi and Anantha Kumar, 2010</a>), and small molecule docking in Autodock 4 (<a href="http://onlinelibrary.wiley.com/doi/10.1002/(SICI">Morris et al., 1998, paywall</a>1096-987X(19981115)19:14%3C1639::AID-JCC10%3E3.0.CO;2-B/pdf))</p>
+<p>We discussed these papers in the Systems Biology and Omics Integration University of Kentucky Journal Club on June 1, 2015. I lead that discussion.</p>
 
-<h2>GA With Acceptance Controlled by Temperature</h2>
+<h2>Mouse / Human Transcriptomic Differences</h2>
 
-<p>In contrast with the above, in these methods, individuals are generated solely by genetic operators (crossover and mutation), and are accepted into the population using a Boltzmann type calculation. At each generation the temperature is decreased, thereby decreasing the probability of accepting higher energy individuals. This has previously been used design transit routes (<a href="http://link.springer.com/chapter/10.1007%2F978-3-642-16472-9_37">Liu et al., 2010, paywall</a>), and in take-or-pay contracts (<a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=485994&amp;tag=1">Wong and Yin Wa Wong, 1996, paywall</a>).</p>
+<p>In 2014, two papers were published by members of the ENCODE project purporting that tissue gene expression clustered more by species than by tissue. In the first (<a href="http://www.nature.com/nature/journal/v515/n7527/full/nature13992.html">ENCODE Consortium, Nature, 2014, doi:10.1038/nature13992 2014</a>), a large number of experiments were combined and compared. <a href="http://www.nature.com/nature/journal/v515/n7527/fig_tab/nature13992_F2.html">Figure 2a</a> shows a PCA plot of expression in across 10 tissues in human and mouse.</p>
 
-<h2>Temperature Controlling Mutation Rate</h2>
+<p><img src="http://www.nature.com/nature/journal/v515/n7527/images/nature13992-f2.jpg" alt="ENCODE paper figuer 2"/></p>
 
-<p>In neither of the strategies above is the mutation or crossover rate modified as a function of the decreasing temperature. An alternative implementation would be to combine a GA where the probability of accepting new solutions is controlled by the temperature, <em>and</em> the mutation rate (the number of elements in an individual undergoing mutation) varies as a function of the temperature, namely as the temperature decreases the number of elements that are mutated decreases as well. This corresponds to varying the search space available by mutation as a function of temperature. This idea of controlling the search space by temperature has been previously implemented by using a <em>simplex</em> to generate new solutions in simulated annealing, and controlling the space of new points by the temperature (described in the 1996 edition of Numerical Recipes in C in section 10.9).</p>
+<p>Interestingly enough, if you collapse PC1 (definitely species), then the tissues start to look quite similar. Which does not seem that unexpected, there are species specific differences, but the tissues are doing something similar in each species.</p>
 
-<p>HNB Moseley has previously used (and published) such a SAGA method wherein the mutation rate changes as a function of the temperature to determine simultaneous solutions in metabolic modeling (<a href="http://www.ncbi.nlm.nih.gov/pubmed/21627825">Genetic Algorithm for Isotopologues in Metabolic Systems (GAIMS)</a>). </p>
+<p>This was not the end of the story, however. A subsequent publication (<a href="http://www.pnas.org/content/111/48/17224">S Lin et al., PNAS, 2014, doi: 10.1073/pnas.1413624111</a>) went further in doing fresh sequencing of 13 tissues in both species, still showing bigger differences between species than between tissues.</p>
 
-<h2>Examining Advantages</h2>
+<h2>Is Everything As it Seems?</h2>
 
-<p>However, to our knowledge, the <em>advantages</em> or <em>disadvantages</em> of changing the mutation rate as a function of temperature has never been examined, especially in comparison to the other two types of implementations discussed above. If you know of any other published instances of SAGA methods where the mutation rate is varied, we would like to know before we attempt to do the characterisation ourselves.</p>
-<h5>Tagged in: <a href="/tags/optimization.html">optimization</a>, <a href="/tags/genetic.html">genetic</a>, <a href="/tags/algorithm.html">algorithm</a>, <a href="/tags/simulated.html">simulated</a>, <a href="/tags/annealing.html">annealing</a></h5><h6>Posted on 2014-03-24</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
+<p>On April 28, Y. Golad sent out this tweet:</p>
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">We reanalyzed the data from <a href="http://t.co/Fv7z9WwLJ4">http://t.co/Fv7z9WwLJ4</a> and found the following: <a href="http://t.co/37eVs8Kln9">pic.twitter.com/37eVs8Kln9</a></p>&mdash; Yoav Gilad (@Y_Gilad) <a href="https://twitter.com/Y_Gilad/status/593088451462963202">April 28, 2015</a></blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>The left figure shows the original data, clustering by species, and on the right, reprocessed data, clustering by tissue. Now, I have to admit when he posted this I was kind of ticked off. Where was the blog-post or manuscript showing what exactly was done? If you look at the comments to Yoav on that tweet, it seems others were wondering the same thing. Thankfully, on May 19, the manuscript hit <a href="http://f1000research.com/articles/4-121/v1">F1000Research (Gilad Y and Mizrahi-Man O. A reanalysis of mouse ENCODE comparative gene expression data [v1; ref status: approved with reservations 1, http://f1000r.es/5ez] F1000Research 2015, 4:121 (doi: 10.12688/f1000research.6536.1))</a>.</p>
+
+<h2>Batch Effects</h2>
+
+<p>Yoav asked for the list of data files that were used in the PNAS paper, and then examined the read id line to extract the experimental design. This experimental design is captured in Figure 1:</p>
+
+<p><img src="https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure1.gif" alt="Y Golad Fig 1"/></p>
+
+<p>Do you notice a problem with this design?</p>
+
+<p>. 
+.
+.
+.
+.</p>
+
+<p>Hopefully you noticed that species (one of the main effects to investigate) is not randomly or even semi-randomly distributed across sequencers and / or lanes, but is almost perfectly confounded with sequencer / lane. It doesn&#39;t matter if one technician handled all the samples, this is potentially a large batch effect / confounding variable. </p>
+
+<p>And Yoav shows that ignoring the batch effect produces data much like that reported in the Lin et al PNAS pub, while removing the batch effect using <a href="http://bioinformatics.oxfordjournals.org/content/28/6/882">ComBat</a> results in the tissues clustering together.</p>
+
+<h2>Is the Data Still Useful?</h2>
+
+<p><a href="https://docs.google.com/presentation/d/1_yA8RHdfodOV-5IoR-yb317KwaWgXFAvJntaIm8HYaU/edit?usp=sharing">I presented</a> these papers and the discussion around them at our weekly Systems Biology and Omics Integration (<a href="http://sboi.bioinformatics.uky.edu">SBOI</a>) Journal Club on June 1, 2015. There were a couple of concerns with the overall study:</p>
+
+<ul>
+<li>Is ENCODE data still useful?
+
+<ul>
+<li>some people seemed to be concerned that this brought the general ENCODE project into question. I think by the end we agreed that in general it is probably ok to be using ENCODE data, but this particular study was questionable.</li>
+</ul></li>
+<li>What does the data tell us?
+
+<ul>
+<li>based on the correction that Yoav did and reanalysis, is there anything actually telling in the data? Unfortunately, because species is so confounded with machine, I don&#39;t think there is much of a conclusion to draw about species differences <em>vs</em> tissue similarity based on this data. There was some disagreement on this point.</li>
+</ul></li>
+<li>Full experimental designs should be published, and requested by reviewers
+
+<ul>
+<li>Really, why a reviewer on the paper <strong>did not</strong> request more information about the experimental design is beyond me, especially given the claims of the manuscript. Why it is not the norm to provide this kind of experimental design information in a manuscript is also a good question. </li>
+</ul></li>
+</ul>
+
+<p>Finally, I think the best use of the 2014 PNAS pub and this dataset is an example of <strong>how not</strong> to design a biological experiment.</p>
+<h5>Tagged in: <a href="/tags/openscience.html">openscience</a></h5><h6>Posted on 2015-06-01</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
   <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */

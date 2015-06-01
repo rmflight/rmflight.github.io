@@ -7,6 +7,76 @@
     <category>data</category>
     <category>bioinformatics</category>
     <category>open science</category>
+    <item><title>Mouse / Human Transcriptomics and Batch Effects</title><link>http://rmflight.github.io/posts/2015/06/mouse_human_transcriptomics.html</link><category>openscience</category><description>&lt;h1&gt;Mouse / Human Transcriptomics and Batch Effects&lt;/h1&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;This &lt;a href=&quot;http://dx.doi.org/10.1073/pnas.1413624111&quot;&gt;2014 PNAS paper by S. Lin et al (Lin et al., PNAS, 2014)&lt;/a&gt; that compares transcription of tissues between species has a flawed experimental design, where species is almost perfectly confounded with machine / lane on which the sequencing was done. Y. Golad and O. Mizrahi-Man have &lt;a href=&quot;http://f1000research.com/articles/4-121/v1&quot;&gt;published a manuscript&lt;/a&gt; describing the confounding and the results of removing it. This was possible because the original authors supplied the information about which publically available files were used in the original analysis. The data from this experiment is probably only suitable as an example of what not to do in high-throughput biology experimental design, and that there &lt;em&gt;may&lt;/em&gt; be similarities in human and mouse transcriptional programs.&lt;/p&gt;
+
+&lt;p&gt;We discussed these papers in the Systems Biology and Omics Integration University of Kentucky Journal Club on June 1, 2015. I lead that discussion.&lt;/p&gt;
+
+&lt;h2&gt;Mouse / Human Transcriptomic Differences&lt;/h2&gt;
+
+&lt;p&gt;In 2014, two papers were published by members of the ENCODE project purporting that tissue gene expression clustered more by species than by tissue. In the first (&lt;a href=&quot;http://www.nature.com/nature/journal/v515/n7527/full/nature13992.html&quot;&gt;ENCODE Consortium, Nature, 2014, doi:10.1038/nature13992 2014&lt;/a&gt;), a large number of experiments were combined and compared. &lt;a href=&quot;http://www.nature.com/nature/journal/v515/n7527/fig_tab/nature13992_F2.html&quot;&gt;Figure 2a&lt;/a&gt; shows a PCA plot of expression in across 10 tissues in human and mouse.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.nature.com/nature/journal/v515/n7527/images/nature13992-f2.jpg&quot; alt=&quot;ENCODE paper figuer 2&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Interestingly enough, if you collapse PC1 (definitely species), then the tissues start to look quite similar. Which does not seem that unexpected, there are species specific differences, but the tissues are doing something similar in each species.&lt;/p&gt;
+
+&lt;p&gt;This was not the end of the story, however. A subsequent publication (&lt;a href=&quot;http://www.pnas.org/content/111/48/17224&quot;&gt;S Lin et al., PNAS, 2014, doi: 10.1073/pnas.1413624111&lt;/a&gt;) went further in doing fresh sequencing of 13 tissues in both species, still showing bigger differences between species than between tissues.&lt;/p&gt;
+
+&lt;h2&gt;Is Everything As it Seems?&lt;/h2&gt;
+
+&lt;p&gt;On April 28, Y. Golad sent out this tweet:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;We reanalyzed the data from &lt;a href=&quot;http://t.co/Fv7z9WwLJ4&quot;&gt;http://t.co/Fv7z9WwLJ4&lt;/a&gt; and found the following: &lt;a href=&quot;http://t.co/37eVs8Kln9&quot;&gt;pic.twitter.com/37eVs8Kln9&lt;/a&gt;&lt;/p&gt;&amp;mdash; Yoav Gilad (@Y_Gilad) &lt;a href=&quot;https://twitter.com/Y_Gilad/status/593088451462963202&quot;&gt;April 28, 2015&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;http://rmflight.github.io//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;The left figure shows the original data, clustering by species, and on the right, reprocessed data, clustering by tissue. Now, I have to admit when he posted this I was kind of ticked off. Where was the blog-post or manuscript showing what exactly was done? If you look at the comments to Yoav on that tweet, it seems others were wondering the same thing. Thankfully, on May 19, the manuscript hit &lt;a href=&quot;http://f1000research.com/articles/4-121/v1&quot;&gt;F1000Research (Gilad Y and Mizrahi-Man O. A reanalysis of mouse ENCODE comparative gene expression data [v1; ref status: approved with reservations 1, http://f1000r.es/5ez] F1000Research 2015, 4:121 (doi: 10.12688/f1000research.6536.1))&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Batch Effects&lt;/h2&gt;
+
+&lt;p&gt;Yoav asked for the list of data files that were used in the PNAS paper, and then examined the read id line to extract the experimental design. This experimental design is captured in Figure 1:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure1.gif&quot; alt=&quot;Y Golad Fig 1&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Do you notice a problem with this design?&lt;/p&gt;
+
+&lt;p&gt;. 
+.
+.
+.
+.&lt;/p&gt;
+
+&lt;p&gt;Hopefully you noticed that species (one of the main effects to investigate) is not randomly or even semi-randomly distributed across sequencers and / or lanes, but is almost perfectly confounded with sequencer / lane. It doesn&amp;#39;t matter if one technician handled all the samples, this is potentially a large batch effect / confounding variable. &lt;/p&gt;
+
+&lt;p&gt;And Yoav shows that ignoring the batch effect produces data much like that reported in the Lin et al PNAS pub, while removing the batch effect using &lt;a href=&quot;http://bioinformatics.oxfordjournals.org/content/28/6/882&quot;&gt;ComBat&lt;/a&gt; results in the tissues clustering together.&lt;/p&gt;
+
+&lt;h2&gt;Is the Data Still Useful?&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1_yA8RHdfodOV-5IoR-yb317KwaWgXFAvJntaIm8HYaU/edit?usp=sharing&quot;&gt;I presented&lt;/a&gt; these papers and the discussion around them at our weekly Systems Biology and Omics Integration (&lt;a href=&quot;http://sboi.bioinformatics.uky.edu&quot;&gt;SBOI&lt;/a&gt;) Journal Club on June 1, 2015. There were a couple of concerns with the overall study:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Is ENCODE data still useful?
+
+&lt;ul&gt;
+&lt;li&gt;some people seemed to be concerned that this brought the general ENCODE project into question. I think by the end we agreed that in general it is probably ok to be using ENCODE data, but this particular study was questionable.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What does the data tell us?
+
+&lt;ul&gt;
+&lt;li&gt;based on the correction that Yoav did and reanalysis, is there anything actually telling in the data? Unfortunately, because species is so confounded with machine, I don&amp;#39;t think there is much of a conclusion to draw about species differences &lt;em&gt;vs&lt;/em&gt; tissue similarity based on this data. There was some disagreement on this point.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Full experimental designs should be published, and requested by reviewers
+
+&lt;ul&gt;
+&lt;li&gt;Really, why a reviewer on the paper &lt;strong&gt;did not&lt;/strong&gt; request more information about the experimental design is beyond me, especially given the claims of the manuscript. Why it is not the norm to provide this kind of experimental design information in a manuscript is also a good question. &lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, I think the best use of the 2014 PNAS pub and this dataset is an example of &lt;strong&gt;how not&lt;/strong&gt; to design a biological experiment.&lt;/p&gt;
+</description></item>
     <item><title>First Open Post-Publication Peer Review, with Credit!</title><link>http://rmflight.github.io/posts/2015/03/openpeerreview.html</link><category>openscience</category><description>&lt;h1&gt;First Open Post-Publication Peer Review, with Credit!&lt;/h1&gt;
 
 &lt;h2&gt;TL;DR&lt;/h2&gt;
