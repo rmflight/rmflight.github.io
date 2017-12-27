@@ -11,6 +11,40 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Custom Deployment Script</title>
+      <link>/post/custom-deployment-script/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/custom-deployment-script/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Use a short bash script to do deployment from your own computer directly to your &lt;code&gt;*.github.io&lt;/code&gt; domain.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why?&lt;/h2&gt;
+&lt;p&gt;So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the &lt;code&gt;/public&lt;/code&gt; directory to the repo for my &lt;code&gt;github.io&lt;/code&gt; site, and then push the changes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-script&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Script&lt;/h2&gt;
+&lt;p&gt;Here is the simple script I ended up using:&lt;/p&gt;
+&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;#!/bin/bash
+org_dir=`pwd`
+cd path/to/github.io/repo/
+#rm -rf *
+cp -Rfu path/to/blogdown/public/* .
+
+git add *
+commit_time=`date`
+git commit -m &amp;quot;update at $commit_time&amp;quot;
+git push origin master
+
+cd $org_dir&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It changes directories, because to push from a &lt;code&gt;git&lt;/code&gt; repo I’m pretty sure you need to be in the directory, so it also makes sure to go back there at the end. It then copies the contents of &lt;code&gt;/public&lt;/code&gt; to the repo, &lt;code&gt;add&lt;/code&gt;s all the files, and then uses the current time-stamp as the commit message, and finally pushes all the updates.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
       <link>/post/linking-to-manually-inserted-images-in-hugo/</link>
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
