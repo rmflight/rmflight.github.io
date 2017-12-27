@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deciphering Life: One Bit at a Time on Deciphering Life: One Bit at a Time</title>
+    <link>/</link>
+    <description>Recent content in Deciphering Life: One Bit at a Time on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
+      <link>/post/linking-to-manually-inserted-images-in-hugo/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/linking-to-manually-inserted-images-in-hugo/</guid>
+      <description>&lt;div id=&#34;manual-linking&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Manual Linking?&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;blogdown&lt;/code&gt; for generating websites and blog-posts from &lt;code&gt;Rmarkdown&lt;/code&gt; files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;like this figure from wikipedia&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;where-to&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Where to??&lt;/h2&gt;
+&lt;p&gt;To do this, you want the text of your &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tag to your image to be:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;img src = &amp;quot;/img/image_file.png&amp;quot;&amp;gt;&amp;lt;/img&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And then put the image itself in the directory &lt;code&gt;/static/img/image_file.png&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;/img/Standard_deviation_diagram.svg&#34;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;By M. W. Toews, &lt;a href=&#34;http://creativecommons.org/licenses/by/2.5&#34;&gt;CC BY 2.5&lt;/a&gt;, via Wikimedia Commons, &lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;source&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This information is also mentioned in &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;section 2.7 of the Blogdown book&lt;/a&gt;. Obviously I need to do more reading.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>I was Part of the Problem</title>
+      <link>/post/i-was-part-of-the-problem/</link>
+      <pubDate>Wed, 18 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/i-was-part-of-the-problem/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;With the recent charges of sexual harassment against some high-profile individuals, and so many women coming forward with #metoo (and the understanding that this is really something almost &lt;em&gt;all&lt;/em&gt; women have faced), I realized that my younger self was #partoftheproblem. I think many other men are part of the problem, &lt;strong&gt;even though they might not think so&lt;/strong&gt;. I didn’t think I was part of the problem either. I hope that other men might read this and critically evaluate if they are #partoftheproblem. I also hope and pray that my own sons will do better at this if I teach them right.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-could-i-be&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How Could I Be?&lt;/h2&gt;
+&lt;p&gt;Let me be up front. I have never &lt;strong&gt;sexually assaulted&lt;/strong&gt; anyone, let alone considered such a thing. But that’s not really the problem, because the way I acted towards women, I think they may have been scared that I might, as I have put tons of &lt;strong&gt;unwanted attention&lt;/strong&gt; on several women over the years, starting with when I was 12 years old, in the sixth grade.&lt;/p&gt;
+&lt;p&gt;I also want to be clear, I was a horrible guy friend to women (even if they didn’t think so). If I knew a girl had a boyfriend, well then, I would &lt;strong&gt;not&lt;/strong&gt; even consider trying to hit on or express interest in that girl, and I was “friends” with plenty of women over the course of my school years who had boyfriends. But in &lt;strong&gt;most&lt;/strong&gt; cases I secretly hoped they might dump their boyfriends and go out with me instead. Also, if I knew they didn’t have a boyfriend, and I found them remotely attractive, then I would do all I could to try to become friends with them in the &lt;strong&gt;hope to eventually become their boyfriend&lt;/strong&gt;. So, my sole reason for being friends with women, really, was to eventually become romantically involved. That was my primary motivation. Looking back on it now, it makes me sick.&lt;/p&gt;
+&lt;p&gt;I’ve never had a woman tell me she was assaulted by anyone either, but given my past behavior, even if someone I knew had, I don’t think my actions made me someone that a woman would trust to tell.&lt;/p&gt;
+&lt;p&gt;Let me give you some examples of my behavior.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;grade-school&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Grade School&lt;/h2&gt;
+&lt;p&gt;In 6th grade, I decided that I wanted a girlfriend, and I picked out one girl in my class who I wanted to be my girlfriend. I am very sure I never asked her out, to be my girlfriend, but I made sure to spend tons of time with her, and if I recall correctly, she eventually got the gist of my interest, and told me &lt;strong&gt;very clearly she wasn’t interested&lt;/strong&gt;. But &lt;strong&gt;her telling me no did not stop my unwanted advances&lt;/strong&gt; or attention. I am sure that I made her very uncomfortable the rest of that grade.&lt;/p&gt;
+&lt;p&gt;In middle school (7-9 at the time), I pretty much continued this process unabated. I would latch onto a woman that I found attractive, and make her the target of my affections, and pour out my unwanted attention upon her, &lt;strong&gt;not taking no for an answer&lt;/strong&gt;. I only stopped after long periods of continued rejection, or when that person acquired a significant other. Although not an excuse for my actions, my tactics and hopes were largely fueled by rampaging hormones, way too many romantic comedies where the nice guy always got the girl by virtue of sheer persistence (this was the 90’s), and nascent exposure to pornography.&lt;/p&gt;
+&lt;p&gt;I would find out girls numbers and call them without being asked. I would know where these girls were at all times through the day, even during lunch and between classes. I would find any excuse to be near them. Every sock-hop (weekly lunch time dance on gym floor) I would ask these girls to dance with me. I would give them valentines cards, Christmas cards, etc, in &lt;strong&gt;the hopes that they would realize what a great guy I was and go out with me.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Just so we are clear, none of this got me any dates in grade school.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;undergraduate&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Undergraduate&lt;/h2&gt;
+&lt;p&gt;Now I’ve graduated high-school, I’m heading off to a local university, with lots of girls. I made lots of friends with girls who had boyfriends, in fact I think my circle of friends had way more girls in it than guys. But, I was always finding one girl who I wanted to date, and would make sure to spend extra time around them, helping them whenever possible, etc, and dropping subtle and not so subtle hints that I wanted to be their boyfriend. And there was always the hope that someone would break-up with their current boyfriend and find me, the faithful friend, waiting to comfort them.&lt;/p&gt;
+&lt;p&gt;Over the course of this time, I had three women agree to be my date. Two of those did not result in an actual date, because I started acting like a stalker after they said yes, and they wisely stayed away. In the third case, we went out twice, but me calling at random hours, and showing up at her house un-announced because I thought she was really sad freaked her out, and she stopped talking to my creepy, stalkerish, clingy self.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;post-graduate&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Post-Graduate&lt;/h2&gt;
+&lt;p&gt;Somehow, it seems, by the time I got to my PhD, I had &lt;strong&gt;mostly&lt;/strong&gt; given up on finding a girlfriend, settling down and getting married (really, that was my goal). I say mostly. I don’t know if I hadn’t met my now spouse in the first couple of months of my PhD that I would not have continued making unwanted advances on the women in my PhD program. (By the way, I met my spouse outside of work, at a Church actually, and was introduced by a mutual friend. In the 13 years I’ve known her, there are only a handful of days we haven’t talked to each other since we went on our first date).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-real-problem&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Real Problem&lt;/h2&gt;
+&lt;p&gt;And this is the &lt;strong&gt;real&lt;/strong&gt; problem. Too many men, my past self included, think women owe them something for being their friend, for being a &lt;strong&gt;nice guy&lt;/strong&gt;. For giving them any kind of attention, or any kind of help. Too many men believe these things, and then use their power and prestige, to demand things of women. Guys, &lt;strong&gt;women don’t owe you anything.&lt;/strong&gt; They definitely don’t owe you sex or reciprocated romantic interest because of something you did for them. They are another person worthy of respect, simply because they are a person.&lt;/p&gt;
+&lt;p&gt;In addition, real life is not a romantic comedy. Non-romantic friendships are a good thing, because we need other peoples perspectives in our lives. So, if a woman tells you &lt;strong&gt;no, she doesn’t want to date you&lt;/strong&gt;, accept it, and move on. Don’t make it awkward, especially if you are in the same work environment. &lt;strong&gt;Don’t assume that a woman is romantically interested just because she is friendly.&lt;/strong&gt; I know, radical thought. Maybe try being friends, colleagues, whatever with no romantic intentions, and no expectations of them either. Don’t be #partoftheproblem.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;solutions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solutions&lt;/h2&gt;
+&lt;p&gt;Teach your children that they can be friends with people of the opposite sex without being romantically involved, especially as they hit puberty. Teach them that &lt;strong&gt;no means no&lt;/strong&gt;, not &lt;strong&gt;no means maybe in 3 weeks&lt;/strong&gt;, or &lt;strong&gt;no means maybe if I try hard enough&lt;/strong&gt;. And if you see other men engaging in putting unwanted attention on women, call them out on it, &lt;strong&gt;whatever form it may take&lt;/strong&gt;. I wish someone had said something to me.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;caveats&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Caveats&lt;/h2&gt;
+&lt;p&gt;I realize that our general culture is really #partoftheproblem, when we have highly sexualized advertising (especially of women to men), and the idea that &lt;strong&gt;boys will be boys&lt;/strong&gt;, tell jokes about sexual assault, and propagate the idea that &lt;strong&gt;women want it&lt;/strong&gt;, based on how they act or dress. Those are all wrong too, and our culture needs to change.&lt;/p&gt;
+&lt;p&gt;I also realize that some of what I describe about myself is rather mild in comparison to much of what gets reported, but that’s not the point. It is still unwanted attention, and I didn’t know how to take no for an answer. Those women &lt;strong&gt;didn’t want my attention&lt;/strong&gt;, and I couldn’t accept that. If I had a different temperament, I don’t know what I would have done. Enough people realized it that some friends in Undergrad stopped being around me, but no one ever told me that what I was doing was wrong, and my parents weren’t involved enough in my so-called love life to know what was going on. If they had, I think they would have told me to knock it off and stop being an idiot.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Criticizing a Publication, and Lying About It</title>
+      <link>/post/criticizing-a-publication-and-lying-about-it/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/criticizing-a-publication-and-lying-about-it/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Other researchers &lt;a href=&#34;https://dx.doi/org/10.1002/prot.25024&#34;&gt;directly criticized&lt;/a&gt; a &lt;a href=&#34;https://dx.doi.org/10.1002/prot.24834&#34;&gt;recent publication of ours&lt;/a&gt; in a “research article”. Although they raised valid points, they &lt;strong&gt;outright lied&lt;/strong&gt; about the availability of our results. In addition, they did not provide access to their own results. We have published &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25257&#34;&gt;new work&lt;/a&gt; supporting our original results, and a direct rebuttal of their critique in a &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25263&#34;&gt;perspective article&lt;/a&gt;. The peer reviewers of their “research article” must have been asleep at the wheel to allow the major point, lack of access to our results, to stand.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;original-publication&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Original Publication&lt;/h2&gt;
+&lt;p&gt;Back in the summer of 2015, I was second author on a publication (&lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1002/prot.24834/full&#34;&gt;Yao et al., 2015&lt;/a&gt;, hereafter YS2015) describing an automated method to characterize zinc ion coordination geometries (CGs). Applying our automated method to all zinc sites in the worldwide Protein Data Bank (wwPDB), we found &lt;em&gt;abberrant&lt;/em&gt; zinc CGs that don’t fit the canonical CGs. We were pretty sure that these aberrant CGs are real, and they have always existed, but had not been previously characterized because methods assumed that only the &lt;em&gt;canonical&lt;/em&gt; geometries should be observed in biological systems, and were excluding the &lt;em&gt;abberrant&lt;/em&gt; ones because they didn’t have good methods to detect and characterize them.&lt;/p&gt;
+&lt;p&gt;Also of note, the proteins with aberrant zinc geometries showed enrichment for different types of enzyme classifications than those with canonical zinc geometries.&lt;/p&gt;
+&lt;p&gt;For this publication, we made &lt;strong&gt;all&lt;/strong&gt; of our code and results available in a tarball that could be downloaded from our &lt;a href=&#34;http://bioinformatics.cesb.uky.edu/bin/view/Main/SoftwareDevelopment#Metal_ion_coordination_analysis_software&#34;&gt;website&lt;/a&gt;. This data went up while the paper was in review, on Dec 7, 2015 (with a correction on Dec 15). Recently, we’ve also put a copy of the tarball on &lt;a href=&#34;https://figshare.com/articles/Zn_metalloprotein_paper/4229333&#34;&gt;FigShare&lt;/a&gt;. Every draft of the publication, from initial submission through to accepted publication, included the link to the tarball on the website.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;critique&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Critique&lt;/h2&gt;
+&lt;p&gt;Less than a year later, &lt;a href=&#34;http://sci-hub.cc/doi/10.1002/prot.25024&#34;&gt;Raczynska, Wlodawer, and Jaskolski&lt;/a&gt; (RJW2016) published a &lt;em&gt;critique&lt;/em&gt; of YS2015 as a “research article”. In their publication, they questioned the existence of the &lt;em&gt;abberrant&lt;/em&gt; sites completely, based on the examination and remodeling of four aberrant structures highlighted in YS2015. To be fair, they did have some valid criticisms of the methods, and Sen Yao did a lot of work in our latest paper to address them.&lt;/p&gt;
+&lt;p&gt;As part of the critique, however, they claimed that they could only evaluate the four structures listed in two figures &lt;strong&gt;because we didn’t provide all of our results&lt;/strong&gt;. However, we had previously made our full results available as a tarball from our website. As you can see in the below figure, &lt;strong&gt;all&lt;/strong&gt; of the results were really available in that tarball.&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;/img/ys2017_figure1.png&#34;, width = &#34;600&#34;&gt;&lt;/p&gt;
+&lt;p&gt;In addition, although RWJ2016 went to all the trouble to actually remodel those four structures by going back to the original X-ray density, they &lt;strong&gt;didn’t make any of their models available&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, no one from RWJ2016 ever contacted our research group to see if the results might be available.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;response&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Response&lt;/h2&gt;
+&lt;div id=&#34;follow-up-paper-on-5-metals&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Follow-Up Paper on 5 Metals&lt;/h3&gt;
+&lt;p&gt;By the time the critiques appeared in RJW2016, Sen was already hard at work showing that the previously developed methods could be modified and then applied to other metal ion CGs, and that they also contained aberrant CGs (see &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25257&#34;&gt;YS2017-1&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;critique-direct-response&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Critique Direct Response&lt;/h3&gt;
+&lt;p&gt;In addition to YS2017-1, we felt that the critique deserved separate response (&lt;a href=&#34;https://doi.org/10.6084/m9.figshare.4754263.v1&#34;&gt;YS2017-2&lt;/a&gt;). To that end, we began drafting a response, wherein we pointed out some of the problems with RJW2016, the first being that we did indeed provide the &lt;strong&gt;full&lt;/strong&gt; set of results from YS2015, and therefore it was possible to evaluate our full work. We also addressed each of their other criticisms of YS2015, in many cases going beyond the original criticism, and explaining how it was being addressed in YS2017-1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-results-and-code&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Open Results and Code&lt;/h3&gt;
+&lt;p&gt;A major part of the conclusions in YS2017-2 was also devoted to the idea that code and results in science need to be shared, highlighting the fact that RJW2016 &lt;strong&gt;did not share their models&lt;/strong&gt; they used to try and discredit our work, lied about the fact that we did not share our own results, and pointing out some other projects in this research area that have shared well and others that have shared badly, and that the previous attitude of competition among research groups does not move science forward.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;peer-review&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Peer Review&lt;/h2&gt;
+&lt;p&gt;Let’s just say that the &lt;em&gt;peer-review&lt;/em&gt; of both of the papers was &lt;strong&gt;interesting&lt;/strong&gt;. Both manuscripts had the same set of reviewers. YS2017-1, the five metal paper, had some rather rigorous peer review, and was definitely improved by the reviewer’s comments. YS2017-2, our perspective, in contrast, was attacked by one peer reviewer right from submission, and was questioned almost continually as to whether it should even be published. I am thankful that one reviewer saw the need for it to be published, and that the Editor ultimately decided that it should be published, and that we were able to rebut each of the reviewer’s criticisms.&lt;/p&gt;
+&lt;p&gt;Finally, I really don’t know what happened in the peer review of RWJ2016. The first major claim was that our data wasn’t available, it should have taken a reviewer 10 minutes to verify and debunk that claim. I would have expected a much different critique from the authors had they actually examined our full data set. But, because of traditional closed peer review, that record is closed to us.&lt;/p&gt;
+&lt;p&gt;Overall though, I’m very happy both of our publications are now out, and we can move on to new stages of our analyses. Looking forward to continuing to work with my co-authors to move the work forward.&lt;/p&gt;
+&lt;div id=&#34;papers-discussed&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Papers Discussed&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Original Zinc CGs: &lt;a href=&#34;https://dx.doi.org/10.1002/prot.24834&#34;&gt;Yao et al 2015&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Critique of Zinc CGs: Raczynska, Wlodawer &amp;amp; Jaskolski 2016, &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25024&#34;&gt;publisher&lt;/a&gt;, &lt;a href=&#34;https://sci-hub.cc/10.1002/prot.25024&#34;&gt;sci-hub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;5 Metal CGs: &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25257&#34;&gt;Yao et al 2017&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Response to critique: Yao et al 2017, &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25263&#34;&gt;publisher&lt;/a&gt;, &lt;a href=&#34;https://doi.org/10.6084/m9.figshare.4754263.v1&#34;&gt;copy on figshare&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Example Talk</title>
+      <link>/talk/example-talk/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 -0500</pubDate>
+      
+      <guid>/talk/example-talk/</guid>
+      <description>&lt;p&gt;Embed your slides or video here using &lt;a href=&#34;https://sourcethemes.com/academic/post/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;shortcodes&lt;/a&gt;. Further details can easily be added using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
