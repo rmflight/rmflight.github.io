@@ -86,15 +86,6 @@
     
     <url>
     
-      <loc>/post/hive-plots-using-r-and-cytoscape/</loc>
-      <lastmod>2012-11-28T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
       <loc>/post/writing-papers-using-r-markdown/</loc>
       <lastmod>2012-10-09T00:00:00+00:00</lastmod>
     </url>
@@ -161,28 +152,8 @@
     
     <url>
     
-      <loc>/tags/cytoscape/</loc>
-      <lastmod>2012-11-28T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
       <loc>/</loc>
       <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/hive-plot/</loc>
-      <lastmod>2012-11-28T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
