@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/reproducible-methods/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/reproducible-methods/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/reproducible-methods/">
+  <meta property="og:title" content="Reproducible Methods | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2013-08-16T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2013-08-16T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Reproducible Methods | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Reproducible Methods</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2013-08-16 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2013-08-16
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Reproducible%20Methods&amp;url=%2fpost%2freproducible-methods%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2freproducible-methods%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2freproducible-methods%2f&amp;title=Reproducible%20Methods"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2freproducible-methods%2f&amp;title=Reproducible%20Methods"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Reproducible%20Methods&amp;body=%2fpost%2freproducible-methods%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <p>Science is built on the whole idea of being able to reproduce results, i.e. if I publish something, it should be possible for someone else to reproduce it, using the description of the methods used in the publication. As biological sciences have become increasingly reliant on computational methods, this has become a bigger and bigger issue, especially as the results of experiments become dependent on independently developed computational code, or use rather sophisticated computer packages that have a variety of settings that can affect output, and multiple versions. For further discussion on this issue, you might want to read <a href="http://bytesizebio.net/index.php/2012/08/24/can-we-make-research-software-accountable/">1</a>, <a href="http://ivory.idyll.org/blog/anecdotal-science.html">2</a>.</p>
+<p>I recently read a couple of different publications that really made me realize how big a problem this is. I want to spend some time showing what the problem is in these publications, and why we should be concerned about the current state of computational analytical reproducibility in life-sciences.</p>
+<p>In both the articles mentioned below, I do not believe that I, or anyone not associated with the project, would be able to generate even approximately similar results based solely on the raw data and the description of methods provided. Ultimately, this is a failure of both those doing the analysis, and the reviewers who reviewed the work, and is a rather deplorable situation for a field that prides itself verification of results. This is why I’m saying these are <strong>bad bioinformatics methods sections</strong>.</p>
+<div id="puthanveettil-et-al.-synaptic-transcriptome" class="section level2">
+<h2>Puthanveettil et al., Synaptic Transcriptome</h2>
+<p><a href="http://doi.org/10.1073/pnas.1304422110">Puthanveettil et al, 2013</a> had a paper out earlier titled <a href="http://doi.org/10.1073/pnas.1304422110">“A strategy to capture and characterize the synaptic transcriptome”</a> in PNAS. Although the primary development reported is a new method of characterizing RNA complexes that are carried by kinesin, much of the following analysis is bioinformatic in nature.</p>
+<p>For example, they used BLAST searches to identify the RNA molecules, a cutoff value is reported in the results. However, functional characterization using Gene Ontology (GO) was carried out by “Bioinformatics analyses” (see the top of pg3 in the PDF). No mention of where the GO terms came from, which annotation source was used, or any software mentioned. Not in the results, discussion, or methods, or the supplemental methods. The microarray data analysis isn’t too badly described, but the 454 sequencing data processing isn’t really described at all.</p>
+<p>My point is, that even given their raw data, I’m not sure I would be able to even approximate their results based on the methods reported in the methods section.</p>
+</div>
+<div id="gulsuner-et-al.-schizophrenia-snps" class="section level2">
+<h2>Gulsuner et al., Schizophrenia SNPs</h2>
+<p><a href="http://dx.doi.org/10.1016/j.cell.2013.06.049">Gulsuner et al</a> published a paper in Cell in August 2013 titled <a href="http://dx.doi.org/10.1016/j.cell.2013.06.049">“Spatial and Temporal Mapping of De Novo Mutations in Schizophrenia to a Fetal Prefrontal Cortical Network”</a>. This one also looks really nice, they look for <em>de novo</em> mutations (i.e. new mutations in offspring not present in parents or siblings) that mess up genes that are in a heavily connected network, and also examine gene co-expression over brain development time-scales. Sounds really cool, and the results seem like they are legit, based on my reading of the manuscript. I was really impressed that they even used <strong>randomly generated</strong> networks to control the false discovery rate!</p>
+<p>However, almost all of the analysis again depends on a lot of different bioinformatic software. I do have to give the authors props, they actually give the <strong>full</strong> version of each tool used. But no mention of tool specific settings (which can generate vastly different results, see <strong>Exome Sequencing</strong> of the methods).</p>
+<p>Then there is this bombshell: “The predicted functional impact of each candidate de novo missense variant was assessed with in silico tools.” (near top of pg 525 of the PDF). Rrrreeeaaaalllly now. No actual quote of which tools were used, although the subsequent wording and references provided imply that they were <a href="http://www.nature.com/nmeth/journal/v7/n4/full/nmeth0410-248.html">PolyPhen2</a>, <a href="http://sift.jcvi.org/">SIFT</a>, and the <a href="http://www.sciencemag.org/content/185/4154/862.long">Grantham Method</a>. But shouldn’t that have been stated up front? Along with any settings that were changed from default??</p>
+<p>There is no raw data available, only their reported SNPs. Not even a list of <strong>all</strong> the SNPs that were potentially considered, so that I could at least go from those and re-run the later analysis. I have to take their word for it (although I am glad at least the SNPs they used in later analyses are reported).</p>
+<p>Finally, the random network generation. I’d like to be able to see that code, go over it, and see what exactly it was doing to verify it was done correctly. It likely was, based on the histograms provided, but still, these are where small errors creep in and result in invalid results.</p>
+<p>As above, even if the raw data was available (didn’t see an SRA accession or any other download link), I’m not sure I could reproduce or verify the results.</p>
+</div>
+<div id="what-to-do" class="section level2">
+<h2>What to do??</h2>
+<p>How do we fix this problem? I think scripts and workflows used to run any type of bioinformatic analyses have to become first class research objects. And we have to teach scientists to write them and use them in a way that makes them first class research objects. So in the same way that a biologist might ask for verification of immunostaining, etc, bioinformaticians should ask that given known input, a script generates <em>reasonable</em> output.</p>
+<p>I know there has been discussion on this before, and disagreement, especially with the exploratory nature of research. However, once you’ve got something working <em>right</em>, you should be able to <em>test</em> it. Reviewers should be asking if it is testable, or the code should be available for others to test.</p>
+<p>I also think we as a community should do more to point out the problem. i.e. when we see it, point it out to others. I’ve done that here, but I don’t know how much should be formal. Maybe we need a new hashtag, #badbioinfomethodsection, and point links to papers that do this. Conversely, we should also point to examples when it is done right (#goodbioinfomethodsection??), and if you are bioinformatician or biologist who does a lot of coding, share your code, and at least supply it as supplemental materials. Oh, and maybe take a <a href="http://softwarecarpentry.org">SoftwareCarpentry</a> class, and look up <a href="http://git-scm.com/">git</a>.</p>
+<p>Posted on August 16, 2013 at <a href="http://robertmflight.blogspot.com/2013/08/reproducible-methods-or-bad.html" class="uri">http://robertmflight.blogspot.com/2013/08/reproducible-methods-or-bad.html</a>, raw markdown at <a href="https://github.com/rmflight/blogPosts/blob/master/reproducible_methods.md" class="uri">https://github.com/rmflight/blogPosts/blob/master/reproducible_methods.md</a></p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/open-science">open-science</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/reproducibility">reproducibility</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

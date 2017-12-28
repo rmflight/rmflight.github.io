@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/pre-calculating-large-tables-of-values/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/pre-calculating-large-tables-of-values/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/pre-calculating-large-tables-of-values/">
+  <meta property="og:title" content="Pre-Calculating Large Tables of Values | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2013-10-17T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2013-10-17T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Pre-Calculating Large Tables of Values | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Pre-Calculating Large Tables of Values</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2013-10-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2013-10-17
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Pre-Calculating%20Large%20Tables%20of%20Values&amp;url=%2fpost%2fpre-calculating-large-tables-of-values%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fpre-calculating-large-tables-of-values%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fpre-calculating-large-tables-of-values%2f&amp;title=Pre-Calculating%20Large%20Tables%20of%20Values"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fpre-calculating-large-tables-of-values%2f&amp;title=Pre-Calculating%20Large%20Tables%20of%20Values"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Pre-Calculating%20Large%20Tables%20of%20Values&amp;body=%2fpost%2fpre-calculating-large-tables-of-values%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <p>I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. <em>i.e.</em> given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a <strong>chi-square</strong> distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.</p>
+<pre><code>pMatch &lt;- 1 - pchisq(distVal, 1)</code></pre>
+<p>The catch is, we want to do this a whole lot of times, in <code>c++</code>. We could use the <code>boost</code> library to calculate the <strong>chi-square</strong> each time we need it. Or we could generate a lookup table that is able to find the p-value simply based on the distance. This is especially attractive if we have a limit past which we consider the probability of a match as being zero, and if we use enough decimal points that we don’t suffer too much in precision.</p>
+<p>Although our goal is to implement this in <strong>c++</strong>, I also want to prototype, demonstrate and evaluate the approach in <code>R</code>.</p>
+<div id="r" class="section level2">
+<h2>R</h2>
+<div id="random-number-set" class="section level3">
+<h3>Random number set</h3>
+<p>We are going to consider 25 (5 standard deviations squared) as our cutoff for saying the probability is zero. So to make sure we are doing all calculations using the exact same thing, we will pre-generate the values for testing on <strong>real</strong> data, in this case a set of 1000000 random numbers from zero to 25.</p>
+<pre class="r"><code>nPoint &lt;- 1000000
+randomData &lt;- abs(rnorm(nPoint, mean=5, sd=5)) # take absolute so we have only positive values
+randomData[randomData &gt; 25] &lt;- 25
+hist(randomData, 100)</code></pre>
+<p><img src="/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/genRandomData-1.png" width="672" /></p>
+</div>
+<div id="the-r-way" class="section level3">
+<h3>The R way</h3>
+<p>Of course, the way to calculate <strong>p-values</strong> for all this data in <code>R</code> is to do the whole vector at once. How long does that take?</p>
+<pre class="r"><code>bTime &lt;- Sys.time()
+actPVals &lt;- 1 - pchisq(randomData, 1)
+eTime &lt;- Sys.time()
+rwayDiff &lt;- difftime(eTime, bTime)
+rwayDiff</code></pre>
+<pre><code>## Time difference of 0.5137203 secs</code></pre>
+</div>
+<div id="naive-way" class="section level3">
+<h3>Naive way</h3>
+<p>A naive way to do this is to do it piecemeal, in a for loop. I will pre-allocate the result vector so we don’t take a hit on memory allocation.</p>
+<pre class="r"><code>naiveRes &lt;- numeric(nPoint)
+bTime &lt;- Sys.time()
+for (iP in 1:nPoint){
+  naiveRes[iP] &lt;- 1 - pchisq(randomData[iP], 1)
+}
+eTime &lt;- Sys.time()
+naiveDiff &lt;- difftime(eTime, bTime)
+naiveDiff</code></pre>
+<pre><code>## Time difference of 1.418367 secs</code></pre>
+<p>So this takes almost 10 times longer. Which of course, is why you are encouraged to do vectorized calculations whenever possible in <code>R</code>, but you already knew that, didn’t you?</p>
+</div>
+<div id="lookup-table" class="section level3">
+<h3>Lookup table</h3>
+<p>What if we now store a set of p-value results in a table, doing it in such a way as to use the actual distance as an index into the table?</p>
+<pre class="r"><code>nDivision &lt;- 10000
+dof &lt;- 1
+nSD &lt;- 25
+
+nElements &lt;- nSD * nDivision
+
+chiVals &lt;- seq(0, nElements, 1) / nDivision # the chi-squared values (or distances), also used as indices when multiplied by 10000
+
+pTable &lt;- 1 - pchisq(chiVals, 1) # the actual chi-square p-values for those distances</code></pre>
+<p>To find a value, we just multiply the distance by 10000 (the number of divisions), and add 1 (because <code>R</code> uses 1 based indexing instead of zero).</p>
+<pre class="r"><code>testVal &lt;- sample(chiVals, 1) # grab a value from the chiVals previously generated
+pTable[(testVal * nDivision) + 1]</code></pre>
+<pre><code>## [1] 0.1577358</code></pre>
+<pre class="r"><code>1 - pchisq(testVal, 1)</code></pre>
+<pre><code>## [1] 0.1577358</code></pre>
+<p>How long does this take compared to the other approaches?</p>
+<pre class="r"><code>tableRes &lt;- numeric(nPoint)
+bTime &lt;- Sys.time()
+for (iP in 1:nPoint){
+  tableRes[iP] &lt;- pTable[(randomData[iP] * nDivision) + 1]
+}
+eTime &lt;- Sys.time()
+tableDiff &lt;- difftime(eTime, bTime)
+tableDiff</code></pre>
+<pre><code>## Time difference of 0.09745979 secs</code></pre>
+<p>So somewhere in-between the two. So not as good as doing a vectorized call, but better than making a call each time. Which is actually what I expected. What about any loss in precision of the values returned?</p>
+<pre class="r"><code>tableRawPrecision &lt;- abs(tableRes - actPVals) / actPVals * 100
+
+precTable &lt;- data.frame(org=actPVals, table=tableRes, percError=tableRawPrecision)
+ggplot(precTable, aes(x=org, y=table)) + geom_point()</code></pre>
+<p><img src="/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(precTable, aes(x=org, y=percError)) + geom_point()</code></pre>
+<p><img src="/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-2.png" width="672" /></p>
+<p>So, according to this, we are only introducing error at 0.8037041%, which isn’t much. And the values look like the are well correlated, so we should be good.</p>
+<p>Now, how do these approaches compare when using <code>c++</code>?</p>
+</div>
+</div>
+<div id="c" class="section level2">
+<h2>C++</h2>
+<p>So it’s a fair comparison, the code below actually writes the <code>c++</code> program we are going to use, with the random numbers for the <strong>p-value</strong> calculation stored as part of the code file.</p>
+<p>A couple of notes:</p>
+<ol style="list-style-type: decimal">
+<li>To be fair, both versions of the code have the set of random numbers and the lookup table as <code>float</code> variables, so that there is no difference in each for memory allocation.</li>
+</ol>
+<ul>
+<li>Neither one stores the results of the calculation, we don’t need it for this demonstration.</li>
+</ul>
+<div id="raw-calculations" class="section level3">
+<h3>Raw calculations</h3>
+<pre class="r"><code>cppRaw &lt;- c(&#39;#include &lt;iostream&gt;&#39;,
+               &#39;#include &lt;boost/math/distributions/chi_squared.hpp&gt;&#39;,
+               &#39;int nVal = 1000000;&#39;,
+               &#39;double dof = 1.0;&#39;,
+               &#39;int i;&#39;,
+               paste(&#39;float randVals[1000000] = {&#39;, paste(as.character(randomData), sep=&quot;&quot;, collapse=&quot;, &quot;), &#39;};&#39;, sep=&quot;&quot;, collapse=&quot;&quot;),
+               paste(&#39;float pTable[250001] = {&#39;, paste(as.character(pTable), sep=&quot;&quot;, collapse=&quot;, &quot;), &#39;};&#39;, sep=&quot;&quot;, collapse=&quot;&quot;),
+               &#39;int main() {&#39;,
+               &#39;using boost::math::chi_squared_distribution;&#39;,
+               &#39;chi_squared_distribution&lt;&gt; myChi(dof);&#39;,
+               &#39;for (i = 0; i &lt; nVal; i++){&#39;,
+               &#39;1 - cdf(myChi, randVals[i]);&#39;,
+               &#39;};&#39;,
+               &#39;return(0);&#39;,
+               &#39;};&#39;)
+cat(cppRaw, sep=&quot;\n&quot;, file=&quot;cppRaw.cpp&quot;)
+
+system(&quot;g++ cppRaw.cpp -o cppRaw.out&quot;)
+system(&quot;time ./cppRaw.out&quot;)</code></pre>
+<pre class="r"><code>cppLookup &lt;- c(&#39;#include &lt;iostream&gt;&#39;,
+               &#39;#include &lt;boost/math/distributions/chi_squared.hpp&gt;&#39;,
+               &#39;int nVal = 1000000;&#39;,
+               &#39;double dof = 1.0;&#39;,
+               &#39;int i;&#39;,
+               paste(&#39;float randVals[1000000] = {&#39;, paste(as.character(randomData), sep=&quot;&quot;, collapse=&quot;, &quot;), &#39;};&#39;, sep=&quot;&quot;, collapse=&quot;&quot;),
+               paste(&#39;float pTable[250001] = {&#39;, paste(as.character(pTable), sep=&quot;&quot;, collapse=&quot;, &quot;), &#39;};&#39;, sep=&quot;&quot;, collapse=&quot;&quot;),
+               &#39;int main() {&#39;,
+               &#39;using boost::math::chi_squared_distribution;&#39;,
+               &#39;chi_squared_distribution&lt;&gt; myChi(dof);&#39;,
+               &#39;for (i = 0; i &lt; nVal; i++){&#39;,
+               &#39;pTable[(int(randVals[i] * nVal))];&#39;,
+               &#39;};&#39;,
+               &#39;return(0);&#39;,
+               &#39;};&#39;)
+cat(cppLookup, sep=&quot;\n&quot;, file=&quot;cppLookup.cpp&quot;)
+system(&quot;g++ cppLookup.cpp -o cppLookup.out&quot;)
+system(&quot;time ./cppLookup.out&quot;)</code></pre>
+<p>So bypassing <code>boost</code> in this case is a good thing, we get some extra speed, and reduce a dependency. We have to generate the lookup table first, but the <code>cpp</code> file can be generated once, with a static variable in a class that is initialized to the lookup values. We do have some error, but in our case we can live with it, as the relative rankings should still be pretty good.</p>
+</div>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/pre-calulations">pre-calulations</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></li>
+    
+    <li><a href="/post/r-rstudio-and-release-and-dev-bioconductor/">R, RStudio, and Release and Dev Bioconductor</a></li>
+    
+    <li><a href="/post/r-interface-for-teaching/">R Interface for Teaching</a></li>
+    
+    <li><a href="/post/storing-package-data-in-custom-environments/">Storing Package Data in Custom Environments</a></li>
+    
+    <li><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

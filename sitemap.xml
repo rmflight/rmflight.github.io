@@ -14,6 +14,15 @@
     
     <url>
     
+      <loc>/post/differences-in-posted-date-vs-sessioninfo/</loc>
+      <lastmod>2017-12-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/linking-to-manually-inserted-images-in-hugo/</loc>
       <lastmod>2017-12-27T00:00:00+00:00</lastmod>
     </url>
@@ -86,6 +95,96 @@
     
     <url>
     
+      <loc>/post/pubmedcommons-api/</loc>
+      <lastmod>2013-10-22T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/open-vs-closed-analysis-languages/</loc>
+      <lastmod>2013-10-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/pre-calculating-large-tables-of-values/</loc>
+      <lastmod>2013-10-17T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/portable-peronal-packages/</loc>
+      <lastmod>2013-09-23T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/k-12-wants-scientists/</loc>
+      <lastmod>2013-09-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/r-rstudio-and-release-and-dev-bioconductor/</loc>
+      <lastmod>2013-09-17T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/reproducible-methods/</loc>
+      <lastmod>2013-08-16T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/r-interface-for-teaching/</loc>
+      <lastmod>2013-07-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/storing-package-data-in-custom-environments/</loc>
+      <lastmod>2013-05-30T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/writing-up-scientific-results-and-literate-programming/</loc>
+      <lastmod>2013-05-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/writing-papers-using-r-markdown/</loc>
       <lastmod>2012-10-09T00:00:00+00:00</lastmod>
     </url>
@@ -113,8 +212,18 @@
     
     <url>
     
+      <loc>/tags/academia/</loc>
+      <lastmod>2013-09-19T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/bioconductor/</loc>
-      <lastmod>2012-07-13T00:00:00+00:00</lastmod>
+      <lastmod>2013-09-17T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -182,6 +291,16 @@
     
     <url>
     
+      <loc>/tags/literate-programming/</loc>
+      <lastmod>2013-05-10T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/metoo/</loc>
       <lastmod>2017-10-18T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -192,8 +311,48 @@
     
     <url>
     
+      <loc>/tags/notebooks/</loc>
+      <lastmod>2013-07-11T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/open-science/</loc>
-      <lastmod>2012-10-09T00:00:00+00:00</lastmod>
+      <lastmod>2013-10-22T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/packages/</loc>
+      <lastmod>2013-09-23T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/post-doc/</loc>
+      <lastmod>2013-09-19T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/pre-calulations/</loc>
+      <lastmod>2013-10-17T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -221,6 +380,16 @@
     
     <url>
     
+      <loc>/tags/python/</loc>
+      <lastmod>2013-10-21T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/r/</loc>
       <lastmod>2017-12-27T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -232,7 +401,27 @@
     <url>
     
       <loc>/tags/reproducibility/</loc>
-      <lastmod>2012-10-09T00:00:00+00:00</lastmod>
+      <lastmod>2013-08-16T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/rstudio/</loc>
+      <lastmod>2013-09-17T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/science/</loc>
+      <lastmod>2013-09-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -243,6 +432,16 @@
     
       <loc>/tags/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/teaching/</loc>
+      <lastmod>2013-07-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

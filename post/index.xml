@@ -45,6 +45,16 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
+      <title>Differences in Posted Date vs sessionInfo()</title>
+      <link>/post/differences-in-posted-date-vs-sessioninfo/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/differences-in-posted-date-vs-sessioninfo/</guid>
+      <description>&lt;p&gt;If you are a newcomer to my weblog, you may notice that some posts that are &lt;code&gt;R&lt;/code&gt; tutorials generally include the output of &lt;code&gt;Sys.time()&lt;/code&gt; at the end. If you look closeley at that time and the &lt;strong&gt;Posted on&lt;/strong&gt; date, you may notice that some posts show disagreement between them. This is because I decided to move &lt;em&gt;all&lt;/em&gt; of my old blog posts from &lt;em&gt;blogspot&lt;/em&gt; to here, and keep the original posted dates.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
       <link>/post/linking-to-manually-inserted-images-in-hugo/</link>
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
@@ -174,591 +184,436 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
-      <title>Writing Papers Using R Markdown</title>
-      <link>/post/writing-papers-using-r-markdown/</link>
-      <pubDate>Tue, 09 Oct 2012 00:00:00 +0000</pubDate>
+      <title>PubmedCommons API</title>
+      <link>/post/pubmedcommons-api/</link>
+      <pubDate>Tue, 22 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>/post/writing-papers-using-r-markdown/</guid>
-      <description>&lt;p&gt;I have been watching the activity in &lt;a href=&#34;http://rstudio.org&#34;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;http://yihui.name/knitr/&#34;&gt;&lt;code&gt;knitr&lt;/code&gt;&lt;/a&gt; for a while, and have even been using &lt;code&gt;Rmd&lt;/code&gt; (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed &lt;a href=&#34;http://yihui.name/en/2012/03/a-really-fast-statistics-journal/&#34;&gt;writing papers&lt;/a&gt; in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using &lt;code&gt;knitr&lt;/code&gt; as a way to create reproducible blog posts that include code (including yours truly).&lt;/p&gt;
-&lt;p&gt;The idea of writing a paper that actually includes the necessary code to perform the analysis, and is actually readable in its raw form, and that someone else could actually run was pretty appealing. Unfortunately, I had not had the time or opportunity to actually try it, until recently our group submitted a conference paper that included a lot of analysis in &lt;code&gt;R&lt;/code&gt; that seemed like the perfect opportunity to try this. (I will link to the paper here when I hear more, or get clearance from my PI). Originally we wrote the paper in Microsoft(r) Word, but after submission I decided to see what it would have taken to write it as an &lt;code&gt;Rmd&lt;/code&gt; document that could then generate &lt;code&gt;markdown&lt;/code&gt; or &lt;code&gt;html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;It turned out that it was not that hard, but it did force me to do some things differently. This is what I want to discuss here.&lt;/p&gt;
-&lt;div id=&#34;advantages&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Advantages&lt;/h2&gt;
-&lt;p&gt;I actually found it much easier to have the text with the analysis (in contrast to having to be separate in a Word document), and upon doing the conversion, discovered some possible numerical errors that crept in because of having to copy numerical results separately (that is the nice thing about being able to insert variable directly into the text). In addition, the Word template for the submission didn’t play nice with automatic table and figure numbering, so our table and figure numbering got messed up in the submission. So overall, I’d say it worked out better with the &lt;code&gt;Rmd&lt;/code&gt; file overall, even with the having to create functions to handle table and figure numbering properly myself (see below).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;tables-and-figures&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Tables and Figures&lt;/h2&gt;
-&lt;p&gt;As I’m sure most of you know, Word (and other WYSIWYG editors) have ability to keep track of your object numbers, this is especially nice for keeping your figure and table numbers straight. Of course, there is no such ability built into a static text file, but I found it was easy to write a couple of functions for this. The way I came up with is to have a variable that contains a label for the figure or table, a function that increments the counter when new figures or tables are added, and a function that prints the associated number for a particular label. This does require a bit of forethought on the part of the writer, because you may have to add a table or figure label to the variable long before you actually create it, but as long as you use sane (i.e. descriptive) labels, it shouldn’t be a big deal. Let me show you what I mean.&lt;/p&gt;
-&lt;div id=&#34;counting&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Counting&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;incCount &amp;lt;- function(inObj, useName){
-    nObj &amp;lt;- length(inObj)
-    useNum &amp;lt;- max(inObj) + 1
-    inObj &amp;lt;- c(inObj, useNum)
-    names(inObj)[nObj+1] &amp;lt;- useName
-    inObj
-}
-figCount &amp;lt;- c(&amp;quot;_&amp;quot;=0)
-tableCount &amp;lt;- c(&amp;quot;_&amp;quot;=0)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &lt;code&gt;incCount&lt;/code&gt; function is very simple, it takes an object, checks the maximum count, and then adds an incremental value with the supplied name. In this example, I initialized the &lt;code&gt;figCount&lt;/code&gt; and &lt;code&gt;tableCount&lt;/code&gt; objects with a non-sensical named value of zero.&lt;/p&gt;
-&lt;p&gt;Now in the process of writing, I decide I’m going to need a table on the amount of time spent by post-docs writing blog posts in different years of their post-doc training. Lets call this &lt;code&gt;t.blogPostDocs&lt;/code&gt;. Notice that this is a fairly descriptive name. We can assign it a number like so:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableCount &amp;lt;- incCount(tableCount, &amp;quot;t.blogPostDocs&amp;quot;)
-tableCount&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##              _ t.blogPostDocs 
-##              0              1&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;inserting&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Inserting&lt;/h3&gt;
-&lt;p&gt;So now we have a variable with a named number we can refer to. But how do we insert it into the text? We are going to use another function that will let us insert either the text with a link, or just the text itself.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pasteLabel &amp;lt;- function(preText, inObj, objName, insLink=TRUE){
-    objNum &amp;lt;- inObj[objName]
-    
-    useText &amp;lt;- paste(preText, objNum, sep=&amp;quot; &amp;quot;)
-    if (insLink){
-        useText &amp;lt;- paste(&amp;quot;[&amp;quot;, useText, &amp;quot;](#&amp;quot;, objName, &amp;quot;)&amp;quot;, sep=&amp;quot;&amp;quot;)
-    }
-    useText
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This function allows us to insert the table number like so:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;r I(pasteLabel(&amp;quot;Table&amp;quot;, tableCount, &amp;quot;t.blogPostDocs&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This would be inserted into a normal &lt;code&gt;inline&lt;/code&gt; code block. The &lt;code&gt;I&lt;/code&gt; makes sure that the text will appear as normal text, and not get formatted as a code block. The default behavior is to insert as a relative link, thereby enabling the use of relative links to link where a table / figure is mentioned to its actual location. For example, we can insert the anchor link like so:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;a id=&amp;quot;t.blogPostDocs&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;markdown-tables&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Markdown Tables&lt;/h3&gt;
-&lt;p&gt;Followed by the actual table text. This brings up the subject of &lt;code&gt;markdown&lt;/code&gt; tables. I also wrote a function (thanks to Yihui again) that transforms a normal &lt;code&gt;R&lt;/code&gt; &lt;code&gt;data.frame&lt;/code&gt; to a &lt;code&gt;markdown&lt;/code&gt; table.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableCat &amp;lt;- function(inFrame){
-    outText &amp;lt;- paste(names(inFrame), collapse=&amp;quot; | &amp;quot;)
-    outText &amp;lt;- c(outText, paste(rep(&amp;quot;---&amp;quot;, ncol(inFrame)), collapse=&amp;quot; | &amp;quot;))
-    invisible(apply(inFrame, 1, function(inRow){
-        outText &amp;lt;&amp;lt;- c(outText, paste(inRow, collapse=&amp;quot; | &amp;quot;))
-    }))
-    return(outText)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Lets see it in action.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;postDocBlogs &amp;lt;- data.frame(PD=c(&amp;quot;p1&amp;quot;, &amp;quot;p2&amp;quot;, &amp;quot;p3&amp;quot;), NBlog=c(4, 10, 2), Year=c(1, 4, 2))
-postDocBlogs&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##   PD NBlog Year
-## 1 p1     4    1
-## 2 p2    10    4
-## 3 p3     2    2&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;postDocInsert &amp;lt;- tableCat(postDocBlogs)
-postDocInsert&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;PD | NBlog | Year&amp;quot; &amp;quot;--- | --- | ---&amp;quot;   &amp;quot;p1 |  4 | 1&amp;quot;      
-## [4] &amp;quot;p2 | 10 | 4&amp;quot;       &amp;quot;p3 |  2 | 2&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To actually insert it into the text, use a code chunk with &lt;code&gt;results=&#39;asis&#39;&lt;/code&gt; and &lt;code&gt;echo=FALSE&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(postDocInsert, sep=&amp;quot;\n&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th&gt;PD&lt;/th&gt;
-&lt;th&gt;NBlog&lt;/th&gt;
-&lt;th&gt;Year&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td&gt;p1&lt;/td&gt;
-&lt;td&gt;4&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td&gt;p2&lt;/td&gt;
-&lt;td&gt;10&lt;/td&gt;
-&lt;td&gt;4&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td&gt;p3&lt;/td&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Before inserting the table though, you might want an inline code with the table number and caption, like this:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;I(pasteLabel(&amp;quot;Table&amp;quot;, tableCount, &amp;quot;t.blogPostDocs&amp;quot;, FALSE))&lt;/code&gt; This is the number of blog posts and year of training for post-docs.&lt;/p&gt;
-&lt;p&gt;Table 1 This is the number of blog posts and year of training for post-docs.&lt;/p&gt;
-&lt;p&gt;Remember for captions to set the &lt;code&gt;insLink&lt;/code&gt; variable to &lt;code&gt;FALSE&lt;/code&gt; so that you don’t generate a link from the caption.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;figures&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Figures&lt;/h3&gt;
-&lt;p&gt;Oftentimes, you will have code that generates the figure, and then you want to insert the figure at a different point. This is accomplished by the judicious use of &lt;code&gt;echo&lt;/code&gt; and &lt;code&gt;include&lt;/code&gt; chunk options.&lt;/p&gt;
-&lt;p&gt;For example, we can create a &lt;code&gt;ggplot2&lt;/code&gt; figure and store it in a variable in one chunk, and then &lt;code&gt;print&lt;/code&gt; it in a later chunk to actually insert it into the text body.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plotData &amp;lt;- data.frame(x=rnorm(1000, 1, 5), y=rnorm(1000, 0, 2))
-plotKeep &amp;lt;- ggplot(plotData, aes(x=x, y=y)) + geom_point()
-figCounts &amp;lt;- incCount(figCount, &amp;quot;f.randomFigure&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And now we decide to actually insert it using &lt;code&gt;print(plotKeep)&lt;/code&gt; with the option of &lt;code&gt;echo=FALSE&lt;/code&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2012-10-09-writing-papers-using-r-markdown_files/figure-html/figureInsert-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;#f.randomFigure&#34;&gt;Figure 1&lt;/a&gt;. A random figure.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;numerical-result-formatting&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Numerical result formatting&lt;/h2&gt;
-&lt;p&gt;When &lt;code&gt;R&lt;/code&gt; prints a number, it normally likes to do so with lots of digits. This is not probably what you want either in a table or when reporting a number in a sentence. You can control that by using the &lt;code&gt;format&lt;/code&gt; function. When generating a new variable, the number of digits to display when printing will be saved, and when used on a variable directly, only the defined number of digits will display.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;echo-and-include&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Echo and Include&lt;/h2&gt;
-&lt;p&gt;This brings up the issue of how to keep the code from appearing in the text body. I found depending on the particulars, either using &lt;code&gt;echo=FALSE&lt;/code&gt; or &lt;code&gt;include=FALSE&lt;/code&gt; would do the job. This is meant to be a paper, a reproducible one, but a paper nonetheless, and therefore the code should not end up in the text body.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;p&gt;One thing I haven’t done yet is convert all the references. I am planning to try using the &lt;a href=&#34;https://github.com/cboettig/knitcitations/&#34;&gt;knitcitations&lt;/a&gt; package. I will probably post on that experience.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;html-generation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;HTML generation&lt;/h2&gt;
-&lt;p&gt;Because I use &lt;code&gt;RStudio&lt;/code&gt;, I set up a modified function For generating a full &lt;code&gt;html&lt;/code&gt; version of the paper, changing the default &lt;code&gt;RStudio&lt;/code&gt; &lt;code&gt;markdown&lt;/code&gt; render options like so:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;htmlOptions &amp;lt;- markdownHTMLOptions(defaults=TRUE)
-htmlOptions &amp;lt;- htmlOptions[htmlOptions != &amp;quot;hard_wrap&amp;quot;]
-markdownToHTML(inputFile, outputFile, options = htmlOptions)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This should be added to a &lt;code&gt;.Rprofile&lt;/code&gt; file either in your &lt;code&gt;home&lt;/code&gt; directory or in the directory you start &lt;code&gt;R&lt;/code&gt; in (this is especially useful for modification on a per project basis).&lt;/p&gt;
-&lt;p&gt;I do this because when I write my documents, I want the source to be readable online. If this is a &lt;code&gt;github&lt;/code&gt; hosted repo, that means being displayed in the &lt;code&gt;github&lt;/code&gt; file browser, which does not do line wrapping. So I set up a 120 character line in my editor, and try very hard to stick to that.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;function-source&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Function source&lt;/h2&gt;
-&lt;p&gt;You can find the previously mentioned functions in a github gist &lt;a href=&#34;https://gist.github.com/3858973&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;post-source&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Post source&lt;/h2&gt;
-&lt;p&gt;The source files for this blog post can be found at: &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.Rmd&#34;&gt;&lt;code&gt;Rmd&lt;/code&gt;&lt;/a&gt;, &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.md&#34;&gt;&lt;code&gt;md&lt;/code&gt;&lt;/a&gt;, and &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.html&#34;&gt;&lt;code&gt;html&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Posted on October 9, 2012, at &lt;a href=&#34;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&#34; class=&#34;uri&#34;&gt;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Edit: added section on formatting numerical results&lt;/p&gt;
-&lt;p&gt;Edit: added session info&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;R version 3.4.2 (2017-09-28)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 16.04.3 LTS
-
-Matrix products: default
-BLAS: /software/R-3.4.2/lib/R/lib/libRblas.so
-LAPACK: /software/R-3.4.2/lib/R/lib/libRlapack.so
-
-locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-
-attached base packages:
-[1] methods   stats     graphics  grDevices utils     datasets  base     
-
-other attached packages:
-[1] ggplot2_2.2.1.9000
-
-loaded via a namespace (and not attached):
- [1] Rcpp_0.12.14      bookdown_0.5      digest_0.6.12    
- [4] rprojroot_1.2     plyr_1.8.4        grid_3.4.2       
- [7] gtable_0.2.0      backports_1.1.1   magrittr_1.5     
-[10] scales_0.5.0.9000 evaluate_0.10.1   blogdown_0.4     
-[13] rlang_0.1.2       stringi_1.1.5     lazyeval_0.2.1   
-[16] rmarkdown_1.8     labeling_0.3      tools_3.4.2      
-[19] stringr_1.2.0     munsell_0.4.3     yaml_2.1.15      
-[22] compiler_3.4.2    colorspace_1.3-2  htmltools_0.3.6  
-[25] knitr_1.17        tibble_1.3.4     &lt;/code&gt;&lt;/pre&gt;
+      <guid>/post/pubmedcommons-api/</guid>
+      <description>&lt;p&gt;The announcements are out, Pubmed is introducing a commenting system &lt;a href=&#34;http://www.ncbi.nlm.nih.gov/pubmedcommons/&#34;&gt;pubmedcommons&lt;/a&gt;, theoretically providing a single location for true post-publication peer review. This is a really good idea, as NCBI is likely to be around for a lot longer than a given publisher, and the requirement for all NIH funded research to be deposited into Pubmed.&lt;/p&gt;
+&lt;p&gt;There are some detractors, and they may have some valid points &lt;a href=&#34;https://twitter.com/caseybergman/status/392729744640577537&#34;&gt;link&lt;/a&gt;. However, the alternative, &lt;a href=&#34;https://pubpeer.com/&#34;&gt;pubpeer&lt;/a&gt;, I had not heard about. &lt;a href=&#34;http://f1000.com/&#34;&gt;F1000&lt;/a&gt; puts the comments in one location, in a way that is no better than a single publisher site.&lt;/p&gt;
+&lt;p&gt;What would truly let the pubmedcommons proliferate would be if it became the equivalent of &lt;a href=&#34;disqus.com&#34;&gt;disqus&lt;/a&gt;, but for scientific articles. For those who don’t know, disqus is essentially a remote commenting platform that provides commenting on other websites. For example, &lt;a href=&#34;http://rmflight.github.io&#34;&gt;my blog&lt;/a&gt; is a static site, and comments are provided by disqus. This is enabled with an account on disqus and a javascript snippet on my website.&lt;/p&gt;
+&lt;p&gt;It would be neat if pubmedcommons became a similar platform for scientific articles, with a little bit more flexibility. i.e. someone would be able to include some javascript, with relevant pubmed IDs, and the comments for that article would be displayed, and others would be able to make comments on that site.&lt;/p&gt;
+&lt;div id=&#34;let-me-illustrate-with-an-example.&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Let me illustrate with an example.&lt;/h3&gt;
+&lt;p&gt;Imagine I publish a paper in PLOS One (or &lt;strong&gt;any&lt;/strong&gt; other journal, for that matter). Upon acceptance, the paper also gets a pubmed id. This instantly creates a forum for comments using pubmedcommons. In addition, PLOS One adds a little bit of javascript to their page for the paper that enables the same commenting system. Therefore, any comments made on the paper at pubmed or PLOS One appear in both places (maybe with a tag for where they originated?). In addition, I post a copy of the paper on my own blog, and add the same javascript, and readers will see the comments made at pubmed, PLOS One, and can comment on the paper on my own blog. In addition, someone else could do the same to display the comments on their own site, etc, etc.&lt;/p&gt;
+&lt;p&gt;I think the above example might have the potential to revolutionize post-pub peer review, because the actual comments are hosted in a central location, but are accessible in many different locations where the publication might exist.&lt;/p&gt;
+&lt;p&gt;Now, it could still go awry. They could take too long to open things up, they might make the policies regarding comments too restrictive, they may police the comments too heavily, etc, etc. But&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
     
     <item>
-      <title>Journal Club 2012-08-15</title>
-      <link>/post/journal-club-2012-08-15/</link>
-      <pubDate>Wed, 15 Aug 2012 00:00:00 +0000</pubDate>
+      <title>Open vs Closed Analysis Languages</title>
+      <link>/post/open-vs-closed-analysis-languages/</link>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>/post/journal-club-2012-08-15/</guid>
-      <description>&lt;p&gt;I just came back from our Bioinformatic group (a rather loose association of various researchers at UofL interested in and doing bioinformatics) journal club, where we discussed this recent paper:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002511&#34;&gt;Google Goes Cancer: Improving Outcome Prediction for Cancer Patients by Network-Based Ranking of Marker Genes&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Besides the catchy title that makes one believe that perhaps Google is getting into cancer research (maybe they are and we don’t know it yet), there were some interesting aspects to this paper.&lt;/p&gt;
-&lt;div id=&#34;premise&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Premise&lt;/h2&gt;
-&lt;p&gt;The premise is that they can combine gene expression data and network data to find better associations between gene expression data and a particular disease endpoint. The way this is carried out is through the use of the TRANSFAC transcription factor - gene target database for the network, the correlation of the gene expression with the disease status as the importance of a gene with the disease, and the Google &lt;a href=&#34;http://en.wikipedia.org/wiki/PageRank&#34;&gt;PageRank&lt;/a&gt; as the means to transfer the network knowledge to the gene expression data. They call their method &lt;strong&gt;NetRank&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Note that the general idea had already been tried in this paper on &lt;a href=&#34;http://dx.doi.org/10.1186/1471-2105-6-233&#34;&gt;GeneRank&lt;/a&gt;.&lt;/p&gt;
+      <guid>/post/open-vs-closed-analysis-languages/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;I think data scientists should choose to learn &lt;strong&gt;open&lt;/strong&gt; languages such as &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;python&lt;/code&gt; because they are &lt;strong&gt;open&lt;/strong&gt; in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;implementation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Implementation&lt;/h2&gt;
-&lt;p&gt;Rank the genes with disease status (poor or good prognosis) using a method (SAM, t-test, fold-change, correlation, NetRank). Pick &lt;em&gt;n&lt;/em&gt; top genes, and develop a predictive model using a support vector machine. Wash, rinse, repeat several times to find the best set, varying the number of top genes, and the number of samples used in the training set.&lt;/p&gt;
-&lt;p&gt;For &lt;strong&gt;NetRank&lt;/strong&gt;, the top genes were decided by using a sub-optimization based on varying &lt;em&gt;d&lt;/em&gt;, the dampening factor in the PageRank algorithm that determines how much information can be transferred to other genes. The best value of &lt;em&gt;d&lt;/em&gt; determined in this study was 0.3.&lt;/p&gt;
-&lt;p&gt;All other methods used just the 8000 genes that passed filtering, but NetRank used all the genes on the array, with those that were filtered out had their initial correlations set to 0, so that they were still in the network representation.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;embed src=&#34;http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g001&amp;amp;representation=PNG_I&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;Monte Carlo cross-validation&lt;/p&gt;
+&lt;div id=&#34;why-the-debate&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why the debate?&lt;/h2&gt;
+&lt;p&gt;This was sparked by a comment on twitter suggesting that data scientists and analysts need to be &lt;em&gt;polyglots&lt;/em&gt;, that they should know more than &lt;strong&gt;one&lt;/strong&gt; programming language or analysis framework (the full conversation of tweets can be found &lt;a href=&#34;https://twitter.com/rmflight/status/387910932250517504&#34;&gt;here&lt;/a&gt;)&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;
+&lt;p&gt;
+Data Scientists need to be Polyglots - know 2 or more of &lt;a href=&#34;https://twitter.com/search?q=%23python&amp;amp;src=hash&#34;&gt;#python&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23rstats&amp;amp;src=hash&#34;&gt;#rstats&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23sas&amp;amp;src=hash&#34;&gt;#sas&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23spss&amp;amp;src=hash&#34;&gt;#spss&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23matlab&amp;amp;src=hash&#34;&gt;#matlab&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23julia&amp;amp;src=hash&#34;&gt;#julia&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23octave&amp;amp;src=hash&#34;&gt;#octave&lt;/a&gt; &lt;a href=&#34;http://t.co/LtzIOzZ4XH&#34;&gt;http://t.co/LtzIOzZ4XH&lt;/a&gt;
+&lt;/p&gt;
+— Gregory Piatetsky (&lt;span class=&#34;citation&#34;&gt;@kdnuggets&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/kdnuggets/statuses/387706109509005312&#34;&gt;October 8, 2013&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;The commenter suggested knowing at least two of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;R&lt;/li&gt;
+&lt;li&gt;Python&lt;/li&gt;
+&lt;li&gt;Matlab&lt;/li&gt;
+&lt;li&gt;SPSS&lt;/li&gt;
+&lt;li&gt;SAS&lt;/li&gt;
+&lt;li&gt;Julia&lt;/li&gt;
+&lt;li&gt;Octave&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My comment back was that one should really evaluate whether &lt;code&gt;SPSS&lt;/code&gt;, &lt;code&gt;SAS&lt;/code&gt; and &lt;code&gt;Matlab&lt;/code&gt; should be on this list, as they are &lt;em&gt;closed&lt;/em&gt; languages, not open, or free.&lt;/p&gt;
+&lt;p&gt;I want to expand on &lt;em&gt;why&lt;/em&gt; I made that comment. Let me be forthright, I have not used &lt;code&gt;SPSS&lt;/code&gt;, nor &lt;code&gt;SAS&lt;/code&gt;, but I have programmed in &lt;code&gt;MatLab&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; extensively, and dabbled in &lt;code&gt;Python&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I also think it is a good thing for data scientists to know more than one language.&lt;/strong&gt; Just to be clear, I am &lt;strong&gt;NOT&lt;/strong&gt; arguing that point.&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;did-it-work&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Did it work?&lt;/h2&gt;
-&lt;p&gt;From the paper, it appears to have worked. Using a monte-carlo cross-validation, they were able to achieve over 70% prediction rates. And this was better than any of the other methods they used to associate genes with the disease, including SAM, t-test, fold-change, and raw correlations.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;embed src=&#34;http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g002&amp;amp;representation=PNG_I&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;NetRank feature selection performance&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;issues&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Issues&lt;/h2&gt;
-&lt;p&gt;As we discussed the article, some questions did come up.&lt;/p&gt;
+&lt;div id=&#34;closed&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Closed&lt;/h2&gt;
+&lt;p&gt;What is a closed analysis language? I would say that there are three types of closed languages:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;What was the variation in &lt;em&gt;d&lt;/em&gt; depending on the size of the training set?&lt;/li&gt;
-&lt;li&gt;How consistent were the genes that came out as biomarkers?&lt;/li&gt;
+&lt;li&gt;those that are not free (but still may their source code openly available)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;It would be nice to try this methodology on a series of independent, but related cancer datasets (ie breast or lung cancer) and see how consistent the lists are. This was done &lt;a href=&#34;http://www.biomedcentral.com/1471-2105/13/182/abstract&#34;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;those where the underlying engine is closed source&lt;/li&gt;
+&lt;li&gt;those where one cannot write their own functions to expand on what is already available&lt;/li&gt;
 &lt;/ul&gt;
-&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;What happens if the genes that don’t pass filtering are removed from the network entirely?&lt;/li&gt;
-&lt;li&gt;Were the problems reported with not-filtering genes due to having only two disease points (poor and good prognosis) to calculate a correlation of expression with?&lt;/li&gt;
-&lt;li&gt;How many iterations does it take to achieve convergence?&lt;/li&gt;
-&lt;li&gt;The list of genes they come up with are fairly well known cancer genes. We were kindof surprised that they didn’t seem to come up novel genes associated directly with pancreatic cancer.&lt;/li&gt;
-&lt;li&gt;Why is &lt;em&gt;d&lt;/em&gt; so variable depending on the cancer examined?&lt;/li&gt;
+&lt;p&gt;Now, &lt;code&gt;MatLab&lt;/code&gt; fits the first two categories. It is rather expensive to get a license for, the license &lt;strong&gt;can&lt;/strong&gt; be restrictive (I know they have had a lot of abuse of licenses in the past, and they are trying to avoid that), and you are not expected to poke around in the internals of the &lt;code&gt;MatLab&lt;/code&gt; engine. Oh, and if you want more than the base engine, expect to pay heavily for add-on packages.&lt;/p&gt;
+&lt;p&gt;However, it is possible to write add-on’s for &lt;code&gt;MatLab&lt;/code&gt;. I have previously &lt;a href=&#34;http://www.mathworks.com/matlabcentral/fileexchange/authors/19294&#34;&gt;written a few&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;closed-problem-checking-results&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Closed problem: Checking results&lt;/h3&gt;
+&lt;p&gt;So why are closed languages a problem? A closed language that does not make it &lt;strong&gt;possible&lt;/strong&gt; to examine the underlying functionality of the analysis engine has two problems:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;surety that calculations are done correctly&lt;/li&gt;
 &lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;the ability of others to run and check results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both of these are issues that are really important in &lt;strong&gt;science&lt;/strong&gt;. I would consider a &lt;strong&gt;data scientist&lt;/strong&gt; to be doing actual &lt;strong&gt;science&lt;/strong&gt;, so others should be able to scrutinize their work. The best scrutiny, is for others to be able to actually run their code. If I can’t run your code, then how do I know what you did is right?? If I can’t afford a copy of &lt;code&gt;MatLab&lt;/code&gt; to run your code (assuming you made it available, you did provide the source for the analysis, right?), that is a bad thing.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;things-to-try&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Things to try&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Could we improve on this by instead of taking just the top-ranked genes, look for the top ranked cliques, i.e. take the top gene, remove anything in its immediate neighborhood, and then go to the next one?&lt;/li&gt;
-&lt;li&gt;What would happen if we used a directed network based on connected Reactome or KEGG pathways?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Find this post online at: &lt;a href=&#34;http://robertmflight.blogspot.com/2012/08/journal-club-150812.html&#34; class=&#34;uri&#34;&gt;http://robertmflight.blogspot.com/2012/08/journal-club-150812.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Authored using Markdown, and the R Markdown package. Published on 15.08.12&lt;/p&gt;
+&lt;div id=&#34;closed-problem-re-using-code&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Closed problem: Re-using code&lt;/h3&gt;
+&lt;p&gt;Of course, the other problem is that with a closed language you have made it impossible for others to easily make use of your analysis. Sure, they could code it up in another language, but unless it is the be-all and end-all of analysis methods, I’m not going to bother. I don’t have a license for &lt;code&gt;MatLab&lt;/code&gt;, or &lt;code&gt;SPSS&lt;/code&gt;, or &lt;code&gt;SAS&lt;/code&gt;, and I can’t afford it; therefore I’m not going to use your method / code nor give you a citation or credit.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;solution-open-languages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solution: Open languages&lt;/h2&gt;
+&lt;p&gt;Languages like &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;python&lt;/code&gt;, they don’t have these problems. If I wonder how a function in the base distribution of &lt;code&gt;R&lt;/code&gt; or &lt;code&gt;python&lt;/code&gt; works, I can go look at the source. If I find a bug, I can suggest a fix, or fix it myself and tell others about it. In addition, if I write code to do an analysis, I can make it available and know that others &lt;strong&gt;should&lt;/strong&gt; have the ability to examine it, including re-running it, in addition to using it for themselves, if it is licensed appropriately. This is the way science should work.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-should-you-use&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What should you use?&lt;/h2&gt;
+&lt;p&gt;Some would argue that you should use &lt;code&gt;MatLab&lt;/code&gt;, &lt;code&gt;SAS&lt;/code&gt;, and &lt;code&gt;SPSS&lt;/code&gt; because they have been around for a while, and are the standard. I would argue that you should not use them because they are controlled by single corporate entities, who are only interested in what will get people to buy their product and use it. You should use software that &lt;a href=&#34;http://r4stats.com/articles/popularity/&#34;&gt;others are using&lt;/a&gt;, and that others will be able to use, regardless of income.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;R&lt;/code&gt; is being used in lots of different places, by lots of different people for statistics, bioinformatics, visualization, and as a general functional language. &lt;code&gt;Python&lt;/code&gt; is a great general purpose language that provides a lot of &lt;strong&gt;functional&lt;/strong&gt; glue for doing lots of different things.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
     
     <item>
-      <title>Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</title>
-      <link>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</link>
-      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+      <title>Pre-Calculating Large Tables of Values</title>
+      <link>/post/pre-calculating-large-tables-of-values/</link>
+      <pubDate>Thu, 17 Oct 2013 00:00:00 +0000</pubDate>
       
-      <guid>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</guid>
-      <description>&lt;div id=&#34;what&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;What?&lt;/h2&gt;
-&lt;p&gt;For those who don’t know, &lt;strong&gt;CDF&lt;/strong&gt; files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as &lt;strong&gt;RMA&lt;/strong&gt;, and others.&lt;/p&gt;
+      <guid>/post/pre-calculating-large-tables-of-values/</guid>
+      <description>&lt;p&gt;I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. &lt;em&gt;i.e.&lt;/em&gt; given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a &lt;strong&gt;chi-square&lt;/strong&gt; distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pMatch &amp;lt;- 1 - pchisq(distVal, 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The catch is, we want to do this a whole lot of times, in &lt;code&gt;c++&lt;/code&gt;. We could use the &lt;code&gt;boost&lt;/code&gt; library to calculate the &lt;strong&gt;chi-square&lt;/strong&gt; each time we need it. Or we could generate a lookup table that is able to find the p-value simply based on the distance. This is especially attractive if we have a limit past which we consider the probability of a match as being zero, and if we use enough decimal points that we don’t suffer too much in precision.&lt;/p&gt;
+&lt;p&gt;Although our goal is to implement this in &lt;strong&gt;c++&lt;/strong&gt;, I also want to prototype, demonstrate and evaluate the approach in &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div id=&#34;random-number-set&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Random number set&lt;/h3&gt;
+&lt;p&gt;We are going to consider 25 (5 standard deviations squared) as our cutoff for saying the probability is zero. So to make sure we are doing all calculations using the exact same thing, we will pre-generate the values for testing on &lt;strong&gt;real&lt;/strong&gt; data, in this case a set of 1000000 random numbers from zero to 25.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nPoint &amp;lt;- 1000000
+randomData &amp;lt;- abs(rnorm(nPoint, mean=5, sd=5)) # take absolute so we have only positive values
+randomData[randomData &amp;gt; 25] &amp;lt;- 25
+hist(randomData, 100)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/genRandomData-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why?&lt;/h2&gt;
-&lt;p&gt;Because we can, and because custom definitions have been shown to be quite useful. See the information over at &lt;a href=&#34;http://brainarray.mbni.med.umich.edu/brainarray/Database/CustomCDF/cdfreadme.htm&#34;&gt;Brainarray&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;the-r-way&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The R way&lt;/h3&gt;
+&lt;p&gt;Of course, the way to calculate &lt;strong&gt;p-values&lt;/strong&gt; for all this data in &lt;code&gt;R&lt;/code&gt; is to do the whole vector at once. How long does that take?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bTime &amp;lt;- Sys.time()
+actPVals &amp;lt;- 1 - pchisq(randomData, 1)
+eTime &amp;lt;- Sys.time()
+rwayDiff &amp;lt;- difftime(eTime, bTime)
+rwayDiff&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Time difference of 0.5137203 secs&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;why-not-somewhere-else&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why not somewhere else?&lt;/h2&gt;
-&lt;p&gt;A lot of times other people create custom &lt;strong&gt;CDF&lt;/strong&gt; files based on their own criteria, and make it subsequently available for others to use (see the &lt;a href=&#34;http://brainarray.mbni.med.umich.edu/brainarray/Database/CustomCDF/cdfreadme.htm&#34;&gt;Brainarray&lt;/a&gt; for an example of what some are doing, as well as &lt;a href=&#34;http://affymetrix2.bioinf.fbb.msu.ru/&#34;&gt;PlandbAffy&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;You have a really nifty idea for a way to reorganize the probesets on an Affymetrix chip to perform a custom analysis, but you don’t want to go to the trouble of actually creating the CDF files and Bioconductor packages normally required to do the analysis, and yet you want to test and develop your analysis method.&lt;/p&gt;
+&lt;div id=&#34;naive-way&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Naive way&lt;/h3&gt;
+&lt;p&gt;A naive way to do this is to do it piecemeal, in a for loop. I will pre-allocate the result vector so we don’t take a hit on memory allocation.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;naiveRes &amp;lt;- numeric(nPoint)
+bTime &amp;lt;- Sys.time()
+for (iP in 1:nPoint){
+  naiveRes[iP] &amp;lt;- 1 - pchisq(randomData[iP], 1)
+}
+eTime &amp;lt;- Sys.time()
+naiveDiff &amp;lt;- difftime(eTime, bTime)
+naiveDiff&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Time difference of 1.418367 secs&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So this takes almost 10 times longer. Which of course, is why you are encouraged to do vectorized calculations whenever possible in &lt;code&gt;R&lt;/code&gt;, but you already knew that, didn’t you?&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;how&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;How?&lt;/h2&gt;
-&lt;p&gt;It turns out you are in luck. At least for &lt;strong&gt;AffyBatch&lt;/strong&gt; objects in Bioconductor (created by calling &lt;strong&gt;ReadAffy&lt;/strong&gt;), the &lt;strong&gt;CDF&lt;/strong&gt; information is stored as an attached environment that can be easily hacked and modified to your hearts content. Environments in R are quite important and useful, and I wouldn’t have come up with this if I hadn’t been working in R for the past couple of years, but figured someone else might benefit from this knowledge.&lt;/p&gt;
+&lt;div id=&#34;lookup-table&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Lookup table&lt;/h3&gt;
+&lt;p&gt;What if we now store a set of p-value results in a table, doing it in such a way as to use the actual distance as an index into the table?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nDivision &amp;lt;- 10000
+dof &amp;lt;- 1
+nSD &amp;lt;- 25
+
+nElements &amp;lt;- nSD * nDivision
+
+chiVals &amp;lt;- seq(0, nElements, 1) / nDivision # the chi-squared values (or distances), also used as indices when multiplied by 10000
+
+pTable &amp;lt;- 1 - pchisq(chiVals, 1) # the actual chi-square p-values for those distances&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To find a value, we just multiply the distance by 10000 (the number of divisions), and add 1 (because &lt;code&gt;R&lt;/code&gt; uses 1 based indexing instead of zero).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;testVal &amp;lt;- sample(chiVals, 1) # grab a value from the chiVals previously generated
+pTable[(testVal * nDivision) + 1]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1577358&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1 - pchisq(testVal, 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1577358&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How long does this take compared to the other approaches?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableRes &amp;lt;- numeric(nPoint)
+bTime &amp;lt;- Sys.time()
+for (iP in 1:nPoint){
+  tableRes[iP] &amp;lt;- pTable[(randomData[iP] * nDivision) + 1]
+}
+eTime &amp;lt;- Sys.time()
+tableDiff &amp;lt;- difftime(eTime, bTime)
+tableDiff&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Time difference of 0.09745979 secs&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So somewhere in-between the two. So not as good as doing a vectorized call, but better than making a call each time. Which is actually what I expected. What about any loss in precision of the values returned?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableRawPrecision &amp;lt;- abs(tableRes - actPVals) / actPVals * 100
+
+precTable &amp;lt;- data.frame(org=actPVals, table=tableRes, percError=tableRawPrecision)
+ggplot(precTable, aes(x=org, y=table)) + geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(precTable, aes(x=org, y=percError)) + geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;So, according to this, we are only introducing error at 0.8037041%, which isn’t much. And the values look like the are well correlated, so we should be good.&lt;/p&gt;
+&lt;p&gt;Now, how do these approaches compare when using &lt;code&gt;c++&lt;/code&gt;?&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;the-environment&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The environment&lt;/h2&gt;
-&lt;p&gt;In R, one can access an environment like so:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get(&amp;quot;objName&amp;quot;, envName) # get the value of object in the environment
-ls(envName)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What is also very cool, is that one can extract the objects in an environment to a list, and also create their own environment from a list using &lt;code&gt;list2env&lt;/code&gt;. Using this methodology, we can create our own definition of probesets that can be used by standard Bioconductor routines to summarize the probes into probesets.&lt;/p&gt;
-&lt;p&gt;A couple of disclaimers:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;c&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;C++&lt;/h2&gt;
+&lt;p&gt;So it’s a fair comparison, the code below actually writes the &lt;code&gt;c++&lt;/code&gt; program we are going to use, with the random numbers for the &lt;strong&gt;p-value&lt;/strong&gt; calculation stored as part of the code file.&lt;/p&gt;
+&lt;p&gt;A couple of notes:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;To be fair, both versions of the code have the set of random numbers and the lookup table as &lt;code&gt;float&lt;/code&gt; variables, so that there is no difference in each for memory allocation.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;I have only tried this on 3’ expression arrays&lt;/li&gt;
-&lt;li&gt;There might be a better way to do this, but I couldn’t find it (let me know in the comments)&lt;/li&gt;
+&lt;li&gt;Neither one stores the results of the calculation, we don’t need it for this demonstration.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div id=&#34;raw-calculations&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Raw calculations&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cppRaw &amp;lt;- c(&amp;#39;#include &amp;lt;iostream&amp;gt;&amp;#39;,
+               &amp;#39;#include &amp;lt;boost/math/distributions/chi_squared.hpp&amp;gt;&amp;#39;,
+               &amp;#39;int nVal = 1000000;&amp;#39;,
+               &amp;#39;double dof = 1.0;&amp;#39;,
+               &amp;#39;int i;&amp;#39;,
+               paste(&amp;#39;float randVals[1000000] = {&amp;#39;, paste(as.character(randomData), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
+               paste(&amp;#39;float pTable[250001] = {&amp;#39;, paste(as.character(pTable), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
+               &amp;#39;int main() {&amp;#39;,
+               &amp;#39;using boost::math::chi_squared_distribution;&amp;#39;,
+               &amp;#39;chi_squared_distribution&amp;lt;&amp;gt; myChi(dof);&amp;#39;,
+               &amp;#39;for (i = 0; i &amp;lt; nVal; i++){&amp;#39;,
+               &amp;#39;1 - cdf(myChi, randVals[i]);&amp;#39;,
+               &amp;#39;};&amp;#39;,
+               &amp;#39;return(0);&amp;#39;,
+               &amp;#39;};&amp;#39;)
+cat(cppRaw, sep=&amp;quot;\n&amp;quot;, file=&amp;quot;cppRaw.cpp&amp;quot;)
+
+system(&amp;quot;g++ cppRaw.cpp -o cppRaw.out&amp;quot;)
+system(&amp;quot;time ./cppRaw.out&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cppLookup &amp;lt;- c(&amp;#39;#include &amp;lt;iostream&amp;gt;&amp;#39;,
+               &amp;#39;#include &amp;lt;boost/math/distributions/chi_squared.hpp&amp;gt;&amp;#39;,
+               &amp;#39;int nVal = 1000000;&amp;#39;,
+               &amp;#39;double dof = 1.0;&amp;#39;,
+               &amp;#39;int i;&amp;#39;,
+               paste(&amp;#39;float randVals[1000000] = {&amp;#39;, paste(as.character(randomData), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
+               paste(&amp;#39;float pTable[250001] = {&amp;#39;, paste(as.character(pTable), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
+               &amp;#39;int main() {&amp;#39;,
+               &amp;#39;using boost::math::chi_squared_distribution;&amp;#39;,
+               &amp;#39;chi_squared_distribution&amp;lt;&amp;gt; myChi(dof);&amp;#39;,
+               &amp;#39;for (i = 0; i &amp;lt; nVal; i++){&amp;#39;,
+               &amp;#39;pTable[(int(randVals[i] * nVal))];&amp;#39;,
+               &amp;#39;};&amp;#39;,
+               &amp;#39;return(0);&amp;#39;,
+               &amp;#39;};&amp;#39;)
+cat(cppLookup, sep=&amp;quot;\n&amp;quot;, file=&amp;quot;cppLookup.cpp&amp;quot;)
+system(&amp;quot;g++ cppLookup.cpp -o cppLookup.out&amp;quot;)
+system(&amp;quot;time ./cppLookup.out&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So bypassing &lt;code&gt;boost&lt;/code&gt; in this case is a good thing, we get some extra speed, and reduce a dependency. We have to generate the lookup table first, but the &lt;code&gt;cpp&lt;/code&gt; file can be generated once, with a static variable in a class that is initialized to the lookup values. We do have some error, but in our case we can live with it, as the relative rankings should still be pretty good.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;example&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Example&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(affy)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: affy&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: BiocGenerics&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: parallel&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;BiocGenerics&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:parallel&amp;#39;:
-## 
-##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-##     clusterExport, clusterMap, parApply, parCapply, parLapply,
-##     parLapplyLB, parRapply, parSapply, parSapplyLB&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
-## 
-##     IQR, mad, sd, var, xtabs&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
-## 
-##     anyDuplicated, append, as.data.frame, cbind, colMeans,
-##     colnames, colSums, do.call, duplicated, eval, evalq, Filter,
-##     Find, get, grep, grepl, intersect, is.unsorted, lapply,
-##     lengths, Map, mapply, match, mget, order, paste, pmax,
-##     pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce,
-##     rowMeans, rownames, rowSums, sapply, setdiff, sort, table,
-##     tapply, union, unique, unsplit, which, which.max, which.min&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: Biobase&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Welcome to Bioconductor
-## 
-##     Vignettes contain introductory material; view with
-##     &amp;#39;browseVignettes()&amp;#39;. To cite Bioconductor, see
-##     &amp;#39;citation(&amp;quot;Biobase&amp;quot;)&amp;#39;, and for packages &amp;#39;citation(&amp;quot;pkgname&amp;quot;)&amp;#39;.&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(estrogen)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: estrogen&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(hgu95av2cdf)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: hgu95av2cdf&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Warning: replacing previous import &amp;#39;AnnotationDbi::tail&amp;#39; by &amp;#39;utils::tail&amp;#39;
-## when loading &amp;#39;hgu95av2cdf&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Warning: replacing previous import &amp;#39;AnnotationDbi::head&amp;#39; by &amp;#39;utils::head&amp;#39;
-## when loading &amp;#39;hgu95av2cdf&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## &lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;datadir = system.file(&amp;quot;extdata&amp;quot;, package=&amp;quot;estrogen&amp;quot;)
-
-pd = read.AnnotatedDataFrame(file.path(datadir, &amp;quot;estrogen.txt&amp;quot;), header=TRUE, sep=&amp;quot;&amp;quot;, row.names=1)
-pData(pd)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##              estrogen time.h
-## low10-1.cel    absent     10
-## low10-2.cel    absent     10
-## high10-1.cel  present     10
-## high10-2.cel  present     10
-## low48-1.cel    absent     48
-## low48-2.cel    absent     48
-## high48-1.cel  present     48
-## high48-2.cel  present     48&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;celDat = ReadAffy(filenames = rownames(pData(pd)), 
-                  phenoData = pd,
-                  verbose=TRUE, celfile.path=datadir)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 1 reading /software/R_libs/R342_bioc36/estrogen/extdata/low10-1.cel ...instantiating an AffyBatch (intensity a 409600x8 matrix)...done.
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low10-1.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low10-2.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high10-1.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high10-2.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low48-1.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low48-2.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high48-1.cel
-## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high48-2.cel&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This loads up the data, reads in the raw data, and gets it ready for us to use. Now, lets see what is in the actual &lt;strong&gt;CDF&lt;/strong&gt; environment.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;topProbes &amp;lt;- head(ls(hgu95av2cdf)) # get a list of probesets
-topProbes&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;100_g_at&amp;quot;  &amp;quot;1000_at&amp;quot;   &amp;quot;1001_at&amp;quot;   &amp;quot;1002_f_at&amp;quot; &amp;quot;1003_s_at&amp;quot; &amp;quot;1004_at&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;exSet &amp;lt;- get(topProbes[1], hgu95av2cdf)
-exSet&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           pm     mm
-##  [1,] 175218 175858
-##  [2,] 356689 357329
-##  [3,] 227696 228336
-##  [4,] 237919 238559
-##  [5,] 275173 275813
-##  [6,] 203444 204084
-##  [7,] 357984 358624
-##  [8,] 368524 369164
-##  [9,] 285352 285992
-## [10,] 304510 305150
-## [11,] 159937 160577
-## [12,] 223929 224569
-## [13,] 282764 283404
-## [14,] 270003 270643
-## [15,] 303343 303983
-## [16,] 389048 389688&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can see here that the first probe set 100_g_at has 16 perfect-match and mis-match probes in associated with it.&lt;/p&gt;
-&lt;p&gt;Lets summarize the original data using RMA.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rma1 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Background correcting
-## Normalizing
-## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
-## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
-## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
-## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
-## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
-## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
-##           low48-2.cel high48-1.cel high48-2.cel
-## 100_g_at     9.570590     9.475796     9.530655
-## 1000_at     10.033520    10.345066     9.863321
-## 1001_at      6.020889     5.981080     6.285192
-## 1002_f_at    5.494511     5.508104     5.630107
-## 1003_s_at    8.138870     7.994937     8.233338
-## 1004_at      7.599544     7.456149     7.675171&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now lets get the data as a list, and then create a new environment to be used for summarization.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;allSets &amp;lt;- ls(hgu95av2cdf)
-allSetDat &amp;lt;- mget(allSets, hgu95av2cdf)
-
-allSetDat[1]&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## $`100_g_at`
-##           pm     mm
-##  [1,] 175218 175858
-##  [2,] 356689 357329
-##  [3,] 227696 228336
-##  [4,] 237919 238559
-##  [5,] 275173 275813
-##  [6,] 203444 204084
-##  [7,] 357984 358624
-##  [8,] 368524 369164
-##  [9,] 285352 285992
-## [10,] 304510 305150
-## [11,] 159937 160577
-## [12,] 223929 224569
-## [13,] 282764 283404
-## [14,] 270003 270643
-## [15,] 303343 303983
-## [16,] 389048 389688&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hgu2 &amp;lt;- list2env(allSetDat)
-celDat@cdfName &amp;lt;- &amp;quot;hgu2&amp;quot;
-
-rma2 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Background correcting
-## Normalizing
-## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma2)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
-## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
-## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
-## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
-## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
-## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
-##           low48-2.cel high48-1.cel high48-2.cel
-## 100_g_at     9.570590     9.475796     9.530655
-## 1000_at     10.033520    10.345066     9.863321
-## 1001_at      6.020889     5.981080     6.285192
-## 1002_f_at    5.494511     5.508104     5.630107
-## 1003_s_at    8.138870     7.994937     8.233338
-## 1004_at      7.599544     7.456149     7.675171&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What about removing the &lt;strong&gt;MM&lt;/strong&gt; columns? RMA only uses the &lt;strong&gt;PM&lt;/strong&gt;, so it should still work.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;allSetDat &amp;lt;- lapply(allSetDat, function(x){
-  x[,1, drop=F]
-})
-
-allSetDat[1]&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## $`100_g_at`
-##           pm
-##  [1,] 175218
-##  [2,] 356689
-##  [3,] 227696
-##  [4,] 237919
-##  [5,] 275173
-##  [6,] 203444
-##  [7,] 357984
-##  [8,] 368524
-##  [9,] 285352
-## [10,] 304510
-## [11,] 159937
-## [12,] 223929
-## [13,] 282764
-## [14,] 270003
-## [15,] 303343
-## [16,] 389048&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hgu3 &amp;lt;- list2env(allSetDat)
-celDat@cdfName &amp;lt;- &amp;quot;hgu3&amp;quot;
-rma3 &amp;lt;-exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Background correcting
-## Normalizing
-## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma3)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
-## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
-## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
-## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
-## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
-## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
-##           low48-2.cel high48-1.cel high48-2.cel
-## 100_g_at     9.570590     9.475796     9.530655
-## 1000_at     10.033520    10.345066     9.863321
-## 1001_at      6.020889     5.981080     6.285192
-## 1002_f_at    5.494511     5.508104     5.630107
-## 1003_s_at    8.138870     7.994937     8.233338
-## 1004_at      7.599544     7.456149     7.675171&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What if we only want to use the first 5 probesets?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;allSetDat &amp;lt;- allSetDat[1:5]
-hgu4 &amp;lt;- list2env(allSetDat)
-celDat@cdfName &amp;lt;- &amp;quot;hgu4&amp;quot;
-celDat&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## AffyBatch object
-## size of arrays=640x640 features (20 kb)
-## cdf=hgu4 (5 affyids)
-## number of samples=8
-## number of genes=5
-## annotation=hgu95av2
-## notes=&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rma4 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Background correcting
-## Normalizing
-## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rma4&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-## 100_g_at     9.463007    9.554665     9.449050     9.401976    9.447562
-## 1000_at     10.182753   10.009785    10.009785     9.970396   10.102424
-## 1001_at      5.943840    6.005177     5.944015     6.089531    6.237329
-## 1002_f_at    5.787166    5.846225     5.816964     5.814798    5.763175
-## 1003_s_at    7.750877    7.769401     7.913021     7.864052    7.860778
-##           low48-2.cel high48-1.cel high48-2.cel
-## 100_g_at     9.457986     9.401366     9.431078
-## 1000_at     10.009785    10.197065     9.889555
-## 1001_at      6.147957     6.189200     6.206669
-## 1002_f_at    5.763175     5.740757     5.755085
-## 1003_s_at    7.917565     7.862614     7.928691&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(rma4)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 5 8&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;custom-cdf&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Custom CDF&lt;/h2&gt;
-&lt;p&gt;To generate our custom CDF, we are going to set our own names, and take random probes from all of the probes on the chip. The actual criteria of which probes should be together can be made using any method the author chooses.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;maxIndx &amp;lt;- 640*640
+</description>
+    </item>
+    
+    <item>
+      <title>Portable, Peronal Packages</title>
+      <link>/post/portable-peronal-packages/</link>
+      <pubDate>Mon, 23 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/portable-peronal-packages/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.programmingr.com/&#34;&gt;ProgrammingR&lt;/a&gt; had an interesting &lt;a href=&#34;http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/&#34;&gt;post&lt;/a&gt; recently about keeping a set of &lt;code&gt;R&lt;/code&gt; functions that are used often as a &lt;a href=&#34;https://gist.github.com/discover&#34;&gt;&lt;code&gt;gist&lt;/code&gt;&lt;/a&gt; on &lt;a href=&#34;https://github.com&#34;&gt;Github&lt;/a&gt;, and &lt;code&gt;source&lt;/code&gt;ing that file at the beginning of &lt;code&gt;R&lt;/code&gt; analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement &lt;a href=&#34;http://cran.r-project.org/web/packages/testthat/index.html&#34;&gt;unit testing&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;However, the best way to have &lt;strong&gt;sets&lt;/strong&gt; of &lt;code&gt;R&lt;/code&gt; functions is as a &lt;a href=&#34;http://adv-r.had.co.nz/Package-basics.html&#34;&gt;&lt;code&gt;package&lt;/code&gt;&lt;/a&gt;, that can then be installed and loaded by anyone. Normally packages are compiled and hosted on &lt;a href=&#34;http://cran.r-project.org/&#34;&gt;&lt;code&gt;CRAN&lt;/code&gt;&lt;/a&gt;, &lt;a href=&#34;http://r-forge.r-project.org/&#34;&gt;&lt;code&gt;R-forge&lt;/code&gt;&lt;/a&gt;, or &lt;a href=&#34;http://bioconductor.org&#34;&gt;&lt;code&gt;Bioconductor&lt;/code&gt;&lt;/a&gt;. However, Github is becoming a common place to host packages, and thanks to Hadley Wickham’s &lt;a href=&#34;http://www.rdocumentation.org/packages/devtools/functions/install_github&#34;&gt;&lt;code&gt;install_github&lt;/code&gt;&lt;/a&gt; function in the &lt;a href=&#34;http://www.rdocumentation.org/packages/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt; package&lt;/a&gt;, it is rather easy to install a package directly from Github. This does require that you have &lt;a href=&#34;http://cran.r-project.org/bin/windows/Rtools/&#34;&gt;r-tools&lt;/a&gt; installed if you are using Windows (I know that can take a bit of work, but it’s not impossible), and do some extra work to create a &lt;a href=&#34;http://adv-r.had.co.nz/Package-basics.html&#34;&gt;proper package&lt;/a&gt;, but the overhead is probably worth it if you are using these functions all the time.&lt;/p&gt;
+&lt;p&gt;Once you have the package created and hosted on Github, it is simple to install it once, and load it when needed. If there is a particular version of the package that is required, it is even possible to tell &lt;code&gt;install_github&lt;/code&gt; to install a particular version based on the &lt;em&gt;commit&lt;/em&gt;, or a &lt;em&gt;tag&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Some examples of this type of package can be found on Github: &lt;a href=&#34;https://github.com/kbroman/broman&#34;&gt;1&lt;/a&gt; &lt;a href=&#34;https://github.com/childsish/lhc-R&#34;&gt;2&lt;/a&gt; &lt;a href=&#34;https://github.com/juba/r-perso&#34;&gt;3&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>K-12 Wants Scientists!!</title>
+      <link>/post/k-12-wants-scientists/</link>
+      <pubDate>Thu, 19 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/k-12-wants-scientists/</guid>
+      <description>&lt;p&gt;It seems that the PostDoc committee here at UK has an interest in providing some information on alternative careers for PostDocs outside of academia. We all know that there are not enough PI slots at universities for all of the PhDs who are going on to do PostDocs, and many will end up in &lt;em&gt;alternative&lt;/em&gt; (I use that term loosely) careers.&lt;/p&gt;
+&lt;p&gt;Yesterday (2013-09-18), Scott Diamond gave a &lt;em&gt;seminar&lt;/em&gt; to PostDocs in the Medical Center at UK on getting involved in teaching science at the K-12 and college level. Scott was previously a professor here at UK, who got involved in science teaching at local schools, saw how miserable many students were in science classes, and wanted to change that. So he quit academia, got his teaching certification, and is now teaching science at a school for high-risk youth, &lt;a href=&#34;http://www.tlc.fcps.net/&#34;&gt;The Learning Center&lt;/a&gt;, here in Fayette County.&lt;/p&gt;
+&lt;p&gt;This school takes 180 of the kids who are extremely truant, i.e. they like to skip school. Of course, we know that poverty is a big factor in the decision to skip school, but so is boredom from lack of engagement with the material. At The Learning Center they have been finding that if you find ways to make the material engaging (especially science), then the kids will &lt;em&gt;want&lt;/em&gt; to be at school, learning, and they will still do well on the standard testing. Scott mentioned that these kids in regular school were truant at least 50% of the time, and at The Learning Center they have an attendance rate of 95%.&lt;/p&gt;
+&lt;p&gt;As scientists, we are out to make discoveries. We look at something happening in the natural world, make hypotheses, and test them. Even in bioinformatics, the goal is to use computers to analyze biological data so we can understand better how these biological systems work, and make better hypotheses and test them. This is not how science is taught in K-12 right now here in the US. In many school systems, it is merely recitation of science facts, with no actual “investigational” science going on.&lt;/p&gt;
+&lt;p&gt;Scott (and others) are working to change this. But to do it right, they need trained scientists in the system. So if you are thinking about doing something other than academia following your PostDoc, and want to help kids be truly interested in science and how it works, maybe you should consider going into teaching K-12??&lt;/p&gt;
+&lt;p&gt;If you want more info about The Learning Center, about their model, or about getting into teaching at this level, you can reach Scott at &lt;code&gt;scott&lt;/code&gt; dot &lt;code&gt;diamond&lt;/code&gt; near &lt;code&gt;uky&lt;/code&gt; circular shape &lt;code&gt;edu&lt;/code&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R, RStudio, and Release and Dev Bioconductor</title>
+      <link>/post/r-rstudio-and-release-and-dev-bioconductor/</link>
+      <pubDate>Tue, 17 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-rstudio-and-release-and-dev-bioconductor/</guid>
+      <description>&lt;p&gt;I have one &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/categoryCompare.html&#34;&gt;&lt;code&gt;Bioconductor&lt;/code&gt; package&lt;/a&gt; that I am currently responsible for. Each &lt;a href=&#34;http://master.bioconductor.org/developers/release-schedule/&#34;&gt;bi-annual release&lt;/a&gt; of &lt;code&gt;Bioconductor&lt;/code&gt; requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of &lt;code&gt;R&lt;/code&gt; and multiple versions of &lt;code&gt;Bioconductor&lt;/code&gt; libraries on a single system (assuming that you do production work and development on the same machine, right?).&lt;/p&gt;
+&lt;p&gt;I really, really like &lt;a href=&#34;http://rstudio.org&#34;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; as my working &lt;code&gt;R&lt;/code&gt; environment, as some of you have read before. So how do we get &lt;code&gt;RStudio&lt;/code&gt; on our Linux system to respect which version of &lt;code&gt;R&lt;/code&gt; and libraries we want to use?&lt;/p&gt;
+&lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Setup&lt;/h2&gt;
+&lt;p&gt;This assumes that you have your &lt;code&gt;R&lt;/code&gt; installs set somewhere properly, and a &lt;strong&gt;normal&lt;/strong&gt; library for production level packages. You should install whichever &lt;code&gt;Bioconductor&lt;/code&gt; packages you want into the &lt;strong&gt;normal&lt;/strong&gt; library, and then make a copy of that. This copy will be your &lt;strong&gt;development&lt;/strong&gt; library.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cp -R productionLibrary developmentLibrary&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I also assume that you are using a local (i.e. sits in your &lt;em&gt;home&lt;/em&gt; directory) &lt;code&gt;.Renviron&lt;/code&gt; file to control where &lt;code&gt;R&lt;/code&gt; installs the packages.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;changing-versions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Changing Versions&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;RStudio&lt;/code&gt; really needs the environment variable &lt;code&gt;RSTUDIO_WHICH_R&lt;/code&gt; set to know where &lt;code&gt;R&lt;/code&gt; is, and &lt;code&gt;R&lt;/code&gt; looks at &lt;code&gt;R_LIBS&lt;/code&gt; in the &lt;code&gt;.Renviron&lt;/code&gt; file. So I simply create two shell scripts that get sourced.&lt;/p&gt;
+&lt;div id=&#34;userdev.sh&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;useRDev.sh&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+export RSTUDIO_WHICH_R=/pathToDevR/bin/R
+echo &amp;quot;R_LIBS=pathtoDevLibs&amp;quot; &amp;gt; .Renviron&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then I can simply do &lt;code&gt;source useRDev.sh&lt;/code&gt; when I need to use the development &lt;code&gt;R&lt;/code&gt; and library. &lt;strong&gt;Note&lt;/strong&gt; that you will need to start &lt;code&gt;RStudio&lt;/code&gt; from the shell for it to respect this environment variable. &lt;code&gt;RStudio&lt;/code&gt; generally seems to install to &lt;code&gt;/usr/lib/rstudio/bin/rstudio&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;resetr.sh&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;resetR.sh&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+export RSTUDIO_WHICH_R=/pathtoReleaseR/bin/R
+echo &amp;quot;R_LIBS=pathtoReleaseLibs&amp;quot; &amp;gt; .Renviron&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This resets my variables by doint &lt;code&gt;source resetR.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;bioconductor-dev-version&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bioconductor Dev Version&lt;/h2&gt;
+&lt;p&gt;To setup &lt;code&gt;Bioconductor&lt;/code&gt; to use the develoment version, simply:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source useRDev.sh
+rstudio
 
-customCDF &amp;lt;- lapply(seq(1,100), function(x){
-  tmp &amp;lt;- matrix(sample(maxIndx, 20), nrow=20, ncol=1)
-  colnames(tmp) &amp;lt;- &amp;quot;pm&amp;quot;
-  return(tmp)
-})
-
-names(customCDF) &amp;lt;- seq(1, 100)
-
-hgu5 &amp;lt;- list2env(customCDF)
-celDat@cdfName &amp;lt;- &amp;quot;hgu5&amp;quot;
-rma5 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Background correcting
-## Normalizing
-## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma5)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##     low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-## 1      6.875302    6.737387     6.867864     6.761329    6.945358
-## 10     6.890655    6.876103     6.809894     6.757057    6.368846
-## 100    6.588289    6.616809     6.641429     6.673279    6.517397
-## 11     7.328216    7.332484     7.251555     7.249391    7.452480
-## 12     5.959854    6.003080     6.068861     6.061606    6.126302
-## 13     6.023770    6.151759     5.937899     6.097629    6.016962
-##     low48-2.cel high48-1.cel high48-2.cel
-## 1      7.086466     7.178230     7.106620
-## 10     6.447421     6.504624     6.416214
-## 100    6.782158     6.618414     6.547781
-## 11     7.288690     7.390152     7.417429
-## 12     6.094947     6.064757     6.145701
-## 13     6.097417     6.044478     6.227716&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I hope this information is useful to someone else. I know it made my life a lot easier.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## R version 3.4.2 (2017-09-28)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 16.04.3 LTS
-## 
-## Matrix products: default
-## BLAS: /software/R-3.4.2/lib/R/lib/libRblas.so
-## LAPACK: /software/R-3.4.2/lib/R/lib/libRlapack.so
-## 
-## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-## 
-## attached base packages:
-## [1] parallel  methods   stats     graphics  grDevices utils     datasets 
-## [8] base     
-## 
-## other attached packages:
-## [1] hgu95av2cdf_2.18.0  estrogen_1.23.0     affy_1.55.0        
-## [4] Biobase_2.38.0      BiocGenerics_0.24.0
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.14          AnnotationDbi_1.40.0  knitr_1.17           
-##  [4] magrittr_1.5          IRanges_2.12.0        zlibbioc_1.23.0      
-##  [7] bit_1.1-12            rlang_0.1.2           blob_1.1.0           
-## [10] stringr_1.2.0         tools_3.4.2           DBI_0.7              
-## [13] htmltools_0.3.6       bit64_0.9-7           yaml_2.1.15          
-## [16] rprojroot_1.2         digest_0.6.12         tibble_1.3.4         
-## [19] preprocessCore_1.39.3 bookdown_0.5          affyio_1.47.1        
-## [22] S4Vectors_0.16.0      memoise_1.1.0         RSQLite_2.0          
-## [25] evaluate_0.10.1       rmarkdown_1.8         blogdown_0.4         
-## [28] stringi_1.1.5         compiler_3.4.2        BiocInstaller_1.27.5 
-## [31] backports_1.1.1       stats4_3.4.2&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Originally published 2013/07/13, moved to &lt;a href=&#34;http://rmflight.github.io&#34; class=&#34;uri&#34;&gt;http://rmflight.github.io&lt;/a&gt; on 2013/12/04.&lt;/p&gt;
+# once in RStudio
+library(BiocInstaller)
+useDev()
+biocLite(ask=F) # this will update all the installed bioconductor packages&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I know this is not the most ideal situation, because I am rewriting over files, but it is working for me, and I thought it might help somone else.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Reproducible Methods</title>
+      <link>/post/reproducible-methods/</link>
+      <pubDate>Fri, 16 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reproducible-methods/</guid>
+      <description>&lt;p&gt;Science is built on the whole idea of being able to reproduce results, i.e. if I publish something, it should be possible for someone else to reproduce it, using the description of the methods used in the publication. As biological sciences have become increasingly reliant on computational methods, this has become a bigger and bigger issue, especially as the results of experiments become dependent on independently developed computational code, or use rather sophisticated computer packages that have a variety of settings that can affect output, and multiple versions. For further discussion on this issue, you might want to read &lt;a href=&#34;http://bytesizebio.net/index.php/2012/08/24/can-we-make-research-software-accountable/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;http://ivory.idyll.org/blog/anecdotal-science.html&#34;&gt;2&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I recently read a couple of different publications that really made me realize how big a problem this is. I want to spend some time showing what the problem is in these publications, and why we should be concerned about the current state of computational analytical reproducibility in life-sciences.&lt;/p&gt;
+&lt;p&gt;In both the articles mentioned below, I do not believe that I, or anyone not associated with the project, would be able to generate even approximately similar results based solely on the raw data and the description of methods provided. Ultimately, this is a failure of both those doing the analysis, and the reviewers who reviewed the work, and is a rather deplorable situation for a field that prides itself verification of results. This is why I’m saying these are &lt;strong&gt;bad bioinformatics methods sections&lt;/strong&gt;.&lt;/p&gt;
+&lt;div id=&#34;puthanveettil-et-al.-synaptic-transcriptome&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Puthanveettil et al., Synaptic Transcriptome&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://doi.org/10.1073/pnas.1304422110&#34;&gt;Puthanveettil et al, 2013&lt;/a&gt; had a paper out earlier titled &lt;a href=&#34;http://doi.org/10.1073/pnas.1304422110&#34;&gt;“A strategy to capture and characterize the synaptic transcriptome”&lt;/a&gt; in PNAS. Although the primary development reported is a new method of characterizing RNA complexes that are carried by kinesin, much of the following analysis is bioinformatic in nature.&lt;/p&gt;
+&lt;p&gt;For example, they used BLAST searches to identify the RNA molecules, a cutoff value is reported in the results. However, functional characterization using Gene Ontology (GO) was carried out by “Bioinformatics analyses” (see the top of pg3 in the PDF). No mention of where the GO terms came from, which annotation source was used, or any software mentioned. Not in the results, discussion, or methods, or the supplemental methods. The microarray data analysis isn’t too badly described, but the 454 sequencing data processing isn’t really described at all.&lt;/p&gt;
+&lt;p&gt;My point is, that even given their raw data, I’m not sure I would be able to even approximate their results based on the methods reported in the methods section.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gulsuner-et-al.-schizophrenia-snps&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gulsuner et al., Schizophrenia SNPs&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://dx.doi.org/10.1016/j.cell.2013.06.049&#34;&gt;Gulsuner et al&lt;/a&gt; published a paper in Cell in August 2013 titled &lt;a href=&#34;http://dx.doi.org/10.1016/j.cell.2013.06.049&#34;&gt;“Spatial and Temporal Mapping of De Novo Mutations in Schizophrenia to a Fetal Prefrontal Cortical Network”&lt;/a&gt;. This one also looks really nice, they look for &lt;em&gt;de novo&lt;/em&gt; mutations (i.e. new mutations in offspring not present in parents or siblings) that mess up genes that are in a heavily connected network, and also examine gene co-expression over brain development time-scales. Sounds really cool, and the results seem like they are legit, based on my reading of the manuscript. I was really impressed that they even used &lt;strong&gt;randomly generated&lt;/strong&gt; networks to control the false discovery rate!&lt;/p&gt;
+&lt;p&gt;However, almost all of the analysis again depends on a lot of different bioinformatic software. I do have to give the authors props, they actually give the &lt;strong&gt;full&lt;/strong&gt; version of each tool used. But no mention of tool specific settings (which can generate vastly different results, see &lt;strong&gt;Exome Sequencing&lt;/strong&gt; of the methods).&lt;/p&gt;
+&lt;p&gt;Then there is this bombshell: “The predicted functional impact of each candidate de novo missense variant was assessed with in silico tools.” (near top of pg 525 of the PDF). Rrrreeeaaaalllly now. No actual quote of which tools were used, although the subsequent wording and references provided imply that they were &lt;a href=&#34;http://www.nature.com/nmeth/journal/v7/n4/full/nmeth0410-248.html&#34;&gt;PolyPhen2&lt;/a&gt;, &lt;a href=&#34;http://sift.jcvi.org/&#34;&gt;SIFT&lt;/a&gt;, and the &lt;a href=&#34;http://www.sciencemag.org/content/185/4154/862.long&#34;&gt;Grantham Method&lt;/a&gt;. But shouldn’t that have been stated up front? Along with any settings that were changed from default??&lt;/p&gt;
+&lt;p&gt;There is no raw data available, only their reported SNPs. Not even a list of &lt;strong&gt;all&lt;/strong&gt; the SNPs that were potentially considered, so that I could at least go from those and re-run the later analysis. I have to take their word for it (although I am glad at least the SNPs they used in later analyses are reported).&lt;/p&gt;
+&lt;p&gt;Finally, the random network generation. I’d like to be able to see that code, go over it, and see what exactly it was doing to verify it was done correctly. It likely was, based on the histograms provided, but still, these are where small errors creep in and result in invalid results.&lt;/p&gt;
+&lt;p&gt;As above, even if the raw data was available (didn’t see an SRA accession or any other download link), I’m not sure I could reproduce or verify the results.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-to-do&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What to do??&lt;/h2&gt;
+&lt;p&gt;How do we fix this problem? I think scripts and workflows used to run any type of bioinformatic analyses have to become first class research objects. And we have to teach scientists to write them and use them in a way that makes them first class research objects. So in the same way that a biologist might ask for verification of immunostaining, etc, bioinformaticians should ask that given known input, a script generates &lt;em&gt;reasonable&lt;/em&gt; output.&lt;/p&gt;
+&lt;p&gt;I know there has been discussion on this before, and disagreement, especially with the exploratory nature of research. However, once you’ve got something working &lt;em&gt;right&lt;/em&gt;, you should be able to &lt;em&gt;test&lt;/em&gt; it. Reviewers should be asking if it is testable, or the code should be available for others to test.&lt;/p&gt;
+&lt;p&gt;I also think we as a community should do more to point out the problem. i.e. when we see it, point it out to others. I’ve done that here, but I don’t know how much should be formal. Maybe we need a new hashtag, #badbioinfomethodsection, and point links to papers that do this. Conversely, we should also point to examples when it is done right (#goodbioinfomethodsection??), and if you are bioinformatician or biologist who does a lot of coding, share your code, and at least supply it as supplemental materials. Oh, and maybe take a &lt;a href=&#34;http://softwarecarpentry.org&#34;&gt;SoftwareCarpentry&lt;/a&gt; class, and look up &lt;a href=&#34;http://git-scm.com/&#34;&gt;git&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Posted on August 16, 2013 at &lt;a href=&#34;http://robertmflight.blogspot.com/2013/08/reproducible-methods-or-bad.html&#34; class=&#34;uri&#34;&gt;http://robertmflight.blogspot.com/2013/08/reproducible-methods-or-bad.html&lt;/a&gt;, raw markdown at &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/reproducible_methods.md&#34; class=&#34;uri&#34;&gt;https://github.com/rmflight/blogPosts/blob/master/reproducible_methods.md&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R Interface for Teaching</title>
+      <link>/post/r-interface-for-teaching/</link>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-interface-for-teaching/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://twitter.com/intent/user?screen_name=kaythaney&amp;amp;tw_i=354635159447941120&amp;amp;tw_p=tweetembed&#34;&gt;Kaitlin Thaney&lt;/a&gt; asked on Twitter last week about using &lt;a href=&#34;https://twitter.com/intent/user?screen_name=ramnath_vaidya&amp;amp;tw_i=354599459868508160&amp;amp;tw_p=tweetembed&#34;&gt;Ramnath Vaidyanathan’s&lt;/a&gt; new &lt;code&gt;interactive R notebook&lt;/code&gt; &lt;a href=&#34;http://ramnathv.github.io/rNotebook/&#34;&gt;1&lt;/a&gt; &lt;a href=&#34;https://github.com/ramnathv/rNotebook&#34;&gt;2&lt;/a&gt; for teaching.&lt;/p&gt;
+&lt;p&gt;Now, to be clear up front, I am &lt;strong&gt;not&lt;/strong&gt; trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don’t really think it is the right interface for teaching &lt;code&gt;R&lt;/code&gt;. I would argue that the best interface for teaching &lt;code&gt;R&lt;/code&gt; right now is &lt;a href=&#34;http://www.rstudio.com/&#34;&gt;RStudio&lt;/a&gt;. Keep reading to find out why.&lt;/p&gt;
+&lt;div id=&#34;ipython-notebook&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;iPython Notebook&lt;/h2&gt;
+&lt;p&gt;First, I believe Ramnath when he says he was inspired by the &lt;a href=&#34;http://ipython.org/notebook.html&#34;&gt;&lt;code&gt;iPython Notebook&lt;/code&gt;&lt;/a&gt; that makes it so very nice to do interactive, reproducible Python coding. Software Carpentry has been very successfully using them for helping to teach Python to scientists.&lt;/p&gt;
+&lt;p&gt;However, the iPython Notebook is an interesting beast for this purpose. You are able to mix &lt;code&gt;markdown&lt;/code&gt; blocks and &lt;code&gt;code&lt;/code&gt; blocks. In addition, it is extremely simple to break up your calculations into &lt;strong&gt;units&lt;/strong&gt; of related code, and re-run those units as needed. This is particularly useful when writing new functions, because you can write the function definition, and a test that displays output in one block, and then the actual computations in subsequent blocks. It makes it very easy to keep re-running the same block of code over and over until it is correct, which allows one to interactively explore changes to functions. This is &lt;strong&gt;awesome&lt;/strong&gt; for learning Python and prototyping functions.&lt;/p&gt;
+&lt;p&gt;In addition to being able to repeatedly &lt;code&gt;write -&amp;gt; run -&amp;gt; modify&lt;/code&gt; in a loop, you can also insert prose describing what is going on in the form of &lt;code&gt;markdown&lt;/code&gt;. This is a nice lightweight syntax that generates html. So it becomes relatively easy to document the &lt;em&gt;why&lt;/em&gt; of something.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r-notebook&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R Notebook&lt;/h2&gt;
+&lt;p&gt;Unfortunately, the &lt;code&gt;R notebook&lt;/code&gt; that Ramnath has put up is not quite the same beast. It is an &lt;a href=&#34;http://ajaxorg.github.io/ace/#nav=about&#34;&gt;Ace editor&lt;/a&gt; window coupled to an R process that knits the markdown and displays the resultant html. This is really cool, and I think will be useful in many other applications, but &lt;strong&gt;not&lt;/strong&gt; for teaching in an interactive environment.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rstudio-as-a-teaching-environment&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;RStudio as a Teaching Environment&lt;/h2&gt;
+&lt;p&gt;Lets think. We want something that lets us repeatedly &lt;code&gt;write -&amp;gt; run -&amp;gt; modify&lt;/code&gt; &lt;strong&gt;on small code blocks&lt;/strong&gt; in &lt;code&gt;R&lt;/code&gt;, but would be great if it was some kind of document that could be shared, and re-run.&lt;/p&gt;
+&lt;p&gt;I would argue that the editor environment in &lt;a href=&#34;http://www.rstudio.com/&#34;&gt;RStudio&lt;/a&gt; when writing &lt;a href=&#34;http://www.rstudio.com/ide/docs/authoring/using_markdown&#34;&gt;R markdown (Rmd)&lt;/a&gt; files is the solution. &lt;code&gt;R&lt;/code&gt; code blocks behave much the same as in iPython notebook, in that they are colored differently, set apart, have syntax highlighting, and can be easily repeatedly run using the &lt;code&gt;code chunk&lt;/code&gt; menu. Outside of code blocks is assumed to be markdown, making it easy to insert documentation and explanation. The code from the code blocks is sent to an attached &lt;code&gt;R&lt;/code&gt; session, where objects can be further investigated if required, and results are displayed.&lt;/p&gt;
+&lt;p&gt;This infrastructure supplies an interactive back and forth between editor and execution environment, with the ability to easily group together units of code.&lt;/p&gt;
+&lt;p&gt;In addition, RStudio has git integration baked in, so it becomes easy to get started with some basic version control.&lt;/p&gt;
+&lt;p&gt;Finally, RStudio is cross-platform, has tab completion among other standard IDE goodies, and its free.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feedback&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Feedback&lt;/h2&gt;
+&lt;p&gt;I’ve gotten some feedback on twitter about this, and I want to update this post to address it.&lt;/p&gt;
+&lt;div id=&#34;hard-to-install&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Hard to Install&lt;/h3&gt;
+&lt;p&gt;One comment was that installing R, RStudio and necessary packages might be hard. True, it might be. However, I have done multiple installs of R, RStudio, Python, and iPython Notebook in both Linux and Windows, and I would argue that the level of difficulty is at least the same.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;moving-from-presentation-to-coding&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Moving from Presentation to Coding&lt;/h3&gt;
+&lt;p&gt;I think this is always difficult, especially if you have a powerpoint, and your code is in another application. However, the latest dev version of RStudio (&lt;a href=&#34;http://www.rstudio.com/ide/download/preview&#34;&gt;download&lt;/a&gt;) now includes the ability to view markdown based presentations in an &lt;a href=&#34;http://www.rstudio.com/ide/docs/presentations/overview&#34;&gt;attached window&lt;/a&gt;. This is probably one of the potentially nicest things for doing presentations that actually involve editing actual code.&lt;/p&gt;
+&lt;p&gt;Edit: added download links for Rstudio preview&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Storing Package Data in Custom Environments</title>
+      <link>/post/storing-package-data-in-custom-environments/</link>
+      <pubDate>Thu, 30 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/storing-package-data-in-custom-environments/</guid>
+      <description>&lt;p&gt;If you do &lt;code&gt;R&lt;/code&gt; package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global &lt;code&gt;options&lt;/code&gt;. This is done by packages &lt;code&gt;grDevices&lt;/code&gt; and &lt;code&gt;parallel&lt;/code&gt;. Sometimes this doesn’t seem to work quite right (see this &lt;a href=&#34;https://github.com/cboettig/knitcitations/issues/14&#34;&gt;issue&lt;/a&gt; for example.&lt;/p&gt;
+&lt;p&gt;Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify. You get a space to put package specific stuff, the user can’t see it or modify it directly, and you just need to write functions that do the appropriate things to that environment (adding variables, reading them, etc). This sounds great in practice, but I wasn’t clear on how to do this, even after reading the &lt;a href=&#34;http://stat.ethz.ch/R-manual/R-devel/library/base/html/environment.html&#34;&gt;help page on environments&lt;/a&gt;, the &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-intro.html&#34;&gt;R documentation&lt;/a&gt;, or even &lt;a href=&#34;https://github.com/hadley/devtools/wiki/Environments&#34;&gt;Hadley’s excellent writeup&lt;/a&gt;. From all these sources, I could glean that one can create environments, name them, modify them, etc, but wasn’t sure how to work with this within a package.&lt;/p&gt;
+&lt;p&gt;I checked out the &lt;a href=&#34;https://github.com/cboettig/knitcitations&#34;&gt;&lt;code&gt;knitcitations&lt;/code&gt;&lt;/a&gt; package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In &lt;code&gt;zzz.R&lt;/code&gt;, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the &lt;code&gt;get&lt;/code&gt; and &lt;code&gt;assign&lt;/code&gt; functions like you would if you were doing anything on the command line.&lt;/p&gt;
+&lt;p&gt;To make sure I had it figured out, I created a very &lt;a href=&#34;https://github.com/rmflight/testEnvironment&#34;&gt;tiny package&lt;/a&gt; to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using &lt;a href=&#34;https://github.com/hadley/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt;]) and see for yourself.&lt;/p&gt;
+&lt;p&gt;I have at least two projects where I know I will use this, and I’m sure others might find it useful as well.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Writing Up Scientific Results and Literate Programming</title>
+      <link>/post/writing-up-scientific-results-and-literate-programming/</link>
+      <pubDate>Fri, 10 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/writing-up-scientific-results-and-literate-programming/</guid>
+      <description>&lt;p&gt;As an academic researcher, my primary purpose is to find some new insight, and subsequently communicate this insight to the general public. The process of doing this is traditionally thought to be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;from observations of the world, generate a hypothesis&lt;/li&gt;
+&lt;li&gt;design experiments to test hypothesis&lt;/li&gt;
+&lt;li&gt;analyse results of the experiments to determine if hypothesis correct&lt;/li&gt;
+&lt;li&gt;write report to communicate results to others (academics and / or general public)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And then repeat.&lt;/p&gt;
+&lt;p&gt;This is the way people envision it happening. And I would imagine that in some rare cases, this is what actually happens. However, I think many researchers would agree that this is not what normally happens. In the process of doing steps &lt;strong&gt;3&lt;/strong&gt; and &lt;strong&gt;4&lt;/strong&gt;, your hypothesis in &lt;strong&gt;1&lt;/strong&gt; will be modified, which modifies the experiments in &lt;strong&gt;2&lt;/strong&gt;, and so on and so forth. This makes the process of scientific discovery a very iterative process, often times right up to the report writing.&lt;/p&gt;
+&lt;p&gt;For some of this, it takes a long time to figure this out. I’ll never forget a professor during my PhD who suggested that you write the paper, and then figure out what experiments you should do to generate the results that would support or disprove the hypothesis you made in the paper. At the time I thought he was nuts, but when you start writing stuff, and looking at how all the steps of experiment and reporting can become intertwined, it doesn’t seem like a bad idea. &lt;a href=&#34;#note1&#34;&gt;note1&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;literate-programming&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Literate programming&lt;/h2&gt;
+&lt;p&gt;What does this have to do with &lt;a href=&#34;http://en.wikipedia.org/wiki/Literate_programming&#34;&gt;&lt;code&gt;literate programming&lt;/code&gt;&lt;/a&gt;? For those who don’t know, &lt;code&gt;literate programming&lt;/code&gt; is a way to mix code and prose together in one document (in &lt;code&gt;R&lt;/code&gt; we use &lt;code&gt;knitr&lt;/code&gt; &amp;amp; &lt;code&gt;sweave&lt;/code&gt;, &lt;code&gt;python&lt;/code&gt; now has the &lt;code&gt;iPython&lt;/code&gt; notebook as an option). This &lt;code&gt;literate programming&lt;/code&gt; paradigm (combined with &lt;code&gt;markdown&lt;/code&gt; as the markup language instead of &lt;code&gt;latex&lt;/code&gt; thanks to &lt;code&gt;knitr&lt;/code&gt;) is changing how I actually write my papers and do research in general.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-that-changes-writing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How that changes writing&lt;/h2&gt;
+&lt;p&gt;As I’ve previously described &lt;a href=&#34;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&#34;&gt;1&lt;/a&gt;&lt;a href=&#34;http://robertmflight.blogspot.com/2012/08/loving-markdown.html&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;http://rstudio.org&#34;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; makes the use of &lt;code&gt;knitr&lt;/code&gt; and generation of literate documents using computations in &lt;code&gt;R&lt;/code&gt; incredibly easy. Because my writing environment and programming environment are tightly coupled together, I can easily start writing what looks like a shareable, readable publication as soon as I start writing code. Couple this together with a CVS like &lt;code&gt;git&lt;/code&gt;, and you have a way to follow the complete providence of a publication from start to finish.&lt;/p&gt;
+&lt;p&gt;Instead of commenting my code to explain &lt;strong&gt;why&lt;/strong&gt; I am doing something, I explain what I am doing in the prose, and then write the code to carry out that analysis. This changes my writing and coding style, and makes the interplay among the steps of writing scientific reports above much more explicit. I think it is a good thing, and will hopefully make my writing and research more productive.&lt;/p&gt;
+&lt;div id=&#34;notes&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Notes&lt;/h3&gt;
+&lt;p&gt;&lt;a name=&#34;note1&#34;&gt;1.&lt;/a&gt; I am not suggesting that one only do experiments that will support the experiment, but writing out the paper at least gives you a framework for doing the experiments, and doing initial analysis. One should always be willing to modify the publication / hypothesis based on what the experiments tell you.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sources&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Sources&lt;/h3&gt;
+&lt;p&gt;Published 10.05.13 &lt;a href=&#34;http://robertmflight.blogspot.com/scientific-writing.html&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The source markdown for this document is available &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/writing_up_results.md&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 </description>
     </item>

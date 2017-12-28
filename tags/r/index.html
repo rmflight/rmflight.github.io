@@ -216,6 +216,65 @@
   </div>
   
   <div>
+    <h2><a href="/post/open-vs-closed-analysis-languages/">Open vs Closed Analysis Languages</a></h2>
+    <div class="article-style">
+      
+      TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
+ Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/pre-calculating-large-tables-of-values/">Pre-Calculating Large Tables of Values</a></h2>
+    <div class="article-style">
+      
+      I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></h2>
+    <div class="article-style">
+      
+      ProgrammingR had an interesting post recently about keeping a set of R functions that are used often as a gist on Github, and sourceing that file at the beginning of R analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement unit testing.
+However, the best way to have sets of R functions is as a package, that can then be installed and loaded by anyone.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/r-rstudio-and-release-and-dev-bioconductor/">R, RStudio, and Release and Dev Bioconductor</a></h2>
+    <div class="article-style">
+      
+      I have one Bioconductor package that I am currently responsible for. Each bi-annual release of Bioconductor requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of R and multiple versions of Bioconductor libraries on a single system (assuming that you do production work and development on the same machine, right?).
+I really, really like RStudio as my working R environment, as some of you have read before.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/r-interface-for-teaching/">R Interface for Teaching</a></h2>
+    <div class="article-style">
+      
+      Kaitlin Thaney asked on Twitter last week about using Ramnath Vaidyanathan’s new interactive R notebook 1 2 for teaching.
+Now, to be clear up front, I am not trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don’t really think it is the right interface for teaching R.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="/post/storing-package-data-in-custom-environments/">Storing Package Data in Custom Environments</a></h2>
+    <div class="article-style">
+      
+      If you do R package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global options. This is done by packages grDevices and parallel. Sometimes this doesn’t seem to work quite right (see this issue for example.
+Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></h2>
     <div class="article-style">
       
