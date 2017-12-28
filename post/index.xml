@@ -173,5 +173,604 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
+    <item>
+      <title>Hive Plots Using R and Cytoscape</title>
+      <link>/post/hive-plots-using-r-and-cytoscape/</link>
+      <pubDate>Wed, 28 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/hive-plots-using-r-and-cytoscape/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Writing Papers Using R Markdown</title>
+      <link>/post/writing-papers-using-r-markdown/</link>
+      <pubDate>Tue, 09 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/writing-papers-using-r-markdown/</guid>
+      <description>&lt;p&gt;I have been watching the activity in &lt;a href=&#34;http://rstudio.org&#34;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;http://yihui.name/knitr/&#34;&gt;&lt;code&gt;knitr&lt;/code&gt;&lt;/a&gt; for a while, and have even been using &lt;code&gt;Rmd&lt;/code&gt; (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed &lt;a href=&#34;http://yihui.name/en/2012/03/a-really-fast-statistics-journal/&#34;&gt;writing papers&lt;/a&gt; in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using &lt;code&gt;knitr&lt;/code&gt; as a way to create reproducible blog posts that include code (including yours truly).&lt;/p&gt;
+&lt;p&gt;The idea of writing a paper that actually includes the necessary code to perform the analysis, and is actually readable in its raw form, and that someone else could actually run was pretty appealing. Unfortunately, I had not had the time or opportunity to actually try it, until recently our group submitted a conference paper that included a lot of analysis in &lt;code&gt;R&lt;/code&gt; that seemed like the perfect opportunity to try this. (I will link to the paper here when I hear more, or get clearance from my PI). Originally we wrote the paper in Microsoft(r) Word, but after submission I decided to see what it would have taken to write it as an &lt;code&gt;Rmd&lt;/code&gt; document that could then generate &lt;code&gt;markdown&lt;/code&gt; or &lt;code&gt;html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It turned out that it was not that hard, but it did force me to do some things differently. This is what I want to discuss here.&lt;/p&gt;
+&lt;div id=&#34;advantages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Advantages&lt;/h2&gt;
+&lt;p&gt;I actually found it much easier to have the text with the analysis (in contrast to having to be separate in a Word document), and upon doing the conversion, discovered some possible numerical errors that crept in because of having to copy numerical results separately (that is the nice thing about being able to insert variable directly into the text). In addition, the Word template for the submission didn’t play nice with automatic table and figure numbering, so our table and figure numbering got messed up in the submission. So overall, I’d say it worked out better with the &lt;code&gt;Rmd&lt;/code&gt; file overall, even with the having to create functions to handle table and figure numbering properly myself (see below).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tables-and-figures&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tables and Figures&lt;/h2&gt;
+&lt;p&gt;As I’m sure most of you know, Word (and other WYSIWYG editors) have ability to keep track of your object numbers, this is especially nice for keeping your figure and table numbers straight. Of course, there is no such ability built into a static text file, but I found it was easy to write a couple of functions for this. The way I came up with is to have a variable that contains a label for the figure or table, a function that increments the counter when new figures or tables are added, and a function that prints the associated number for a particular label. This does require a bit of forethought on the part of the writer, because you may have to add a table or figure label to the variable long before you actually create it, but as long as you use sane (i.e. descriptive) labels, it shouldn’t be a big deal. Let me show you what I mean.&lt;/p&gt;
+&lt;div id=&#34;counting&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Counting&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;incCount &amp;lt;- function(inObj, useName){
+    nObj &amp;lt;- length(inObj)
+    useNum &amp;lt;- max(inObj) + 1
+    inObj &amp;lt;- c(inObj, useNum)
+    names(inObj)[nObj+1] &amp;lt;- useName
+    inObj
+}
+figCount &amp;lt;- c(&amp;quot;_&amp;quot;=0)
+tableCount &amp;lt;- c(&amp;quot;_&amp;quot;=0)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;incCount&lt;/code&gt; function is very simple, it takes an object, checks the maximum count, and then adds an incremental value with the supplied name. In this example, I initialized the &lt;code&gt;figCount&lt;/code&gt; and &lt;code&gt;tableCount&lt;/code&gt; objects with a non-sensical named value of zero.&lt;/p&gt;
+&lt;p&gt;Now in the process of writing, I decide I’m going to need a table on the amount of time spent by post-docs writing blog posts in different years of their post-doc training. Lets call this &lt;code&gt;t.blogPostDocs&lt;/code&gt;. Notice that this is a fairly descriptive name. We can assign it a number like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableCount &amp;lt;- incCount(tableCount, &amp;quot;t.blogPostDocs&amp;quot;)
+tableCount&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##              _ t.blogPostDocs 
+##              0              1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inserting&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Inserting&lt;/h3&gt;
+&lt;p&gt;So now we have a variable with a named number we can refer to. But how do we insert it into the text? We are going to use another function that will let us insert either the text with a link, or just the text itself.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pasteLabel &amp;lt;- function(preText, inObj, objName, insLink=TRUE){
+    objNum &amp;lt;- inObj[objName]
+    
+    useText &amp;lt;- paste(preText, objNum, sep=&amp;quot; &amp;quot;)
+    if (insLink){
+        useText &amp;lt;- paste(&amp;quot;[&amp;quot;, useText, &amp;quot;](#&amp;quot;, objName, &amp;quot;)&amp;quot;, sep=&amp;quot;&amp;quot;)
+    }
+    useText
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This function allows us to insert the table number like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;r I(pasteLabel(&amp;quot;Table&amp;quot;, tableCount, &amp;quot;t.blogPostDocs&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This would be inserted into a normal &lt;code&gt;inline&lt;/code&gt; code block. The &lt;code&gt;I&lt;/code&gt; makes sure that the text will appear as normal text, and not get formatted as a code block. The default behavior is to insert as a relative link, thereby enabling the use of relative links to link where a table / figure is mentioned to its actual location. For example, we can insert the anchor link like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;a id=&amp;quot;t.blogPostDocs&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;markdown-tables&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Markdown Tables&lt;/h3&gt;
+&lt;p&gt;Followed by the actual table text. This brings up the subject of &lt;code&gt;markdown&lt;/code&gt; tables. I also wrote a function (thanks to Yihui again) that transforms a normal &lt;code&gt;R&lt;/code&gt; &lt;code&gt;data.frame&lt;/code&gt; to a &lt;code&gt;markdown&lt;/code&gt; table.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableCat &amp;lt;- function(inFrame){
+    outText &amp;lt;- paste(names(inFrame), collapse=&amp;quot; | &amp;quot;)
+    outText &amp;lt;- c(outText, paste(rep(&amp;quot;---&amp;quot;, ncol(inFrame)), collapse=&amp;quot; | &amp;quot;))
+    invisible(apply(inFrame, 1, function(inRow){
+        outText &amp;lt;&amp;lt;- c(outText, paste(inRow, collapse=&amp;quot; | &amp;quot;))
+    }))
+    return(outText)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lets see it in action.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;postDocBlogs &amp;lt;- data.frame(PD=c(&amp;quot;p1&amp;quot;, &amp;quot;p2&amp;quot;, &amp;quot;p3&amp;quot;), NBlog=c(4, 10, 2), Year=c(1, 4, 2))
+postDocBlogs&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   PD NBlog Year
+## 1 p1     4    1
+## 2 p2    10    4
+## 3 p3     2    2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;postDocInsert &amp;lt;- tableCat(postDocBlogs)
+postDocInsert&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;PD | NBlog | Year&amp;quot; &amp;quot;--- | --- | ---&amp;quot;   &amp;quot;p1 |  4 | 1&amp;quot;      
+## [4] &amp;quot;p2 | 10 | 4&amp;quot;       &amp;quot;p3 |  2 | 2&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To actually insert it into the text, use a code chunk with &lt;code&gt;results=&#39;asis&#39;&lt;/code&gt; and &lt;code&gt;echo=FALSE&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(postDocInsert, sep=&amp;quot;\n&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;PD&lt;/th&gt;
+&lt;th&gt;NBlog&lt;/th&gt;
+&lt;th&gt;Year&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;p1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;p2&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;p3&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Before inserting the table though, you might want an inline code with the table number and caption, like this:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;I(pasteLabel(&amp;quot;Table&amp;quot;, tableCount, &amp;quot;t.blogPostDocs&amp;quot;, FALSE))&lt;/code&gt; This is the number of blog posts and year of training for post-docs.&lt;/p&gt;
+&lt;p&gt;Table 1 This is the number of blog posts and year of training for post-docs.&lt;/p&gt;
+&lt;p&gt;Remember for captions to set the &lt;code&gt;insLink&lt;/code&gt; variable to &lt;code&gt;FALSE&lt;/code&gt; so that you don’t generate a link from the caption.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;figures&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Figures&lt;/h3&gt;
+&lt;p&gt;Oftentimes, you will have code that generates the figure, and then you want to insert the figure at a different point. This is accomplished by the judicious use of &lt;code&gt;echo&lt;/code&gt; and &lt;code&gt;include&lt;/code&gt; chunk options.&lt;/p&gt;
+&lt;p&gt;For example, we can create a &lt;code&gt;ggplot2&lt;/code&gt; figure and store it in a variable in one chunk, and then &lt;code&gt;print&lt;/code&gt; it in a later chunk to actually insert it into the text body.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plotData &amp;lt;- data.frame(x=rnorm(1000, 1, 5), y=rnorm(1000, 0, 2))
+plotKeep &amp;lt;- ggplot(plotData, aes(x=x, y=y)) + geom_point()
+figCounts &amp;lt;- incCount(figCount, &amp;quot;f.randomFigure&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now we decide to actually insert it using &lt;code&gt;print(plotKeep)&lt;/code&gt; with the option of &lt;code&gt;echo=FALSE&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2012-10-09-writing-papers-using-r-markdown_files/figure-html/figureInsert-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;#f.randomFigure&#34;&gt;Figure 1&lt;/a&gt;. A random figure.&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;numerical-result-formatting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Numerical result formatting&lt;/h2&gt;
+&lt;p&gt;When &lt;code&gt;R&lt;/code&gt; prints a number, it normally likes to do so with lots of digits. This is not probably what you want either in a table or when reporting a number in a sentence. You can control that by using the &lt;code&gt;format&lt;/code&gt; function. When generating a new variable, the number of digits to display when printing will be saved, and when used on a variable directly, only the defined number of digits will display.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;echo-and-include&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Echo and Include&lt;/h2&gt;
+&lt;p&gt;This brings up the issue of how to keep the code from appearing in the text body. I found depending on the particulars, either using &lt;code&gt;echo=FALSE&lt;/code&gt; or &lt;code&gt;include=FALSE&lt;/code&gt; would do the job. This is meant to be a paper, a reproducible one, but a paper nonetheless, and therefore the code should not end up in the text body.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;One thing I haven’t done yet is convert all the references. I am planning to try using the &lt;a href=&#34;https://github.com/cboettig/knitcitations/&#34;&gt;knitcitations&lt;/a&gt; package. I will probably post on that experience.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;html-generation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;HTML generation&lt;/h2&gt;
+&lt;p&gt;Because I use &lt;code&gt;RStudio&lt;/code&gt;, I set up a modified function For generating a full &lt;code&gt;html&lt;/code&gt; version of the paper, changing the default &lt;code&gt;RStudio&lt;/code&gt; &lt;code&gt;markdown&lt;/code&gt; render options like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;htmlOptions &amp;lt;- markdownHTMLOptions(defaults=TRUE)
+htmlOptions &amp;lt;- htmlOptions[htmlOptions != &amp;quot;hard_wrap&amp;quot;]
+markdownToHTML(inputFile, outputFile, options = htmlOptions)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This should be added to a &lt;code&gt;.Rprofile&lt;/code&gt; file either in your &lt;code&gt;home&lt;/code&gt; directory or in the directory you start &lt;code&gt;R&lt;/code&gt; in (this is especially useful for modification on a per project basis).&lt;/p&gt;
+&lt;p&gt;I do this because when I write my documents, I want the source to be readable online. If this is a &lt;code&gt;github&lt;/code&gt; hosted repo, that means being displayed in the &lt;code&gt;github&lt;/code&gt; file browser, which does not do line wrapping. So I set up a 120 character line in my editor, and try very hard to stick to that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;function-source&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Function source&lt;/h2&gt;
+&lt;p&gt;You can find the previously mentioned functions in a github gist &lt;a href=&#34;https://gist.github.com/3858973&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;post-source&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Post source&lt;/h2&gt;
+&lt;p&gt;The source files for this blog post can be found at: &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.Rmd&#34;&gt;&lt;code&gt;Rmd&lt;/code&gt;&lt;/a&gt;, &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.md&#34;&gt;&lt;code&gt;md&lt;/code&gt;&lt;/a&gt;, and &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/papersinRmd.html&#34;&gt;&lt;code&gt;html&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Posted on October 9, 2012, at &lt;a href=&#34;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&#34; class=&#34;uri&#34;&gt;http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Edit: added section on formatting numerical results&lt;/p&gt;
+&lt;p&gt;Edit: added session info&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;R version 3.4.2 (2017-09-28)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 16.04.3 LTS
+
+Matrix products: default
+BLAS: /software/R-3.4.2/lib/R/lib/libRblas.so
+LAPACK: /software/R-3.4.2/lib/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] methods   stats     graphics  grDevices utils     datasets  base     
+
+other attached packages:
+[1] ggplot2_2.2.1.9000
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.14      bookdown_0.5      digest_0.6.12    
+ [4] rprojroot_1.2     plyr_1.8.4        grid_3.4.2       
+ [7] gtable_0.2.0      backports_1.1.1   magrittr_1.5     
+[10] scales_0.5.0.9000 evaluate_0.10.1   blogdown_0.4     
+[13] rlang_0.1.2       stringi_1.1.5     lazyeval_0.2.1   
+[16] rmarkdown_1.8     labeling_0.3      tools_3.4.2      
+[19] stringr_1.2.0     munsell_0.4.3     yaml_2.1.15      
+[22] compiler_3.4.2    colorspace_1.3-2  htmltools_0.3.6  
+[25] knitr_1.17        tibble_1.3.4     &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Journal Club 2012-08-15</title>
+      <link>/post/journal-club-2012-08-15/</link>
+      <pubDate>Wed, 15 Aug 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/journal-club-2012-08-15/</guid>
+      <description>&lt;p&gt;I just came back from our Bioinformatic group (a rather loose association of various researchers at UofL interested in and doing bioinformatics) journal club, where we discussed this recent paper:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002511&#34;&gt;Google Goes Cancer: Improving Outcome Prediction for Cancer Patients by Network-Based Ranking of Marker Genes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Besides the catchy title that makes one believe that perhaps Google is getting into cancer research (maybe they are and we don’t know it yet), there were some interesting aspects to this paper.&lt;/p&gt;
+&lt;div id=&#34;premise&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Premise&lt;/h2&gt;
+&lt;p&gt;The premise is that they can combine gene expression data and network data to find better associations between gene expression data and a particular disease endpoint. The way this is carried out is through the use of the TRANSFAC transcription factor - gene target database for the network, the correlation of the gene expression with the disease status as the importance of a gene with the disease, and the Google &lt;a href=&#34;http://en.wikipedia.org/wiki/PageRank&#34;&gt;PageRank&lt;/a&gt; as the means to transfer the network knowledge to the gene expression data. They call their method &lt;strong&gt;NetRank&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Note that the general idea had already been tried in this paper on &lt;a href=&#34;http://dx.doi.org/10.1186/1471-2105-6-233&#34;&gt;GeneRank&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;implementation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;Rank the genes with disease status (poor or good prognosis) using a method (SAM, t-test, fold-change, correlation, NetRank). Pick &lt;em&gt;n&lt;/em&gt; top genes, and develop a predictive model using a support vector machine. Wash, rinse, repeat several times to find the best set, varying the number of top genes, and the number of samples used in the training set.&lt;/p&gt;
+&lt;p&gt;For &lt;strong&gt;NetRank&lt;/strong&gt;, the top genes were decided by using a sub-optimization based on varying &lt;em&gt;d&lt;/em&gt;, the dampening factor in the PageRank algorithm that determines how much information can be transferred to other genes. The best value of &lt;em&gt;d&lt;/em&gt; determined in this study was 0.3.&lt;/p&gt;
+&lt;p&gt;All other methods used just the 8000 genes that passed filtering, but NetRank used all the genes on the array, with those that were filtered out had their initial correlations set to 0, so that they were still in the network representation.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;embed src=&#34;http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g001&amp;amp;representation=PNG_I&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Monte Carlo cross-validation&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;did-it-work&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Did it work?&lt;/h2&gt;
+&lt;p&gt;From the paper, it appears to have worked. Using a monte-carlo cross-validation, they were able to achieve over 70% prediction rates. And this was better than any of the other methods they used to associate genes with the disease, including SAM, t-test, fold-change, and raw correlations.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;embed src=&#34;http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g002&amp;amp;representation=PNG_I&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;NetRank feature selection performance&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;issues&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Issues&lt;/h2&gt;
+&lt;p&gt;As we discussed the article, some questions did come up.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;What was the variation in &lt;em&gt;d&lt;/em&gt; depending on the size of the training set?&lt;/li&gt;
+&lt;li&gt;How consistent were the genes that came out as biomarkers?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;It would be nice to try this methodology on a series of independent, but related cancer datasets (ie breast or lung cancer) and see how consistent the lists are. This was done &lt;a href=&#34;http://www.biomedcentral.com/1471-2105/13/182/abstract&#34;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;What happens if the genes that don’t pass filtering are removed from the network entirely?&lt;/li&gt;
+&lt;li&gt;Were the problems reported with not-filtering genes due to having only two disease points (poor and good prognosis) to calculate a correlation of expression with?&lt;/li&gt;
+&lt;li&gt;How many iterations does it take to achieve convergence?&lt;/li&gt;
+&lt;li&gt;The list of genes they come up with are fairly well known cancer genes. We were kindof surprised that they didn’t seem to come up novel genes associated directly with pancreatic cancer.&lt;/li&gt;
+&lt;li&gt;Why is &lt;em&gt;d&lt;/em&gt; so variable depending on the cancer examined?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;things-to-try&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Things to try&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Could we improve on this by instead of taking just the top-ranked genes, look for the top ranked cliques, i.e. take the top gene, remove anything in its immediate neighborhood, and then go to the next one?&lt;/li&gt;
+&lt;li&gt;What would happen if we used a directed network based on connected Reactome or KEGG pathways?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Find this post online at: &lt;a href=&#34;http://robertmflight.blogspot.com/2012/08/journal-club-150812.html&#34; class=&#34;uri&#34;&gt;http://robertmflight.blogspot.com/2012/08/journal-club-150812.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Authored using Markdown, and the R Markdown package. Published on 15.08.12&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</title>
+      <link>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</link>
+      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</guid>
+      <description>&lt;div id=&#34;what&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What?&lt;/h2&gt;
+&lt;p&gt;For those who don’t know, &lt;strong&gt;CDF&lt;/strong&gt; files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as &lt;strong&gt;RMA&lt;/strong&gt;, and others.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why?&lt;/h2&gt;
+&lt;p&gt;Because we can, and because custom definitions have been shown to be quite useful. See the information over at &lt;a href=&#34;http://brainarray.mbni.med.umich.edu/brainarray/Database/CustomCDF/cdfreadme.htm&#34;&gt;Brainarray&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-not-somewhere-else&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why not somewhere else?&lt;/h2&gt;
+&lt;p&gt;A lot of times other people create custom &lt;strong&gt;CDF&lt;/strong&gt; files based on their own criteria, and make it subsequently available for others to use (see the &lt;a href=&#34;http://brainarray.mbni.med.umich.edu/brainarray/Database/CustomCDF/cdfreadme.htm&#34;&gt;Brainarray&lt;/a&gt; for an example of what some are doing, as well as &lt;a href=&#34;http://affymetrix2.bioinf.fbb.msu.ru/&#34;&gt;PlandbAffy&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;You have a really nifty idea for a way to reorganize the probesets on an Affymetrix chip to perform a custom analysis, but you don’t want to go to the trouble of actually creating the CDF files and Bioconductor packages normally required to do the analysis, and yet you want to test and develop your analysis method.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How?&lt;/h2&gt;
+&lt;p&gt;It turns out you are in luck. At least for &lt;strong&gt;AffyBatch&lt;/strong&gt; objects in Bioconductor (created by calling &lt;strong&gt;ReadAffy&lt;/strong&gt;), the &lt;strong&gt;CDF&lt;/strong&gt; information is stored as an attached environment that can be easily hacked and modified to your hearts content. Environments in R are quite important and useful, and I wouldn’t have come up with this if I hadn’t been working in R for the past couple of years, but figured someone else might benefit from this knowledge.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-environment&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The environment&lt;/h2&gt;
+&lt;p&gt;In R, one can access an environment like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get(&amp;quot;objName&amp;quot;, envName) # get the value of object in the environment
+ls(envName)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What is also very cool, is that one can extract the objects in an environment to a list, and also create their own environment from a list using &lt;code&gt;list2env&lt;/code&gt;. Using this methodology, we can create our own definition of probesets that can be used by standard Bioconductor routines to summarize the probes into probesets.&lt;/p&gt;
+&lt;p&gt;A couple of disclaimers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I have only tried this on 3’ expression arrays&lt;/li&gt;
+&lt;li&gt;There might be a better way to do this, but I couldn’t find it (let me know in the comments)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(affy)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: affy&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: BiocGenerics&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: parallel&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;BiocGenerics&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:parallel&amp;#39;:
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     IQR, mad, sd, var, xtabs&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     anyDuplicated, append, as.data.frame, cbind, colMeans,
+##     colnames, colSums, do.call, duplicated, eval, evalq, Filter,
+##     Find, get, grep, grepl, intersect, is.unsorted, lapply,
+##     lengths, Map, mapply, match, mget, order, paste, pmax,
+##     pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce,
+##     rowMeans, rownames, rowSums, sapply, setdiff, sort, table,
+##     tapply, union, unique, unsplit, which, which.max, which.min&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Biobase&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     &amp;#39;browseVignettes()&amp;#39;. To cite Bioconductor, see
+##     &amp;#39;citation(&amp;quot;Biobase&amp;quot;)&amp;#39;, and for packages &amp;#39;citation(&amp;quot;pkgname&amp;quot;)&amp;#39;.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(estrogen)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: estrogen&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(hgu95av2cdf)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: hgu95av2cdf&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: replacing previous import &amp;#39;AnnotationDbi::tail&amp;#39; by &amp;#39;utils::tail&amp;#39;
+## when loading &amp;#39;hgu95av2cdf&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: replacing previous import &amp;#39;AnnotationDbi::head&amp;#39; by &amp;#39;utils::head&amp;#39;
+## when loading &amp;#39;hgu95av2cdf&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;datadir = system.file(&amp;quot;extdata&amp;quot;, package=&amp;quot;estrogen&amp;quot;)
+
+pd = read.AnnotatedDataFrame(file.path(datadir, &amp;quot;estrogen.txt&amp;quot;), header=TRUE, sep=&amp;quot;&amp;quot;, row.names=1)
+pData(pd)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##              estrogen time.h
+## low10-1.cel    absent     10
+## low10-2.cel    absent     10
+## high10-1.cel  present     10
+## high10-2.cel  present     10
+## low48-1.cel    absent     48
+## low48-2.cel    absent     48
+## high48-1.cel  present     48
+## high48-2.cel  present     48&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;celDat = ReadAffy(filenames = rownames(pData(pd)), 
+                  phenoData = pd,
+                  verbose=TRUE, celfile.path=datadir)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 1 reading /software/R_libs/R342_bioc36/estrogen/extdata/low10-1.cel ...instantiating an AffyBatch (intensity a 409600x8 matrix)...done.
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low10-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low10-2.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high10-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high10-2.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low48-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low48-2.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high48-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high48-2.cel&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This loads up the data, reads in the raw data, and gets it ready for us to use. Now, lets see what is in the actual &lt;strong&gt;CDF&lt;/strong&gt; environment.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;topProbes &amp;lt;- head(ls(hgu95av2cdf)) # get a list of probesets
+topProbes&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;100_g_at&amp;quot;  &amp;quot;1000_at&amp;quot;   &amp;quot;1001_at&amp;quot;   &amp;quot;1002_f_at&amp;quot; &amp;quot;1003_s_at&amp;quot; &amp;quot;1004_at&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;exSet &amp;lt;- get(topProbes[1], hgu95av2cdf)
+exSet&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##           pm     mm
+##  [1,] 175218 175858
+##  [2,] 356689 357329
+##  [3,] 227696 228336
+##  [4,] 237919 238559
+##  [5,] 275173 275813
+##  [6,] 203444 204084
+##  [7,] 357984 358624
+##  [8,] 368524 369164
+##  [9,] 285352 285992
+## [10,] 304510 305150
+## [11,] 159937 160577
+## [12,] 223929 224569
+## [13,] 282764 283404
+## [14,] 270003 270643
+## [15,] 303343 303983
+## [16,] 389048 389688&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can see here that the first probe set 100_g_at has 16 perfect-match and mis-match probes in associated with it.&lt;/p&gt;
+&lt;p&gt;Lets summarize the original data using RMA.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rma1 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Background correcting
+## Normalizing
+## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
+## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
+## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
+## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
+## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
+## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.570590     9.475796     9.530655
+## 1000_at     10.033520    10.345066     9.863321
+## 1001_at      6.020889     5.981080     6.285192
+## 1002_f_at    5.494511     5.508104     5.630107
+## 1003_s_at    8.138870     7.994937     8.233338
+## 1004_at      7.599544     7.456149     7.675171&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now lets get the data as a list, and then create a new environment to be used for summarization.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;allSets &amp;lt;- ls(hgu95av2cdf)
+allSetDat &amp;lt;- mget(allSets, hgu95av2cdf)
+
+allSetDat[1]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## $`100_g_at`
+##           pm     mm
+##  [1,] 175218 175858
+##  [2,] 356689 357329
+##  [3,] 227696 228336
+##  [4,] 237919 238559
+##  [5,] 275173 275813
+##  [6,] 203444 204084
+##  [7,] 357984 358624
+##  [8,] 368524 369164
+##  [9,] 285352 285992
+## [10,] 304510 305150
+## [11,] 159937 160577
+## [12,] 223929 224569
+## [13,] 282764 283404
+## [14,] 270003 270643
+## [15,] 303343 303983
+## [16,] 389048 389688&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hgu2 &amp;lt;- list2env(allSetDat)
+celDat@cdfName &amp;lt;- &amp;quot;hgu2&amp;quot;
+
+rma2 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Background correcting
+## Normalizing
+## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
+## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
+## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
+## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
+## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
+## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.570590     9.475796     9.530655
+## 1000_at     10.033520    10.345066     9.863321
+## 1001_at      6.020889     5.981080     6.285192
+## 1002_f_at    5.494511     5.508104     5.630107
+## 1003_s_at    8.138870     7.994937     8.233338
+## 1004_at      7.599544     7.456149     7.675171&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What about removing the &lt;strong&gt;MM&lt;/strong&gt; columns? RMA only uses the &lt;strong&gt;PM&lt;/strong&gt;, so it should still work.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;allSetDat &amp;lt;- lapply(allSetDat, function(x){
+  x[,1, drop=F]
+})
+
+allSetDat[1]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## $`100_g_at`
+##           pm
+##  [1,] 175218
+##  [2,] 356689
+##  [3,] 227696
+##  [4,] 237919
+##  [5,] 275173
+##  [6,] 203444
+##  [7,] 357984
+##  [8,] 368524
+##  [9,] 285352
+## [10,] 304510
+## [11,] 159937
+## [12,] 223929
+## [13,] 282764
+## [14,] 270003
+## [15,] 303343
+## [16,] 389048&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hgu3 &amp;lt;- list2env(allSetDat)
+celDat@cdfName &amp;lt;- &amp;quot;hgu3&amp;quot;
+rma3 &amp;lt;-exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Background correcting
+## Normalizing
+## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma3)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
+## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
+## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
+## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
+## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
+## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.570590     9.475796     9.530655
+## 1000_at     10.033520    10.345066     9.863321
+## 1001_at      6.020889     5.981080     6.285192
+## 1002_f_at    5.494511     5.508104     5.630107
+## 1003_s_at    8.138870     7.994937     8.233338
+## 1004_at      7.599544     7.456149     7.675171&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What if we only want to use the first 5 probesets?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;allSetDat &amp;lt;- allSetDat[1:5]
+hgu4 &amp;lt;- list2env(allSetDat)
+celDat@cdfName &amp;lt;- &amp;quot;hgu4&amp;quot;
+celDat&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## AffyBatch object
+## size of arrays=640x640 features (20 kb)
+## cdf=hgu4 (5 affyids)
+## number of samples=8
+## number of genes=5
+## annotation=hgu95av2
+## notes=&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rma4 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Background correcting
+## Normalizing
+## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rma4&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.463007    9.554665     9.449050     9.401976    9.447562
+## 1000_at     10.182753   10.009785    10.009785     9.970396   10.102424
+## 1001_at      5.943840    6.005177     5.944015     6.089531    6.237329
+## 1002_f_at    5.787166    5.846225     5.816964     5.814798    5.763175
+## 1003_s_at    7.750877    7.769401     7.913021     7.864052    7.860778
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.457986     9.401366     9.431078
+## 1000_at     10.009785    10.197065     9.889555
+## 1001_at      6.147957     6.189200     6.206669
+## 1002_f_at    5.763175     5.740757     5.755085
+## 1003_s_at    7.917565     7.862614     7.928691&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(rma4)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5 8&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;custom-cdf&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Custom CDF&lt;/h2&gt;
+&lt;p&gt;To generate our custom CDF, we are going to set our own names, and take random probes from all of the probes on the chip. The actual criteria of which probes should be together can be made using any method the author chooses.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;maxIndx &amp;lt;- 640*640
+
+customCDF &amp;lt;- lapply(seq(1,100), function(x){
+  tmp &amp;lt;- matrix(sample(maxIndx, 20), nrow=20, ncol=1)
+  colnames(tmp) &amp;lt;- &amp;quot;pm&amp;quot;
+  return(tmp)
+})
+
+names(customCDF) &amp;lt;- seq(1, 100)
+
+hgu5 &amp;lt;- list2env(customCDF)
+celDat@cdfName &amp;lt;- &amp;quot;hgu5&amp;quot;
+rma5 &amp;lt;- exprs(rma(celDat))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Background correcting
+## Normalizing
+## Calculating Expression&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(rma5)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##     low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 1      6.875302    6.737387     6.867864     6.761329    6.945358
+## 10     6.890655    6.876103     6.809894     6.757057    6.368846
+## 100    6.588289    6.616809     6.641429     6.673279    6.517397
+## 11     7.328216    7.332484     7.251555     7.249391    7.452480
+## 12     5.959854    6.003080     6.068861     6.061606    6.126302
+## 13     6.023770    6.151759     5.937899     6.097629    6.016962
+##     low48-2.cel high48-1.cel high48-2.cel
+## 1      7.086466     7.178230     7.106620
+## 10     6.447421     6.504624     6.416214
+## 100    6.782158     6.618414     6.547781
+## 11     7.288690     7.390152     7.417429
+## 12     6.094947     6.064757     6.145701
+## 13     6.097417     6.044478     6.227716&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I hope this information is useful to someone else. I know it made my life a lot easier.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 3.4.2 (2017-09-28)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 16.04.3 LTS
+## 
+## Matrix products: default
+## BLAS: /software/R-3.4.2/lib/R/lib/libRblas.so
+## LAPACK: /software/R-3.4.2/lib/R/lib/libRlapack.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] parallel  methods   stats     graphics  grDevices utils     datasets 
+## [8] base     
+## 
+## other attached packages:
+## [1] hgu95av2cdf_2.18.0  estrogen_1.23.0     affy_1.55.0        
+## [4] Biobase_2.38.0      BiocGenerics_0.24.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.14          AnnotationDbi_1.40.0  knitr_1.17           
+##  [4] magrittr_1.5          IRanges_2.12.0        zlibbioc_1.23.0      
+##  [7] bit_1.1-12            rlang_0.1.2           blob_1.1.0           
+## [10] stringr_1.2.0         tools_3.4.2           DBI_0.7              
+## [13] htmltools_0.3.6       bit64_0.9-7           yaml_2.1.15          
+## [16] rprojroot_1.2         digest_0.6.12         tibble_1.3.4         
+## [19] preprocessCore_1.39.3 bookdown_0.5          affyio_1.47.1        
+## [22] S4Vectors_0.16.0      memoise_1.1.0         RSQLite_2.0          
+## [25] evaluate_0.10.1       rmarkdown_1.8         blogdown_0.4         
+## [28] stringi_1.1.5         compiler_3.4.2        BiocInstaller_1.27.5 
+## [31] backports_1.1.1       stats4_3.4.2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Originally published 2013/07/13, moved to &lt;a href=&#34;http://rmflight.github.io&#34; class=&#34;uri&#34;&gt;http://rmflight.github.io&lt;/a&gt; on 2013/12/04.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>

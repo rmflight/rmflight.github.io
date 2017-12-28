@@ -11,7 +11,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/custom-deployment-script/">
+  <link rel="alternate" hreflang="en-us" href="/post/journal-club-2012-08-15/">
 
   
   
@@ -57,7 +57,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/custom-deployment-script/">
+  <link rel="canonical" href="/post/journal-club-2012-08-15/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -65,19 +65,19 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/post/custom-deployment-script/">
-  <meta property="og:title" content="Custom Deployment Script | Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/journal-club-2012-08-15/">
+  <meta property="og:title" content="Journal Club 2012-08-15 | Deciphering Life: One Bit at a Time">
   <meta property="og:description" content="">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2017-12-27T00:00:00&#43;00:00">
+  <meta property="article:published_time" content="2012-08-15T00:00:00&#43;00:00">
   
-  <meta property="article:modified_time" content="2017-12-27T00:00:00&#43;00:00">
-  
-
+  <meta property="article:modified_time" content="2012-08-15T00:00:00&#43;00:00">
   
 
-  <title>Custom Deployment Script | Deciphering Life: One Bit at a Time</title>
+  
+
+  <title>Journal Club 2012-08-15 | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -191,7 +191,7 @@
 
   <div class="article-container">
     <div class="article-inner">
-      <h1 itemprop="name">Custom Deployment Script</h1>
+      <h1 itemprop="name">Journal Club 2012-08-15</h1>
 
       
 
@@ -199,15 +199,15 @@
 
   <span class="article-date">
     
-    <time datetime="2017-12-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2017-12-27
+    <time datetime="2012-08-15 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2012-08-15
     </time>
   </span>
 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 min read
+    3 min read
   </span>
   
 
@@ -225,35 +225,35 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Custom%20Deployment%20Script&amp;url=%2fpost%2fcustom-deployment-script%2f"
+         href="https://twitter.com/intent/tweet?text=Journal%20Club%202012-08-15&amp;url=%2fpost%2fjournal-club-2012-08-15%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2fcustom-deployment-script%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fjournal-club-2012-08-15%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fcustom-deployment-script%2f&amp;title=Custom%20Deployment%20Script"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fjournal-club-2012-08-15%2f&amp;title=Journal%20Club%202012-08-15"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2fcustom-deployment-script%2f&amp;title=Custom%20Deployment%20Script"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fjournal-club-2012-08-15%2f&amp;title=Journal%20Club%202012-08-15"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Custom%20Deployment%20Script&amp;body=%2fpost%2fcustom-deployment-script%2f">
+         href="mailto:?subject=Journal%20Club%202012-08-15&amp;body=%2fpost%2fjournal-club-2012-08-15%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -267,30 +267,58 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <div id="tldr" class="section level2">
-<h2>TL;DR</h2>
-<p>Use a short bash script to do deployment from your own computer directly to your <code>*.github.io</code> domain.</p>
+        <p>I just came back from our Bioinformatic group (a rather loose association of various researchers at UofL interested in and doing bioinformatics) journal club, where we discussed this recent paper:</p>
+<p><a href="http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002511">Google Goes Cancer: Improving Outcome Prediction for Cancer Patients by Network-Based Ranking of Marker Genes</a></p>
+<p>Besides the catchy title that makes one believe that perhaps Google is getting into cancer research (maybe they are and we don’t know it yet), there were some interesting aspects to this paper.</p>
+<div id="premise" class="section level2">
+<h2>Premise</h2>
+<p>The premise is that they can combine gene expression data and network data to find better associations between gene expression data and a particular disease endpoint. The way this is carried out is through the use of the TRANSFAC transcription factor - gene target database for the network, the correlation of the gene expression with the disease status as the importance of a gene with the disease, and the Google <a href="http://en.wikipedia.org/wiki/PageRank">PageRank</a> as the means to transfer the network knowledge to the gene expression data. They call their method <strong>NetRank</strong>.</p>
+<p>Note that the general idea had already been tried in this paper on <a href="http://dx.doi.org/10.1186/1471-2105-6-233">GeneRank</a>.</p>
 </div>
-<div id="why" class="section level2">
-<h2>Why?</h2>
-<p>So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the <code>/public</code> directory to the repo for my <code>github.io</code> site, and then push the changes.</p>
+<div id="implementation" class="section level2">
+<h2>Implementation</h2>
+<p>Rank the genes with disease status (poor or good prognosis) using a method (SAM, t-test, fold-change, correlation, NetRank). Pick <em>n</em> top genes, and develop a predictive model using a support vector machine. Wash, rinse, repeat several times to find the best set, varying the number of top genes, and the number of samples used in the training set.</p>
+<p>For <strong>NetRank</strong>, the top genes were decided by using a sub-optimization based on varying <em>d</em>, the dampening factor in the PageRank algorithm that determines how much information can be transferred to other genes. The best value of <em>d</em> determined in this study was 0.3.</p>
+<p>All other methods used just the 8000 genes that passed filtering, but NetRank used all the genes on the array, with those that were filtered out had their initial correlations set to 0, so that they were still in the network representation.</p>
+<div class="figure">
+<embed src="http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g001&amp;representation=PNG_I" />
+<p class="caption">Monte Carlo cross-validation</p>
 </div>
-<div id="the-script" class="section level2">
-<h2>The Script</h2>
-<p>Here is the simple script I ended up using:</p>
-<pre class="sh"><code>#!/bin/bash
-org_dir=`pwd`
-cd path/to/github.io/repo/
-#rm -rf *
-cp -Rfu path/to/blogdown/public/* .
-
-git add *
-commit_time=`date`
-git commit -m &quot;update at $commit_time&quot;
-git push origin master
-
-cd $org_dir</code></pre>
-<p>It changes directories, because to push from a <code>git</code> repo I’m pretty sure you need to be in the directory, so it also makes sure to go back there at the end. It then copies the contents of <code>/public</code> to the repo, <code>add</code>s all the files, and then uses the current time-stamp as the commit message, and finally pushes all the updates.</p>
+</div>
+<div id="did-it-work" class="section level2">
+<h2>Did it work?</h2>
+<p>From the paper, it appears to have worked. Using a monte-carlo cross-validation, they were able to achieve over 70% prediction rates. And this was better than any of the other methods they used to associate genes with the disease, including SAM, t-test, fold-change, and raw correlations.</p>
+<div class="figure">
+<embed src="http://www.ploscompbiol.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pcbi.1002511.g002&amp;representation=PNG_I" />
+<p class="caption">NetRank feature selection performance</p>
+</div>
+</div>
+<div id="issues" class="section level2">
+<h2>Issues</h2>
+<p>As we discussed the article, some questions did come up.</p>
+<ol style="list-style-type: decimal">
+<li>What was the variation in <em>d</em> depending on the size of the training set?</li>
+<li>How consistent were the genes that came out as biomarkers?</li>
+</ol>
+<ul>
+<li>It would be nice to try this methodology on a series of independent, but related cancer datasets (ie breast or lung cancer) and see how consistent the lists are. This was done <a href="http://www.biomedcentral.com/1471-2105/13/182/abstract">here</a>.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>What happens if the genes that don’t pass filtering are removed from the network entirely?</li>
+<li>Were the problems reported with not-filtering genes due to having only two disease points (poor and good prognosis) to calculate a correlation of expression with?</li>
+<li>How many iterations does it take to achieve convergence?</li>
+<li>The list of genes they come up with are fairly well known cancer genes. We were kindof surprised that they didn’t seem to come up novel genes associated directly with pancreatic cancer.</li>
+<li>Why is <em>d</em> so variable depending on the cancer examined?</li>
+</ol>
+</div>
+<div id="things-to-try" class="section level2">
+<h2>Things to try</h2>
+<ul>
+<li>Could we improve on this by instead of taking just the top-ranked genes, look for the top ranked cliques, i.e. take the top gene, remove anything in its immediate neighborhood, and then go to the next one?</li>
+<li>What would happen if we used a directed network based on connected Reactome or KEGG pathways?</li>
+</ul>
+<p>Find this post online at: <a href="http://robertmflight.blogspot.com/2012/08/journal-club-150812.html" class="uri">http://robertmflight.blogspot.com/2012/08/journal-club-150812.html</a></p>
+<p>Authored using Markdown, and the R Markdown package. Published on 15.08.12</p>
 </div>
 
       </div>
@@ -300,9 +328,7 @@ cd $org_dir</code></pre>
 
 <div class="article-tags">
   
-  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
-  
-  <a class="btn btn-primary btn-outline" href="/tags/blogdown">blogdown</a>
+  <a class="btn btn-primary btn-outline" href="/tags/journal-club">journal-club</a>
   
 </div>
 
@@ -314,22 +340,6 @@ cd $org_dir</code></pre>
 </article>
 
 
-
-<div class="article-container article-widget">
-  <div class="hr-light"></div>
-  <h3>Related</h3>
-  <ul>
-    
-    <li><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></li>
-    
-    <li><a href="/post/hive-plots-using-r-and-cytoscape/">Hive Plots Using R and Cytoscape</a></li>
-    
-    <li><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></li>
-    
-    <li><a href="/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/">Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</a></li>
-    
-  </ul>
-</div>
 
 
 

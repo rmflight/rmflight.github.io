@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/">
+  <meta property="og:title" content="Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2012-07-13T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2012-07-13T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2012-07-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2012-07-13
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    9 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Creating%20Custom%20CDF%27s%20for%20Affymetrix%20Chips%20in%20Bioconductor&amp;url=%2fpost%2fcreating-custom-cdf-s-for-affymetrix-chips-in-bioconductor%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fcreating-custom-cdf-s-for-affymetrix-chips-in-bioconductor%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fcreating-custom-cdf-s-for-affymetrix-chips-in-bioconductor%2f&amp;title=Creating%20Custom%20CDF%27s%20for%20Affymetrix%20Chips%20in%20Bioconductor"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fcreating-custom-cdf-s-for-affymetrix-chips-in-bioconductor%2f&amp;title=Creating%20Custom%20CDF%27s%20for%20Affymetrix%20Chips%20in%20Bioconductor"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Creating%20Custom%20CDF%27s%20for%20Affymetrix%20Chips%20in%20Bioconductor&amp;body=%2fpost%2fcreating-custom-cdf-s-for-affymetrix-chips-in-bioconductor%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="what" class="section level2">
+<h2>What?</h2>
+<p>For those who don’t know, <strong>CDF</strong> files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as <strong>RMA</strong>, and others.</p>
+</div>
+<div id="why" class="section level2">
+<h2>Why?</h2>
+<p>Because we can, and because custom definitions have been shown to be quite useful. See the information over at <a href="http://brainarray.mbni.med.umich.edu/brainarray/Database/CustomCDF/cdfreadme.htm">Brainarray</a>.</p>
+</div>
+<div id="why-not-somewhere-else" class="section level2">
+<h2>Why not somewhere else?</h2>
+<p>A lot of times other people create custom <strong>CDF</strong> files based on their own criteria, and make it subsequently available for others to use (see the <a href="http://brainarray.mbni.med.umich.edu/brainarray/Database/CustomCDF/cdfreadme.htm">Brainarray</a> for an example of what some are doing, as well as <a href="http://affymetrix2.bioinf.fbb.msu.ru/">PlandbAffy</a>)</p>
+<p>You have a really nifty idea for a way to reorganize the probesets on an Affymetrix chip to perform a custom analysis, but you don’t want to go to the trouble of actually creating the CDF files and Bioconductor packages normally required to do the analysis, and yet you want to test and develop your analysis method.</p>
+</div>
+<div id="how" class="section level2">
+<h2>How?</h2>
+<p>It turns out you are in luck. At least for <strong>AffyBatch</strong> objects in Bioconductor (created by calling <strong>ReadAffy</strong>), the <strong>CDF</strong> information is stored as an attached environment that can be easily hacked and modified to your hearts content. Environments in R are quite important and useful, and I wouldn’t have come up with this if I hadn’t been working in R for the past couple of years, but figured someone else might benefit from this knowledge.</p>
+</div>
+<div id="the-environment" class="section level2">
+<h2>The environment</h2>
+<p>In R, one can access an environment like so:</p>
+<pre class="r"><code>get(&quot;objName&quot;, envName) # get the value of object in the environment
+ls(envName)</code></pre>
+<p>What is also very cool, is that one can extract the objects in an environment to a list, and also create their own environment from a list using <code>list2env</code>. Using this methodology, we can create our own definition of probesets that can be used by standard Bioconductor routines to summarize the probes into probesets.</p>
+<p>A couple of disclaimers:</p>
+<ul>
+<li>I have only tried this on 3’ expression arrays</li>
+<li>There might be a better way to do this, but I couldn’t find it (let me know in the comments)</li>
+</ul>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<pre class="r"><code>require(affy)</code></pre>
+<pre><code>## Loading required package: affy</code></pre>
+<pre><code>## Loading required package: BiocGenerics</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## 
+## Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:parallel&#39;:
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     anyDuplicated, append, as.data.frame, cbind, colMeans,
+##     colnames, colSums, do.call, duplicated, eval, evalq, Filter,
+##     Find, get, grep, grepl, intersect, is.unsorted, lapply,
+##     lengths, Map, mapply, match, mget, order, paste, pmax,
+##     pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce,
+##     rowMeans, rownames, rowSums, sapply, setdiff, sort, table,
+##     tapply, union, unique, unsplit, which, which.max, which.min</code></pre>
+<pre><code>## Loading required package: Biobase</code></pre>
+<pre><code>## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     &#39;browseVignettes()&#39;. To cite Bioconductor, see
+##     &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre class="r"><code>require(estrogen)</code></pre>
+<pre><code>## Loading required package: estrogen</code></pre>
+<pre class="r"><code>require(hgu95av2cdf)</code></pre>
+<pre><code>## Loading required package: hgu95av2cdf</code></pre>
+<pre><code>## Warning: replacing previous import &#39;AnnotationDbi::tail&#39; by &#39;utils::tail&#39;
+## when loading &#39;hgu95av2cdf&#39;</code></pre>
+<pre><code>## Warning: replacing previous import &#39;AnnotationDbi::head&#39; by &#39;utils::head&#39;
+## when loading &#39;hgu95av2cdf&#39;</code></pre>
+<pre><code>## </code></pre>
+<pre class="r"><code>datadir = system.file(&quot;extdata&quot;, package=&quot;estrogen&quot;)
+
+pd = read.AnnotatedDataFrame(file.path(datadir, &quot;estrogen.txt&quot;), header=TRUE, sep=&quot;&quot;, row.names=1)
+pData(pd)</code></pre>
+<pre><code>##              estrogen time.h
+## low10-1.cel    absent     10
+## low10-2.cel    absent     10
+## high10-1.cel  present     10
+## high10-2.cel  present     10
+## low48-1.cel    absent     48
+## low48-2.cel    absent     48
+## high48-1.cel  present     48
+## high48-2.cel  present     48</code></pre>
+<pre class="r"><code>celDat = ReadAffy(filenames = rownames(pData(pd)), 
+                  phenoData = pd,
+                  verbose=TRUE, celfile.path=datadir)</code></pre>
+<pre><code>## 1 reading /software/R_libs/R342_bioc36/estrogen/extdata/low10-1.cel ...instantiating an AffyBatch (intensity a 409600x8 matrix)...done.
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low10-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low10-2.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high10-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high10-2.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low48-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/low48-2.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high48-1.cel
+## Reading in : /software/R_libs/R342_bioc36/estrogen/extdata/high48-2.cel</code></pre>
+<p>This loads up the data, reads in the raw data, and gets it ready for us to use. Now, lets see what is in the actual <strong>CDF</strong> environment.</p>
+<pre class="r"><code>topProbes &lt;- head(ls(hgu95av2cdf)) # get a list of probesets
+topProbes</code></pre>
+<pre><code>## [1] &quot;100_g_at&quot;  &quot;1000_at&quot;   &quot;1001_at&quot;   &quot;1002_f_at&quot; &quot;1003_s_at&quot; &quot;1004_at&quot;</code></pre>
+<pre class="r"><code>exSet &lt;- get(topProbes[1], hgu95av2cdf)
+exSet</code></pre>
+<pre><code>##           pm     mm
+##  [1,] 175218 175858
+##  [2,] 356689 357329
+##  [3,] 227696 228336
+##  [4,] 237919 238559
+##  [5,] 275173 275813
+##  [6,] 203444 204084
+##  [7,] 357984 358624
+##  [8,] 368524 369164
+##  [9,] 285352 285992
+## [10,] 304510 305150
+## [11,] 159937 160577
+## [12,] 223929 224569
+## [13,] 282764 283404
+## [14,] 270003 270643
+## [15,] 303343 303983
+## [16,] 389048 389688</code></pre>
+<p>We can see here that the first probe set 100_g_at has 16 perfect-match and mis-match probes in associated with it.</p>
+<p>Lets summarize the original data using RMA.</p>
+<pre class="r"><code>rma1 &lt;- exprs(rma(celDat))</code></pre>
+<pre><code>## Background correcting
+## Normalizing
+## Calculating Expression</code></pre>
+<pre class="r"><code>head(rma1)</code></pre>
+<pre><code>##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
+## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
+## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
+## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
+## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
+## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.570590     9.475796     9.530655
+## 1000_at     10.033520    10.345066     9.863321
+## 1001_at      6.020889     5.981080     6.285192
+## 1002_f_at    5.494511     5.508104     5.630107
+## 1003_s_at    8.138870     7.994937     8.233338
+## 1004_at      7.599544     7.456149     7.675171</code></pre>
+<p>Now lets get the data as a list, and then create a new environment to be used for summarization.</p>
+<pre class="r"><code>allSets &lt;- ls(hgu95av2cdf)
+allSetDat &lt;- mget(allSets, hgu95av2cdf)
+
+allSetDat[1]</code></pre>
+<pre><code>## $`100_g_at`
+##           pm     mm
+##  [1,] 175218 175858
+##  [2,] 356689 357329
+##  [3,] 227696 228336
+##  [4,] 237919 238559
+##  [5,] 275173 275813
+##  [6,] 203444 204084
+##  [7,] 357984 358624
+##  [8,] 368524 369164
+##  [9,] 285352 285992
+## [10,] 304510 305150
+## [11,] 159937 160577
+## [12,] 223929 224569
+## [13,] 282764 283404
+## [14,] 270003 270643
+## [15,] 303343 303983
+## [16,] 389048 389688</code></pre>
+<pre class="r"><code>hgu2 &lt;- list2env(allSetDat)
+celDat@cdfName &lt;- &quot;hgu2&quot;
+
+rma2 &lt;- exprs(rma(celDat))</code></pre>
+<pre><code>## Background correcting
+## Normalizing
+## Calculating Expression</code></pre>
+<pre class="r"><code>head(rma2)</code></pre>
+<pre><code>##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
+## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
+## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
+## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
+## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
+## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.570590     9.475796     9.530655
+## 1000_at     10.033520    10.345066     9.863321
+## 1001_at      6.020889     5.981080     6.285192
+## 1002_f_at    5.494511     5.508104     5.630107
+## 1003_s_at    8.138870     7.994937     8.233338
+## 1004_at      7.599544     7.456149     7.675171</code></pre>
+<p>What about removing the <strong>MM</strong> columns? RMA only uses the <strong>PM</strong>, so it should still work.</p>
+<pre class="r"><code>allSetDat &lt;- lapply(allSetDat, function(x){
+  x[,1, drop=F]
+})
+
+allSetDat[1]</code></pre>
+<pre><code>## $`100_g_at`
+##           pm
+##  [1,] 175218
+##  [2,] 356689
+##  [3,] 227696
+##  [4,] 237919
+##  [5,] 275173
+##  [6,] 203444
+##  [7,] 357984
+##  [8,] 368524
+##  [9,] 285352
+## [10,] 304510
+## [11,] 159937
+## [12,] 223929
+## [13,] 282764
+## [14,] 270003
+## [15,] 303343
+## [16,] 389048</code></pre>
+<pre class="r"><code>hgu3 &lt;- list2env(allSetDat)
+celDat@cdfName &lt;- &quot;hgu3&quot;
+rma3 &lt;-exprs(rma(celDat))</code></pre>
+<pre><code>## Background correcting
+## Normalizing
+## Calculating Expression</code></pre>
+<pre class="r"><code>head(rma3)</code></pre>
+<pre><code>##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.642896    9.741496     9.537036     9.353625    9.591697
+## 1000_at     10.398169   10.254362    10.003971     9.903528   10.374866
+## 1001_at      5.717613    5.881008     5.859563     5.954028    5.960540
+## 1002_f_at    5.512596    5.801807     5.571065     5.608132    5.390064
+## 1003_s_at    7.783927    8.007975     8.037999     7.835120    7.926487
+## 1004_at      7.289162    7.603670     7.488539     7.771506    7.521789
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.570590     9.475796     9.530655
+## 1000_at     10.033520    10.345066     9.863321
+## 1001_at      6.020889     5.981080     6.285192
+## 1002_f_at    5.494511     5.508104     5.630107
+## 1003_s_at    8.138870     7.994937     8.233338
+## 1004_at      7.599544     7.456149     7.675171</code></pre>
+<p>What if we only want to use the first 5 probesets?</p>
+<pre class="r"><code>allSetDat &lt;- allSetDat[1:5]
+hgu4 &lt;- list2env(allSetDat)
+celDat@cdfName &lt;- &quot;hgu4&quot;
+celDat</code></pre>
+<pre><code>## AffyBatch object
+## size of arrays=640x640 features (20 kb)
+## cdf=hgu4 (5 affyids)
+## number of samples=8
+## number of genes=5
+## annotation=hgu95av2
+## notes=</code></pre>
+<pre class="r"><code>rma4 &lt;- exprs(rma(celDat))</code></pre>
+<pre><code>## Background correcting
+## Normalizing
+## Calculating Expression</code></pre>
+<pre class="r"><code>rma4</code></pre>
+<pre><code>##           low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 100_g_at     9.463007    9.554665     9.449050     9.401976    9.447562
+## 1000_at     10.182753   10.009785    10.009785     9.970396   10.102424
+## 1001_at      5.943840    6.005177     5.944015     6.089531    6.237329
+## 1002_f_at    5.787166    5.846225     5.816964     5.814798    5.763175
+## 1003_s_at    7.750877    7.769401     7.913021     7.864052    7.860778
+##           low48-2.cel high48-1.cel high48-2.cel
+## 100_g_at     9.457986     9.401366     9.431078
+## 1000_at     10.009785    10.197065     9.889555
+## 1001_at      6.147957     6.189200     6.206669
+## 1002_f_at    5.763175     5.740757     5.755085
+## 1003_s_at    7.917565     7.862614     7.928691</code></pre>
+<pre class="r"><code>dim(rma4)</code></pre>
+<pre><code>## [1] 5 8</code></pre>
+</div>
+<div id="custom-cdf" class="section level2">
+<h2>Custom CDF</h2>
+<p>To generate our custom CDF, we are going to set our own names, and take random probes from all of the probes on the chip. The actual criteria of which probes should be together can be made using any method the author chooses.</p>
+<pre class="r"><code>maxIndx &lt;- 640*640
+
+customCDF &lt;- lapply(seq(1,100), function(x){
+  tmp &lt;- matrix(sample(maxIndx, 20), nrow=20, ncol=1)
+  colnames(tmp) &lt;- &quot;pm&quot;
+  return(tmp)
+})
+
+names(customCDF) &lt;- seq(1, 100)
+
+hgu5 &lt;- list2env(customCDF)
+celDat@cdfName &lt;- &quot;hgu5&quot;
+rma5 &lt;- exprs(rma(celDat))</code></pre>
+<pre><code>## Background correcting
+## Normalizing
+## Calculating Expression</code></pre>
+<pre class="r"><code>head(rma5)</code></pre>
+<pre><code>##     low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
+## 1      6.875302    6.737387     6.867864     6.761329    6.945358
+## 10     6.890655    6.876103     6.809894     6.757057    6.368846
+## 100    6.588289    6.616809     6.641429     6.673279    6.517397
+## 11     7.328216    7.332484     7.251555     7.249391    7.452480
+## 12     5.959854    6.003080     6.068861     6.061606    6.126302
+## 13     6.023770    6.151759     5.937899     6.097629    6.016962
+##     low48-2.cel high48-1.cel high48-2.cel
+## 1      7.086466     7.178230     7.106620
+## 10     6.447421     6.504624     6.416214
+## 100    6.782158     6.618414     6.547781
+## 11     7.288690     7.390152     7.417429
+## 12     6.094947     6.064757     6.145701
+## 13     6.097417     6.044478     6.227716</code></pre>
+<p>I hope this information is useful to someone else. I know it made my life a lot easier.</p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.4.2 (2017-09-28)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 16.04.3 LTS
+## 
+## Matrix products: default
+## BLAS: /software/R-3.4.2/lib/R/lib/libRblas.so
+## LAPACK: /software/R-3.4.2/lib/R/lib/libRlapack.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] parallel  methods   stats     graphics  grDevices utils     datasets 
+## [8] base     
+## 
+## other attached packages:
+## [1] hgu95av2cdf_2.18.0  estrogen_1.23.0     affy_1.55.0        
+## [4] Biobase_2.38.0      BiocGenerics_0.24.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.14          AnnotationDbi_1.40.0  knitr_1.17           
+##  [4] magrittr_1.5          IRanges_2.12.0        zlibbioc_1.23.0      
+##  [7] bit_1.1-12            rlang_0.1.2           blob_1.1.0           
+## [10] stringr_1.2.0         tools_3.4.2           DBI_0.7              
+## [13] htmltools_0.3.6       bit64_0.9-7           yaml_2.1.15          
+## [16] rprojroot_1.2         digest_0.6.12         tibble_1.3.4         
+## [19] preprocessCore_1.39.3 bookdown_0.5          affyio_1.47.1        
+## [22] S4Vectors_0.16.0      memoise_1.1.0         RSQLite_2.0          
+## [25] evaluate_0.10.1       rmarkdown_1.8         blogdown_0.4         
+## [28] stringi_1.1.5         compiler_3.4.2        BiocInstaller_1.27.5 
+## [31] backports_1.1.1       stats4_3.4.2</code></pre>
+<p>Originally published 2013/07/13, moved to <a href="http://rmflight.github.io" class="uri">http://rmflight.github.io</a> on 2013/12/04.</p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/bioconductor">bioconductor</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/cdf">cdf</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

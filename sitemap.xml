@@ -86,6 +86,52 @@
     
     <url>
     
+      <loc>/post/hive-plots-using-r-and-cytoscape/</loc>
+      <lastmod>2012-11-28T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/writing-papers-using-r-markdown/</loc>
+      <lastmod>2012-10-09T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/journal-club-2012-08-15/</loc>
+      <lastmod>2012-08-15T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</loc>
+      <lastmod>2012-07-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/bioconductor/</loc>
+      <lastmod>2012-07-13T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/blogdown/</loc>
       <lastmod>2017-12-27T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -105,8 +151,38 @@
     
     <url>
     
+      <loc>/tags/cdf/</loc>
+      <lastmod>2012-07-13T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/cytoscape/</loc>
+      <lastmod>2012-11-28T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/</loc>
       <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/hive-plot/</loc>
+      <lastmod>2012-11-28T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -125,8 +201,28 @@
     
     <url>
     
+      <loc>/tags/journal-club/</loc>
+      <lastmod>2012-08-15T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/metoo/</loc>
       <lastmod>2017-10-18T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/open-science/</loc>
+      <lastmod>2012-10-09T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -156,6 +252,16 @@
     
       <loc>/tags/r/</loc>
       <lastmod>2017-12-27T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/reproducibility/</loc>
+      <lastmod>2012-10-09T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
