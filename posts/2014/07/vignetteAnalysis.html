@@ -1,0 +1,193 @@
+<!DOCTYPE html><html><head><title>Creating an analysis as a package and vignette</title><meta charset="utf-8"><meta content="width=device-width, initiali-scale=1.0, user-scalable=yes" name="viewport"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/css/smartphone.css" media="only screen and (max-device-width:480px)" rel="stylesheet" type="text/css"><link href="/css/feedList.css" rel="stylesheet" type="text/css"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-43966261-1', 'rmflight.github.io');
+ga('send', 'pageview');
+
+</script><!-- Styles for R syntax highlighter -->
+  <style type="text/css">
+  pre .operator,
+pre .paren {
+  color: rgb(104, 118, 135)
+}
+
+pre .literal {
+  color: rgb(88, 72, 246)
+}
+
+pre .number {
+  color: rgb(0, 0, 205);
+}
+
+pre .comment {
+  color: rgb(76, 136, 107);
+}
+
+pre .keyword {
+  color: rgb(0, 0, 255);
+}
+
+pre .identifier {
+  color: rgb(0, 0, 0);
+}
+
+pre .string {
+  color: rgb(3, 106, 7);
+}
+</style>
+  
+  <!-- R syntax highlighter -->
+  <script type="text/javascript">
+  var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+  <script>
+  window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+(function(){
+  var k = document.createElement('script');k.type = 'text/javascript';k.async = true;
+  var m,src = (m=location.href.match(/\bkwsrc=([^&]+)\b/))&&decodeURIComponent(m[1]);
+  k.src = src ||(location.protocol === "https:" ? "https:" : "http:") + 
+    '//cdn.krxd.net/static/socialtag/widget.js';
+  var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s); 
+})();
+</script></head><body><div class="container-fluid well"><h1>Deciphering life: One bit at a time</h1><p>Robert M Flight's home on the web</p></div><div class="subnav"><ul class="nav nav-pills"><li><a href="/index.html">Home</a></li><li><a href="/pages/about.html">About</a></li><li><a href="/pages/archive.html">Blog Archive</a></li><li><a href="https://github.com/rmflight/researchBlog">Blog Source</a></li><li><a href="https://github.com/rmflight?tab=repositories">Github Repos</a></li><li><a href="http://www.ncbi.nlm.nih.gov/myncbi/robert%20m.flight.1/comments/">PubmedCommons Comments</a></li><li><a href="/pages/cv.html">CV</a></li></ul></div><div class="container-fluid"><div class="row-fluid"><div class="span1"></div><div class="span9"><h1>Creating an analysis as a package and vignette</h1>
+
+<p>Following from my <a href="/posts/2014/07/analyses_as_packages.html">last post</a>, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the <a href="http://nsaunders.wordpress.com/2012/08/16/twitter-coverage-of-the-ismb-2012-meeting-some-statistics/">2012</a> and <a href="https://github.com/stephenturner/twitterchive">2014</a> ISMB conference (thanks to <a href="https://twitter.com/nsaunders">Neil</a> and <a href="https://twitter.com/genetics_blog">Stephen</a> for compiling the data). </p>
+
+<p>I will link to individual commits so that you can see how things change as we go along.</p>
+
+<h2>Setup</h2>
+
+<h3>Initialization</h3>
+
+<p>To start, we will initialize the package. <code>devtools</code> or <code>rstudio</code> make this rather easy:</p>
+
+<pre><code class="r">library(devtools)
+create(&quot;~/Documents/projects/personal/ismbTweetAnalysis&quot;)
+</code></pre>
+
+<pre><code>Creating package ismbTweetAnalysis in ~/Documents/projects/personal
+No DESCRIPTION found. Creating with values:
+
+Package: ismbTweetAnalysis
+Title: What the package does (short line)
+Version: 0.1
+Authors@R: &quot;First Last &lt;first.last@example.com&gt; [aut, cre]&quot;
+Description: What the package does (paragraph)
+Depends: R (&gt;= 3.0.3)
+License: What license is it under?
+LazyData: true
+Adding Rstudio project file to ismbTweetAnalysis
+</code></pre>
+
+<p>Alternatively, you can use <code>File &gt; New Project &gt; New Directory &gt; R Package</code> in <code>rstudio</code>. Don&#39;t forget to <code>Create a git repository</code> (or <code>git init</code> in the directory). Note that the <code>devtools</code> created package will pass <code>CRAN</code> tests, whereas the <code>rstudio</code> will not.</p>
+
+<p>Open the <code>DESCRIPTION</code> file, and you will need to change the <code>Title</code>, <code>Authors</code> or <code>Authors@R</code>, <code>Description</code>, <code>License</code>, and add <code>VignetteBuilder: knitr</code> at the end. <a href="https://github.com/rmflight/ismbTweetAnalysis/commit/16ddb22e252520d6088dc17d4c63e9c41dc32314">Here</a> is what my initial setup looks like.</p>
+
+<h3>RStudio Project Options</h3>
+
+<p>In addition, to make our life easier, we will change some options in the <code>rstudio</code> project. </p>
+
+<p><code>Tools &gt; Project Options &gt; Build Tools</code>, check <code>Generate documentation with Roxygen</code>, and select turn on all the options. We want to <code>roxygenize</code> when we <code>Build &amp; Reload</code> especially, and have <code>roxygen</code> control the <code>NAMESPACE</code> file so we don&#39;t worry about it.</p>
+
+<p>Alternatively, you can use <code>document</code> with <code>reload=TRUE</code> in <code>devtools</code> to update documentation and reload the functions. </p>
+
+<p>Having <strong>this</strong> particular option of <code>documenting</code> and <code>reloading</code> the package every time I write a new function is what makes this easy. I write the new function, <code>document</code>/<code>reload</code>, and I can keep chugging along with my analysis document. And if I have to restart, I just <code>run all</code> chunks to get back to where I need to be.</p>
+
+<h2>Data</h2>
+
+<p>Now we need some data. Neil&#39;s data from 2012 uses a CSV format, however the tweets themselves have commas, so we will download the <code>rdata</code> file and use that, and also Stephen&#39;s data from 2014. However, there are three separate files for 2014, so we will download all three files and combine them. Both initial data sets will go in the <code>/inst/extdata</code> folder, and we will clean them up.</p>
+
+<p><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/391aee099f08c94d26e183e2d9a80781afa722bc">Here</a> we have added our 4 data files.</p>
+
+<h3>Vignette</h3>
+
+<p>We are going to write this analysis as the vignette of the package, using <code>R markdown</code> as the language. To do that we need to create the file and add some boilerplate at the top so that the vignette gets generated properly. <a href="https://github.com/rmflight/ismbTweetAnalysis/commit/c1de77bfc803435b3af32f641b165615aaabb57b">Here</a> is the initial vignette, it is nothing but the <code>engine</code> and <code>index</code> definition, which are important.</p>
+
+<h1>Start the Analysis!</h1>
+
+<p>At this point we can start the analysis. The actual analysis will be done in the <code>Rmd</code> vignette file. The basic process is to add prose describing the analysis, with actual code to generate results and figures embedded in the <code>Rmd</code>, and adding functions and documentation (as <code>roxygen</code> tags) in the <code>.R</code> file, while doing iterations of <code>document</code> or <code>Build/Reload</code> along the way. Iterations of <code>document</code> / <code>Build/Reload</code> after writing new functions in the <code>.R</code> file will make them available to us in our workspace, with tab-completion in <code>rstudio</code>. </p>
+
+<p>The following are bullet point summaries of points when I committed or built/reloaded, with links to the commit so you can see what has changed in the package.</p>
+
+<ul>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/f3dabdc3f7fb981489ba35e18bd458a983b33698">Adding description of data sources to analysis </a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/be314c3edb8953adc4351e90c2b038285cb78d3b">Munging 2012 data a little, saving, and documenting</a>
+
+<ul>
+<li>Now we can load up this data with <code>data(ismb2012)</code></li>
+</ul></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/f90268c97e5a94c5cd052f40d7f394d81e8adc61">Function written and exported for reading ST&#39;s data files</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/f46a8b21bf3a168ff469925fab38c6ee8ccb9a08">Read in, combine, and re-save ST&#39;s archive</a>
+
+<ul>
+<li>Note that this and previous chunk have <code>eval=FALSE</code>, so that they are not run in the analysis, but they were run interactively while I was doing the work.</li>
+</ul></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/30509c15f3c9590dc07dbbb26d59733664f01f65">Simple histogram of 2012 tweets by day</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/13138980de9531e92fe03a7d0db40302e5dac3c5">Making a counting function by <code>screenName</code></a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/72434fd84d222f2284c97c771fa0d0f3d3577ac7">Examining the top tweeters using previous function</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/aff15c9205667879ab9669c26f6bc8ff47d153b8">Fixing data files, because of issues with having the same named object in different RData files</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/7e65de3a88ee0495fe9b92f9291bc590d69eab9e">Examining top tweeters in 2014</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/285926ebe051992d46a91040aaed0a14142f279c">Density of tweets with respect to starting time of conference</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/93b05400d158414a725b456b1698a941c6c80b42">Counting how often a specific tweet was retweeted</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/3e25bdaec902630943d694706ed576dca0e74d62">Getting raw tweet ranks for each individual</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/6987116ce6c6ebe78dfaac9590b80806c08f9e6f">Examining the ranks by total retweeted tweets per user</a></li>
+</ul>
+
+<p>And at this point I&#39;m going to stop there. Now we have an analysis (that we will make into a nice output shortly), and we have munged 2 data sets, and wrote 6 functions, that may be useful in other contexts.</p>
+
+<h2>Preview Report</h2>
+
+<p>To preview the report, you can use the <code>Knit HTML</code> button in <code>rstudio</code>, or also use <code>knitr</code> directly. This will give you an html preview of the final report.</p>
+
+<h2>Generate Vignette</h2>
+
+<p>Once happy with the report, you can use <code>devtools::build_vignettes()</code> to generate the vignette files that will be copied to the relevant locations.</p>
+
+<h2>Commit and Push it ALL!</h2>
+
+<p>At this point, if you are happy with the package and analysis as a whole, you should commit all the package files to version control and make it available. In this case this means:</p>
+
+<ul>
+<li>inst/doc: the output vignette</li>
+<li>man: the function documentation</li>
+<li>DESCRIPTION: our description file</li>
+<li>NAMESPACE: the file documenting our namespace</li>
+</ul>
+
+<p>You can see this commit <a href="https://github.com/rmflight/ismbTweetAnalysis/commit/7387a727708f8413ff68be1a5e285777b85ca7c7">here</a>.</p>
+
+<p>Now your package can be installed by others using <code>devtools::install_github()</code>. You could also submit your package to <code>CRAN</code> or <code>Bioconductor</code> if so desired.</p>
+
+<h2>Not Covered</h2>
+
+<p>Now this was a simple example. Ideally I should have included tests for my functions, you can read up <a href="https://github.com/hadley/testthat">1</a> <a href="http://adv-r.had.co.nz/Testing.html">2</a> on how to do that. In addition, none of my functions use methods (<a href="http://adv-r.had.co.nz/OO-essentials.html">see why they are useful</a>).</p>
+
+<p>I hope that you find this example useful, and will consider using <code>packages</code> more often even for <strong>simple</strong> analyses.</p>
+
+<ul>
+<li>Reproducibility: One issue that may come up is how to make sure that you or someone else can directly reproduce the work in your package. Again, Hadley Wickham and the <code>rstudio</code> team have been thinking about this, and there is now the <a href="http://rstudio.github.io/packrat/"><code>packrat</code> package</a> to make a project completely self-contained with all of it&#39;s dependencies.</li>
+</ul>
+
+<p><em>Edit 2014-07-28</em> - added note on reproducibility at the end. </p>
+<h5>Tagged in: <a href="/tags/R.html">R</a>, <a href="/tags/development.html">development</a>, <a href="/tags/packages.html">packages</a>, <a href="/tags/vignettes.html">vignettes</a></h5><h6>Posted on 2014-07-28</h6><a href="https://twitter.com/share" class="twitter-share-button" data-via="rmflight" data-size="large">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><div id="disqus_thread"></div>
+  <script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'decipheringlife'; // required: replace example with your forum shortname
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div><div class="span2"><a class="twitter-timeline" href="https://twitter.com/rmflight" data-widget-id="368415899268558848">Tweets by @rmflight</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<h3>Feeds</h3><ul class="feed-list"><li><a href="/rss.xml">SiteWide Feed</a></li><li><a href="/tags/R.xml">R Feed</a></li></ul><h3>Blog Roll</h3><ul><li><a href="http://www.r-bloggers.com/">R bloggers</a></li><li><a href="http://ivory.idyll.org/blog/">Living in an Ivory Basement</a></li><li><a href="http://bytesizebio.net/">Byte Size Biology</a></li><li><a href="http://robjhyndman.com/hyndsight/">Hyndsight</a></li><li><a href="http://solomonmessing.wordpress.com/blog/">Solomon Messing</a></li><li><a href="http://nsaunders.wordpress.com/">What You're Doing Is Rather Desperate</a></li><li><a href="http://yihui.name/en/">Yihui Xie's Blog</a></li><li><a href="http://simplystatistics.org/">Simply Statistics</a></li><li><a href="http://software-carpentry.org/">Software carpentry</a></li></ul><h3>Tags</h3><ul><li><a href="/tags/R.html">R (21)</a></li><li><a href="/tags/bioconductor.html">bioconductor (3)</a></li><li><a href="/tags/cdf.html">cdf (1)</a></li><li><a href="/tags/openscience.html">openscience (9)</a></li><li><a href="/tags/reproducibility.html">reproducibility (4)</a></li><li><a href="/tags/tutorial.html">tutorial (2)</a></li><li><a href="/tags/science.html">science (2)</a></li><li><a href="/tags/hiveplot.html">hiveplot (1)</a></li><li><a href="/tags/cytoscape.html">cytoscape (1)</a></li><li><a href="/tags/literateprogramming.html">literateprogramming (1)</a></li><li><a href="/tags/writing.html">writing (1)</a></li><li><a href="/tags/package.html">package (2)</a></li><li><a href="/tags/timhortons.html">timhortons (1)</a></li><li><a href="/tags/mapping.html">mapping (1)</a></li><li><a href="/tags/teaching.html">teaching (1)</a></li><li><a href="/tags/notebook.html">notebook (1)</a></li><li><a href="/tags/moving.html">moving (2)</a></li><li><a href="/tags/Samatha.html">Samatha (2)</a></li><li><a href="/tags/twitter.html">twitter (3)</a></li><li><a href="/tags/rstudio.html">rstudio (1)</a></li><li><a href="/tags/postdoc.html">postdoc (2)</a></li><li><a href="/tags/academia.html">academia (1)</a></li><li><a href="/tags/packages.html">packages (4)</a></li><li><a href="/tags/precalculate.html">precalculate (1)</a></li><li><a href="/tags/hpc.html">hpc (1)</a></li><li><a href="/tags/python.html">python (1)</a></li><li><a href="/tags/pubmedcommons.html">pubmedcommons (1)</a></li><li><a href="/tags/learning.html">learning (1)</a></li><li><a href="/tags/softwarecarpentry.html">softwarecarpentry (1)</a></li><li><a href="/tags/git.html">git (1)</a></li><li><a href="/tags/matlab.html">matlab (1)</a></li><li><a href="/tags/documentation.html">documentation (1)</a></li><li><a href="/tags/help.html">help (1)</a></li><li><a href="/tags/optimization.html">optimization (1)</a></li><li><a href="/tags/genetic.html">genetic (1)</a></li><li><a href="/tags/algorithm.html">algorithm (1)</a></li><li><a href="/tags/simulated.html">simulated (1)</a></li><li><a href="/tags/annealing.html">annealing (1)</a></li><li><a href="/tags/meta-analysis.html">meta-analysis (1)</a></li><li><a href="/tags/publication.html">publication (2)</a></li><li><a href="/tags/bioinformatics.html">bioinformatics (1)</a></li><li><a href="/tags/github.html">github (1)</a></li><li><a href="/tags/development.html">development (2)</a></li><li><a href="/tags/vignettes.html">vignettes (2)</a></li><li><a href="/tags/career.html">career (1)</a></li><li><a href="/tags/phdisabled.html">phdisabled (1)</a></li><li><a href="/tags/migraines.html">migraines (1)</a></li><li><a href="/tags/zinc.html">zinc (1)</a></li><li><a href="/tags/visualization.html">visualization (1)</a></li><li><a href="/tags/randomforest.html">randomforest (1)</a></li><li><a href="/tags/pls.html">pls (1)</a></li><li><a href="/tags/reviews.html">reviews (1)</a></li><li><a href="/tags/xero.html">xero (1)</a></li><li><a href="/tags/boots.html">boots (1)</a></li></ul></div></div><div class="span12"><div class="span2"></div><div class="span8"><footer class="footer"><p class="right back_to_top"><a href="#">&uArr; Page Top</a></p><p><a href="https://github.com/DASpringate/samatha">Built in R with Samatha</a></p></footer></div></div></div></body></html>
