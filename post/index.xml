@@ -184,6 +184,58 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
+      <title>Authentication of Key Resources for Data Analysis</title>
+      <link>/post/authentication-of-key-resources-for-data-analysis/</link>
+      <pubDate>Wed, 23 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/authentication-of-key-resources-for-data-analysis/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;NIH recently introduced a reproducibility initiative, extending to including the “Authentication of Key Resources” page in grant applications from Jan 25, 2016. Seems to be intended for grants involving biological reagents, but we included it in our recent R03 grant developing new data analysis methods. We believe that this type of thing should become common for all grants, not just those that use biological/chemical resources.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;nih-and-reproducibility&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;NIH and Reproducibility&lt;/h2&gt;
+&lt;p&gt;There has been a lot of things published recently about the &lt;em&gt;reproducibility crisis&lt;/em&gt; in science (see refs). The federal funding agencies are starting to respond to this, and beginning with grants submitted after January 25, 2016, grants are &lt;a href=&#34;http://grants.nih.gov/reproducibility/index.htm&#34;&gt;supposed to address the reproducibility&lt;/a&gt; of the work proposed, including the presence of various confounding factors (i.e. sex of animals, the source of cell lines, etc). In addition to this, there is a new document that can be added to grants, the &lt;a href=&#34;http://nexus.od.nih.gov/all/2016/01/29/authentication-of-key-biological-andor-chemical-resources-in-nih-grant-applications/&#34;&gt;&lt;strong&gt;Authentication Plan&lt;/strong&gt;&lt;/a&gt;, which as far as I can tell is intended specifically for:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;key biological and/or chemical resources used in the proposed studies&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, this makes sense. Some sources of irreproducibility include, but are not limited to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;unvalidated antibodies&lt;/li&gt;
+&lt;li&gt;cell lines that are not what was thought&lt;/li&gt;
+&lt;li&gt;impure chemicals&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I think this is a &lt;strong&gt;good thing&lt;/strong&gt;. What does it have to do with data analysis?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-code-authentication&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data / Code Authentication&lt;/h2&gt;
+&lt;p&gt;When we were submitting a recent R03 proposal for developing novel data analysis methods and statistical tools, the grant management office asked us about the &lt;strong&gt;Authentication of Key Resources&lt;/strong&gt; attachment, which we completely missed. Upon review of the guidelines, we initially determined that this document did not apply. However, we decided to go ahead and take some initiative.&lt;/p&gt;
+&lt;div id=&#34;data-authentication&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Data Authentication?&lt;/h3&gt;
+&lt;p&gt;When dealing with multiple samples from high-throughput samples, there are frequently a few easy ways to examine the data quality, and although it can be hard to verify that the data &lt;strong&gt;is what the supplier says it is&lt;/strong&gt;, which would be true &lt;strong&gt;authentication&lt;/strong&gt;, there are some ways to verify that the various samples in the dataset are at least self-consistent within each sample class (normal and disease, condition 1 and condition 2).&lt;/p&gt;
+&lt;p&gt;My go-to for data self-consistency are principal components analysis (PCA) and correlation heat-maps. Correlation heat-maps involve calculating all of the pairwise sample to sample correlations using all of the non-zero sample features (those that are non-zero in the two pairs being compared). These heatmaps, combined with the sample class information, and clustering within each class, are a nice visual way to eyeball samples that have potential problems. A simple example for RNA-seq transcriptomics was shown in &lt;a href=&#34;https://dx.doi.org/10.1093/bioinformatics/btv425&#34;&gt;Gierliński et al., Statistical models for RNA-seq data derived from a two-condition 48-replicate experiment Bioinformatics (2015) 31 (22): 3625-3630, Figure 1&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/yeast_48rep_cor_heatmap.jpg&#34; alt=&#34;Gierlinkski et al heatmap, Figure 1&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Gierlinkski et al heatmap, Figure 1&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The other measures they used in this paper are also very nice, in plotting the median correlation of a sample against all other samples, and the fraction of outlier features in a given sample (see figure 2 of Gierlinkski et al). The final measure they propose is not generally applicable to all -omics data however.&lt;/p&gt;
+&lt;p&gt;PCA on the data, followed by visualizing the scores on the first few principal components, and colored by sample class (or experimental condition) is similar in spirit to the correlation heat-map. In fact, it is very similar, because PCA is actually decomposing on the covariance of the samples, which is very related to the correlations (an early algorithm actually used the correlation matrix).&lt;/p&gt;
+&lt;p&gt;Both of these methods can highlight possible problems with individual samples, and make sure that the set of data going into the analysis is at least self-consistent, which is important when doing classification or differential abundance analyses.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-authentication&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Code Authentication&lt;/h3&gt;
+&lt;p&gt;The other thing we highlighted in the document was &lt;strong&gt;code&lt;/strong&gt; authentication. In this case, we highlighted the use of unit-testing in the R packages that we are planning to develop. Even though this is software coming out of a research lab, we need to have confidence that the functions we write return the correct values given various inputs. In addition, code testing coverage helps evaluate that we are testing &lt;em&gt;all&lt;/em&gt; of the functionality by checking that all of the lines in our code are run by the tests. Finally, we are also planning to write tests for core functions provided by others (i.e. functions in other R packages), in that they work as we expect, by returning correct values given specific inputs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Going forward, I think it would be a good thing if people writing research grants for data analysis methods would discuss how they are going to look at the data to assess it’s quality, and how they are going to do unit testing, and will have to start saying that they are going to do unit testing of their analysis method.&lt;/p&gt;
+&lt;p&gt;I’d be interested in others’ thoughts on this as well.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Random Forest vs PLS on Random Data</title>
       <link>/post/random-forest-vs-pls-on-random-data/</link>
       <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
@@ -1072,59 +1124,6 @@ Adding Rstudio project file to ismbTweetAnalysis&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;em&gt;Edit 2014-07-28&lt;/em&gt; - added note on reproducibility at the end.&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Packages vs ProjectTemplate</title>
-      <link>/post/packages-vs-projecttemplate/</link>
-      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/packages-vs-projecttemplate/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;tl;dr&lt;/h2&gt;
-&lt;p&gt;Imposing a different structure than &lt;code&gt;R&lt;/code&gt; packages for distributing &lt;code&gt;R&lt;/code&gt; code is a bad idea, especially now that &lt;code&gt;R&lt;/code&gt; package tools have gotten to the point where managing a package has become much easier.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;projecttemplate&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;ProjectTemplate ??&lt;/h2&gt;
-&lt;p&gt;My last two posts (&lt;a href=&#34;/post/analyses-as-packages&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;/post/vignette-analysis&#34;&gt;2&lt;/a&gt;) provided an argument and an example of why one should use &lt;code&gt;R&lt;/code&gt; packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package &lt;a href=&#34;http://projecttemplate.net/index.html&#34;&gt;&lt;code&gt;ProjectTemplate&lt;/code&gt;&lt;/a&gt;. I was reminded about it thanks to &lt;a href=&#34;https://twitter.com/hadleywickham/statuses/493775065033371648&#34;&gt;Hadley Wickham&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;would be interesting to see comparison to ProjectTemplate&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.johnmyleswhite.com/&#34;&gt;John Myles White&lt;/a&gt; has an &lt;code&gt;R&lt;/code&gt; package, &lt;a href=&#34;http://projecttemplate.net/&#34;&gt;ProjectTemplate&lt;/a&gt; for handling analyses. In contrast to the package philosophy that I espoused previously, &lt;code&gt;ProjectTemplate&lt;/code&gt; has a large, logical folder layout (you can read all about each folder and why it &lt;a href=&#34;http://projecttemplate.net/architecture.html&#34;&gt;exists here&lt;/a&gt;). There is a folder for raw data, a folder for &lt;code&gt;R&lt;/code&gt; scripts, a folder for reports, etc.&lt;/p&gt;
-&lt;p&gt;Hadley probably wanted me to do the same analysis using &lt;code&gt;ProjectTemplate&lt;/code&gt;, but I don’t have the time for that. Instead I’m going to write below about the features &lt;code&gt;ProjectTemplate&lt;/code&gt; has, and why I think packages are a better general solution. So, just to be clear, I have not done any analyses using &lt;code&gt;ProjectTemplate&lt;/code&gt;, I have only the website descriptions to go on.&lt;/p&gt;
-&lt;p&gt;Now, I think I understand the philosophy of &lt;code&gt;ProjectTemplate&lt;/code&gt;, in that when writing a manuscript or report in an external editor such as LaTex, Word, LibreOffice (or even something else), you want a directory of outputs (graphs, tables, etc) resulting from applying a series of transformations on some data (&lt;code&gt;R&lt;/code&gt; scripts applied to &lt;code&gt;.txt&lt;/code&gt; or &lt;code&gt;.csv&lt;/code&gt;, etc). In addition, a &lt;code&gt;package&lt;/code&gt; is for storing &lt;strong&gt;general&lt;/strong&gt; functions that will work across multiple &lt;code&gt;projects&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;differences&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Differences&lt;/h2&gt;
-&lt;div id=&#34;keeping-directories-straight&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Keeping Directories Straight&lt;/h3&gt;
-&lt;p&gt;I can understand this POV, and in the past would have largely agreed. However, with the development of &lt;code&gt;devtools&lt;/code&gt; and other tools that make managing &lt;code&gt;R&lt;/code&gt; packages rather easy, I think it makes more sense to use the &lt;code&gt;R&lt;/code&gt; package mechanism instead of a custom format. In the &lt;code&gt;ProjectTemplate&lt;/code&gt; you may write functions or code in the &lt;code&gt;/lib&lt;/code&gt;, &lt;code&gt;/munge&lt;/code&gt; or &lt;code&gt;/src&lt;/code&gt; directory depending on their purpose (general, data munging, actual analysis, respectively). Keeping all of this straight seems to me a waste of time from doing the actual analysis.&lt;/p&gt;
-&lt;p&gt;In a package, functions are in the &lt;code&gt;/R&lt;/code&gt; directory, and that is where they live. They may be organized into different files depending on their purpose, names, or methods and classes (not fun &lt;code&gt;S4&lt;/code&gt;, not fun), but at least I know where they are.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;documentation&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Documentation&lt;/h3&gt;
-&lt;p&gt;This for me is the kicker. With packages (and &lt;code&gt;roxygen2&lt;/code&gt; and &lt;code&gt;devtools&lt;/code&gt;), I can document everything in such a way that the documentation is available &lt;strong&gt;without looking at the source file&lt;/strong&gt;; (i.e. &lt;code&gt;?function&lt;/code&gt;) be reminded of the various arguments, or look up the properties of my documented data set.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;dependencies&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Dependencies&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;R&lt;/code&gt; packages naturally tell you what other packages they depend on, and will try to resolve those dependencies when you install them. Now, granted, this isn’t a perfect process (anyone trying to upgrade their full &lt;code&gt;R&lt;/code&gt; package library knows this), and with the proliferation of packages on &lt;code&gt;github&lt;/code&gt; is likely to get more difficult (hmmm, would be nice to have a central registry of &lt;code&gt;github&lt;/code&gt; available packages), but in general it does work (for a different solution, check out &lt;a href=&#34;http://rstudio.github.io/packrat/&#34;&gt;packrat&lt;/a&gt;. This means that an analysis that is a package can naturally get it’s dependencies at install time (really try it, go ahead and install my &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis&#34;&gt;example package&lt;/a&gt; without having &lt;code&gt;stringr&lt;/code&gt; installed).&lt;/p&gt;
-&lt;p&gt;In contrast, &lt;code&gt;ProjectTemplate&lt;/code&gt; assumes all of the required packages are already installed, and if you shared your analysis directory with someone else, they have to look at the list and install everything before they are able to run it (although this is probably not that bad).&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;package-reproducibility&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Package Reproducibility&lt;/h2&gt;
-&lt;p&gt;In this day and age of seeking to provide &lt;strong&gt;reproducible&lt;/strong&gt; analyses, having all of the entities (code, data, final report) in a container that knows how to install it’s dependencies, and that works within the language ecosystem to provide documentation on the functions used, seems really useful. I believe that &lt;code&gt;R&lt;/code&gt; packages provide that better than most other solutions I have seen lately.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;outputs&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Outputs&lt;/h2&gt;
-&lt;p&gt;“But I don’t want to write my final report using Markdown or Latex” you cry! “How will I get my graphs or tables otherwise?” if using a package? I didn’t mention this in the previous posts, but it is possible to write the code in such a way to save graphics or write text files into a specific location (I would recommend &lt;code&gt;/inst/extdata/output&lt;/code&gt; if it was me).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;final-thoughts&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Final Thoughts&lt;/h2&gt;
-&lt;p&gt;As I said, I think I understand John’s thought process into designing &lt;code&gt;ProjectTemplate&lt;/code&gt;, but given how easy it is to work with packages in the current &lt;code&gt;R&lt;/code&gt; ecosystem, and that &lt;code&gt;R&lt;/code&gt; packages are the built-in way to share things, I think it is more natural to use packages directly with prose of the analysis as a package vignette. But everyone works differently. If you are writing analyses in &lt;code&gt;R&lt;/code&gt;, please use a sane directory setup (either packages, or &lt;code&gt;ProjectTemplate&lt;/code&gt; or something else), and use version control (really, please learn how to use &lt;code&gt;mercurial&lt;/code&gt; or &lt;code&gt;git&lt;/code&gt;, your future self will thank you for it).&lt;/p&gt;
-&lt;p&gt;Remember, when the reviewer (or your boss, or you) asks for something to be added, or to change something slightly in a figure, or add a new dataset, you want to be able to do it easily, and regenerate &lt;em&gt;all&lt;/em&gt; of your results without manual intervention.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
