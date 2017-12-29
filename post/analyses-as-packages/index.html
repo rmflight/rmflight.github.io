@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/analyses-as-packages/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/analyses-as-packages/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/analyses-as-packages/">
+  <meta property="og:title" content="Analyses as Packages | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2014-07-28T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2014-07-28T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Analyses as Packages | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Analyses as Packages</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2014-07-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2014-07-28
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Analyses%20as%20Packages&amp;url=%2fpost%2fanalyses-as-packages%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fanalyses-as-packages%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fanalyses-as-packages%2f&amp;title=Analyses%20as%20Packages"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fanalyses-as-packages%2f&amp;title=Analyses%20as%20Packages"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Analyses%20as%20Packages&amp;body=%2fpost%2fanalyses-as-packages%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="tldr" class="section level2">
+<h2>TL;DR</h2>
+<p>Instead of writing an analysis as a single or set of <code>R</code> scripts, use a <code>package</code> and include the analysis as a <code>vignette</code> of the package. Read below for the why, the <a href="/post/vignette-analysis">how is in the next post</a>.</p>
+</div>
+<div id="analyses-and-reports" class="section level2">
+<h2>Analyses and Reports</h2>
+<p>As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work. As I have continued working in <code>R</code>, I have progressed from having a simple <code>.R</code> script (or collection of related scripts) to using a package to structure as much of my research as possible, including analyses that generate reports.</p>
+<p>Note that I have been meaning to write this post for a while, but the tipping point was seeing <a href="https://twitter.com/hspter/statuses/489075887460339712">these tweets</a> from <a href="https://twitter.com/hspter">Hilary Parker</a> and <a href="https://twitter.com/dnusinow">David Nusinow</a></p>
+<blockquote>
+<p>I am all about the many short scripts rather than one long script when doing an analysis. I think I am alone here.</p>
+</blockquote>
+</div>
+<div id="why-packages" class="section level2">
+<h2>Why Packages</h2>
+<p>Packages are <code>R</code>’s method for sharing code in a sensible way, making it possible for others to easily (more often than not) use functions that you have written (I’m looking at you <code>python</code>!). Why not use them? They also give you access to <code>R</code>’s facilities for documentation and sharing computable documents. <a href="https://twitter.com/hadleywickham">Hadley Wickham</a> has a nice section on packages in his <a href="http://adv-r.had.co.nz/Philosophy.html">Advanced R</a> book.</p>
+<p>I use a lot of Hadley’s packages in the following sections, because they are useful, and promote practices that make it extremely practical to use packages as a way to make an analysis a self-contained unit.</p>
+<p>Duncan Murdoch has a nice slide deck on why to use packages and vignettes <a href="http://www.stats.uwo.ca/faculty/murdoch/ism2013/5Vignettes.pdf">here</a></p>
+<div id="structure" class="section level3">
+<h3>Structure</h3>
+<p>I want to breifly review the structure of package directories, you can read more about packages in Hadley’s book (link above), and in the official <code>R</code> <a href="http://cran.r-project.org/doc/manuals/r-release/R-exts.html">documentation from <code>CRAN</code></a>.</p>
+<p>Packages impose a relatively simple structure on your project directory. <code>/R</code> contains the <code>.R</code> files with your actual functions, and <code>/data</code> can contain any <code>.RData</code> or <code>.rda</code> files that you might need. Other data types (<code>.txt</code>, <code>.tab</code>, <code>.csv</code>) can also go in <code>/data</code>, or they may go in <code>/inst/extdata</code>. Note that in <code>/inst/extdata</code> you can specify any directory structure that seems appropriate.</p>
+<p>Other required files are <a href="http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file"><code>DESCRIPTION</code></a> and <a href="http://cran.r-project.org/doc/manuals/r-release/R-exts.html#Package-namespaces"><code>NAMESPACE</code></a>.</p>
+<p>You may also have <code>.Rmd</code> or <code>.Rnw</code> / <code>.Rtex</code> files in <code>/vignettes</code> that generate <code>html</code> or <code>pdf</code> output that combines prose and <code>R</code> code into a single document. This is where things get really interesting in being able to package up an analysis, especially when combined with functions.</p>
+</div>
+<div id="functions" class="section level3">
+<h3>Functions</h3>
+<p>Almost any analysis I have done involves writing at least one function, generally more, because I almost never do anything once in an analysis. Packages are <strong>the</strong> primary method of sharing functions in <code>R</code> that make sure that your functions play nice with the <code>R</code> NAMESPACE, and allow one to define function dependencies from other packages. If you define a function in a package (and <code>export</code> it), it immediately becomes re-usable in multiple analyses, without worrying about suffering from copypasta.</p>
+</div>
+<div id="function-documentation" class="section level3">
+<h3>Function Documentation</h3>
+<p>The easiest way to document functions is by using <a href="http://cran.r-project.org/web/packages/roxygen2/index.html"><code>roxygen2</code></a> (see the intro <a href="http://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">vignette</a>). This allows you to worry about the documentation right next to the function itself, and not worry about writing separate documentation files in <code>/inst/doc</code> (really, you don’t want to do it, I have, and it is painful). The <a href="http://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html">keywords</a> in <code>roxygen2</code> make sense, and are not hard to remember.</p>
+</div>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>As mentioned above, you can include data with your package. The neat thing about including data, is you can document it and have that documentation available as part of the package.</p>
+<p>I find it really useful to put any raw data that you want to work with in <code>/inst/extdata</code> in whatever format it exists, and then process the data and save it as an <code>.RData</code> file in <code>/data</code>, with associated documentation. It is also really useful if part of the calculations are long running, then you can save the results as an associated data file, and simply load it when needed in the analysis.</p>
+<p>Small note about documenting data sets. You put the <code>roxygen2</code> comments in another file, and also need to provide <code>@name</code> explicitly, and follow the documentation block with <code>NULL</code>. Check the <code>roxygen2</code> vignette “Generating Rd files” for a specific example.</p>
+</div>
+</div>
+<div id="why-vignettes-as-a-reporting-method" class="section level2">
+<h2>Why Vignettes as a Reporting Method</h2>
+<p>One great feature of packages is that one can include multiple <code>vignettes</code>, long form text mixed with <code>code</code> (and/or figures) to explain or highlight functionality in a package. Normally these are used to write tutorials, demonstrate features, or group together documentation that wouldn’t normally be together in the general documentation. However, there are no limits as to what can actually be contained within the <code>vignette</code> as far as content, or how many <code>vignettes</code> a package can have.</p>
+<p>For packages hosted by CRAN, <code>vignettes</code> are an optional component. However, the Bioconductor project requires that <code>vignettes</code> be included in each package.</p>
+<p>So, <code>R</code> packages have a method to include long form prose that can be mixed with <code>R</code> code directly as part of the package, within which you have already put your functions and associated data.</p>
+<p>Prior to <code>R</code> 3.0, one generally had to write vignettes using <code>sweave</code>, a combination of <code>latex</code> and <code>R</code> code that generates a PDF file. However, since v3.0, it is possible to write vignettes using <code>R markdown</code> (and actually some other markup formats), which generates HTML output. The advantages to using <code>R markdown</code> over <code>sweave</code> are that the syntax for writing <code>markdown</code> is much simpler, and much more readable in it’s raw format.</p>
+<p>Given that a package allows us to define sets of related functions, data, and documentation (with dependencies defined) all in one place that others can subsequently install and make use of and build on, why wouldn’t you want to use packages and vignettes to write long form analyses?</p>
+<p>From some of my descriptions above, it may appear that this incurs some overhead. However, thanks to the <strong>#hadleyverse</strong> and <code>rstudio</code>, it is rather trivial (note that <code>rstudio</code> is not essential, but I find it does make it easier). In my <a href="/posts/2014/07/vignetteAnalysis.html">next post</a> I am going to give a worked example from start to finish of generating an analysis that is a vignette as part of a package.</p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/development">development</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/packages">packages</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/vignettes">vignettes</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    
+    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
+    
+    <li><a href="/post/self-written-function-help/">Self-Written Function Help</a></li>
+    
+    <li><a href="/post/package-version-increment-pre-and-post-commit-hooks/">Package Version Increment Pre- and Post-Commit Hooks</a></li>
+    
+    <li><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/packages-vs-projecttemplate/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/packages-vs-projecttemplate/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/packages-vs-projecttemplate/">
+  <meta property="og:title" content="Packages vs ProjectTemplate | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2014-07-28T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2014-07-28T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Packages vs ProjectTemplate | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Packages vs ProjectTemplate</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2014-07-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2014-07-28
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Packages%20vs%20ProjectTemplate&amp;url=%2fpost%2fpackages-vs-projecttemplate%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fpackages-vs-projecttemplate%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fpackages-vs-projecttemplate%2f&amp;title=Packages%20vs%20ProjectTemplate"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fpackages-vs-projecttemplate%2f&amp;title=Packages%20vs%20ProjectTemplate"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Packages%20vs%20ProjectTemplate&amp;body=%2fpost%2fpackages-vs-projecttemplate%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="tldr" class="section level2">
+<h2>tl;dr</h2>
+<p>Imposing a different structure than <code>R</code> packages for distributing <code>R</code> code is a bad idea, especially now that <code>R</code> package tools have gotten to the point where managing a package has become much easier.</p>
+</div>
+<div id="projecttemplate" class="section level2">
+<h2>ProjectTemplate ??</h2>
+<p>My last two posts (<a href="/post/analyses-as-packages">1</a>, <a href="/post/vignette-analysis">2</a>) provided an argument and an example of why one should use <code>R</code> packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package <a href="http://projecttemplate.net/index.html"><code>ProjectTemplate</code></a>. I was reminded about it thanks to <a href="https://twitter.com/hadleywickham/statuses/493775065033371648">Hadley Wickham</a>:</p>
+<blockquote>
+<p>would be interesting to see comparison to ProjectTemplate</p>
+</blockquote>
+<p><a href="http://www.johnmyleswhite.com/">John Myles White</a> has an <code>R</code> package, <a href="http://projecttemplate.net/">ProjectTemplate</a> for handling analyses. In contrast to the package philosophy that I espoused previously, <code>ProjectTemplate</code> has a large, logical folder layout (you can read all about each folder and why it <a href="http://projecttemplate.net/architecture.html">exists here</a>). There is a folder for raw data, a folder for <code>R</code> scripts, a folder for reports, etc.</p>
+<p>Hadley probably wanted me to do the same analysis using <code>ProjectTemplate</code>, but I don’t have the time for that. Instead I’m going to write below about the features <code>ProjectTemplate</code> has, and why I think packages are a better general solution. So, just to be clear, I have not done any analyses using <code>ProjectTemplate</code>, I have only the website descriptions to go on.</p>
+<p>Now, I think I understand the philosophy of <code>ProjectTemplate</code>, in that when writing a manuscript or report in an external editor such as LaTex, Word, LibreOffice (or even something else), you want a directory of outputs (graphs, tables, etc) resulting from applying a series of transformations on some data (<code>R</code> scripts applied to <code>.txt</code> or <code>.csv</code>, etc). In addition, a <code>package</code> is for storing <strong>general</strong> functions that will work across multiple <code>projects</code>.</p>
+</div>
+<div id="differences" class="section level2">
+<h2>Differences</h2>
+<div id="keeping-directories-straight" class="section level3">
+<h3>Keeping Directories Straight</h3>
+<p>I can understand this POV, and in the past would have largely agreed. However, with the development of <code>devtools</code> and other tools that make managing <code>R</code> packages rather easy, I think it makes more sense to use the <code>R</code> package mechanism instead of a custom format. In the <code>ProjectTemplate</code> you may write functions or code in the <code>/lib</code>, <code>/munge</code> or <code>/src</code> directory depending on their purpose (general, data munging, actual analysis, respectively). Keeping all of this straight seems to me a waste of time from doing the actual analysis.</p>
+<p>In a package, functions are in the <code>/R</code> directory, and that is where they live. They may be organized into different files depending on their purpose, names, or methods and classes (not fun <code>S4</code>, not fun), but at least I know where they are.</p>
+</div>
+<div id="documentation" class="section level3">
+<h3>Documentation</h3>
+<p>This for me is the kicker. With packages (and <code>roxygen2</code> and <code>devtools</code>), I can document everything in such a way that the documentation is available <strong>without looking at the source file</strong>; (i.e. <code>?function</code>) be reminded of the various arguments, or look up the properties of my documented data set.</p>
+</div>
+<div id="dependencies" class="section level3">
+<h3>Dependencies</h3>
+<p><code>R</code> packages naturally tell you what other packages they depend on, and will try to resolve those dependencies when you install them. Now, granted, this isn’t a perfect process (anyone trying to upgrade their full <code>R</code> package library knows this), and with the proliferation of packages on <code>github</code> is likely to get more difficult (hmmm, would be nice to have a central registry of <code>github</code> available packages), but in general it does work (for a different solution, check out <a href="http://rstudio.github.io/packrat/">packrat</a>. This means that an analysis that is a package can naturally get it’s dependencies at install time (really try it, go ahead and install my <a href="https://github.com/rmflight/ismbTweetAnalysis">example package</a> without having <code>stringr</code> installed).</p>
+<p>In contrast, <code>ProjectTemplate</code> assumes all of the required packages are already installed, and if you shared your analysis directory with someone else, they have to look at the list and install everything before they are able to run it (although this is probably not that bad).</p>
+</div>
+</div>
+<div id="package-reproducibility" class="section level2">
+<h2>Package Reproducibility</h2>
+<p>In this day and age of seeking to provide <strong>reproducible</strong> analyses, having all of the entities (code, data, final report) in a container that knows how to install it’s dependencies, and that works within the language ecosystem to provide documentation on the functions used, seems really useful. I believe that <code>R</code> packages provide that better than most other solutions I have seen lately.</p>
+</div>
+<div id="outputs" class="section level2">
+<h2>Outputs</h2>
+<p>“But I don’t want to write my final report using Markdown or Latex” you cry! “How will I get my graphs or tables otherwise?” if using a package? I didn’t mention this in the previous posts, but it is possible to write the code in such a way to save graphics or write text files into a specific location (I would recommend <code>/inst/extdata/output</code> if it was me).</p>
+</div>
+<div id="final-thoughts" class="section level2">
+<h2>Final Thoughts</h2>
+<p>As I said, I think I understand John’s thought process into designing <code>ProjectTemplate</code>, but given how easy it is to work with packages in the current <code>R</code> ecosystem, and that <code>R</code> packages are the built-in way to share things, I think it is more natural to use packages directly with prose of the analysis as a package vignette. But everyone works differently. If you are writing analyses in <code>R</code>, please use a sane directory setup (either packages, or <code>ProjectTemplate</code> or something else), and use version control (really, please learn how to use <code>mercurial</code> or <code>git</code>, your future self will thank you for it).</p>
+<p>Remember, when the reviewer (or your boss, or you) asks for something to be added, or to change something slightly in a figure, or add a new dataset, you want to be able to do it easily, and regenerate <em>all</em> of your results without manual intervention.</p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/packages">packages</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    
+    <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
+    
+    <li><a href="/post/self-written-function-help/">Self-Written Function Help</a></li>
+    
+    <li><a href="/post/package-version-increment-pre-and-post-commit-hooks/">Package Version Increment Pre- and Post-Commit Hooks</a></li>
+    
+    <li><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

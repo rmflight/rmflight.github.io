@@ -216,86 +216,97 @@
   </div>
   
   <div>
-    <h2><a href="/post/open-vs-closed-analysis-languages/">Open vs Closed Analysis Languages</a></h2>
+    <h2><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></h2>
     <div class="article-style">
       
-      TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
- Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)
+      I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing R package vignettes to the web after building and checking on travis-ci. Hadley Wickham pointed to using such a scheme to push the web version of his book after each update and the S3 deploy hooks on travis-ci. Deploying your html content to S3 is great, but given the availability of the gh-pages branch on GitHub, I thought it would be neat to work out how to deploy the html output from an R package vignette to the gh-pages branch on GitHub.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/pre-calculating-large-tables-of-values/">Pre-Calculating Large Tables of Values</a></h2>
+    <h2><a href="/post/analyses-as-packages/">Analyses as Packages</a></h2>
     <div class="article-style">
       
-      I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.
+      TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
+ Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></h2>
+    <h2><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></h2>
     <div class="article-style">
       
-      ProgrammingR had an interesting post recently about keeping a set of R functions that are used often as a gist on Github, and sourceing that file at the beginning of R analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement unit testing.
-However, the best way to have sets of R functions is as a package, that can then be installed and loaded by anyone.
+      Following from my last post, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the 2012 and 2014 ISMB conference (thanks to Neil and Stephen for compiling the data).
+I will link to individual commits so that you can see how things change as we go along.
+Setup Initialization To start, we will initialize the package.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/r-rstudio-and-release-and-dev-bioconductor/">R, RStudio, and Release and Dev Bioconductor</a></h2>
+    <h2><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></h2>
     <div class="article-style">
       
-      I have one Bioconductor package that I am currently responsible for. Each bi-annual release of Bioconductor requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of R and multiple versions of Bioconductor libraries on a single system (assuming that you do production work and development on the same machine, right?).
-I really, really like RStudio as my working R environment, as some of you have read before.
+      tl;dr Imposing a different structure than R packages for distributing R code is a bad idea, especially now that R package tools have gotten to the point where managing a package has become much easier.
+ ProjectTemplate ?? My last two posts (1, 2) provided an argument and an example of why one should use R packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package ProjectTemplate.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/r-interface-for-teaching/">R Interface for Teaching</a></h2>
+    <h2><a href="/post/r-job-notifications-using-twitter/">R Job Notifications Using Twitter</a></h2>
     <div class="article-style">
       
-      Kaitlin Thaney asked on Twitter last week about using Ramnath Vaidyanathan’s new interactive R notebook 1 2 for teaching.
-Now, to be clear up front, I am not trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don’t really think it is the right interface for teaching R.
+      There has been some interesting activity about getting R to send a notification somehow when a long running job is completed. The most notable entries I have seen in this category are RPushBullet for web notifications and pingr for audio notifications.
+Although RPushBullet looks really cool (and Dirk does great work), I wondered if there was a way to do this using a free service that I already had access to, namely twitter.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/storing-package-data-in-custom-environments/">Storing Package Data in Custom Environments</a></h2>
+    <h2><a href="/post/categorycompare-paper-finally-out/">categoryCompare Paper Finally Out!</a></h2>
     <div class="article-style">
       
-      If you do R package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global options. This is done by packages grDevices and parallel. Sometimes this doesn’t seem to work quite right (see this issue for example.
-Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify.
+      I can finally say that the publication on my Bioconductor package categoryCompare is finally published in the Bioinformatics and Computational Biology section of Frontiers in Genetics. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.
+TL;DR The software package has been in development in one form or another since 2010, released to Bioconductor in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></h2>
+    <h2><a href="/post/self-written-function-help/">Self-Written Function Help</a></h2>
     <div class="article-style">
       
-      I have been watching the activity in RStudio and knitr for a while, and have even been using Rmd (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed writing papers in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using knitr as a way to create reproducible blog posts that include code (including yours truly).
+      I have noted at least one instance (and there are probably others) about how Python’s docStrings are so great, and wouldn’t it be nice to have a similar system in R. Especially when you can have your new function tab completion available depending on your development environment.
+This is a false statement, however. If you set up your R development environment properly, you can have these features available in R. It will take a little bit of work, however.
       
     </div>
   </div>
   
   <div>
-    <h2><a href="/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/">Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</a></h2>
+    <h2><a href="/post/installing-matlab-vs-installing-r/">Installing MatLab vs Installing R</a></h2>
     <div class="article-style">
       
-      What? For those who don’t know, CDF files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as RMA, and others.
- Why? Because we can, and because custom definitions have been shown to be quite useful. See the information over at Brainarray.
- Why not somewhere else? A lot of times other people create custom CDF files based on their own criteria, and make it subsequently available for others to use (see the Brainarray for an example of what some are doing, as well as PlandbAffy)
+      I retweeted this a few days ago:
+1. Open MATLAB for first time in a few years after using #rstats. 2. Site license doesn’t work right. 3. F*** MATLAB, I’ll try to do it in R
+And as I have started the process of installing MatLab on my own machine because I want to translate a published MatLab package into R, I am reminded of how painful the process can be.
       
     </div>
   </div>
   
 
   
+<nav>
+  <ul class="pager">
+    
+    
+    <li><a href="/tags/r/page/2/">&gt;</a></li>
+    
+  </ul>
+</nav>
+
 
 
 </div>

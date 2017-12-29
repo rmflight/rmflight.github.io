@@ -194,400 +194,895 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
-      <title>PubmedCommons API</title>
-      <link>/post/pubmedcommons-api/</link>
-      <pubDate>Tue, 22 Oct 2013 00:00:00 +0000</pubDate>
+      <title>Random Forest vs PLS on Random Data</title>
+      <link>/post/random-forest-vs-pls-on-random-data/</link>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>/post/pubmedcommons-api/</guid>
-      <description>&lt;p&gt;The announcements are out, Pubmed is introducing a commenting system &lt;a href=&#34;http://www.ncbi.nlm.nih.gov/pubmedcommons/&#34;&gt;pubmedcommons&lt;/a&gt;, theoretically providing a single location for true post-publication peer review. This is a really good idea, as NCBI is likely to be around for a lot longer than a given publisher, and the requirement for all NIH funded research to be deposited into Pubmed.&lt;/p&gt;
-&lt;p&gt;There are some detractors, and they may have some valid points &lt;a href=&#34;https://twitter.com/caseybergman/status/392729744640577537&#34;&gt;link&lt;/a&gt;. However, the alternative, &lt;a href=&#34;https://pubpeer.com/&#34;&gt;pubpeer&lt;/a&gt;, I had not heard about. &lt;a href=&#34;http://f1000.com/&#34;&gt;F1000&lt;/a&gt; puts the comments in one location, in a way that is no better than a single publisher site.&lt;/p&gt;
-&lt;p&gt;What would truly let the pubmedcommons proliferate would be if it became the equivalent of &lt;a href=&#34;disqus.com&#34;&gt;disqus&lt;/a&gt;, but for scientific articles. For those who don’t know, disqus is essentially a remote commenting platform that provides commenting on other websites. For example, &lt;a href=&#34;http://rmflight.github.io&#34;&gt;my blog&lt;/a&gt; is a static site, and comments are provided by disqus. This is enabled with an account on disqus and a javascript snippet on my website.&lt;/p&gt;
-&lt;p&gt;It would be neat if pubmedcommons became a similar platform for scientific articles, with a little bit more flexibility. i.e. someone would be able to include some javascript, with relevant pubmed IDs, and the comments for that article would be displayed, and others would be able to make comments on that site.&lt;/p&gt;
-&lt;div id=&#34;let-me-illustrate-with-an-example.&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Let me illustrate with an example.&lt;/h3&gt;
-&lt;p&gt;Imagine I publish a paper in PLOS One (or &lt;strong&gt;any&lt;/strong&gt; other journal, for that matter). Upon acceptance, the paper also gets a pubmed id. This instantly creates a forum for comments using pubmedcommons. In addition, PLOS One adds a little bit of javascript to their page for the paper that enables the same commenting system. Therefore, any comments made on the paper at pubmed or PLOS One appear in both places (maybe with a tag for where they originated?). In addition, I post a copy of the paper on my own blog, and add the same javascript, and readers will see the comments made at pubmed, PLOS One, and can comment on the paper on my own blog. In addition, someone else could do the same to display the comments on their own site, etc, etc.&lt;/p&gt;
-&lt;p&gt;I think the above example might have the potential to revolutionize post-pub peer review, because the actual comments are hosted in a central location, but are accessible in many different locations where the publication might exist.&lt;/p&gt;
-&lt;p&gt;Now, it could still go awry. They could take too long to open things up, they might make the policies regarding comments too restrictive, they may police the comments too heavily, etc, etc. But&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Open vs Closed Analysis Languages</title>
-      <link>/post/open-vs-closed-analysis-languages/</link>
-      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/post/open-vs-closed-analysis-languages/</guid>
+      <guid>/post/random-forest-vs-pls-on-random-data/</guid>
       <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;I think data scientists should choose to learn &lt;strong&gt;open&lt;/strong&gt; languages such as &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;python&lt;/code&gt; because they are &lt;strong&gt;open&lt;/strong&gt; in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.&lt;/p&gt;
+&lt;p&gt;Partial least squares (PLS) discriminant-analysis (DA) can ridiculously over fit even on completely random data. The quality of the PLS-DA model can be assessed using cross-validation, but cross-validation is not typically performed in many metabolomics publications. Random forest, in contrast, because of the &lt;em&gt;forest&lt;/em&gt; of decision tree learners, and the out-of-bag (OOB) samples used for testing each tree, automatically provides an indication of the quality of the model.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;why-the-debate&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why the debate?&lt;/h2&gt;
-&lt;p&gt;This was sparked by a comment on twitter suggesting that data scientists and analysts need to be &lt;em&gt;polyglots&lt;/em&gt;, that they should know more than &lt;strong&gt;one&lt;/strong&gt; programming language or analysis framework (the full conversation of tweets can be found &lt;a href=&#34;https://twitter.com/rmflight/status/387910932250517504&#34;&gt;here&lt;/a&gt;)&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34;&gt;
-&lt;p&gt;
-Data Scientists need to be Polyglots - know 2 or more of &lt;a href=&#34;https://twitter.com/search?q=%23python&amp;amp;src=hash&#34;&gt;#python&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23rstats&amp;amp;src=hash&#34;&gt;#rstats&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23sas&amp;amp;src=hash&#34;&gt;#sas&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23spss&amp;amp;src=hash&#34;&gt;#spss&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23matlab&amp;amp;src=hash&#34;&gt;#matlab&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23julia&amp;amp;src=hash&#34;&gt;#julia&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%23octave&amp;amp;src=hash&#34;&gt;#octave&lt;/a&gt; &lt;a href=&#34;http://t.co/LtzIOzZ4XH&#34;&gt;http://t.co/LtzIOzZ4XH&lt;/a&gt;
-&lt;/p&gt;
-— Gregory Piatetsky (&lt;span class=&#34;citation&#34;&gt;@kdnuggets&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/kdnuggets/statuses/387706109509005312&#34;&gt;October 8, 2013&lt;/a&gt;
+&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why?&lt;/h2&gt;
+&lt;p&gt;I’ve recently been working on some machine learning work using &lt;strong&gt;random forests&lt;/strong&gt; (RF) &lt;a href=&#34;https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf&#34;&gt;Breimann, 2001&lt;/a&gt; on metabolomics data. This has been relatively successful, with decent sensitivity and specificity, and hopefully I’ll be able to post more soon. However, PLS (Wold, 1975) is a standard technique used in metabolomics due to the prevalence of analytical chemists in metabolomics and a long familiarity with the method. Importantly, my collaborators frequently use PLS-DA to generate plots to show that the various classes of samples are separable.&lt;/p&gt;
+&lt;p&gt;However, it has long been known that PLS (and all of it’s variants, PLS-DA, OPLS, OPLS-DA, etc) can easily generate models that over fit the data, and that over fitting of the model needs to be assessed if the model is going to be used in subsequent analyses.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;random-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Random Data&lt;/h2&gt;
+&lt;p&gt;To illustrate the behavior of both RF and PLS-DA, we will generate some random data where each of the samples are randomly assigned to one of two classes.&lt;/p&gt;
+&lt;div id=&#34;feature-intensities&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Feature Intensities&lt;/h3&gt;
+&lt;p&gt;We will generate a data set with 1000 features, where each feature’s mean value is from a uniform distribution with a range of 1-10000.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(cowplot)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;cowplot&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     ggsave&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(fakeDataWithError)
+set.seed(1234)
+n_point &amp;lt;- 1000
+max_value &amp;lt;- 10000
+init_values &amp;lt;- runif(n_point, 0, max_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;init_data &amp;lt;- data.frame(data = init_values)
+ggplot(init_data, aes(x = data)) + geom_histogram() + ggtitle(&amp;quot;Initial Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_initial-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;For each of these features, their distribution across samples will be based on a random normal distribution where the mean is the initial feature value and a standard deviation of 200. The number of samples is 100.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n_sample &amp;lt;- 100
+error_values &amp;lt;- add_uniform_noise(n_sample, init_values, 200)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Just for information, the &lt;code&gt;add_uniform_noise&lt;/code&gt; function is this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;add_uniform_noise&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## function (n_rep, value, sd, use_zero = FALSE) 
+## {
+##     n_value &amp;lt;- length(value)
+##     n_sd &amp;lt;- n_rep * n_value
+##     out_sd &amp;lt;- rnorm(n_sd, 0, sd)
+##     out_sd &amp;lt;- matrix(out_sd, nrow = n_value, ncol = n_rep)
+##     if (!use_zero) {
+##         tmp_value &amp;lt;- matrix(value, nrow = n_value, ncol = n_rep, 
+##             byrow = FALSE)
+##         out_value &amp;lt;- tmp_value + out_sd
+##     }
+##     else {
+##         out_value &amp;lt;- out_sd
+##     }
+##     return(out_value)
+## }
+## &amp;lt;environment: namespace:fakeDataWithError&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I created it as part of a package that is able to add different kinds of noise to data.&lt;/p&gt;
+&lt;p&gt;The distribution of values for a single feature looks like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;error_data &amp;lt;- data.frame(feature_1 = error_values[1,])
+ggplot(error_data, aes(x = feature_1)) + geom_histogram() + ggtitle(&amp;quot;Error Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_error-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;And we will assign the first 50 samples to &lt;strong&gt;class_1&lt;/strong&gt; and the second 50 samples to &lt;strong&gt;class_2&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_class &amp;lt;- rep(c(&amp;quot;class_1&amp;quot;, &amp;quot;class_2&amp;quot;), each = 50)
+sample_class&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   [1] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##   [8] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##  [15] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##  [22] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##  [29] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##  [36] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##  [43] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
+##  [50] &amp;quot;class_1&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [57] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [64] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [71] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [78] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [85] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [92] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
+##  [99] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pca&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PCA&lt;/h2&gt;
+&lt;p&gt;Just to show that the data is pretty random, lets use principal components analysis (PCA) to do a decomposition, and plot the first two components:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tmp_pca &amp;lt;- prcomp(t(error_values), center = TRUE, scale. = TRUE)
+pca_data &amp;lt;- as.data.frame(tmp_pca$x[, 1:2])
+pca_data$class &amp;lt;- as.factor(sample_class)
+ggplot(pca_data, aes(x = PC1, y = PC2, color = class)) + geom_point(size = 4)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/pca_data-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;random-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Random Forest&lt;/h2&gt;
+&lt;p&gt;Let’s use RF first, and see how things look.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(randomForest)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## randomForest 4.6-12&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Type rfNews() to see new features/changes/bug fixes.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;randomForest&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     margin&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rf_model &amp;lt;- randomForest(t(error_values), y = as.factor(sample_class))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The confusion matrix comparing actual &lt;em&gt;vs&lt;/em&gt; predicted classes based on the out of bag (OOB) samples:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::kable(rf_model$confusion)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;class_1&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;class_2&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;class.error&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;class_1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;28&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;22&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.44&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;class_2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;23&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;27&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.46&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;And an overall error of 0.4866246.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pls-da&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PLS-DA&lt;/h2&gt;
+&lt;p&gt;So PLS-DA is really just PLS with &lt;strong&gt;y&lt;/strong&gt; variable that is binary.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(caret)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pls_model &amp;lt;- plsda(t(error_values), as.factor(sample_class), ncomp = 2)
+pls_scores &amp;lt;- data.frame(comp1 = pls_model$scores[,1], comp2 = pls_model$scores[,2], class = sample_class)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And plot the PLS scores:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(pls_scores, aes(x = comp1, y = comp2, color = class)) + geom_point(size = 4) + ggtitle(&amp;quot;PLS-DA of Random Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_plsda-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;And voila! Perfectly separated data! If I didn’t tell you that it was random, would you suspect it?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cross-validated-pls-da&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Cross-validated PLS-DA&lt;/h2&gt;
+&lt;p&gt;Of course, one way to truly assess the worth of the model would be to use cross-validation, where a fraction of data is held back, and the model trained on the rest. Predictions are then made on the held back fraction, and because we know the truth, we will then calculate the &lt;strong&gt;area under the reciever operator curve&lt;/strong&gt; (AUROC) or area under the curve (AUC) created by plotting true positives &lt;em&gt;vs&lt;/em&gt; false positives.&lt;/p&gt;
+&lt;p&gt;To do this we will need two functions:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Generates all of the CV folds&lt;/li&gt;
+&lt;li&gt;Generates PLS-DA model, does prediction on hold out, calculates AUC&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(cvTools)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: robustbase&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ROCR)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: gplots&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;gplots&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     lowess&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gen_cv &amp;lt;- function(xdata, ydata, nrep, kfold){
+  n_sample &amp;lt;- length(ydata)
+  all_index &amp;lt;- seq(1, n_sample)
+  cv_data &amp;lt;- cvFolds(n_sample, K = kfold, R = nrep, type = &amp;quot;random&amp;quot;)
+  
+  rep_values &amp;lt;- vapply(seq(1, nrep), function(in_rep){
+    use_rep &amp;lt;- cv_data$subsets[, in_rep]
+    cv_values &amp;lt;- vapply(seq(1, kfold), function(in_fold){
+      test_index &amp;lt;- use_rep[cv_data$which == in_fold]
+      train_index &amp;lt;- all_index[-test_index]
+      
+      plsda_cv(xdata[train_index, ], ydata[train_index], xdata[test_index, ],
+               ydata[test_index])
+    }, numeric(1))
+  }, numeric(kfold))
+}
+
+plsda_cv &amp;lt;- function(xtrain, ytrain, xtest, ytest){
+  pls_model &amp;lt;- plsda(xtrain, ytrain, ncomp = 2)
+  pls_pred &amp;lt;- predict(pls_model, xtest, type = &amp;quot;prob&amp;quot;)
+  
+  use_pred &amp;lt;- pls_pred[, 2, 1]
+  
+  pred_perf &amp;lt;- ROCR::prediction(use_pred, ytest)
+  pred_auc &amp;lt;- ROCR::performance(pred_perf, &amp;quot;auc&amp;quot;)@y.values[[1]]
+  return(pred_auc)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now lets do a bunch of replicates (100).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cv_vals &amp;lt;- gen_cv(t(error_values), factor(sample_class), nrep = 100, kfold = 5)
+
+mean(cv_vals)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.4182644&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sd(cv_vals)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1086778&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cv_frame &amp;lt;- data.frame(auc = as.vector(cv_vals))
+ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/rep_plsda-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;So we get an average AUC of 0.4182644, which is pretty awful. This implies that even though there was good separation on the scores, maybe the model is not actually that good, and we should be cautious of any predictions being made.&lt;/p&gt;
+&lt;p&gt;Of course, the PCA at the beginning of the analysis shows that there is no &lt;em&gt;real&lt;/em&gt; separation in the data in the first place.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::session_info()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Session info -------------------------------------------------------------&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  setting  value                       
+##  version  R version 3.4.2 (2017-09-28)
+##  system   x86_64, linux-gnu           
+##  ui       X11                         
+##  language en_US                       
+##  collate  en_US.UTF-8                 
+##  tz       posixrules                  
+##  date     2017-12-28&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Packages -----------------------------------------------------------------&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  package           * version    date      
+##  assertthat          0.2.0      2017-04-11
+##  backports           1.1.1      2017-09-25
+##  base              * 3.4.2      2017-10-10
+##  bindr               0.1        2016-11-13
+##  bindrcpp            0.2        2017-06-17
+##  bitops              1.0-6      2013-08-17
+##  blogdown            0.4        2017-12-12
+##  bookdown            0.5        2017-08-20
+##  caret             * 6.0-77     2017-09-07
+##  caTools             1.17.1     2014-09-10
+##  class               7.3-14     2015-08-30
+##  codetools           0.2-15     2016-10-05
+##  colorspace          1.3-2      2016-12-14
+##  compiler            3.4.2      2017-10-10
+##  cowplot           * 0.9.1      2017-11-16
+##  CVST                0.2-1      2013-12-10
+##  cvTools           * 0.3.2      2012-05-14
+##  datasets          * 3.4.2      2017-10-10
+##  ddalpha             1.3.1      2017-09-27
+##  DEoptimR            1.0-8      2016-11-19
+##  devtools            1.13.3     2017-08-02
+##  digest              0.6.12     2017-01-27
+##  dimRed              0.1.0      2017-05-04
+##  dplyr               0.7.4      2017-09-28
+##  DRR                 0.0.2      2016-09-15
+##  evaluate            0.10.1     2017-06-24
+##  fakeDataWithError * 0.0.1      2017-12-29
+##  foreach             1.4.3      2015-10-13
+##  gdata               2.18.0     2017-06-06
+##  ggplot2           * 2.2.1.9000 2017-12-13
+##  glue                1.1.1      2017-06-21
+##  gower               0.1.2      2017-02-23
+##  gplots            * 3.0.1      2016-03-30
+##  graphics          * 3.4.2      2017-10-10
+##  grDevices         * 3.4.2      2017-10-10
+##  grid                3.4.2      2017-10-10
+##  gtable              0.2.0      2016-02-26
+##  gtools              3.5.0      2015-05-29
+##  highr               0.6        2016-05-09
+##  htmltools           0.3.6      2017-04-28
+##  ipred               0.9-6      2017-03-01
+##  iterators           1.0.8      2015-10-13
+##  kernlab             0.9-25     2016-10-03
+##  KernSmooth          2.23-15    2015-06-29
+##  knitr               1.17       2017-08-10
+##  labeling            0.3        2014-08-23
+##  lattice           * 0.20-35    2017-03-25
+##  lava                1.5.1      2017-09-27
+##  lazyeval            0.2.1      2017-10-29
+##  lubridate           1.7.1      2017-11-03
+##  magrittr            1.5        2014-11-22
+##  MASS                7.3-47     2017-04-21
+##  Matrix              1.2-11     2017-08-16
+##  memoise             1.1.0      2017-04-21
+##  methods           * 3.4.2      2017-10-10
+##  ModelMetrics        1.1.0      2016-08-26
+##  munsell             0.4.3      2016-02-13
+##  nlme                3.1-131    2017-02-06
+##  nnet                7.3-12     2016-02-02
+##  pkgconfig           2.0.1      2017-12-07
+##  pls                 2.6-0      2016-12-18
+##  plyr                1.8.4      2016-06-08
+##  prodlim             1.6.1      2017-03-06
+##  purrr               0.2.4      2017-10-18
+##  R6                  2.2.2      2017-06-17
+##  randomForest      * 4.6-12     2015-10-07
+##  Rcpp                0.12.14    2017-11-23
+##  RcppRoll            0.2.2      2015-04-05
+##  recipes             0.1.0      2017-07-27
+##  reshape2            1.4.3      2017-12-11
+##  rlang               0.1.2      2017-08-09
+##  rmarkdown           1.8        2017-11-17
+##  robustbase        * 0.92-7     2016-12-09
+##  ROCR              * 1.0-7      2015-03-26
+##  rpart               4.1-11     2017-04-21
+##  rprojroot           1.2        2017-01-16
+##  scales              0.5.0.9000 2017-10-12
+##  sfsmisc             1.1-1      2017-06-08
+##  splines             3.4.2      2017-10-10
+##  stats             * 3.4.2      2017-10-10
+##  stats4              3.4.2      2017-10-10
+##  stringi             1.1.5      2017-04-07
+##  stringr             1.2.0      2017-02-18
+##  survival            2.41-3     2017-04-04
+##  tibble              1.3.4      2017-08-22
+##  timeDate            3012.100   2015-01-23
+##  tools               3.4.2      2017-10-10
+##  utils             * 3.4.2      2017-10-10
+##  withr               2.1.0.9000 2017-12-05
+##  yaml                2.1.15     2017-12-01
+##  source                                     
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  cran (@0.9.1)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (rmflight/fakeDataWithError@ccd8714)
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (tidyverse/ggplot2@bfff1d8)         
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  local                                      
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@0.2.1)                              
+##  cran (@1.7.1)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (gaborcsardi/pkgconfig@96a1413)     
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@0.2.4)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@0.12.14)                            
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@1.4.3)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (hadley/scales@d767915)             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  local                                      
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  local                                      
+##  Github (jimhester/withr@fe81c00)           
+##  cran (@2.1.15)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Novel Zinc Coordination Geometries</title>
+      <link>/post/novel-zinc-coordination-geometries/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/novel-zinc-coordination-geometries/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a &lt;strong&gt;less-biased&lt;/strong&gt; method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries. Proteins. &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1002/prot.24834/full&#34;&gt;doi: 10.1002/prot.24834&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;zinc-coordination&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Zinc Coordination&lt;/h2&gt;
+&lt;p&gt;As I’m sure many people know, zinc is a very important metal for biology. It is one of the most numerous metal ions, and plays a role in many different types of proteins. Zinc ions in protein structures can have anywhere from 4 to 6 ligands, in many different coordination geometries.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/prot24834-fig-0001.png&#34; alt=&#34;zinc coordination geometries&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;zinc coordination geometries&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Figure 1 from Yao et al., 2015&lt;/p&gt;
+&lt;p&gt;How the zinc ion is coordinated is going to depend on the protein sequence of amino acids that surround it, and knowledge of the protein sequence should enable knowledge of how the zinc ions are coordinated. Therefore, being able to characterize zinc ion coordination geometries (CGs) from structural data (such as protein structures in the world-wide protein data bank) and associate them with protein sequences is very important.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;previous-attempts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Previous Attempts&lt;/h2&gt;
+&lt;p&gt;Other groups had done this previously, and we now have hidden-markov models for determining zinc binding thanks to this work. However, in all the cases that we could find, the determination of CG was made by comparison to &lt;strong&gt;previously known&lt;/strong&gt; geometries that have been described from zinc-compound crystal structures.&lt;/p&gt;
+&lt;p&gt;When the biologically based CGs are compared to previously known, there will be a bunch of CGs that are &lt;strong&gt;outliers&lt;/strong&gt; or will remain &lt;strong&gt;unclassified&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;our-initial-attempt&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Our Initial Attempt&lt;/h2&gt;
+&lt;p&gt;When Sen (the lead author, currently a third year PhD student in the University of Louisville Bioinformatics program) first tried to use bootstrapping and a expectation-maximization algorithm to automatically classify the zinc CGs, she started getting rather &lt;strong&gt;funny&lt;/strong&gt; results, as in, why is the algorithm not converging and we are getting these &lt;strong&gt;huge variances&lt;/strong&gt; in the various measures that characterize the CGs.&lt;/p&gt;
+&lt;p&gt;A single visualization was key in unlocking what was going on. Figure 2 in the paper is a histogram of the minimum angle (where angle is ligand-zinc-ligand) in degrees.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/prot24834-fig-0002.png&#34; alt=&#34;minimum angle histogram&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;minimum angle histogram&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Based on Figure 1, we would expect the minimum angle to be &lt;strong&gt;90&lt;/strong&gt;, but as you can see in Figure 2, there are an awful lot of angles less than &lt;strong&gt;90&lt;/strong&gt;. We are very sure that they are real given the definition of zinc-ligand bond-length that was used to define potential ligands, and the statistical decision used to define &lt;strong&gt;how many&lt;/strong&gt; ligands a given zinc ion has.&lt;/p&gt;
+&lt;p&gt;So we have a bunch of zinc-ions that make ligand-zinc-ligand bond angles at 60, and even 30 degrees! It turns out that these small angles are largely (but not all) due to bidentate ligands, where for example the zinc ion forms bonds with two oxygen’s from an aspartate or glutamate amino acid.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;separate-out-compressed-and-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Separate Out Compressed and Cluster!&lt;/h2&gt;
+&lt;p&gt;To make the problem tractable, we first have to separate out the compressed angle zinc sites, and then we can do clustering on the set of ligand-zinc-ligand angles to determine in a mostly un-biased fashion what CGs are present and which zinc-site belongs to which CG.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;clustering&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Clustering&lt;/h2&gt;
+&lt;p&gt;The use of k-means clustering on the angles also required developing a way to order the ligand-zinc-ligand angles in such a way that they are comparable across all of the different CGs. The final method used in the paper was to order them using &lt;em&gt;largest-sortedmiddle-opposite&lt;/em&gt;, which is the largest angle, the middle angles sorted in order, and lastly the opposite of the largest angle. This keeps them from being scrambled from site to site, and allows them to be comparable across zinc sites.&lt;/p&gt;
+&lt;p&gt;Also, because the number of true clusters was unknown as we are trying to discover in an unbiased way all CGs, the number of clusters was varied, and for each &lt;em&gt;k&lt;/em&gt;-clusters, replicate clusterings done, and the stability of the clusters was assessed by cluster membership and locations across replicates.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;novel-cgs&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Novel CGs&lt;/h2&gt;
+&lt;p&gt;Based on all this work, we were able to compare generated clusters from both the &lt;em&gt;normal&lt;/em&gt; and &lt;em&gt;compressed&lt;/em&gt; groups with canonical CGs to determine if a CG from clustering corresponds to a &lt;strong&gt;known&lt;/strong&gt; CG or a &lt;strong&gt;novel&lt;/strong&gt; CG. The &lt;strong&gt;normal&lt;/strong&gt; clusters mostly corresponded to &lt;strong&gt;known&lt;/strong&gt; CGs or unsurprising variants thereof. What was really interesting is that there were multiple clusters corresponding to a tetrahedral CG. To determine if the &lt;em&gt;compressed&lt;/em&gt; CGs were merely a &lt;em&gt;compressed&lt;/em&gt; variant of the canonical, the compressed angle was removed from the comparison to generate a probability of assignment. At least one of the &lt;em&gt;compressed&lt;/em&gt; groups appear to be novel, in that it has not been described before, either structurally or functionally.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;functional-characterization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Functional Characterization&lt;/h2&gt;
+&lt;p&gt;We also wanted to determine if there was a functional component to the CGs, &lt;em&gt;i.e.&lt;/em&gt; different CGs have different functionality (this is my primary but not only contribution to this manuscript). To do this we annotated all of the PDB sequences using &lt;a href=&#34;http://www.ebi.ac.uk/Tools/pfa/iprscan5/&#34;&gt;&lt;em&gt;InterProScan&lt;/em&gt;&lt;/a&gt;, and kept annotations that intersected the range of amino-acids that potentially interact with the zinc ion. This bit is tricky, because many different CGs can have many different functionality, merely doing hypergeometric-enrichment of annotations in each cluster doesn’t lead to a convincing picture; as we quickly found out (it was the first thing I tried). However, if we generate a measure of functional similarity between clusters (based on a faux covariance, really, read the paper, it is rather neat) and compare this functional cluster similarity measure with a cluster distance based on the angles, there is an extremely high Spearman correlation of 0.88 for the &lt;em&gt;normal&lt;/em&gt; and 0.66 for the &lt;em&gt;compressed&lt;/em&gt; CGs, implying that CG and function are intimately related.&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;/img/prot24834-fig-0009.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;/img/prot24834-fig-0010.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we considered &lt;strong&gt;all&lt;/strong&gt; &lt;em&gt;normal&lt;/em&gt; and &lt;em&gt;compressed&lt;/em&gt; clusters as separate groups and performed hypergeometric-enrichment on both the &lt;em&gt;InterProScan&lt;/em&gt; and &lt;em&gt;EC&lt;/em&gt; number annotations, finding enriched annotations specific to each group of clusters.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;implications&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Implications&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Making too many assumptions about biological structure can be a bad thing. Given that, however, if you are using canonical structures for assignment and you get a ton of &lt;strong&gt;outliers&lt;/strong&gt;, maybe you need to re-examine your data and methods.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Machine learning methods such as &lt;em&gt;random-forest&lt;/em&gt;, &lt;em&gt;k-means clustering&lt;/em&gt;, and statistical classification can be readily used to discover and assign metal-ion CG. If you are careful, and separate out the &lt;em&gt;compressed&lt;/em&gt; from &lt;em&gt;normal&lt;/em&gt; first.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There is a rather tight relationship between a zinc-ion’s CG and the functionality of the protein it is embedded within.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reproducibility&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Reproducibility&lt;/h2&gt;
+&lt;p&gt;Although we have admittedly dropped the ball on this, there will be a tarball of all of the scripts used to generate the results including a README explaining how to run them available soon.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mouse / Human Transcriptomics and Batch Effects</title>
+      <link>/post/mouse-human-transcriptomics-and-batch-effects/</link>
+      <pubDate>Mon, 01 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mouse-human-transcriptomics-and-batch-effects/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;This &lt;a href=&#34;http://dx.doi.org/10.1073/pnas.1413624111&#34;&gt;2014 PNAS paper by S. Lin et al (Lin et al., PNAS, 2014)&lt;/a&gt; that compares transcription of tissues between species has a flawed experimental design, where species is almost perfectly confounded with machine / lane on which the sequencing was done. Y. Golad and O. Mizrahi-Man have &lt;a href=&#34;http://f1000research.com/articles/4-121/v1&#34;&gt;published a manuscript&lt;/a&gt; describing the confounding and the results of removing it. This was possible because the original authors supplied the information about which publically available files were used in the original analysis. The data from this experiment is probably only suitable as an example of what not to do in high-throughput biology experimental design, and that there &lt;em&gt;may&lt;/em&gt; be similarities in human and mouse transcriptional programs.&lt;/p&gt;
+&lt;p&gt;We discussed these papers in the Systems Biology and Omics Integration University of Kentucky Journal Club on June 1, 2015. I lead that discussion.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mouse-human-transcriptomic-differences&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mouse / Human Transcriptomic Differences&lt;/h2&gt;
+&lt;p&gt;In 2014, two papers were published by members of the ENCODE project purporting that tissue gene expression clustered more by species than by tissue. In the first (&lt;a href=&#34;http://www.nature.com/nature/journal/v515/n7527/full/nature13992.html&#34;&gt;ENCODE Consortium, Nature, 2014, doi:10.1038/nature13992 2014&lt;/a&gt;), a large number of experiments were combined and compared. &lt;a href=&#34;http://www.nature.com/nature/journal/v515/n7527/fig_tab/nature13992_F2.html&#34;&gt;Figure 2a&lt;/a&gt; shows a PCA plot of expression in across 10 tissues in human and mouse.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;http://www.nature.com/nature/journal/v515/n7527/images/nature13992-f2.jpg&#34; alt=&#34;ENCODE paper figuer 2&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;ENCODE paper figuer 2&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Interestingly enough, if you collapse PC1 (definitely species), then the tissues start to look quite similar. Which does not seem that unexpected, there are species specific differences, but the tissues are doing something similar in each species.&lt;/p&gt;
+&lt;p&gt;This was not the end of the story, however. A subsequent publication (&lt;a href=&#34;http://www.pnas.org/content/111/48/17224&#34;&gt;S Lin et al., PNAS, 2014, doi: 10.1073/pnas.1413624111&lt;/a&gt;) went further in doing fresh sequencing of 13 tissues in both species, still showing bigger differences between species than between tissues.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;is-everything-as-it-seems&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Is Everything As it Seems?&lt;/h2&gt;
+&lt;p&gt;On April 28, Y. Gilad sent out &lt;a href=&#34;https://twitter.com/Y_Gilad/status/593088451462963202&#34;&gt;this tweet&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We reanalyzed the data from &lt;a href=&#34;http://t.co/Fv7z9WwLJ4&#34;&gt;http://t.co/Fv7z9WwLJ4&lt;/a&gt; and found the following: &lt;a href=&#34;http://t.co/37eVs8Kln9&#34;&gt;pic.twitter.com/37eVs8Kln9&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;p&gt;The commenter suggested knowing at least two of:&lt;/p&gt;
+&lt;p&gt;The left figure shows the original data, clustering by species, and on the right, reprocessed data, clustering by tissue. Now, I have to admit when he posted this I was kind of ticked off. Where was the blog-post or manuscript showing what exactly was done? If you look at the comments to Yoav on that tweet, it seems others were wondering the same thing. Thankfully, on May 19, the manuscript hit &lt;a href=&#34;http://f1000research.com/articles/4-121/v1&#34;&gt;F1000Research (Gilad Y and Mizrahi-Man O. A reanalysis of mouse ENCODE comparative gene expression data [v1; ref status: approved with reservations 1, http://f1000r.es/5ez] F1000Research 2015, 4:121 (doi: 10.12688/f1000research.6536.1))&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;batch-effects&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Batch Effects&lt;/h2&gt;
+&lt;p&gt;Yoav asked for the list of data files that were used in the PNAS paper, and then examined the read id line to extract the experimental design. This experimental design is captured in Figure 1:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure1.gif&#34; alt=&#34;Y Golad Fig 1&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Y Golad Fig 1&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Do you notice a problem with this design?&lt;/p&gt;
+&lt;p&gt;. . . . .&lt;/p&gt;
+&lt;p&gt;Hopefully you noticed that species (one of the main effects to investigate) is not randomly or even semi-randomly distributed across sequencers and / or lanes, but is almost perfectly confounded with sequencer / lane. It doesn’t matter if one technician handled all the samples, this is potentially a large batch effect / confounding variable.&lt;/p&gt;
+&lt;p&gt;And Yoav shows that ignoring the batch effect produces data much like that reported in the Lin et al PNAS pub, while removing the batch effect using &lt;a href=&#34;http://bioinformatics.oxfordjournals.org/content/28/6/882&#34;&gt;ComBat&lt;/a&gt; results in the tissues clustering together.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;is-the-data-still-useful&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Is the Data Still Useful?&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1_yA8RHdfodOV-5IoR-yb317KwaWgXFAvJntaIm8HYaU/edit?usp=sharing&#34;&gt;I presented&lt;/a&gt; these papers and the discussion around them at our weekly Systems Biology and Omics Integration (&lt;a href=&#34;http://sboi.bioinformatics.uky.edu&#34;&gt;SBOI&lt;/a&gt;) Journal Club on June 1, 2015. There were a couple of concerns with the overall study:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;R&lt;/li&gt;
-&lt;li&gt;Python&lt;/li&gt;
-&lt;li&gt;Matlab&lt;/li&gt;
-&lt;li&gt;SPSS&lt;/li&gt;
-&lt;li&gt;SAS&lt;/li&gt;
-&lt;li&gt;Julia&lt;/li&gt;
-&lt;li&gt;Octave&lt;/li&gt;
+&lt;li&gt;Is ENCODE data still useful?&lt;/li&gt;
+&lt;li&gt;some people seemed to be concerned that this brought the general ENCODE project into question. I think by the end we agreed that in general it is probably ok to be using ENCODE data, but this particular study was questionable.&lt;/li&gt;
+&lt;li&gt;What does the data tell us?&lt;/li&gt;
+&lt;li&gt;based on the correction that Yoav did and reanalysis, is there anything actually telling in the data? Unfortunately, because species is so confounded with machine, I don’t think there is much of a conclusion to draw about species differences &lt;em&gt;vs&lt;/em&gt; tissue similarity based on this data. There was some disagreement on this point.&lt;/li&gt;
+&lt;li&gt;Full experimental designs should be published, and requested by reviewers&lt;/li&gt;
+&lt;li&gt;Really, why a reviewer on the paper &lt;strong&gt;did not&lt;/strong&gt; request more information about the experimental design is beyond me, especially given the claims of the manuscript. Why it is not the norm to provide this kind of experimental design information in a manuscript is also a good question.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;My comment back was that one should really evaluate whether &lt;code&gt;SPSS&lt;/code&gt;, &lt;code&gt;SAS&lt;/code&gt; and &lt;code&gt;Matlab&lt;/code&gt; should be on this list, as they are &lt;em&gt;closed&lt;/em&gt; languages, not open, or free.&lt;/p&gt;
-&lt;p&gt;I want to expand on &lt;em&gt;why&lt;/em&gt; I made that comment. Let me be forthright, I have not used &lt;code&gt;SPSS&lt;/code&gt;, nor &lt;code&gt;SAS&lt;/code&gt;, but I have programmed in &lt;code&gt;MatLab&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; extensively, and dabbled in &lt;code&gt;Python&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;I also think it is a good thing for data scientists to know more than one language.&lt;/strong&gt; Just to be clear, I am &lt;strong&gt;NOT&lt;/strong&gt; arguing that point.&lt;/p&gt;
+&lt;p&gt;Finally, I think the best use of the 2014 PNAS pub and this dataset is an example of &lt;strong&gt;how not&lt;/strong&gt; to design a biological experiment.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;closed&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Closed&lt;/h2&gt;
-&lt;p&gt;What is a closed analysis language? I would say that there are three types of closed languages:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;those that are not free (but still may their source code openly available)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;those where the underlying engine is closed source&lt;/li&gt;
-&lt;li&gt;those where one cannot write their own functions to expand on what is already available&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Now, &lt;code&gt;MatLab&lt;/code&gt; fits the first two categories. It is rather expensive to get a license for, the license &lt;strong&gt;can&lt;/strong&gt; be restrictive (I know they have had a lot of abuse of licenses in the past, and they are trying to avoid that), and you are not expected to poke around in the internals of the &lt;code&gt;MatLab&lt;/code&gt; engine. Oh, and if you want more than the base engine, expect to pay heavily for add-on packages.&lt;/p&gt;
-&lt;p&gt;However, it is possible to write add-on’s for &lt;code&gt;MatLab&lt;/code&gt;. I have previously &lt;a href=&#34;http://www.mathworks.com/matlabcentral/fileexchange/authors/19294&#34;&gt;written a few&lt;/a&gt;.&lt;/p&gt;
-&lt;div id=&#34;closed-problem-checking-results&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Closed problem: Checking results&lt;/h3&gt;
-&lt;p&gt;So why are closed languages a problem? A closed language that does not make it &lt;strong&gt;possible&lt;/strong&gt; to examine the underlying functionality of the analysis engine has two problems:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;surety that calculations are done correctly&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;the ability of others to run and check results&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Both of these are issues that are really important in &lt;strong&gt;science&lt;/strong&gt;. I would consider a &lt;strong&gt;data scientist&lt;/strong&gt; to be doing actual &lt;strong&gt;science&lt;/strong&gt;, so others should be able to scrutinize their work. The best scrutiny, is for others to be able to actually run their code. If I can’t run your code, then how do I know what you did is right?? If I can’t afford a copy of &lt;code&gt;MatLab&lt;/code&gt; to run your code (assuming you made it available, you did provide the source for the analysis, right?), that is a bad thing.&lt;/p&gt;
+&lt;div id=&#34;addendum&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;a id=&#34;addendum&#34;&gt;&lt;/a&gt; Addendum&lt;/h2&gt;
+&lt;p&gt;As I looked at the comment section of the Gilad &amp;amp; Man article yesterday (June 1, 2015), I noticed that there were direct replies from S. Lin in a couple of places. In particular is a comment that Lin et al did a second set of sequencing with a new design, and reanalysed the data. Links are provided to two figures, a table of the new design and a new 3D PCA plot:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/slin_table1part2.jpg&#34; alt=&#34;new design&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;new design&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;closed-problem-re-using-code&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Closed problem: Re-using code&lt;/h3&gt;
-&lt;p&gt;Of course, the other problem is that with a closed language you have made it impossible for others to easily make use of your analysis. Sure, they could code it up in another language, but unless it is the be-all and end-all of analysis methods, I’m not going to bother. I don’t have a license for &lt;code&gt;MatLab&lt;/code&gt;, or &lt;code&gt;SPSS&lt;/code&gt;, or &lt;code&gt;SAS&lt;/code&gt;, and I can’t afford it; therefore I’m not going to use your method / code nor give you a citation or credit.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/slin_fig1part2.jpg&#34; alt=&#34;new pca&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;new pca&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;solution-open-languages&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Solution: Open languages&lt;/h2&gt;
-&lt;p&gt;Languages like &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;python&lt;/code&gt;, they don’t have these problems. If I wonder how a function in the base distribution of &lt;code&gt;R&lt;/code&gt; or &lt;code&gt;python&lt;/code&gt; works, I can go look at the source. If I find a bug, I can suggest a fix, or fix it myself and tell others about it. In addition, if I write code to do an analysis, I can make it available and know that others &lt;strong&gt;should&lt;/strong&gt; have the ability to examine it, including re-running it, in addition to using it for themselves, if it is licensed appropriately. This is the way science should work.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;what-should-you-use&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;What should you use?&lt;/h2&gt;
-&lt;p&gt;Some would argue that you should use &lt;code&gt;MatLab&lt;/code&gt;, &lt;code&gt;SAS&lt;/code&gt;, and &lt;code&gt;SPSS&lt;/code&gt; because they have been around for a while, and are the standard. I would argue that you should not use them because they are controlled by single corporate entities, who are only interested in what will get people to buy their product and use it. You should use software that &lt;a href=&#34;http://r4stats.com/articles/popularity/&#34;&gt;others are using&lt;/a&gt;, and that others will be able to use, regardless of income.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;R&lt;/code&gt; is being used in lots of different places, by lots of different people for statistics, bioinformatics, visualization, and as a general functional language. &lt;code&gt;Python&lt;/code&gt; is a great general purpose language that provides a lot of &lt;strong&gt;functional&lt;/strong&gt; glue for doing lots of different things.&lt;/p&gt;
+&lt;p&gt;The new sequencing design seems much more reasonable, and the PCA plot has many characteristics of the original one from the original comparative analysis by Mouse ENCODE (see above), in that yes, there are species specific differences, but there also appears to be a way to collapse along PC2 and PC3 where the tissues will line up with each other, which I kind of would expect.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
     
     <item>
-      <title>Pre-Calculating Large Tables of Values</title>
-      <link>/post/pre-calculating-large-tables-of-values/</link>
-      <pubDate>Thu, 17 Oct 2013 00:00:00 +0000</pubDate>
+      <title>First Open Post-Publication Peer Review, with Credit!</title>
+      <link>/post/first-open-post-publication-peer-review-with-credit/</link>
+      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
       
-      <guid>/post/pre-calculating-large-tables-of-values/</guid>
-      <description>&lt;p&gt;I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. &lt;em&gt;i.e.&lt;/em&gt; given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a &lt;strong&gt;chi-square&lt;/strong&gt; distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pMatch &amp;lt;- 1 - pchisq(distVal, 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The catch is, we want to do this a whole lot of times, in &lt;code&gt;c++&lt;/code&gt;. We could use the &lt;code&gt;boost&lt;/code&gt; library to calculate the &lt;strong&gt;chi-square&lt;/strong&gt; each time we need it. Or we could generate a lookup table that is able to find the p-value simply based on the distance. This is especially attractive if we have a limit past which we consider the probability of a match as being zero, and if we use enough decimal points that we don’t suffer too much in precision.&lt;/p&gt;
-&lt;p&gt;Although our goal is to implement this in &lt;strong&gt;c++&lt;/strong&gt;, I also want to prototype, demonstrate and evaluate the approach in &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
-&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R&lt;/h2&gt;
-&lt;div id=&#34;random-number-set&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Random number set&lt;/h3&gt;
-&lt;p&gt;We are going to consider 25 (5 standard deviations squared) as our cutoff for saying the probability is zero. So to make sure we are doing all calculations using the exact same thing, we will pre-generate the values for testing on &lt;strong&gt;real&lt;/strong&gt; data, in this case a set of 1000000 random numbers from zero to 25.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nPoint &amp;lt;- 1000000
-randomData &amp;lt;- abs(rnorm(nPoint, mean=5, sd=5)) # take absolute so we have only positive values
-randomData[randomData &amp;gt; 25] &amp;lt;- 25
-hist(randomData, 100)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/genRandomData-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+      <guid>/post/first-open-post-publication-peer-review-with-credit/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Reviewed &lt;a href=&#34;https://twitter.com/@biodataganache&#34;&gt;Jason McDermott’s&lt;/a&gt; &lt;a href=&#34;http://f1000research.com/articles/4-60/v1&#34;&gt;MDRPred paper&lt;/a&gt; on F1000Research!, where my review is posted along side the paper, &lt;a href=&#34;http://f1000research.com/articles/4-60/v1#referee-response-7889&#34;&gt;with a DOI&lt;/a&gt;, completely in the open with my name attached. Was a pleasant experience, aided by the fact that Jason wrote a good paper.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;the-r-way&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;The R way&lt;/h3&gt;
-&lt;p&gt;Of course, the way to calculate &lt;strong&gt;p-values&lt;/strong&gt; for all this data in &lt;code&gt;R&lt;/code&gt; is to do the whole vector at once. How long does that take?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bTime &amp;lt;- Sys.time()
-actPVals &amp;lt;- 1 - pchisq(randomData, 1)
-eTime &amp;lt;- Sys.time()
-rwayDiff &amp;lt;- difftime(eTime, bTime)
-rwayDiff&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Time difference of 0.5137203 secs&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;f1000research&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;F1000Research!&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://f1000research.com/&#34;&gt;F1000Research!&lt;/a&gt; is a new publishing startup from F1000 that has a model of post-publication peer review, whereby upon submission the manuscript undergoes basic quality checks (no real editorial control), and then is published. Once the article is published, reviewers are invited to review, and they have 10 days to submit their review. Reviews are signed, and given a DOI. Reviewers are asked to assign one of &lt;strong&gt;Approved&lt;/strong&gt;, &lt;strong&gt;Approved with Reservations&lt;/strong&gt;, &lt;strong&gt;Not Approved&lt;/strong&gt; status to the article.&lt;/p&gt;
+&lt;p&gt;When the article gets two revieweres giving &lt;strong&gt;Approved&lt;/strong&gt; status (likely after at least one round of review and resubmission), then it will be submitted to PubMed for indexing.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;naive-way&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Naive way&lt;/h3&gt;
-&lt;p&gt;A naive way to do this is to do it piecemeal, in a for loop. I will pre-allocate the result vector so we don’t take a hit on memory allocation.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;naiveRes &amp;lt;- numeric(nPoint)
-bTime &amp;lt;- Sys.time()
-for (iP in 1:nPoint){
-  naiveRes[iP] &amp;lt;- 1 - pchisq(randomData[iP], 1)
-}
-eTime &amp;lt;- Sys.time()
-naiveDiff &amp;lt;- difftime(eTime, bTime)
-naiveDiff&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Time difference of 1.418367 secs&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So this takes almost 10 times longer. Which of course, is why you are encouraged to do vectorized calculations whenever possible in &lt;code&gt;R&lt;/code&gt;, but you already knew that, didn’t you?&lt;/p&gt;
+&lt;div id=&#34;how-did-i-end-up-reviewing-this&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How Did I End Up Reviewing This??&lt;/h2&gt;
+&lt;p&gt;Long story short, I’ve been following Jason on twitter for a while, and I happened to see him tweet and blog about trying to get an F1000Research article up as a citeable supporting publication for a grant going in. I thought it was a nifty idea, and although I actually at the time did not have much of an idea of what Jason’s research actually involved, communicated with him that when the article went live I would be willing to be recommended as a reviewer. Imagine my surprise that I actually had enough domain knowledge that I could actually review the article.&lt;/p&gt;
+&lt;p&gt;That is saying something, given that the paper has a neat combination of genetic algorithms, regular expressions, and protein function prediction (really, you should go give it a read). By the way, this is also the first paper I’ve reviewed in a long time that did not have serious methodological problems, or where claims are made with no substantiation, and I could not identify any serious statistical issues.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;lookup-table&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Lookup table&lt;/h3&gt;
-&lt;p&gt;What if we now store a set of p-value results in a table, doing it in such a way as to use the actual distance as an index into the table?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nDivision &amp;lt;- 10000
-dof &amp;lt;- 1
-nSD &amp;lt;- 25
-
-nElements &amp;lt;- nSD * nDivision
-
-chiVals &amp;lt;- seq(0, nElements, 1) / nDivision # the chi-squared values (or distances), also used as indices when multiplied by 10000
-
-pTable &amp;lt;- 1 - pchisq(chiVals, 1) # the actual chi-square p-values for those distances&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To find a value, we just multiply the distance by 10000 (the number of divisions), and add 1 (because &lt;code&gt;R&lt;/code&gt; uses 1 based indexing instead of zero).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;testVal &amp;lt;- sample(chiVals, 1) # grab a value from the chiVals previously generated
-pTable[(testVal * nDivision) + 1]&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.1577358&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;1 - pchisq(testVal, 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.1577358&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How long does this take compared to the other approaches?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableRes &amp;lt;- numeric(nPoint)
-bTime &amp;lt;- Sys.time()
-for (iP in 1:nPoint){
-  tableRes[iP] &amp;lt;- pTable[(randomData[iP] * nDivision) + 1]
-}
-eTime &amp;lt;- Sys.time()
-tableDiff &amp;lt;- difftime(eTime, bTime)
-tableDiff&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Time difference of 0.09745979 secs&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So somewhere in-between the two. So not as good as doing a vectorized call, but better than making a call each time. Which is actually what I expected. What about any loss in precision of the values returned?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tableRawPrecision &amp;lt;- abs(tableRes - actPVals) / actPVals * 100
-
-precTable &amp;lt;- data.frame(org=actPVals, table=tableRes, percError=tableRawPrecision)
-ggplot(precTable, aes(x=org, y=table)) + geom_point()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(precTable, aes(x=org, y=percError)) + geom_point()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;So, according to this, we are only introducing error at 0.8037041%, which isn’t much. And the values look like the are well correlated, so we should be good.&lt;/p&gt;
-&lt;p&gt;Now, how do these approaches compare when using &lt;code&gt;c++&lt;/code&gt;?&lt;/p&gt;
+&lt;div id=&#34;the-open-part&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Open Part&lt;/h2&gt;
+&lt;p&gt;Although I don’t do a lot of reviewing, I had to admit that this was one of the best reviewing assignments I’ve had in a while. Although I believe that peer review is essential to science, and it needs to be more open (I’ve started signing my reviews for other journals), this was the first time I knew my review was open (my name would be known to the authors’ by default) and public. I have to say that this likely improved the care and thoroughness in doing the actual review as I went through the article, given that both the authors and anyone else who comes across the article and my review can see if the issues I raise are real, or if I’m trying to make myself look good. And my name will be publicly associated with it!&lt;/p&gt;
+&lt;p&gt;Note that this &lt;strong&gt;openness&lt;/strong&gt; did not keep me from criticizing particular aspects of the paper. There are lots of things that need to be changed in the article before I will give it an &lt;strong&gt;Approved&lt;/strong&gt; status, and I laid those out in my review.&lt;/p&gt;
 &lt;/div&gt;
+&lt;div id=&#34;postpublication&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PostPublication&lt;/h2&gt;
+&lt;p&gt;I really appreciated that I get to review a &lt;strong&gt;published&lt;/strong&gt; article, because it means that the whole thing is typeset, figures and tables are in their logical place (not at the end of the document!!!), the line spacing is readable, etc. Note to other publishers, at least let authors put the figures in-line for review if you are not going to type-set the article before it goes to reviewers.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;c&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;C++&lt;/h2&gt;
-&lt;p&gt;So it’s a fair comparison, the code below actually writes the &lt;code&gt;c++&lt;/code&gt; program we are going to use, with the random numbers for the &lt;strong&gt;p-value&lt;/strong&gt; calculation stored as part of the code file.&lt;/p&gt;
-&lt;p&gt;A couple of notes:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;To be fair, both versions of the code have the set of random numbers and the lookup table as &lt;code&gt;float&lt;/code&gt; variables, so that there is no difference in each for memory allocation.&lt;/li&gt;
-&lt;/ol&gt;
+&lt;div id=&#34;disclaimers&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Disclaimers&lt;/h2&gt;
+&lt;p&gt;I was given an F1000Research! t-shirt as a reward for commenting on a &lt;a href=&#34;http://blog.f1000research.com/2013/08/23/peer-review-credit-where-credits-due/#comment-1020559658&#34;&gt;blog-post&lt;/a&gt; regarding incentives for peer-review. I like the shirt. Having done my review, I am also eligible to get a 50% discount on the article processing charges if I submit an article to F1000Research in the next 12 months.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Being a PhD Student and Post-Doc with Migraines</title>
+      <link>/post/being-a-phd-student-and-post-doc-with-migraines/</link>
+      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/being-a-phd-student-and-post-doc-with-migraines/</guid>
+      <description>&lt;p&gt;A blog post on the &lt;a href=&#34;http://jabberwocky.weecology.org/2014/10/13/how-technology-can-help-scientists-with-chronic-illnesses-or-technology-ftw/&#34;&gt;Weecology group blog&lt;/a&gt; by &lt;a href=&#34;https://twitter.com/elitabaldridge&#34;&gt;Elita Baldridge&lt;/a&gt; on being a PhD student with fibromyalgia, and how they are working through that, caused me to pause and reflect on my experience as a PhD student and PostDoc with migraines. For those who haven’t read my blog, I do research in bioinformatics, specifically in transcriptomics and metabolomics. I spend almost all of my research hours in front of a computer writing code, generating plots, and trying to make sense of -omics level data.&lt;/p&gt;
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Being in academia with migraines is a challenge, but probably less challenging than some other fields or disabilities. Moving cities and discovering Excedrin has made my migraines more bearable.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;migraine&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Migraine&lt;/h2&gt;
+&lt;p&gt;For those who don’t know, migraines are a rather unusual neurological event that result in a bunch of symptoms, the most well known generally being aura (frequently visual, although auditory and olfactory are also known) followed by what is described as intense, debilitating pain, which may or may not be accompanied by extreme nausea and / or vomiting and tiredness.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;my-migraines&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;My Migraines&lt;/h2&gt;
+&lt;p&gt;I have suffered from migraines since at least my early teens (possibly younger), but mine seem to be rather mild in comparison to what I have read about others experiences. In contrast to many other migraineurs, I do not experience visual aura, and in general my pain levels tend to be on the milder side. However, I do experience mood swings during my prodrome (period prior to pain), going from a generally nice guy to someone who considers killing you just for looking at me wrong; as well as confusion, and I also experience &lt;a href=&#34;http://en.wikipedia.org/wiki/Aphasia&#34;&gt;expressive aphasia&lt;/a&gt;, wherein I can no longer remember proper nouns, but can describe properties of the object in question (for example, instead of a &lt;strong&gt;pencil&lt;/strong&gt;, I might say “the writing implement with a lead center”). In addition to the pain of the migraine, which is often a pounding localized to one location of my skull, I often also experience extreme sensitivity to touch, to the point of not being able to sleep on a few occasions; as well as nausea, however never to the point of actually throwing up. Less frequently I will experience sensitivity to light or sound.&lt;/p&gt;
+&lt;p&gt;As far as I can tell, my primary migraine trigger is changes in the weather, particularly large or frequent changes in barometric pressure. If the weather is stable (either nice or bad), the frequency and severity of my migraines are greatly reduced.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;phd&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PhD&lt;/h2&gt;
+&lt;p&gt;During my undergraduate and masters degrees, I actually didn’t notice that much of an effect from my migraines. At some point, after a lot of investigation of my headaches, and alternative therapies, I did finally get a diagnosis of migraine, and a prescription for &lt;a href=&#34;http://www.rxlist.com/maxalt-drug.htm&#34;&gt;Maxalt&lt;/a&gt;, a triptan used to treat migraines. I used this very sparingly, due to the side effects, and the cost.&lt;/p&gt;
+&lt;p&gt;My PhD was at &lt;a href=&#34;http://www.dal.ca/&#34;&gt;Dalhousie University&lt;/a&gt; in Halifax, NS, Canada. If you don’t know, &lt;a href=&#34;http://en.wikipedia.org/wiki/Halifax,_Nova_Scotia&#34;&gt;Halifax&lt;/a&gt; is a harbor city on the east coast of Nova Scotia, and as a result of its location has extremely variable weather, as it gets the west -&amp;gt; east weather from the rest of Canada, as well as weather systems going south -&amp;gt; north up the eastern seaboard of the United States. This results in a large amount of barometric pressure changes, and resulted in a lot of migraines for me. In general, my coping strategy when possible was to go home, take 2 tylenol, and go to bed for the rest of the day and sleep it off. As a PhD student in an analytical chemistry lab doing no wet lab work but only programming, this was often a viable option. My PhD supervisor was very supportive, in that as long as grades were good and project progress was being made, he was not particular about hours spent in the lab.&lt;/p&gt;
+&lt;p&gt;Of course, as a PhD student, there were often times this was not possible. I took regular upper level classes in my first 2 years, and I never informed any of my instructors about my migraines, but often just suffered through classes when necessary. In addition, I TA’d first and second year chemistry lab. Given the other symptoms of my migraines, I actually feel sorry for the students I instructed. I know many times I had trouble resolving what were probably trivial mistakes by first year students, and losing my cool over something that was not that difficult to fix. Second year was a bit better in that the students had more experience in a lab setting, however I TA’d analytical chemistry, which essentially involved generating a series of standards, measuring the standards, and then measuring a sample with unknown concentration. There was generally fewer ways for any given lab experiment to fail in the 2nd year lab, putting a lighter cognitive load on me most days.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;seminars-and-conferences&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Seminars and Conferences&lt;/h2&gt;
+&lt;p&gt;Of course, as a student I had to attend weekly departmental seminars, and present a couple of times as well. I also traveled to a few conferences and presented talks and posters. To my recollection, I have not suffered a severe migraine during my own talks at a conference. However, I have had different occasions where I have had to skip out on conference sessions due to a migraine, and have been even less likely to socialize and network than I usually would because of migraines. This is hard, because one of the primary purposes of attending conferences is exposure to new research and people.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;postdoc&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PostDoc&lt;/h2&gt;
+&lt;p&gt;My first PostDoc was at the University of Louisville in Louisville, KY, USA. My move to the US coincided with two things: 1) The introduction of Excedrin Migraine, and 2) My wife giving birth to our son. &lt;strong&gt;1&lt;/strong&gt; is important because Excedrin has allowed me to &lt;em&gt;manage&lt;/em&gt; my migraines. The side effects from Maxalt were almost as bad as the migraine itself, and it was bloody expensive (even with my wifes great drug plan). As a PostDoc supporting my wife and son, I always stopped to think about whether I actually needed it. Excedrin Migraine worked quite well in alleviating the pain from my migraines without introducing new side effects. I should note at this time that I was not a regular tea or coffee drinker, so the effect is not likely due to a caffeine addiction.&lt;/p&gt;
+&lt;p&gt;Then I discovered that the regular Excedrin worked about the same, and was available in a generic form at many big box stores at an extremely low price ($4 for 100 tablets). I haven’t taken any Maxalt in over 3 years, and probably buy the generic Excedrin 100 count for $4 at WalMart every few months. Is this good for my stomach?? Maybe not. Do I need to watch myself if I get a cut within a short amount of time after taking Excedrin (ASA inhibits clotting)?? Yep. But it seems to mess with my head a lot less than the triptans I have taken (I have also tried Zomig in addition to the Maxalt).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2&lt;/strong&gt; is important because the arrival of our son resulted in a lot of increased stress (and don’t get me wrong, a lot of happiness and joy as well). Although not a primary trigger for my migraines, it definitely did not help. And having a migraine with a crying baby in the background is a special kind of torture (I was reminded of this again the other day with my 8 month old daughter).&lt;/p&gt;
+&lt;p&gt;However, the move to the midwest US has resulted in a general decrease in the severity of my migraines, but I’m not sure about the frequency. Since moving here, I’ve only had to leave work because of a migraine once or twice a year, instead of the once a month that I used to in Nova Scotia.&lt;/p&gt;
+&lt;p&gt;Obviously, my productivity at work during a migraine is reduced compared to not being in a migraine. However, there are often periods in academia when things just need to get done (collaborator has a paper or grant deadline, etc), and going home for me means a combined hour of walking and public transit, and a very small likelyhood of getting anything done even after the migraine has passed (having a 4 year old and 8 month old contributes to this a lot, but I wouldn’t have it any other way).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;challenges&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Challenges&lt;/h2&gt;
+&lt;p&gt;As I previously said, my migraines appear to be rather mild based on the descriptions of other peoples migraines I have encountered (see the &lt;a href=&#34;http://www.reddit.com/r/migraine&#34;&gt;migraine subreddit&lt;/a&gt; for some painful descriptions from other migaineurs). However, they can make some interactions difficult. My normally cheerful and upbeat demeanor can quickly turn sour, and I have been acutely aware of some rather awkward social interactions during a migraine. Thankfully, many times I am able to simply avoid others at work when I have a migraine, and I generally take pains to think twice before speaking as well (which is a good thing to do in general). I don’t teach, and the number of meetings that I &lt;strong&gt;have&lt;/strong&gt; to attend in a given week is rather small, thankfully (not just because of my migraines).&lt;/p&gt;
+&lt;p&gt;The pain and mental confusion from my migraines can make getting work done difficult, and although Excedrin seems to do a wonderful job of dulling the pain, nothing can help with the mental confusion. Having a migraine in the middle of working on a large data analysis with many possible directions, or managing many different projects takes an incredible amount of mental effort when I am in a migraine. I have had times when I sit in front of my computer completely stunned because I cannot figure out what needs to be done next. At these points I frequently occupy myself with mindless tasks that need to be done, sending meeting emails, downloading papers to read, and trying to stay off of social media time sucks like Facebook and Reddit, as I tend to get heavily engrossed in those more so than usual.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prophylactic&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Prophylactic&lt;/h2&gt;
+&lt;p&gt;This past year I finally tried CBD (cannibidiol) oil, an oil where only CBD has been extracted from the marijuana plant. Taking this twice a day, every day, has greatly reduced the number of migraines I have, and seems to reduce their intensity as well. It’s greatest effect is on the pain levels I encounter, and not so much the other neurological effects of the migraines.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Updated on 2017-12-28 with information on CBD oil.&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Travis-CI to GitHub Pages</title>
+      <link>/post/travis-ci-to-github-pages/</link>
+      <pubDate>Wed, 05 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/travis-ci-to-github-pages/</guid>
+      <description>&lt;p&gt;I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing &lt;code&gt;R&lt;/code&gt; package vignettes to the web after building and checking on &lt;em&gt;travis-ci&lt;/em&gt;. &lt;a href=&#34;https://twitter.com/hadleywickham&#34;&gt;Hadley Wickham&lt;/a&gt; pointed to using such a scheme to push the web version of his book after each update and the &lt;code&gt;S3&lt;/code&gt; deploy hooks on &lt;em&gt;travis-ci&lt;/em&gt;. Deploying your html content to &lt;code&gt;S3&lt;/code&gt; is great, but given the availability of the &lt;code&gt;gh-pages&lt;/code&gt; branch on GitHub, I thought it would be neat to work out how to deploy the html output from an &lt;code&gt;R&lt;/code&gt; package vignette to the &lt;code&gt;gh-pages&lt;/code&gt; branch on GitHub. This is useful because more and more packages are being hosted only on GitHub and building and testing use the &lt;em&gt;travis-ci&lt;/em&gt; service, and it takes work to remember to &lt;code&gt;knit&lt;/code&gt; and push stuff separately to the &lt;code&gt;gh-pages&lt;/code&gt; branch. In addition, although it is possible to &lt;code&gt;deploy&lt;/code&gt; one’s html output to other services from within &lt;em&gt;travis-ci&lt;/em&gt;, there is not an &lt;strong&gt;easy&lt;/strong&gt; pushbutton solution to deploying to GitHub pages. After some searching and looking, this is what I have come up with for my own package.&lt;/p&gt;
+&lt;p&gt;All subsequent steps assume that:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Neither one stores the results of the calculation, we don’t need it for this demonstration.&lt;/li&gt;
+&lt;li&gt;You are hosting your package development on GitHub&lt;/li&gt;
+&lt;li&gt;You have html content in the &lt;em&gt;gh-pages&lt;/em&gt; branch of your package repo (see more about &lt;em&gt;gh-pages&lt;/em&gt; &lt;a href=&#34;https://help.github.com/articles/creating-project-pages-manually/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://help.github.com/categories/github-pages-basics/&#34;&gt;here&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;You already have your package doing building and testing using &lt;em&gt;travis-ci&lt;/em&gt;. See the &lt;a href=&#34;https://github.com/craigcitro/r-travis&#34;&gt;&lt;code&gt;r-travis&lt;/code&gt;&lt;/a&gt; project for more information on how to set this up.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div id=&#34;raw-calculations&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Raw calculations&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cppRaw &amp;lt;- c(&amp;#39;#include &amp;lt;iostream&amp;gt;&amp;#39;,
-               &amp;#39;#include &amp;lt;boost/math/distributions/chi_squared.hpp&amp;gt;&amp;#39;,
-               &amp;#39;int nVal = 1000000;&amp;#39;,
-               &amp;#39;double dof = 1.0;&amp;#39;,
-               &amp;#39;int i;&amp;#39;,
-               paste(&amp;#39;float randVals[1000000] = {&amp;#39;, paste(as.character(randomData), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
-               paste(&amp;#39;float pTable[250001] = {&amp;#39;, paste(as.character(pTable), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
-               &amp;#39;int main() {&amp;#39;,
-               &amp;#39;using boost::math::chi_squared_distribution;&amp;#39;,
-               &amp;#39;chi_squared_distribution&amp;lt;&amp;gt; myChi(dof);&amp;#39;,
-               &amp;#39;for (i = 0; i &amp;lt; nVal; i++){&amp;#39;,
-               &amp;#39;1 - cdf(myChi, randVals[i]);&amp;#39;,
-               &amp;#39;};&amp;#39;,
-               &amp;#39;return(0);&amp;#39;,
-               &amp;#39;};&amp;#39;)
-cat(cppRaw, sep=&amp;quot;\n&amp;quot;, file=&amp;quot;cppRaw.cpp&amp;quot;)
+&lt;div id=&#34;oauth&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;OAUTH&lt;/h2&gt;
+&lt;p&gt;To start, you will need to generate an &lt;code&gt;OAUTH&lt;/code&gt; token on GitHub that will be used to allow you to push back to your GitHub repo. This will be some really long alphanumeric string. You can generate one by going to &lt;code&gt;settings&lt;/code&gt; -&amp;gt; &lt;code&gt;applications&lt;/code&gt; -&amp;gt; &lt;code&gt;personal access tokens&lt;/code&gt; -&amp;gt; &lt;code&gt;generate new token&lt;/code&gt;. Make sure to copy this into a file that is &lt;strong&gt;not&lt;/strong&gt; under version control.&lt;/p&gt;
+&lt;p&gt;You will also need to install the &lt;code&gt;travis&lt;/code&gt; ruby framework.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gem install travis&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After installing, navigate to your &lt;code&gt;git&lt;/code&gt; repo for the project you want to enable automatic pushing of content for, and then login to &lt;em&gt;travis-ci&lt;/em&gt; and secure the GitHub token.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;travis login
 
-system(&amp;quot;g++ cppRaw.cpp -o cppRaw.out&amp;quot;)
-system(&amp;quot;time ./cppRaw.out&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cppLookup &amp;lt;- c(&amp;#39;#include &amp;lt;iostream&amp;gt;&amp;#39;,
-               &amp;#39;#include &amp;lt;boost/math/distributions/chi_squared.hpp&amp;gt;&amp;#39;,
-               &amp;#39;int nVal = 1000000;&amp;#39;,
-               &amp;#39;double dof = 1.0;&amp;#39;,
-               &amp;#39;int i;&amp;#39;,
-               paste(&amp;#39;float randVals[1000000] = {&amp;#39;, paste(as.character(randomData), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
-               paste(&amp;#39;float pTable[250001] = {&amp;#39;, paste(as.character(pTable), sep=&amp;quot;&amp;quot;, collapse=&amp;quot;, &amp;quot;), &amp;#39;};&amp;#39;, sep=&amp;quot;&amp;quot;, collapse=&amp;quot;&amp;quot;),
-               &amp;#39;int main() {&amp;#39;,
-               &amp;#39;using boost::math::chi_squared_distribution;&amp;#39;,
-               &amp;#39;chi_squared_distribution&amp;lt;&amp;gt; myChi(dof);&amp;#39;,
-               &amp;#39;for (i = 0; i &amp;lt; nVal; i++){&amp;#39;,
-               &amp;#39;pTable[(int(randVals[i] * nVal))];&amp;#39;,
-               &amp;#39;};&amp;#39;,
-               &amp;#39;return(0);&amp;#39;,
-               &amp;#39;};&amp;#39;)
-cat(cppLookup, sep=&amp;quot;\n&amp;quot;, file=&amp;quot;cppLookup.cpp&amp;quot;)
-system(&amp;quot;g++ cppLookup.cpp -o cppLookup.out&amp;quot;)
-system(&amp;quot;time ./cppLookup.out&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So bypassing &lt;code&gt;boost&lt;/code&gt; in this case is a good thing, we get some extra speed, and reduce a dependency. We have to generate the lookup table first, but the &lt;code&gt;cpp&lt;/code&gt; file can be generated once, with a static variable in a class that is initialized to the lookup values. We do have some error, but in our case we can live with it, as the relative rankings should still be pretty good.&lt;/p&gt;
+travis encrypt GH_TOKEN=&amp;quot;yourgithubtoken&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will generate output that should be copied to your &lt;code&gt;.travis.yml&lt;/code&gt; file. Essentially we have created an environment variable &lt;code&gt;GH_TOKEN&lt;/code&gt; with your actual GitHub token, that is encrypted on the &lt;em&gt;travis-ci&lt;/em&gt; servers. So this way you don’t expose your actual GitHub token to anyone who looks at your &lt;code&gt;.travis.yml&lt;/code&gt; file.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;deploy-script&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deploy Script&lt;/h2&gt;
+&lt;p&gt;We also need a bash script that will actually push the content for us. As part of the &lt;code&gt;R&lt;/code&gt; process on &lt;em&gt;travis-ci&lt;/em&gt;, we get a &lt;code&gt;tar.gz&lt;/code&gt; file of the package with the compiled vignette. So we just need to &lt;code&gt;untar&lt;/code&gt; that file, copy the html file, and create the &lt;code&gt;git&lt;/code&gt; repo and push. The code below is what I have done for my own package, &lt;a href=&#34;https://github.com/rmflight/categoryCompare&#34;&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt;. I saved this code in the file &lt;code&gt;.push_gh_pages.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+
+rm -rf out || exit 0;
+mkdir out;
+
+GH_REPO=&amp;quot;@github.com/rmflight/categoryCompare.git&amp;quot;
+
+FULL_REPO=&amp;quot;https://$GH_TOKEN$GH_REPO&amp;quot;
+
+for files in &amp;#39;*.tar.gz&amp;#39;; do
+        tar xfz $files
+done
+
+cd out
+git init
+git config user.name &amp;quot;rmflight-travis&amp;quot;
+git config user.email &amp;quot;travis&amp;quot;
+cp ../categoryCompare/inst/doc/categoryCompare_vignette.html index.html
+
+git add .
+git commit -m &amp;quot;deployed to github pages&amp;quot;
+git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that we remove the directory where we want to create our &lt;code&gt;git&lt;/code&gt; repo, create it, setup the &lt;code&gt;remote&lt;/code&gt; repo with the token string, and then we &lt;code&gt;untar&lt;/code&gt; and &lt;code&gt;unzip&lt;/code&gt; the previously built package, and copy over the file that we want to be the index.html page on the &lt;code&gt;gh-pages&lt;/code&gt; branch. Finally we add it, commit it, and do a force push.&lt;/p&gt;
+&lt;p&gt;This script is actually part of the package repo, but does not get included in the built &lt;code&gt;tar.gz&lt;/code&gt; file (add it to &lt;code&gt;.Rbuildignore&lt;/code&gt;). This makes it easy to keep it in sync with any changes to the overall package itself.&lt;/p&gt;
+&lt;p&gt;Note that this is completely overriding the current contents of the &lt;code&gt;gh-pages&lt;/code&gt; branch. If you wanted to do something nicer (&lt;em&gt;i.e.&lt;/em&gt; preserving commits or working with an index page pointing to multiple vignettes), you could &lt;code&gt;pull&lt;/code&gt; just the &lt;code&gt;gh-pages&lt;/code&gt; branch first, and then make modifications.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;modifying-.travis.yml&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Modifying .travis.yml&lt;/h2&gt;
+&lt;p&gt;In addition, we need to add three lines to the &lt;code&gt;.travis.yml&lt;/code&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# under env: global:
+  - secure: &amp;quot;yoursecurestring&amp;quot;
+
+# under before_install:
+  - chmod 755 ./.push_gh_pages.sh
+
+# under after_success:
+  - ./.push_gh_pages.sh&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Adding the &lt;code&gt;GH_TOKEN&lt;/code&gt; to the global environment variables&lt;/li&gt;
+&lt;li&gt;Making the deploy script executable&lt;/li&gt;
+&lt;li&gt;Adding the running of the deploy script &lt;code&gt;after_success&lt;/code&gt;, so only when build and check and tests run successfully&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And it seems to work quite nicely. As an example, my &lt;a href=&#34;https://github.com/rmflight/categoryCompare&#34;&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt; package now has it’s vignette on the &lt;a href=&#34;http://rmflight.github.io/categoryCompare/&#34;&gt;&lt;code&gt;gh-pages&lt;/code&gt; branch&lt;/a&gt;, and this will get updated every time I push a commit.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;update&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Update&lt;/h2&gt;
+&lt;p&gt;As &lt;a href=&#34;https://twitter.com/cpsievert&#34;&gt;Carson&lt;/a&gt; pointed out below, there was an error in the second code block. &lt;code&gt;travis secure&lt;/code&gt; should be &lt;code&gt;travis encrypt&lt;/code&gt;, as you are &lt;strong&gt;encrypting&lt;/strong&gt; the credentials. &lt;strong&gt;secure&lt;/strong&gt; is for decrypting something that was already encrypted. Thanks for catching it!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My Career Goals</title>
+      <link>/post/my-career-goals/</link>
+      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/my-career-goals/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;I don’t want to be a PI because I enjoy spending time with my family, and don’t think I can handle the stress of juggling multiple grants, people, and deadlines. I want to be a staff member in a group that affords relative autonomy, while providing some security. If I’m lucky enough, my current position will enable that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-bad-news&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Bad News&lt;/h2&gt;
+&lt;p&gt;If you keep up with the news in academia, this is a horrible time to be a &lt;em&gt;postdoc&lt;/em&gt; (post-doctoral) or &lt;em&gt;PI&lt;/em&gt; (principal investigator). The amount of money available for grants is at an all time low, and the likelihood of getting a grant is dismal. If you want to be successful, then you will need to work incredibly hard, sacrifice everything, and it is likely that you still won’t get grants that allow you to have an independent research lab at a decent university.&lt;/p&gt;
+&lt;p&gt;Of course, this is worst in the biomedical field, due to a glut of NIH research money and universities allowing researchers salary to be composed largely of grant money, with very little money from the university itself. In addition grant money has been allowed to be used to support trainees; undergraduate, graduate, and postdoctoral. The compensation for the trainees was relatively minimal, leading to a glut of highly trained, poorly paid people who hope to move up the academic ladder. The large numbers of which has likely contributed to the current funding situation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-good-news&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Good News&lt;/h2&gt;
+&lt;p&gt;The NIH and NSF are &lt;em&gt;starting&lt;/em&gt; to encourage research labs to hire staff at reasonable pay, and support trainees from specific grants. Although I keep hearing about this in general, I don’t know of any specific changes in grant applications that are causing any real changes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;my-own-path&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;My Own Path&lt;/h2&gt;
+&lt;p&gt;During my senior undergraduate and masters work, I realized that I probably couldn’t be a student forever, but I had hopes. During my PhD, however, I saw many PI’s who sacrified their time with families for their teaching, research, and administrative duties. This was even more pronounced during my first PostDoc, and made me question my continued progress in academia. I actually had a job offer as a research programmer with a research hospital during my first PostDoc, which I turned down because I realized that it was likely in that position (at least as advertised) there would be limited opportunity to pursue my own research ideas. However, grant funding success rate was continuing to plummet (see above), and I was not able to push out a first author paper before finishing my first PostDoc, so being successful in a faculty search was looking grim.&lt;/p&gt;
+&lt;p&gt;When I started my second PostDoc position (transitioning from transcriptomics to metabolomics), I was up front with my supervisor that I did not feel that I was the type of person who could manage their own lab with independent funding, but that I wanted to find a place where I could stay on as staff while contributing research. My PI was sympathetic, and we worked well together, so he was immediately amenable to that, as long as the funding situation would provide.&lt;/p&gt;
+&lt;p&gt;Fortunately, within a year of joining the lab, we and our collaborators landed a large center grant that provides stable funding for 5 years, and everyone involved (my PI, the other PI’s, myself) would be happy if I stayed on as staff after my time as a PostDoc. Already, as a PostDoc in this group I have a lot of latitude and freedom to pursue avenues of research, as long as they are somehow aligned with the overall goals of the lab. I am also finding myself involved in supervising various undergraduate and graduate projects, as well as proposing new avenues for research.&lt;/p&gt;
+&lt;p&gt;I know the opportunity to stay on as staff in a research group is relatively rare in the current funding climate, and my job will be largely to develop novel methods and software to advance our understanding of metabolism in various biological states, as well as provide means to secure additional funding for the lab.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Analyses as Packages</title>
+      <link>/post/analyses-as-packages/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analyses-as-packages/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Instead of writing an analysis as a single or set of &lt;code&gt;R&lt;/code&gt; scripts, use a &lt;code&gt;package&lt;/code&gt; and include the analysis as a &lt;code&gt;vignette&lt;/code&gt; of the package. Read below for the why, the &lt;a href=&#34;/post/vignette-analysis&#34;&gt;how is in the next post&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;analyses-and-reports&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Analyses and Reports&lt;/h2&gt;
+&lt;p&gt;As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work. As I have continued working in &lt;code&gt;R&lt;/code&gt;, I have progressed from having a simple &lt;code&gt;.R&lt;/code&gt; script (or collection of related scripts) to using a package to structure as much of my research as possible, including analyses that generate reports.&lt;/p&gt;
+&lt;p&gt;Note that I have been meaning to write this post for a while, but the tipping point was seeing &lt;a href=&#34;https://twitter.com/hspter/statuses/489075887460339712&#34;&gt;these tweets&lt;/a&gt; from &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/dnusinow&#34;&gt;David Nusinow&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I am all about the many short scripts rather than one long script when doing an analysis. I think I am alone here.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-packages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why Packages&lt;/h2&gt;
+&lt;p&gt;Packages are &lt;code&gt;R&lt;/code&gt;’s method for sharing code in a sensible way, making it possible for others to easily (more often than not) use functions that you have written (I’m looking at you &lt;code&gt;python&lt;/code&gt;!). Why not use them? They also give you access to &lt;code&gt;R&lt;/code&gt;’s facilities for documentation and sharing computable documents. &lt;a href=&#34;https://twitter.com/hadleywickham&#34;&gt;Hadley Wickham&lt;/a&gt; has a nice section on packages in his &lt;a href=&#34;http://adv-r.had.co.nz/Philosophy.html&#34;&gt;Advanced R&lt;/a&gt; book.&lt;/p&gt;
+&lt;p&gt;I use a lot of Hadley’s packages in the following sections, because they are useful, and promote practices that make it extremely practical to use packages as a way to make an analysis a self-contained unit.&lt;/p&gt;
+&lt;p&gt;Duncan Murdoch has a nice slide deck on why to use packages and vignettes &lt;a href=&#34;http://www.stats.uwo.ca/faculty/murdoch/ism2013/5Vignettes.pdf&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;structure&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Structure&lt;/h3&gt;
+&lt;p&gt;I want to breifly review the structure of package directories, you can read more about packages in Hadley’s book (link above), and in the official &lt;code&gt;R&lt;/code&gt; &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html&#34;&gt;documentation from &lt;code&gt;CRAN&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Packages impose a relatively simple structure on your project directory. &lt;code&gt;/R&lt;/code&gt; contains the &lt;code&gt;.R&lt;/code&gt; files with your actual functions, and &lt;code&gt;/data&lt;/code&gt; can contain any &lt;code&gt;.RData&lt;/code&gt; or &lt;code&gt;.rda&lt;/code&gt; files that you might need. Other data types (&lt;code&gt;.txt&lt;/code&gt;, &lt;code&gt;.tab&lt;/code&gt;, &lt;code&gt;.csv&lt;/code&gt;) can also go in &lt;code&gt;/data&lt;/code&gt;, or they may go in &lt;code&gt;/inst/extdata&lt;/code&gt;. Note that in &lt;code&gt;/inst/extdata&lt;/code&gt; you can specify any directory structure that seems appropriate.&lt;/p&gt;
+&lt;p&gt;Other required files are &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file&#34;&gt;&lt;code&gt;DESCRIPTION&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html#Package-namespaces&#34;&gt;&lt;code&gt;NAMESPACE&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You may also have &lt;code&gt;.Rmd&lt;/code&gt; or &lt;code&gt;.Rnw&lt;/code&gt; / &lt;code&gt;.Rtex&lt;/code&gt; files in &lt;code&gt;/vignettes&lt;/code&gt; that generate &lt;code&gt;html&lt;/code&gt; or &lt;code&gt;pdf&lt;/code&gt; output that combines prose and &lt;code&gt;R&lt;/code&gt; code into a single document. This is where things get really interesting in being able to package up an analysis, especially when combined with functions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;functions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Functions&lt;/h3&gt;
+&lt;p&gt;Almost any analysis I have done involves writing at least one function, generally more, because I almost never do anything once in an analysis. Packages are &lt;strong&gt;the&lt;/strong&gt; primary method of sharing functions in &lt;code&gt;R&lt;/code&gt; that make sure that your functions play nice with the &lt;code&gt;R&lt;/code&gt; NAMESPACE, and allow one to define function dependencies from other packages. If you define a function in a package (and &lt;code&gt;export&lt;/code&gt; it), it immediately becomes re-usable in multiple analyses, without worrying about suffering from copypasta.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;function-documentation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Function Documentation&lt;/h3&gt;
+&lt;p&gt;The easiest way to document functions is by using &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/index.html&#34;&gt;&lt;code&gt;roxygen2&lt;/code&gt;&lt;/a&gt; (see the intro &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html&#34;&gt;vignette&lt;/a&gt;). This allows you to worry about the documentation right next to the function itself, and not worry about writing separate documentation files in &lt;code&gt;/inst/doc&lt;/code&gt; (really, you don’t want to do it, I have, and it is painful). The &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html&#34;&gt;keywords&lt;/a&gt; in &lt;code&gt;roxygen2&lt;/code&gt; make sense, and are not hard to remember.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Data&lt;/h3&gt;
+&lt;p&gt;As mentioned above, you can include data with your package. The neat thing about including data, is you can document it and have that documentation available as part of the package.&lt;/p&gt;
+&lt;p&gt;I find it really useful to put any raw data that you want to work with in &lt;code&gt;/inst/extdata&lt;/code&gt; in whatever format it exists, and then process the data and save it as an &lt;code&gt;.RData&lt;/code&gt; file in &lt;code&gt;/data&lt;/code&gt;, with associated documentation. It is also really useful if part of the calculations are long running, then you can save the results as an associated data file, and simply load it when needed in the analysis.&lt;/p&gt;
+&lt;p&gt;Small note about documenting data sets. You put the &lt;code&gt;roxygen2&lt;/code&gt; comments in another file, and also need to provide &lt;code&gt;@name&lt;/code&gt; explicitly, and follow the documentation block with &lt;code&gt;NULL&lt;/code&gt;. Check the &lt;code&gt;roxygen2&lt;/code&gt; vignette “Generating Rd files” for a specific example.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;why-vignettes-as-a-reporting-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why Vignettes as a Reporting Method&lt;/h2&gt;
+&lt;p&gt;One great feature of packages is that one can include multiple &lt;code&gt;vignettes&lt;/code&gt;, long form text mixed with &lt;code&gt;code&lt;/code&gt; (and/or figures) to explain or highlight functionality in a package. Normally these are used to write tutorials, demonstrate features, or group together documentation that wouldn’t normally be together in the general documentation. However, there are no limits as to what can actually be contained within the &lt;code&gt;vignette&lt;/code&gt; as far as content, or how many &lt;code&gt;vignettes&lt;/code&gt; a package can have.&lt;/p&gt;
+&lt;p&gt;For packages hosted by CRAN, &lt;code&gt;vignettes&lt;/code&gt; are an optional component. However, the Bioconductor project requires that &lt;code&gt;vignettes&lt;/code&gt; be included in each package.&lt;/p&gt;
+&lt;p&gt;So, &lt;code&gt;R&lt;/code&gt; packages have a method to include long form prose that can be mixed with &lt;code&gt;R&lt;/code&gt; code directly as part of the package, within which you have already put your functions and associated data.&lt;/p&gt;
+&lt;p&gt;Prior to &lt;code&gt;R&lt;/code&gt; 3.0, one generally had to write vignettes using &lt;code&gt;sweave&lt;/code&gt;, a combination of &lt;code&gt;latex&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; code that generates a PDF file. However, since v3.0, it is possible to write vignettes using &lt;code&gt;R markdown&lt;/code&gt; (and actually some other markup formats), which generates HTML output. The advantages to using &lt;code&gt;R markdown&lt;/code&gt; over &lt;code&gt;sweave&lt;/code&gt; are that the syntax for writing &lt;code&gt;markdown&lt;/code&gt; is much simpler, and much more readable in it’s raw format.&lt;/p&gt;
+&lt;p&gt;Given that a package allows us to define sets of related functions, data, and documentation (with dependencies defined) all in one place that others can subsequently install and make use of and build on, why wouldn’t you want to use packages and vignettes to write long form analyses?&lt;/p&gt;
+&lt;p&gt;From some of my descriptions above, it may appear that this incurs some overhead. However, thanks to the &lt;strong&gt;#hadleyverse&lt;/strong&gt; and &lt;code&gt;rstudio&lt;/code&gt;, it is rather trivial (note that &lt;code&gt;rstudio&lt;/code&gt; is not essential, but I find it does make it easier). In my &lt;a href=&#34;/posts/2014/07/vignetteAnalysis.html&#34;&gt;next post&lt;/a&gt; I am going to give a worked example from start to finish of generating an analysis that is a vignette as part of a package.&lt;/p&gt;
+&lt;/div&gt;
 </description>
     </item>
     
     <item>
-      <title>Portable, Peronal Packages</title>
-      <link>/post/portable-peronal-packages/</link>
-      <pubDate>Mon, 23 Sep 2013 00:00:00 +0000</pubDate>
+      <title>Creating an Analysis as a Package and Vignette</title>
+      <link>/post/vignette-analysis/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>/post/portable-peronal-packages/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://www.programmingr.com/&#34;&gt;ProgrammingR&lt;/a&gt; had an interesting &lt;a href=&#34;http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/&#34;&gt;post&lt;/a&gt; recently about keeping a set of &lt;code&gt;R&lt;/code&gt; functions that are used often as a &lt;a href=&#34;https://gist.github.com/discover&#34;&gt;&lt;code&gt;gist&lt;/code&gt;&lt;/a&gt; on &lt;a href=&#34;https://github.com&#34;&gt;Github&lt;/a&gt;, and &lt;code&gt;source&lt;/code&gt;ing that file at the beginning of &lt;code&gt;R&lt;/code&gt; analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement &lt;a href=&#34;http://cran.r-project.org/web/packages/testthat/index.html&#34;&gt;unit testing&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;However, the best way to have &lt;strong&gt;sets&lt;/strong&gt; of &lt;code&gt;R&lt;/code&gt; functions is as a &lt;a href=&#34;http://adv-r.had.co.nz/Package-basics.html&#34;&gt;&lt;code&gt;package&lt;/code&gt;&lt;/a&gt;, that can then be installed and loaded by anyone. Normally packages are compiled and hosted on &lt;a href=&#34;http://cran.r-project.org/&#34;&gt;&lt;code&gt;CRAN&lt;/code&gt;&lt;/a&gt;, &lt;a href=&#34;http://r-forge.r-project.org/&#34;&gt;&lt;code&gt;R-forge&lt;/code&gt;&lt;/a&gt;, or &lt;a href=&#34;http://bioconductor.org&#34;&gt;&lt;code&gt;Bioconductor&lt;/code&gt;&lt;/a&gt;. However, Github is becoming a common place to host packages, and thanks to Hadley Wickham’s &lt;a href=&#34;http://www.rdocumentation.org/packages/devtools/functions/install_github&#34;&gt;&lt;code&gt;install_github&lt;/code&gt;&lt;/a&gt; function in the &lt;a href=&#34;http://www.rdocumentation.org/packages/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt; package&lt;/a&gt;, it is rather easy to install a package directly from Github. This does require that you have &lt;a href=&#34;http://cran.r-project.org/bin/windows/Rtools/&#34;&gt;r-tools&lt;/a&gt; installed if you are using Windows (I know that can take a bit of work, but it’s not impossible), and do some extra work to create a &lt;a href=&#34;http://adv-r.had.co.nz/Package-basics.html&#34;&gt;proper package&lt;/a&gt;, but the overhead is probably worth it if you are using these functions all the time.&lt;/p&gt;
-&lt;p&gt;Once you have the package created and hosted on Github, it is simple to install it once, and load it when needed. If there is a particular version of the package that is required, it is even possible to tell &lt;code&gt;install_github&lt;/code&gt; to install a particular version based on the &lt;em&gt;commit&lt;/em&gt;, or a &lt;em&gt;tag&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Some examples of this type of package can be found on Github: &lt;a href=&#34;https://github.com/kbroman/broman&#34;&gt;1&lt;/a&gt; &lt;a href=&#34;https://github.com/childsish/lhc-R&#34;&gt;2&lt;/a&gt; &lt;a href=&#34;https://github.com/juba/r-perso&#34;&gt;3&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>K-12 Wants Scientists!!</title>
-      <link>/post/k-12-wants-scientists/</link>
-      <pubDate>Thu, 19 Sep 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/post/k-12-wants-scientists/</guid>
-      <description>&lt;p&gt;It seems that the PostDoc committee here at UK has an interest in providing some information on alternative careers for PostDocs outside of academia. We all know that there are not enough PI slots at universities for all of the PhDs who are going on to do PostDocs, and many will end up in &lt;em&gt;alternative&lt;/em&gt; (I use that term loosely) careers.&lt;/p&gt;
-&lt;p&gt;Yesterday (2013-09-18), Scott Diamond gave a &lt;em&gt;seminar&lt;/em&gt; to PostDocs in the Medical Center at UK on getting involved in teaching science at the K-12 and college level. Scott was previously a professor here at UK, who got involved in science teaching at local schools, saw how miserable many students were in science classes, and wanted to change that. So he quit academia, got his teaching certification, and is now teaching science at a school for high-risk youth, &lt;a href=&#34;http://www.tlc.fcps.net/&#34;&gt;The Learning Center&lt;/a&gt;, here in Fayette County.&lt;/p&gt;
-&lt;p&gt;This school takes 180 of the kids who are extremely truant, i.e. they like to skip school. Of course, we know that poverty is a big factor in the decision to skip school, but so is boredom from lack of engagement with the material. At The Learning Center they have been finding that if you find ways to make the material engaging (especially science), then the kids will &lt;em&gt;want&lt;/em&gt; to be at school, learning, and they will still do well on the standard testing. Scott mentioned that these kids in regular school were truant at least 50% of the time, and at The Learning Center they have an attendance rate of 95%.&lt;/p&gt;
-&lt;p&gt;As scientists, we are out to make discoveries. We look at something happening in the natural world, make hypotheses, and test them. Even in bioinformatics, the goal is to use computers to analyze biological data so we can understand better how these biological systems work, and make better hypotheses and test them. This is not how science is taught in K-12 right now here in the US. In many school systems, it is merely recitation of science facts, with no actual “investigational” science going on.&lt;/p&gt;
-&lt;p&gt;Scott (and others) are working to change this. But to do it right, they need trained scientists in the system. So if you are thinking about doing something other than academia following your PostDoc, and want to help kids be truly interested in science and how it works, maybe you should consider going into teaching K-12??&lt;/p&gt;
-&lt;p&gt;If you want more info about The Learning Center, about their model, or about getting into teaching at this level, you can reach Scott at &lt;code&gt;scott&lt;/code&gt; dot &lt;code&gt;diamond&lt;/code&gt; near &lt;code&gt;uky&lt;/code&gt; circular shape &lt;code&gt;edu&lt;/code&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R, RStudio, and Release and Dev Bioconductor</title>
-      <link>/post/r-rstudio-and-release-and-dev-bioconductor/</link>
-      <pubDate>Tue, 17 Sep 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/post/r-rstudio-and-release-and-dev-bioconductor/</guid>
-      <description>&lt;p&gt;I have one &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/categoryCompare.html&#34;&gt;&lt;code&gt;Bioconductor&lt;/code&gt; package&lt;/a&gt; that I am currently responsible for. Each &lt;a href=&#34;http://master.bioconductor.org/developers/release-schedule/&#34;&gt;bi-annual release&lt;/a&gt; of &lt;code&gt;Bioconductor&lt;/code&gt; requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of &lt;code&gt;R&lt;/code&gt; and multiple versions of &lt;code&gt;Bioconductor&lt;/code&gt; libraries on a single system (assuming that you do production work and development on the same machine, right?).&lt;/p&gt;
-&lt;p&gt;I really, really like &lt;a href=&#34;http://rstudio.org&#34;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; as my working &lt;code&gt;R&lt;/code&gt; environment, as some of you have read before. So how do we get &lt;code&gt;RStudio&lt;/code&gt; on our Linux system to respect which version of &lt;code&gt;R&lt;/code&gt; and libraries we want to use?&lt;/p&gt;
+      <guid>/post/vignette-analysis/</guid>
+      <description>&lt;p&gt;Following from my &lt;a href=&#34;/post/analyses-as-packages&#34;&gt;last post&lt;/a&gt;, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the &lt;a href=&#34;http://nsaunders.wordpress.com/2012/08/16/twitter-coverage-of-the-ismb-2012-meeting-some-statistics/&#34;&gt;2012&lt;/a&gt; and &lt;a href=&#34;https://github.com/stephenturner/twitterchive&#34;&gt;2014&lt;/a&gt; ISMB conference (thanks to &lt;a href=&#34;https://twitter.com/nsaunders&#34;&gt;Neil&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/genetics_blog&#34;&gt;Stephen&lt;/a&gt; for compiling the data).&lt;/p&gt;
+&lt;p&gt;I will link to individual commits so that you can see how things change as we go along.&lt;/p&gt;
 &lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Setup&lt;/h2&gt;
-&lt;p&gt;This assumes that you have your &lt;code&gt;R&lt;/code&gt; installs set somewhere properly, and a &lt;strong&gt;normal&lt;/strong&gt; library for production level packages. You should install whichever &lt;code&gt;Bioconductor&lt;/code&gt; packages you want into the &lt;strong&gt;normal&lt;/strong&gt; library, and then make a copy of that. This copy will be your &lt;strong&gt;development&lt;/strong&gt; library.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cp -R productionLibrary developmentLibrary&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I also assume that you are using a local (i.e. sits in your &lt;em&gt;home&lt;/em&gt; directory) &lt;code&gt;.Renviron&lt;/code&gt; file to control where &lt;code&gt;R&lt;/code&gt; installs the packages.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;changing-versions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Changing Versions&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;RStudio&lt;/code&gt; really needs the environment variable &lt;code&gt;RSTUDIO_WHICH_R&lt;/code&gt; set to know where &lt;code&gt;R&lt;/code&gt; is, and &lt;code&gt;R&lt;/code&gt; looks at &lt;code&gt;R_LIBS&lt;/code&gt; in the &lt;code&gt;.Renviron&lt;/code&gt; file. So I simply create two shell scripts that get sourced.&lt;/p&gt;
-&lt;div id=&#34;userdev.sh&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;useRDev.sh&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;#!/bin/sh
-export RSTUDIO_WHICH_R=/pathToDevR/bin/R
-echo &amp;quot;R_LIBS=pathtoDevLibs&amp;quot; &amp;gt; .Renviron&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then I can simply do &lt;code&gt;source useRDev.sh&lt;/code&gt; when I need to use the development &lt;code&gt;R&lt;/code&gt; and library. &lt;strong&gt;Note&lt;/strong&gt; that you will need to start &lt;code&gt;RStudio&lt;/code&gt; from the shell for it to respect this environment variable. &lt;code&gt;RStudio&lt;/code&gt; generally seems to install to &lt;code&gt;/usr/lib/rstudio/bin/rstudio&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;resetr.sh&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;resetR.sh&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;#!/bin/sh
-export RSTUDIO_WHICH_R=/pathtoReleaseR/bin/R
-echo &amp;quot;R_LIBS=pathtoReleaseLibs&amp;quot; &amp;gt; .Renviron&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This resets my variables by doint &lt;code&gt;source resetR.sh&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;bioconductor-dev-version&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Bioconductor Dev Version&lt;/h2&gt;
-&lt;p&gt;To setup &lt;code&gt;Bioconductor&lt;/code&gt; to use the develoment version, simply:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;source useRDev.sh
-rstudio
+&lt;div id=&#34;initialization&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initialization&lt;/h3&gt;
+&lt;p&gt;To start, we will initialize the package. &lt;code&gt;devtools&lt;/code&gt; or &lt;code&gt;rstudio&lt;/code&gt; make this rather easy:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(devtools)
+create(&amp;quot;~/Documents/projects/personal/ismbTweetAnalysis&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Creating package ismbTweetAnalysis in ~/Documents/projects/personal
+No DESCRIPTION found. Creating with values:
 
-# once in RStudio
-library(BiocInstaller)
-useDev()
-biocLite(ask=F) # this will update all the installed bioconductor packages&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I know this is not the most ideal situation, because I am rewriting over files, but it is working for me, and I thought it might help somone else.&lt;/p&gt;
+Package: ismbTweetAnalysis
+Title: What the package does (short line)
+Version: 0.1
+Authors@R: &amp;quot;First Last &amp;lt;first.last@example.com&amp;gt; [aut, cre]&amp;quot;
+Description: What the package does (paragraph)
+Depends: R (&amp;gt;= 3.0.3)
+License: What license is it under?
+LazyData: true
+Adding Rstudio project file to ismbTweetAnalysis&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alternatively, you can use &lt;code&gt;File &amp;gt; New Project &amp;gt; New Directory &amp;gt; R Package&lt;/code&gt; in &lt;code&gt;rstudio&lt;/code&gt;. Don’t forget to &lt;code&gt;Create a git repository&lt;/code&gt; (or &lt;code&gt;git init&lt;/code&gt; in the directory). Note that the &lt;code&gt;devtools&lt;/code&gt; created package will pass &lt;code&gt;CRAN&lt;/code&gt; tests, whereas the &lt;code&gt;rstudio&lt;/code&gt; will not.&lt;/p&gt;
+&lt;p&gt;Open the &lt;code&gt;DESCRIPTION&lt;/code&gt; file, and you will need to change the &lt;code&gt;Title&lt;/code&gt;, &lt;code&gt;Authors&lt;/code&gt; or &lt;code&gt;Authors@R&lt;/code&gt;, &lt;code&gt;Description&lt;/code&gt;, &lt;code&gt;License&lt;/code&gt;, and add &lt;code&gt;VignetteBuilder: knitr&lt;/code&gt; at the end. &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/16ddb22e252520d6088dc17d4c63e9c41dc32314&#34;&gt;Here&lt;/a&gt; is what my initial setup looks like.&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Reproducible Methods</title>
-      <link>/post/reproducible-methods/</link>
-      <pubDate>Fri, 16 Aug 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/post/reproducible-methods/</guid>
-      <description>&lt;p&gt;Science is built on the whole idea of being able to reproduce results, i.e. if I publish something, it should be possible for someone else to reproduce it, using the description of the methods used in the publication. As biological sciences have become increasingly reliant on computational methods, this has become a bigger and bigger issue, especially as the results of experiments become dependent on independently developed computational code, or use rather sophisticated computer packages that have a variety of settings that can affect output, and multiple versions. For further discussion on this issue, you might want to read &lt;a href=&#34;http://bytesizebio.net/index.php/2012/08/24/can-we-make-research-software-accountable/&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;http://ivory.idyll.org/blog/anecdotal-science.html&#34;&gt;2&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I recently read a couple of different publications that really made me realize how big a problem this is. I want to spend some time showing what the problem is in these publications, and why we should be concerned about the current state of computational analytical reproducibility in life-sciences.&lt;/p&gt;
-&lt;p&gt;In both the articles mentioned below, I do not believe that I, or anyone not associated with the project, would be able to generate even approximately similar results based solely on the raw data and the description of methods provided. Ultimately, this is a failure of both those doing the analysis, and the reviewers who reviewed the work, and is a rather deplorable situation for a field that prides itself verification of results. This is why I’m saying these are &lt;strong&gt;bad bioinformatics methods sections&lt;/strong&gt;.&lt;/p&gt;
-&lt;div id=&#34;puthanveettil-et-al.-synaptic-transcriptome&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Puthanveettil et al., Synaptic Transcriptome&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://doi.org/10.1073/pnas.1304422110&#34;&gt;Puthanveettil et al, 2013&lt;/a&gt; had a paper out earlier titled &lt;a href=&#34;http://doi.org/10.1073/pnas.1304422110&#34;&gt;“A strategy to capture and characterize the synaptic transcriptome”&lt;/a&gt; in PNAS. Although the primary development reported is a new method of characterizing RNA complexes that are carried by kinesin, much of the following analysis is bioinformatic in nature.&lt;/p&gt;
-&lt;p&gt;For example, they used BLAST searches to identify the RNA molecules, a cutoff value is reported in the results. However, functional characterization using Gene Ontology (GO) was carried out by “Bioinformatics analyses” (see the top of pg3 in the PDF). No mention of where the GO terms came from, which annotation source was used, or any software mentioned. Not in the results, discussion, or methods, or the supplemental methods. The microarray data analysis isn’t too badly described, but the 454 sequencing data processing isn’t really described at all.&lt;/p&gt;
-&lt;p&gt;My point is, that even given their raw data, I’m not sure I would be able to even approximate their results based on the methods reported in the methods section.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;gulsuner-et-al.-schizophrenia-snps&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Gulsuner et al., Schizophrenia SNPs&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://dx.doi.org/10.1016/j.cell.2013.06.049&#34;&gt;Gulsuner et al&lt;/a&gt; published a paper in Cell in August 2013 titled &lt;a href=&#34;http://dx.doi.org/10.1016/j.cell.2013.06.049&#34;&gt;“Spatial and Temporal Mapping of De Novo Mutations in Schizophrenia to a Fetal Prefrontal Cortical Network”&lt;/a&gt;. This one also looks really nice, they look for &lt;em&gt;de novo&lt;/em&gt; mutations (i.e. new mutations in offspring not present in parents or siblings) that mess up genes that are in a heavily connected network, and also examine gene co-expression over brain development time-scales. Sounds really cool, and the results seem like they are legit, based on my reading of the manuscript. I was really impressed that they even used &lt;strong&gt;randomly generated&lt;/strong&gt; networks to control the false discovery rate!&lt;/p&gt;
-&lt;p&gt;However, almost all of the analysis again depends on a lot of different bioinformatic software. I do have to give the authors props, they actually give the &lt;strong&gt;full&lt;/strong&gt; version of each tool used. But no mention of tool specific settings (which can generate vastly different results, see &lt;strong&gt;Exome Sequencing&lt;/strong&gt; of the methods).&lt;/p&gt;
-&lt;p&gt;Then there is this bombshell: “The predicted functional impact of each candidate de novo missense variant was assessed with in silico tools.” (near top of pg 525 of the PDF). Rrrreeeaaaalllly now. No actual quote of which tools were used, although the subsequent wording and references provided imply that they were &lt;a href=&#34;http://www.nature.com/nmeth/journal/v7/n4/full/nmeth0410-248.html&#34;&gt;PolyPhen2&lt;/a&gt;, &lt;a href=&#34;http://sift.jcvi.org/&#34;&gt;SIFT&lt;/a&gt;, and the &lt;a href=&#34;http://www.sciencemag.org/content/185/4154/862.long&#34;&gt;Grantham Method&lt;/a&gt;. But shouldn’t that have been stated up front? Along with any settings that were changed from default??&lt;/p&gt;
-&lt;p&gt;There is no raw data available, only their reported SNPs. Not even a list of &lt;strong&gt;all&lt;/strong&gt; the SNPs that were potentially considered, so that I could at least go from those and re-run the later analysis. I have to take their word for it (although I am glad at least the SNPs they used in later analyses are reported).&lt;/p&gt;
-&lt;p&gt;Finally, the random network generation. I’d like to be able to see that code, go over it, and see what exactly it was doing to verify it was done correctly. It likely was, based on the histograms provided, but still, these are where small errors creep in and result in invalid results.&lt;/p&gt;
-&lt;p&gt;As above, even if the raw data was available (didn’t see an SRA accession or any other download link), I’m not sure I could reproduce or verify the results.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;what-to-do&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;What to do??&lt;/h2&gt;
-&lt;p&gt;How do we fix this problem? I think scripts and workflows used to run any type of bioinformatic analyses have to become first class research objects. And we have to teach scientists to write them and use them in a way that makes them first class research objects. So in the same way that a biologist might ask for verification of immunostaining, etc, bioinformaticians should ask that given known input, a script generates &lt;em&gt;reasonable&lt;/em&gt; output.&lt;/p&gt;
-&lt;p&gt;I know there has been discussion on this before, and disagreement, especially with the exploratory nature of research. However, once you’ve got something working &lt;em&gt;right&lt;/em&gt;, you should be able to &lt;em&gt;test&lt;/em&gt; it. Reviewers should be asking if it is testable, or the code should be available for others to test.&lt;/p&gt;
-&lt;p&gt;I also think we as a community should do more to point out the problem. i.e. when we see it, point it out to others. I’ve done that here, but I don’t know how much should be formal. Maybe we need a new hashtag, #badbioinfomethodsection, and point links to papers that do this. Conversely, we should also point to examples when it is done right (#goodbioinfomethodsection??), and if you are bioinformatician or biologist who does a lot of coding, share your code, and at least supply it as supplemental materials. Oh, and maybe take a &lt;a href=&#34;http://softwarecarpentry.org&#34;&gt;SoftwareCarpentry&lt;/a&gt; class, and look up &lt;a href=&#34;http://git-scm.com/&#34;&gt;git&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Posted on August 16, 2013 at &lt;a href=&#34;http://robertmflight.blogspot.com/2013/08/reproducible-methods-or-bad.html&#34; class=&#34;uri&#34;&gt;http://robertmflight.blogspot.com/2013/08/reproducible-methods-or-bad.html&lt;/a&gt;, raw markdown at &lt;a href=&#34;https://github.com/rmflight/blogPosts/blob/master/reproducible_methods.md&#34; class=&#34;uri&#34;&gt;https://github.com/rmflight/blogPosts/blob/master/reproducible_methods.md&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R Interface for Teaching</title>
-      <link>/post/r-interface-for-teaching/</link>
-      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/post/r-interface-for-teaching/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://twitter.com/intent/user?screen_name=kaythaney&amp;amp;tw_i=354635159447941120&amp;amp;tw_p=tweetembed&#34;&gt;Kaitlin Thaney&lt;/a&gt; asked on Twitter last week about using &lt;a href=&#34;https://twitter.com/intent/user?screen_name=ramnath_vaidya&amp;amp;tw_i=354599459868508160&amp;amp;tw_p=tweetembed&#34;&gt;Ramnath Vaidyanathan’s&lt;/a&gt; new &lt;code&gt;interactive R notebook&lt;/code&gt; &lt;a href=&#34;http://ramnathv.github.io/rNotebook/&#34;&gt;1&lt;/a&gt; &lt;a href=&#34;https://github.com/ramnathv/rNotebook&#34;&gt;2&lt;/a&gt; for teaching.&lt;/p&gt;
-&lt;p&gt;Now, to be clear up front, I am &lt;strong&gt;not&lt;/strong&gt; trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don’t really think it is the right interface for teaching &lt;code&gt;R&lt;/code&gt;. I would argue that the best interface for teaching &lt;code&gt;R&lt;/code&gt; right now is &lt;a href=&#34;http://www.rstudio.com/&#34;&gt;RStudio&lt;/a&gt;. Keep reading to find out why.&lt;/p&gt;
-&lt;div id=&#34;ipython-notebook&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;iPython Notebook&lt;/h2&gt;
-&lt;p&gt;First, I believe Ramnath when he says he was inspired by the &lt;a href=&#34;http://ipython.org/notebook.html&#34;&gt;&lt;code&gt;iPython Notebook&lt;/code&gt;&lt;/a&gt; that makes it so very nice to do interactive, reproducible Python coding. Software Carpentry has been very successfully using them for helping to teach Python to scientists.&lt;/p&gt;
-&lt;p&gt;However, the iPython Notebook is an interesting beast for this purpose. You are able to mix &lt;code&gt;markdown&lt;/code&gt; blocks and &lt;code&gt;code&lt;/code&gt; blocks. In addition, it is extremely simple to break up your calculations into &lt;strong&gt;units&lt;/strong&gt; of related code, and re-run those units as needed. This is particularly useful when writing new functions, because you can write the function definition, and a test that displays output in one block, and then the actual computations in subsequent blocks. It makes it very easy to keep re-running the same block of code over and over until it is correct, which allows one to interactively explore changes to functions. This is &lt;strong&gt;awesome&lt;/strong&gt; for learning Python and prototyping functions.&lt;/p&gt;
-&lt;p&gt;In addition to being able to repeatedly &lt;code&gt;write -&amp;gt; run -&amp;gt; modify&lt;/code&gt; in a loop, you can also insert prose describing what is going on in the form of &lt;code&gt;markdown&lt;/code&gt;. This is a nice lightweight syntax that generates html. So it becomes relatively easy to document the &lt;em&gt;why&lt;/em&gt; of something.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;r-notebook&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R Notebook&lt;/h2&gt;
-&lt;p&gt;Unfortunately, the &lt;code&gt;R notebook&lt;/code&gt; that Ramnath has put up is not quite the same beast. It is an &lt;a href=&#34;http://ajaxorg.github.io/ace/#nav=about&#34;&gt;Ace editor&lt;/a&gt; window coupled to an R process that knits the markdown and displays the resultant html. This is really cool, and I think will be useful in many other applications, but &lt;strong&gt;not&lt;/strong&gt; for teaching in an interactive environment.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;rstudio-as-a-teaching-environment&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;RStudio as a Teaching Environment&lt;/h2&gt;
-&lt;p&gt;Lets think. We want something that lets us repeatedly &lt;code&gt;write -&amp;gt; run -&amp;gt; modify&lt;/code&gt; &lt;strong&gt;on small code blocks&lt;/strong&gt; in &lt;code&gt;R&lt;/code&gt;, but would be great if it was some kind of document that could be shared, and re-run.&lt;/p&gt;
-&lt;p&gt;I would argue that the editor environment in &lt;a href=&#34;http://www.rstudio.com/&#34;&gt;RStudio&lt;/a&gt; when writing &lt;a href=&#34;http://www.rstudio.com/ide/docs/authoring/using_markdown&#34;&gt;R markdown (Rmd)&lt;/a&gt; files is the solution. &lt;code&gt;R&lt;/code&gt; code blocks behave much the same as in iPython notebook, in that they are colored differently, set apart, have syntax highlighting, and can be easily repeatedly run using the &lt;code&gt;code chunk&lt;/code&gt; menu. Outside of code blocks is assumed to be markdown, making it easy to insert documentation and explanation. The code from the code blocks is sent to an attached &lt;code&gt;R&lt;/code&gt; session, where objects can be further investigated if required, and results are displayed.&lt;/p&gt;
-&lt;p&gt;This infrastructure supplies an interactive back and forth between editor and execution environment, with the ability to easily group together units of code.&lt;/p&gt;
-&lt;p&gt;In addition, RStudio has git integration baked in, so it becomes easy to get started with some basic version control.&lt;/p&gt;
-&lt;p&gt;Finally, RStudio is cross-platform, has tab completion among other standard IDE goodies, and its free.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;feedback&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Feedback&lt;/h2&gt;
-&lt;p&gt;I’ve gotten some feedback on twitter about this, and I want to update this post to address it.&lt;/p&gt;
-&lt;div id=&#34;hard-to-install&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Hard to Install&lt;/h3&gt;
-&lt;p&gt;One comment was that installing R, RStudio and necessary packages might be hard. True, it might be. However, I have done multiple installs of R, RStudio, Python, and iPython Notebook in both Linux and Windows, and I would argue that the level of difficulty is at least the same.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;moving-from-presentation-to-coding&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Moving from Presentation to Coding&lt;/h3&gt;
-&lt;p&gt;I think this is always difficult, especially if you have a powerpoint, and your code is in another application. However, the latest dev version of RStudio (&lt;a href=&#34;http://www.rstudio.com/ide/download/preview&#34;&gt;download&lt;/a&gt;) now includes the ability to view markdown based presentations in an &lt;a href=&#34;http://www.rstudio.com/ide/docs/presentations/overview&#34;&gt;attached window&lt;/a&gt;. This is probably one of the potentially nicest things for doing presentations that actually involve editing actual code.&lt;/p&gt;
-&lt;p&gt;Edit: added download links for Rstudio preview&lt;/p&gt;
+&lt;div id=&#34;rstudio-project-options&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;RStudio Project Options&lt;/h3&gt;
+&lt;p&gt;In addition, to make our life easier, we will change some options in the &lt;code&gt;rstudio&lt;/code&gt; project.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Tools &amp;gt; Project Options &amp;gt; Build Tools&lt;/code&gt;, check &lt;code&gt;Generate documentation with Roxygen&lt;/code&gt;, and select turn on all the options. We want to &lt;code&gt;roxygenize&lt;/code&gt; when we &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt; especially, and have &lt;code&gt;roxygen&lt;/code&gt; control the &lt;code&gt;NAMESPACE&lt;/code&gt; file so we don’t worry about it.&lt;/p&gt;
+&lt;p&gt;Alternatively, you can use &lt;code&gt;document&lt;/code&gt; with &lt;code&gt;reload=TRUE&lt;/code&gt; in &lt;code&gt;devtools&lt;/code&gt; to update documentation and reload the functions.&lt;/p&gt;
+&lt;p&gt;Having &lt;strong&gt;this&lt;/strong&gt; particular option of &lt;code&gt;documenting&lt;/code&gt; and &lt;code&gt;reloading&lt;/code&gt; the package every time I write a new function is what makes this easy. I write the new function, &lt;code&gt;document&lt;/code&gt;/&lt;code&gt;reload&lt;/code&gt;, and I can keep chugging along with my analysis document. And if I have to restart, I just &lt;code&gt;run all&lt;/code&gt; chunks to get back to where I need to be.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Storing Package Data in Custom Environments</title>
-      <link>/post/storing-package-data-in-custom-environments/</link>
-      <pubDate>Thu, 30 May 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/post/storing-package-data-in-custom-environments/</guid>
-      <description>&lt;p&gt;If you do &lt;code&gt;R&lt;/code&gt; package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global &lt;code&gt;options&lt;/code&gt;. This is done by packages &lt;code&gt;grDevices&lt;/code&gt; and &lt;code&gt;parallel&lt;/code&gt;. Sometimes this doesn’t seem to work quite right (see this &lt;a href=&#34;https://github.com/cboettig/knitcitations/issues/14&#34;&gt;issue&lt;/a&gt; for example.&lt;/p&gt;
-&lt;p&gt;Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify. You get a space to put package specific stuff, the user can’t see it or modify it directly, and you just need to write functions that do the appropriate things to that environment (adding variables, reading them, etc). This sounds great in practice, but I wasn’t clear on how to do this, even after reading the &lt;a href=&#34;http://stat.ethz.ch/R-manual/R-devel/library/base/html/environment.html&#34;&gt;help page on environments&lt;/a&gt;, the &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-intro.html&#34;&gt;R documentation&lt;/a&gt;, or even &lt;a href=&#34;https://github.com/hadley/devtools/wiki/Environments&#34;&gt;Hadley’s excellent writeup&lt;/a&gt;. From all these sources, I could glean that one can create environments, name them, modify them, etc, but wasn’t sure how to work with this within a package.&lt;/p&gt;
-&lt;p&gt;I checked out the &lt;a href=&#34;https://github.com/cboettig/knitcitations&#34;&gt;&lt;code&gt;knitcitations&lt;/code&gt;&lt;/a&gt; package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In &lt;code&gt;zzz.R&lt;/code&gt;, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the &lt;code&gt;get&lt;/code&gt; and &lt;code&gt;assign&lt;/code&gt; functions like you would if you were doing anything on the command line.&lt;/p&gt;
-&lt;p&gt;To make sure I had it figured out, I created a very &lt;a href=&#34;https://github.com/rmflight/testEnvironment&#34;&gt;tiny package&lt;/a&gt; to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using &lt;a href=&#34;https://github.com/hadley/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt;]) and see for yourself.&lt;/p&gt;
-&lt;p&gt;I have at least two projects where I know I will use this, and I’m sure others might find it useful as well.&lt;/p&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data&lt;/h2&gt;
+&lt;p&gt;Now we need some data. Neil’s data from 2012 uses a CSV format, however the tweets themselves have commas, so we will download the &lt;code&gt;rdata&lt;/code&gt; file and use that, and also Stephen’s data from 2014. However, there are three separate files for 2014, so we will download all three files and combine them. Both initial data sets will go in the &lt;code&gt;/inst/extdata&lt;/code&gt; folder, and we will clean them up.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/391aee099f08c94d26e183e2d9a80781afa722bc&#34;&gt;Here&lt;/a&gt; we have added our 4 data files.&lt;/p&gt;
+&lt;div id=&#34;vignette&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Vignette&lt;/h3&gt;
+&lt;p&gt;We are going to write this analysis as the vignette of the package, using &lt;code&gt;R markdown&lt;/code&gt; as the language. To do that we need to create the file and add some boilerplate at the top so that the vignette gets generated properly. &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/c1de77bfc803435b3af32f641b165615aaabb57b&#34;&gt;Here&lt;/a&gt; is the initial vignette, it is nothing but the &lt;code&gt;engine&lt;/code&gt; and &lt;code&gt;index&lt;/code&gt; definition, which are important.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;start-the-analysis&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Start the Analysis!&lt;/h1&gt;
+&lt;p&gt;At this point we can start the analysis. The actual analysis will be done in the &lt;code&gt;Rmd&lt;/code&gt; vignette file. The basic process is to add prose describing the analysis, with actual code to generate results and figures embedded in the &lt;code&gt;Rmd&lt;/code&gt;, and adding functions and documentation (as &lt;code&gt;roxygen&lt;/code&gt; tags) in the &lt;code&gt;.R&lt;/code&gt; file, while doing iterations of &lt;code&gt;document&lt;/code&gt; or &lt;code&gt;Build/Reload&lt;/code&gt; along the way. Iterations of &lt;code&gt;document&lt;/code&gt; / &lt;code&gt;Build/Reload&lt;/code&gt; after writing new functions in the &lt;code&gt;.R&lt;/code&gt; file will make them available to us in our workspace, with tab-completion in &lt;code&gt;rstudio&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The following are bullet point summaries of points when I committed or built/reloaded, with links to the commit so you can see what has changed in the package.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/f3dabdc3f7fb981489ba35e18bd458a983b33698&#34;&gt;Adding description of data sources to analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/be314c3edb8953adc4351e90c2b038285cb78d3b&#34;&gt;Munging 2012 data a little, saving, and documenting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Now we can load up this data with &lt;code&gt;data(ismb2012)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/f90268c97e5a94c5cd052f40d7f394d81e8adc61&#34;&gt;Function written and exported for reading ST’s data files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/f46a8b21bf3a168ff469925fab38c6ee8ccb9a08&#34;&gt;Read in, combine, and re-save ST’s archive&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Note that this and previous chunk have &lt;code&gt;eval=FALSE&lt;/code&gt;, so that they are not run in the analysis, but they were run interactively while I was doing the work.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/30509c15f3c9590dc07dbbb26d59733664f01f65&#34;&gt;Simple histogram of 2012 tweets by day&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/13138980de9531e92fe03a7d0db40302e5dac3c5&#34;&gt;Making a counting function by &lt;code&gt;screenName&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/72434fd84d222f2284c97c771fa0d0f3d3577ac7&#34;&gt;Examining the top tweeters using previous function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/aff15c9205667879ab9669c26f6bc8ff47d153b8&#34;&gt;Fixing data files, because of issues with having the same named object in different RData files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/7e65de3a88ee0495fe9b92f9291bc590d69eab9e&#34;&gt;Examining top tweeters in 2014&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/285926ebe051992d46a91040aaed0a14142f279c&#34;&gt;Density of tweets with respect to starting time of conference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/93b05400d158414a725b456b1698a941c6c80b42&#34;&gt;Counting how often a specific tweet was retweeted&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/3e25bdaec902630943d694706ed576dca0e74d62&#34;&gt;Getting raw tweet ranks for each individual&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/6987116ce6c6ebe78dfaac9590b80806c08f9e6f&#34;&gt;Examining the ranks by total retweeted tweets per user&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And at this point I’m going to stop there. Now we have an analysis (that we will make into a nice output shortly), and we have munged 2 data sets, and wrote 6 functions, that may be useful in other contexts.&lt;/p&gt;
+&lt;div id=&#34;preview-report&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Preview Report&lt;/h2&gt;
+&lt;p&gt;To preview the report, you can use the &lt;code&gt;Knit HTML&lt;/code&gt; button in &lt;code&gt;rstudio&lt;/code&gt;, or also use &lt;code&gt;knitr&lt;/code&gt; directly. This will give you an html preview of the final report.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generate-vignette&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Generate Vignette&lt;/h2&gt;
+&lt;p&gt;Once happy with the report, you can use &lt;code&gt;devtools::build_vignettes()&lt;/code&gt; to generate the vignette files that will be copied to the relevant locations.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;commit-and-push-it-all&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Commit and Push it ALL!&lt;/h2&gt;
+&lt;p&gt;At this point, if you are happy with the package and analysis as a whole, you should commit all the package files to version control and make it available. In this case this means:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;inst/doc: the output vignette&lt;/li&gt;
+&lt;li&gt;man: the function documentation&lt;/li&gt;
+&lt;li&gt;DESCRIPTION: our description file&lt;/li&gt;
+&lt;li&gt;NAMESPACE: the file documenting our namespace&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can see this commit &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/7387a727708f8413ff68be1a5e285777b85ca7c7&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now your package can be installed by others using &lt;code&gt;devtools::install_github()&lt;/code&gt;. You could also submit your package to &lt;code&gt;CRAN&lt;/code&gt; or &lt;code&gt;Bioconductor&lt;/code&gt; if so desired.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;not-covered&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Not Covered&lt;/h2&gt;
+&lt;p&gt;Now this was a simple example. Ideally I should have included tests for my functions, you can read up &lt;a href=&#34;https://github.com/hadley/testthat&#34;&gt;1&lt;/a&gt; &lt;a href=&#34;http://adv-r.had.co.nz/Testing.html&#34;&gt;2&lt;/a&gt; on how to do that. In addition, none of my functions use methods (&lt;a href=&#34;http://adv-r.had.co.nz/OO-essentials.html&#34;&gt;see why they are useful&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;I hope that you find this example useful, and will consider using &lt;code&gt;packages&lt;/code&gt; more often even for &lt;strong&gt;simple&lt;/strong&gt; analyses.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reproducibility: One issue that may come up is how to make sure that you or someone else can directly reproduce the work in your package. Again, Hadley Wickham and the &lt;code&gt;rstudio&lt;/code&gt; team have been thinking about this, and there is now the &lt;a href=&#34;http://rstudio.github.io/packrat/&#34;&gt;&lt;code&gt;packrat&lt;/code&gt; package&lt;/a&gt; to make a project completely self-contained with all of it’s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Edit 2014-07-28&lt;/em&gt; - added note on reproducibility at the end.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
     </item>
     

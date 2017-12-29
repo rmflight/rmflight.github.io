@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/vignette-analysis/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/vignette-analysis/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/vignette-analysis/">
+  <meta property="og:title" content="Creating an Analysis as a Package and Vignette | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2014-07-28T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2014-07-28T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Creating an Analysis as a Package and Vignette | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Creating an Analysis as a Package and Vignette</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2014-07-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2014-07-28
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Creating%20an%20Analysis%20as%20a%20Package%20and%20Vignette&amp;url=%2fpost%2fvignette-analysis%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fvignette-analysis%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fvignette-analysis%2f&amp;title=Creating%20an%20Analysis%20as%20a%20Package%20and%20Vignette"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fvignette-analysis%2f&amp;title=Creating%20an%20Analysis%20as%20a%20Package%20and%20Vignette"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Creating%20an%20Analysis%20as%20a%20Package%20and%20Vignette&amp;body=%2fpost%2fvignette-analysis%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <p>Following from my <a href="/post/analyses-as-packages">last post</a>, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the <a href="http://nsaunders.wordpress.com/2012/08/16/twitter-coverage-of-the-ismb-2012-meeting-some-statistics/">2012</a> and <a href="https://github.com/stephenturner/twitterchive">2014</a> ISMB conference (thanks to <a href="https://twitter.com/nsaunders">Neil</a> and <a href="https://twitter.com/genetics_blog">Stephen</a> for compiling the data).</p>
+<p>I will link to individual commits so that you can see how things change as we go along.</p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<div id="initialization" class="section level3">
+<h3>Initialization</h3>
+<p>To start, we will initialize the package. <code>devtools</code> or <code>rstudio</code> make this rather easy:</p>
+<pre class="r"><code>library(devtools)
+create(&quot;~/Documents/projects/personal/ismbTweetAnalysis&quot;)</code></pre>
+<pre><code>Creating package ismbTweetAnalysis in ~/Documents/projects/personal
+No DESCRIPTION found. Creating with values:
+
+Package: ismbTweetAnalysis
+Title: What the package does (short line)
+Version: 0.1
+Authors@R: &quot;First Last &lt;first.last@example.com&gt; [aut, cre]&quot;
+Description: What the package does (paragraph)
+Depends: R (&gt;= 3.0.3)
+License: What license is it under?
+LazyData: true
+Adding Rstudio project file to ismbTweetAnalysis</code></pre>
+<p>Alternatively, you can use <code>File &gt; New Project &gt; New Directory &gt; R Package</code> in <code>rstudio</code>. Don’t forget to <code>Create a git repository</code> (or <code>git init</code> in the directory). Note that the <code>devtools</code> created package will pass <code>CRAN</code> tests, whereas the <code>rstudio</code> will not.</p>
+<p>Open the <code>DESCRIPTION</code> file, and you will need to change the <code>Title</code>, <code>Authors</code> or <code>Authors@R</code>, <code>Description</code>, <code>License</code>, and add <code>VignetteBuilder: knitr</code> at the end. <a href="https://github.com/rmflight/ismbTweetAnalysis/commit/16ddb22e252520d6088dc17d4c63e9c41dc32314">Here</a> is what my initial setup looks like.</p>
+</div>
+<div id="rstudio-project-options" class="section level3">
+<h3>RStudio Project Options</h3>
+<p>In addition, to make our life easier, we will change some options in the <code>rstudio</code> project.</p>
+<p><code>Tools &gt; Project Options &gt; Build Tools</code>, check <code>Generate documentation with Roxygen</code>, and select turn on all the options. We want to <code>roxygenize</code> when we <code>Build &amp; Reload</code> especially, and have <code>roxygen</code> control the <code>NAMESPACE</code> file so we don’t worry about it.</p>
+<p>Alternatively, you can use <code>document</code> with <code>reload=TRUE</code> in <code>devtools</code> to update documentation and reload the functions.</p>
+<p>Having <strong>this</strong> particular option of <code>documenting</code> and <code>reloading</code> the package every time I write a new function is what makes this easy. I write the new function, <code>document</code>/<code>reload</code>, and I can keep chugging along with my analysis document. And if I have to restart, I just <code>run all</code> chunks to get back to where I need to be.</p>
+</div>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>Now we need some data. Neil’s data from 2012 uses a CSV format, however the tweets themselves have commas, so we will download the <code>rdata</code> file and use that, and also Stephen’s data from 2014. However, there are three separate files for 2014, so we will download all three files and combine them. Both initial data sets will go in the <code>/inst/extdata</code> folder, and we will clean them up.</p>
+<p><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/391aee099f08c94d26e183e2d9a80781afa722bc">Here</a> we have added our 4 data files.</p>
+<div id="vignette" class="section level3">
+<h3>Vignette</h3>
+<p>We are going to write this analysis as the vignette of the package, using <code>R markdown</code> as the language. To do that we need to create the file and add some boilerplate at the top so that the vignette gets generated properly. <a href="https://github.com/rmflight/ismbTweetAnalysis/commit/c1de77bfc803435b3af32f641b165615aaabb57b">Here</a> is the initial vignette, it is nothing but the <code>engine</code> and <code>index</code> definition, which are important.</p>
+</div>
+</div>
+<div id="start-the-analysis" class="section level1">
+<h1>Start the Analysis!</h1>
+<p>At this point we can start the analysis. The actual analysis will be done in the <code>Rmd</code> vignette file. The basic process is to add prose describing the analysis, with actual code to generate results and figures embedded in the <code>Rmd</code>, and adding functions and documentation (as <code>roxygen</code> tags) in the <code>.R</code> file, while doing iterations of <code>document</code> or <code>Build/Reload</code> along the way. Iterations of <code>document</code> / <code>Build/Reload</code> after writing new functions in the <code>.R</code> file will make them available to us in our workspace, with tab-completion in <code>rstudio</code>.</p>
+<p>The following are bullet point summaries of points when I committed or built/reloaded, with links to the commit so you can see what has changed in the package.</p>
+<ul>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/f3dabdc3f7fb981489ba35e18bd458a983b33698">Adding description of data sources to analysis</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/be314c3edb8953adc4351e90c2b038285cb78d3b">Munging 2012 data a little, saving, and documenting</a></li>
+<li>Now we can load up this data with <code>data(ismb2012)</code></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/f90268c97e5a94c5cd052f40d7f394d81e8adc61">Function written and exported for reading ST’s data files</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/f46a8b21bf3a168ff469925fab38c6ee8ccb9a08">Read in, combine, and re-save ST’s archive</a></li>
+<li>Note that this and previous chunk have <code>eval=FALSE</code>, so that they are not run in the analysis, but they were run interactively while I was doing the work.</li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/30509c15f3c9590dc07dbbb26d59733664f01f65">Simple histogram of 2012 tweets by day</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/13138980de9531e92fe03a7d0db40302e5dac3c5">Making a counting function by <code>screenName</code></a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/72434fd84d222f2284c97c771fa0d0f3d3577ac7">Examining the top tweeters using previous function</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/aff15c9205667879ab9669c26f6bc8ff47d153b8">Fixing data files, because of issues with having the same named object in different RData files</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/7e65de3a88ee0495fe9b92f9291bc590d69eab9e">Examining top tweeters in 2014</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/285926ebe051992d46a91040aaed0a14142f279c">Density of tweets with respect to starting time of conference</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/93b05400d158414a725b456b1698a941c6c80b42">Counting how often a specific tweet was retweeted</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/3e25bdaec902630943d694706ed576dca0e74d62">Getting raw tweet ranks for each individual</a></li>
+<li><a href="https://github.com/rmflight/ismbTweetAnalysis/commit/6987116ce6c6ebe78dfaac9590b80806c08f9e6f">Examining the ranks by total retweeted tweets per user</a></li>
+</ul>
+<p>And at this point I’m going to stop there. Now we have an analysis (that we will make into a nice output shortly), and we have munged 2 data sets, and wrote 6 functions, that may be useful in other contexts.</p>
+<div id="preview-report" class="section level2">
+<h2>Preview Report</h2>
+<p>To preview the report, you can use the <code>Knit HTML</code> button in <code>rstudio</code>, or also use <code>knitr</code> directly. This will give you an html preview of the final report.</p>
+</div>
+<div id="generate-vignette" class="section level2">
+<h2>Generate Vignette</h2>
+<p>Once happy with the report, you can use <code>devtools::build_vignettes()</code> to generate the vignette files that will be copied to the relevant locations.</p>
+</div>
+<div id="commit-and-push-it-all" class="section level2">
+<h2>Commit and Push it ALL!</h2>
+<p>At this point, if you are happy with the package and analysis as a whole, you should commit all the package files to version control and make it available. In this case this means:</p>
+<ul>
+<li>inst/doc: the output vignette</li>
+<li>man: the function documentation</li>
+<li>DESCRIPTION: our description file</li>
+<li>NAMESPACE: the file documenting our namespace</li>
+</ul>
+<p>You can see this commit <a href="https://github.com/rmflight/ismbTweetAnalysis/commit/7387a727708f8413ff68be1a5e285777b85ca7c7">here</a>.</p>
+<p>Now your package can be installed by others using <code>devtools::install_github()</code>. You could also submit your package to <code>CRAN</code> or <code>Bioconductor</code> if so desired.</p>
+</div>
+<div id="not-covered" class="section level2">
+<h2>Not Covered</h2>
+<p>Now this was a simple example. Ideally I should have included tests for my functions, you can read up <a href="https://github.com/hadley/testthat">1</a> <a href="http://adv-r.had.co.nz/Testing.html">2</a> on how to do that. In addition, none of my functions use methods (<a href="http://adv-r.had.co.nz/OO-essentials.html">see why they are useful</a>).</p>
+<p>I hope that you find this example useful, and will consider using <code>packages</code> more often even for <strong>simple</strong> analyses.</p>
+<ul>
+<li>Reproducibility: One issue that may come up is how to make sure that you or someone else can directly reproduce the work in your package. Again, Hadley Wickham and the <code>rstudio</code> team have been thinking about this, and there is now the <a href="http://rstudio.github.io/packrat/"><code>packrat</code> package</a> to make a project completely self-contained with all of it’s dependencies.</li>
+</ul>
+<p><em>Edit 2014-07-28</em> - added note on reproducibility at the end.</p>
+</div>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/development">development</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/packages">packages</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/vignettes">vignettes</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
+    
+    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
+    
+    <li><a href="/post/self-written-function-help/">Self-Written Function Help</a></li>
+    
+    <li><a href="/post/package-version-increment-pre-and-post-commit-hooks/">Package Version Increment Pre- and Post-Commit Hooks</a></li>
+    
+    <li><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

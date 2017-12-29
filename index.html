@@ -575,8 +575,6 @@
 
         
         
-          
-      
 
       
       
@@ -587,7 +585,7 @@
   
   
   <h3 class="article-title" itemprop="name">
-    <a href="/post/pubmedcommons-api/" itemprop="url">PubmedCommons API</a>
+    <a href="/post/random-forest-vs-pls-on-random-data/" itemprop="url">Random Forest vs PLS on Random Data</a>
   </h3>
   
 
@@ -595,15 +593,15 @@
 
   <span class="article-date">
     
-    <time datetime="2013-10-22 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2013-10-22
+    <time datetime="2015-12-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2015-12-12
     </time>
   </span>
 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    10 min read
   </span>
   
 
@@ -621,12 +619,12 @@
 
   <div class="article-style" itemprop="articleBody">
     
-    The announcements are out, Pubmed is introducing a commenting system pubmedcommons, theoretically providing a single location for true post-publication peer review. This is a really good idea, as NCBI is likely to be around for a lot longer than a given publisher, and the requirement for all NIH funded research to be deposited into Pubmed.
-There are some detractors, and they may have some valid points link. However, the alternative, pubpeer, I had not heard about.
+    TL;DR Partial least squares (PLS) discriminant-analysis (DA) can ridiculously over fit even on completely random data. The quality of the PLS-DA model can be assessed using cross-validation, but cross-validation is not typically performed in many metabolomics publications. Random forest, in contrast, because of the forest of decision tree learners, and the out-of-bag (OOB) samples used for testing each tree, automatically provides an indication of the quality of the model.
+ Why?
     
   </div>
   <p class="read-more">
-    <a href="/post/pubmedcommons-api/" class="btn btn-primary btn-outline">
+    <a href="/post/random-forest-vs-pls-on-random-data/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
@@ -649,6 +647,10 @@ There are some detractors, and they may have some valid points link. However, th
       
           
       
+          
+      
+          
+      
 
       
       
@@ -659,7 +661,7 @@ There are some detractors, and they may have some valid points link. However, th
   
   
   <h3 class="article-title" itemprop="name">
-    <a href="/post/open-vs-closed-analysis-languages/" itemprop="url">Open vs Closed Analysis Languages</a>
+    <a href="/post/novel-zinc-coordination-geometries/" itemprop="url">Novel Zinc Coordination Geometries</a>
   </h3>
   
 
@@ -667,15 +669,15 @@ There are some detractors, and they may have some valid points link. However, th
 
   <span class="article-date">
     
-    <time datetime="2013-10-21 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2013-10-21
+    <time datetime="2015-06-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2015-06-17
     </time>
   </span>
 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    6 min read
   </span>
   
 
@@ -693,12 +695,11 @@ There are some detractors, and they may have some valid points link. However, th
 
   <div class="article-style" itemprop="articleBody">
     
-    TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
- Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)
+    TL;DR Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a less-biased method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries.
     
   </div>
   <p class="read-more">
-    <a href="/post/open-vs-closed-analysis-languages/" class="btn btn-primary btn-outline">
+    <a href="/post/novel-zinc-coordination-geometries/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
@@ -717,8 +718,6 @@ There are some detractors, and they may have some valid points link. However, th
         
           
       
-          
-      
 
       
       
@@ -729,7 +728,7 @@ There are some detractors, and they may have some valid points link. However, th
   
   
   <h3 class="article-title" itemprop="name">
-    <a href="/post/pre-calculating-large-tables-of-values/" itemprop="url">Pre-Calculating Large Tables of Values</a>
+    <a href="/post/mouse-human-transcriptomics-and-batch-effects/" itemprop="url">Mouse / Human Transcriptomics and Batch Effects</a>
   </h3>
   
 
@@ -737,8 +736,8 @@ There are some detractors, and they may have some valid points link. However, th
 
   <span class="article-date">
     
-    <time datetime="2013-10-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2013-10-17
+    <time datetime="2015-06-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2015-06-01
     </time>
   </span>
 
@@ -763,11 +762,11 @@ There are some detractors, and they may have some valid points link. However, th
 
   <div class="article-style" itemprop="articleBody">
     
-    I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.
+    TL;DR This 2014 PNAS paper by S. Lin et al (Lin et al., PNAS, 2014) that compares transcription of tissues between species has a flawed experimental design, where species is almost perfectly confounded with machine / lane on which the sequencing was done. Y. Golad and O. Mizrahi-Man have published a manuscript describing the confounding and the results of removing it. This was possible because the original authors supplied the information about which publically available files were used in the original analysis.
     
   </div>
   <p class="read-more">
-    <a href="/post/pre-calculating-large-tables-of-values/" class="btn btn-primary btn-outline">
+    <a href="/post/mouse-human-transcriptomics-and-batch-effects/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
@@ -786,8 +785,6 @@ There are some detractors, and they may have some valid points link. However, th
         
           
       
-          
-      
 
       
       
@@ -798,7 +795,7 @@ There are some detractors, and they may have some valid points link. However, th
   
   
   <h3 class="article-title" itemprop="name">
-    <a href="/post/portable-peronal-packages/" itemprop="url">Portable, Peronal Packages</a>
+    <a href="/post/first-open-post-publication-peer-review-with-credit/" itemprop="url">First Open Post-Publication Peer Review, with Credit!</a>
   </h3>
   
 
@@ -806,80 +803,8 @@ There are some detractors, and they may have some valid points link. However, th
 
   <span class="article-date">
     
-    <time datetime="2013-09-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2013-09-23
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    ProgrammingR had an interesting post recently about keeping a set of R functions that are used often as a gist on Github, and sourceing that file at the beginning of R analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement unit testing.
-However, the best way to have sets of R functions is as a package, that can then be installed and loaded by anyone.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/portable-peronal-packages/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/k-12-wants-scientists/" itemprop="url">K-12 Wants Scientists!!</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2013-09-19 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2013-09-19
+    <time datetime="2015-03-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2015-03-25
     </time>
   </span>
 
@@ -904,12 +829,81 @@ However, the best way to have sets of R functions is as a package, that can then
 
   <div class="article-style" itemprop="articleBody">
     
-    It seems that the PostDoc committee here at UK has an interest in providing some information on alternative careers for PostDocs outside of academia. We all know that there are not enough PI slots at universities for all of the PhDs who are going on to do PostDocs, and many will end up in alternative (I use that term loosely) careers.
-Yesterday (2013-09-18), Scott Diamond gave a seminar to PostDocs in the Medical Center at UK on getting involved in teaching science at the K-12 and college level.
+    TL;DR Reviewed Jason McDermott’s MDRPred paper on F1000Research!, where my review is posted along side the paper, with a DOI, completely in the open with my name attached. Was a pleasant experience, aided by the fact that Jason wrote a good paper.
+ F1000Research! F1000Research! is a new publishing startup from F1000 that has a model of post-publication peer review, whereby upon submission the manuscript undergoes basic quality checks (no real editorial control), and then is published.
     
   </div>
   <p class="read-more">
-    <a href="/post/k-12-wants-scientists/" class="btn btn-primary btn-outline">
+    <a href="/post/first-open-post-publication-peer-review-with-credit/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
+          
+      
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost">
+  
+  
+  <h3 class="article-title" itemprop="name">
+    <a href="/post/being-a-phd-student-and-post-doc-with-migraines/" itemprop="url">Being a PhD Student and Post-Doc with Migraines</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2014-12-31 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2014-12-31
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    9 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    A blog post on the Weecology group blog by Elita Baldridge on being a PhD student with fibromyalgia, and how they are working through that, caused me to pause and reflect on my experience as a PhD student and PostDoc with migraines. For those who haven’t read my blog, I do research in bioinformatics, specifically in transcriptomics and metabolomics. I spend almost all of my research hours in front of a computer writing code, generating plots, and trying to make sense of -omics level data.
+    
+  </div>
+  <p class="read-more">
+    <a href="/post/being-a-phd-student-and-post-doc-with-migraines/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
@@ -1102,7 +1096,14 @@ for comparing -omics data using annotations.</p>
           
           
           
-          <a href="/tags/r" style="font-size:2.432429365241517rem">R</a>
+          <a href="/tags/matlab" style="font-size:0.8rem">MatLab</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/r" style="font-size:2.4708923920776846rem">R</a>
         
           
           
@@ -1116,14 +1117,28 @@ for comparing -omics data using annotations.</p>
           
           
           
-          <a href="/tags/bioconductor" style="font-size:1.2914102047404095rem">bioconductor</a>
+          <a href="/tags/bioconductor" style="font-size:1.4234338452815438rem">bioconductor</a>
         
           
           
           
           
           
-          <a href="/tags/blogdown" style="font-size:1.2914102047404095rem">blogdown</a>
+          <a href="/tags/bioinformatics" style="font-size:0.8rem">bioinformatics</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/blogdown" style="font-size:1.1933429623715908rem">blogdown</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/career" style="font-size:0.8rem">career</a>
         
           
           
@@ -1131,6 +1146,34 @@ for comparing -omics data using annotations.</p>
           
           
           <a href="/tags/cdf" style="font-size:0.8rem">cdf</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/development" style="font-size:1.1933429623715908rem">development</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/documentation" style="font-size:0.8rem">documentation</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/git" style="font-size:0.8rem">git</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/github" style="font-size:0.8rem">github</a>
         
           
           
@@ -1151,7 +1194,21 @@ for comparing -omics data using annotations.</p>
           
           
           
+          <a href="/tags/learning" style="font-size:0.8rem">learning</a>
+        
+          
+          
+          
+          
+          
           <a href="/tags/literate-programming" style="font-size:0.8rem">literate-programming</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/meta-analysis" style="font-size:0.8rem">meta-analysis</a>
         
           
           
@@ -1165,6 +1222,13 @@ for comparing -omics data using annotations.</p>
           
           
           
+          <a href="/tags/migraines" style="font-size:0.8rem">migraines</a>
+        
+          
+          
+          
+          
+          
           <a href="/tags/notebooks" style="font-size:0.8rem">notebooks</a>
         
           
@@ -1172,21 +1236,28 @@ for comparing -omics data using annotations.</p>
           
           
           
-          <a href="/tags/open-science" style="font-size:1.7828204094808187rem">open-science</a>
+          <a href="/tags/open-science" style="font-size:1.9800288871147718rem">open-science</a>
         
           
           
           
           
           
-          <a href="/tags/packages" style="font-size:1.2914102047404095rem">packages</a>
+          <a href="/tags/packages" style="font-size:1.9042533014706038rem">packages</a>
         
           
           
           
           
           
-          <a href="/tags/post-doc" style="font-size:0.8rem">post-doc</a>
+          <a href="/tags/phdisabled" style="font-size:0.8rem">phdisabled</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/post-doc" style="font-size:1.1933429623715908rem">post-doc</a>
         
           
           
@@ -1200,7 +1271,7 @@ for comparing -omics data using annotations.</p>
           
           
           
-          <a href="/tags/publications" style="font-size:0.8rem">publications</a>
+          <a href="/tags/publications" style="font-size:1.1933429623715908rem">publications</a>
         
           
           
@@ -1214,7 +1285,7 @@ for comparing -omics data using annotations.</p>
           
           
           
-          <a href="/tags/reproducibility" style="font-size:1.2914102047404095rem">reproducibility</a>
+          <a href="/tags/reproducibility" style="font-size:1.5866859247431813rem">reproducibility</a>
         
           
           
@@ -1235,7 +1306,49 @@ for comparing -omics data using annotations.</p>
           
           
           
+          <a href="/tags/software-carpentry" style="font-size:0.8rem">software-carpentry</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/structural-biochemistry" style="font-size:0.8rem">structural-biochemistry</a>
+        
+          
+          
+          
+          
+          
           <a href="/tags/teaching" style="font-size:0.8rem">teaching</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/twitter" style="font-size:0.8rem">twitter</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/vignettes" style="font-size:1.1933429623715908rem">vignettes</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/visualization" style="font-size:0.8rem">visualization</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/zinc" style="font-size:0.8rem">zinc</a>
         
       </div>
     

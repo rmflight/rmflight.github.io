@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/random-forest-vs-pls-on-random-data/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/random-forest-vs-pls-on-random-data/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/random-forest-vs-pls-on-random-data/">
+  <meta property="og:title" content="Random Forest vs PLS on Random Data | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2015-12-12T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2015-12-12T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Random Forest vs PLS on Random Data | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Random Forest vs PLS on Random Data</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2015-12-12 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2015-12-12
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    10 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Random%20Forest%20vs%20PLS%20on%20Random%20Data&amp;url=%2fpost%2frandom-forest-vs-pls-on-random-data%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2frandom-forest-vs-pls-on-random-data%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2frandom-forest-vs-pls-on-random-data%2f&amp;title=Random%20Forest%20vs%20PLS%20on%20Random%20Data"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2frandom-forest-vs-pls-on-random-data%2f&amp;title=Random%20Forest%20vs%20PLS%20on%20Random%20Data"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Random%20Forest%20vs%20PLS%20on%20Random%20Data&amp;body=%2fpost%2frandom-forest-vs-pls-on-random-data%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="tldr" class="section level2">
+<h2>TL;DR</h2>
+<p>Partial least squares (PLS) discriminant-analysis (DA) can ridiculously over fit even on completely random data. The quality of the PLS-DA model can be assessed using cross-validation, but cross-validation is not typically performed in many metabolomics publications. Random forest, in contrast, because of the <em>forest</em> of decision tree learners, and the out-of-bag (OOB) samples used for testing each tree, automatically provides an indication of the quality of the model.</p>
+</div>
+<div id="why" class="section level2">
+<h2>Why?</h2>
+<p>I’ve recently been working on some machine learning work using <strong>random forests</strong> (RF) <a href="https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf">Breimann, 2001</a> on metabolomics data. This has been relatively successful, with decent sensitivity and specificity, and hopefully I’ll be able to post more soon. However, PLS (Wold, 1975) is a standard technique used in metabolomics due to the prevalence of analytical chemists in metabolomics and a long familiarity with the method. Importantly, my collaborators frequently use PLS-DA to generate plots to show that the various classes of samples are separable.</p>
+<p>However, it has long been known that PLS (and all of it’s variants, PLS-DA, OPLS, OPLS-DA, etc) can easily generate models that over fit the data, and that over fitting of the model needs to be assessed if the model is going to be used in subsequent analyses.</p>
+</div>
+<div id="random-data" class="section level2">
+<h2>Random Data</h2>
+<p>To illustrate the behavior of both RF and PLS-DA, we will generate some random data where each of the samples are randomly assigned to one of two classes.</p>
+<div id="feature-intensities" class="section level3">
+<h3>Feature Intensities</h3>
+<p>We will generate a data set with 1000 features, where each feature’s mean value is from a uniform distribution with a range of 1-10000.</p>
+<pre class="r"><code>library(cowplot)</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     ggsave</code></pre>
+<pre class="r"><code>library(fakeDataWithError)
+set.seed(1234)
+n_point &lt;- 1000
+max_value &lt;- 10000
+init_values &lt;- runif(n_point, 0, max_value)</code></pre>
+<pre class="r"><code>init_data &lt;- data.frame(data = init_values)
+ggplot(init_data, aes(x = data)) + geom_histogram() + ggtitle(&quot;Initial Data&quot;)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_initial-1.png" width="672" /></p>
+<p>For each of these features, their distribution across samples will be based on a random normal distribution where the mean is the initial feature value and a standard deviation of 200. The number of samples is 100.</p>
+<pre class="r"><code>n_sample &lt;- 100
+error_values &lt;- add_uniform_noise(n_sample, init_values, 200)</code></pre>
+<p>Just for information, the <code>add_uniform_noise</code> function is this:</p>
+<pre class="r"><code>add_uniform_noise</code></pre>
+<pre><code>## function (n_rep, value, sd, use_zero = FALSE) 
+## {
+##     n_value &lt;- length(value)
+##     n_sd &lt;- n_rep * n_value
+##     out_sd &lt;- rnorm(n_sd, 0, sd)
+##     out_sd &lt;- matrix(out_sd, nrow = n_value, ncol = n_rep)
+##     if (!use_zero) {
+##         tmp_value &lt;- matrix(value, nrow = n_value, ncol = n_rep, 
+##             byrow = FALSE)
+##         out_value &lt;- tmp_value + out_sd
+##     }
+##     else {
+##         out_value &lt;- out_sd
+##     }
+##     return(out_value)
+## }
+## &lt;environment: namespace:fakeDataWithError&gt;</code></pre>
+<p>I created it as part of a package that is able to add different kinds of noise to data.</p>
+<p>The distribution of values for a single feature looks like this:</p>
+<pre class="r"><code>error_data &lt;- data.frame(feature_1 = error_values[1,])
+ggplot(error_data, aes(x = feature_1)) + geom_histogram() + ggtitle(&quot;Error Data&quot;)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_error-1.png" width="672" /></p>
+<p>And we will assign the first 50 samples to <strong>class_1</strong> and the second 50 samples to <strong>class_2</strong>.</p>
+<pre class="r"><code>sample_class &lt;- rep(c(&quot;class_1&quot;, &quot;class_2&quot;), each = 50)
+sample_class</code></pre>
+<pre><code>##   [1] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##   [8] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##  [15] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##  [22] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##  [29] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##  [36] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##  [43] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
+##  [50] &quot;class_1&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [57] &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [64] &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [71] &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [78] &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [85] &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [92] &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot; &quot;class_2&quot;
+##  [99] &quot;class_2&quot; &quot;class_2&quot;</code></pre>
+</div>
+</div>
+<div id="pca" class="section level2">
+<h2>PCA</h2>
+<p>Just to show that the data is pretty random, lets use principal components analysis (PCA) to do a decomposition, and plot the first two components:</p>
+<pre class="r"><code>tmp_pca &lt;- prcomp(t(error_values), center = TRUE, scale. = TRUE)
+pca_data &lt;- as.data.frame(tmp_pca$x[, 1:2])
+pca_data$class &lt;- as.factor(sample_class)
+ggplot(pca_data, aes(x = PC1, y = PC2, color = class)) + geom_point(size = 4)</code></pre>
+<p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/pca_data-1.png" width="672" /></p>
+</div>
+<div id="random-forest" class="section level2">
+<h2>Random Forest</h2>
+<p>Let’s use RF first, and see how things look.</p>
+<pre class="r"><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-12</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
+<pre class="r"><code>rf_model &lt;- randomForest(t(error_values), y = as.factor(sample_class))</code></pre>
+<p>The confusion matrix comparing actual <em>vs</em> predicted classes based on the out of bag (OOB) samples:</p>
+<pre class="r"><code>knitr::kable(rf_model$confusion)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">class_1</th>
+<th align="right">class_2</th>
+<th align="right">class.error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>class_1</td>
+<td align="right">28</td>
+<td align="right">22</td>
+<td align="right">0.44</td>
+</tr>
+<tr class="even">
+<td>class_2</td>
+<td align="right">23</td>
+<td align="right">27</td>
+<td align="right">0.46</td>
+</tr>
+</tbody>
+</table>
+<p>And an overall error of 0.4866246.</p>
+</div>
+<div id="pls-da" class="section level2">
+<h2>PLS-DA</h2>
+<p>So PLS-DA is really just PLS with <strong>y</strong> variable that is binary.</p>
+<pre class="r"><code>library(caret)</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre class="r"><code>pls_model &lt;- plsda(t(error_values), as.factor(sample_class), ncomp = 2)
+pls_scores &lt;- data.frame(comp1 = pls_model$scores[,1], comp2 = pls_model$scores[,2], class = sample_class)</code></pre>
+<p>And plot the PLS scores:</p>
+<pre class="r"><code>ggplot(pls_scores, aes(x = comp1, y = comp2, color = class)) + geom_point(size = 4) + ggtitle(&quot;PLS-DA of Random Data&quot;)</code></pre>
+<p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_plsda-1.png" width="672" /></p>
+<p>And voila! Perfectly separated data! If I didn’t tell you that it was random, would you suspect it?</p>
+</div>
+<div id="cross-validated-pls-da" class="section level2">
+<h2>Cross-validated PLS-DA</h2>
+<p>Of course, one way to truly assess the worth of the model would be to use cross-validation, where a fraction of data is held back, and the model trained on the rest. Predictions are then made on the held back fraction, and because we know the truth, we will then calculate the <strong>area under the reciever operator curve</strong> (AUROC) or area under the curve (AUC) created by plotting true positives <em>vs</em> false positives.</p>
+<p>To do this we will need two functions:</p>
+<ol style="list-style-type: decimal">
+<li>Generates all of the CV folds</li>
+<li>Generates PLS-DA model, does prediction on hold out, calculates AUC</li>
+</ol>
+<pre class="r"><code>library(cvTools)</code></pre>
+<pre><code>## Loading required package: robustbase</code></pre>
+<pre class="r"><code>library(ROCR)</code></pre>
+<pre><code>## Loading required package: gplots</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     lowess</code></pre>
+<pre class="r"><code>gen_cv &lt;- function(xdata, ydata, nrep, kfold){
+  n_sample &lt;- length(ydata)
+  all_index &lt;- seq(1, n_sample)
+  cv_data &lt;- cvFolds(n_sample, K = kfold, R = nrep, type = &quot;random&quot;)
+  
+  rep_values &lt;- vapply(seq(1, nrep), function(in_rep){
+    use_rep &lt;- cv_data$subsets[, in_rep]
+    cv_values &lt;- vapply(seq(1, kfold), function(in_fold){
+      test_index &lt;- use_rep[cv_data$which == in_fold]
+      train_index &lt;- all_index[-test_index]
+      
+      plsda_cv(xdata[train_index, ], ydata[train_index], xdata[test_index, ],
+               ydata[test_index])
+    }, numeric(1))
+  }, numeric(kfold))
+}
+
+plsda_cv &lt;- function(xtrain, ytrain, xtest, ytest){
+  pls_model &lt;- plsda(xtrain, ytrain, ncomp = 2)
+  pls_pred &lt;- predict(pls_model, xtest, type = &quot;prob&quot;)
+  
+  use_pred &lt;- pls_pred[, 2, 1]
+  
+  pred_perf &lt;- ROCR::prediction(use_pred, ytest)
+  pred_auc &lt;- ROCR::performance(pred_perf, &quot;auc&quot;)@y.values[[1]]
+  return(pred_auc)
+}</code></pre>
+<p>And now lets do a bunch of replicates (100).</p>
+<pre class="r"><code>cv_vals &lt;- gen_cv(t(error_values), factor(sample_class), nrep = 100, kfold = 5)
+
+mean(cv_vals)</code></pre>
+<pre><code>## [1] 0.4182644</code></pre>
+<pre class="r"><code>sd(cv_vals)</code></pre>
+<pre><code>## [1] 0.1086778</code></pre>
+<pre class="r"><code>cv_frame &lt;- data.frame(auc = as.vector(cv_vals))
+ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)</code></pre>
+<p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/rep_plsda-1.png" width="672" /></p>
+<p>So we get an average AUC of 0.4182644, which is pretty awful. This implies that even though there was good separation on the scores, maybe the model is not actually that good, and we should be cautious of any predictions being made.</p>
+<p>Of course, the PCA at the beginning of the analysis shows that there is no <em>real</em> separation in the data in the first place.</p>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## Session info -------------------------------------------------------------</code></pre>
+<pre><code>##  setting  value                       
+##  version  R version 3.4.2 (2017-09-28)
+##  system   x86_64, linux-gnu           
+##  ui       X11                         
+##  language en_US                       
+##  collate  en_US.UTF-8                 
+##  tz       posixrules                  
+##  date     2017-12-28</code></pre>
+<pre><code>## Packages -----------------------------------------------------------------</code></pre>
+<pre><code>##  package           * version    date      
+##  assertthat          0.2.0      2017-04-11
+##  backports           1.1.1      2017-09-25
+##  base              * 3.4.2      2017-10-10
+##  bindr               0.1        2016-11-13
+##  bindrcpp            0.2        2017-06-17
+##  bitops              1.0-6      2013-08-17
+##  blogdown            0.4        2017-12-12
+##  bookdown            0.5        2017-08-20
+##  caret             * 6.0-77     2017-09-07
+##  caTools             1.17.1     2014-09-10
+##  class               7.3-14     2015-08-30
+##  codetools           0.2-15     2016-10-05
+##  colorspace          1.3-2      2016-12-14
+##  compiler            3.4.2      2017-10-10
+##  cowplot           * 0.9.1      2017-11-16
+##  CVST                0.2-1      2013-12-10
+##  cvTools           * 0.3.2      2012-05-14
+##  datasets          * 3.4.2      2017-10-10
+##  ddalpha             1.3.1      2017-09-27
+##  DEoptimR            1.0-8      2016-11-19
+##  devtools            1.13.3     2017-08-02
+##  digest              0.6.12     2017-01-27
+##  dimRed              0.1.0      2017-05-04
+##  dplyr               0.7.4      2017-09-28
+##  DRR                 0.0.2      2016-09-15
+##  evaluate            0.10.1     2017-06-24
+##  fakeDataWithError * 0.0.1      2017-12-29
+##  foreach             1.4.3      2015-10-13
+##  gdata               2.18.0     2017-06-06
+##  ggplot2           * 2.2.1.9000 2017-12-13
+##  glue                1.1.1      2017-06-21
+##  gower               0.1.2      2017-02-23
+##  gplots            * 3.0.1      2016-03-30
+##  graphics          * 3.4.2      2017-10-10
+##  grDevices         * 3.4.2      2017-10-10
+##  grid                3.4.2      2017-10-10
+##  gtable              0.2.0      2016-02-26
+##  gtools              3.5.0      2015-05-29
+##  highr               0.6        2016-05-09
+##  htmltools           0.3.6      2017-04-28
+##  ipred               0.9-6      2017-03-01
+##  iterators           1.0.8      2015-10-13
+##  kernlab             0.9-25     2016-10-03
+##  KernSmooth          2.23-15    2015-06-29
+##  knitr               1.17       2017-08-10
+##  labeling            0.3        2014-08-23
+##  lattice           * 0.20-35    2017-03-25
+##  lava                1.5.1      2017-09-27
+##  lazyeval            0.2.1      2017-10-29
+##  lubridate           1.7.1      2017-11-03
+##  magrittr            1.5        2014-11-22
+##  MASS                7.3-47     2017-04-21
+##  Matrix              1.2-11     2017-08-16
+##  memoise             1.1.0      2017-04-21
+##  methods           * 3.4.2      2017-10-10
+##  ModelMetrics        1.1.0      2016-08-26
+##  munsell             0.4.3      2016-02-13
+##  nlme                3.1-131    2017-02-06
+##  nnet                7.3-12     2016-02-02
+##  pkgconfig           2.0.1      2017-12-07
+##  pls                 2.6-0      2016-12-18
+##  plyr                1.8.4      2016-06-08
+##  prodlim             1.6.1      2017-03-06
+##  purrr               0.2.4      2017-10-18
+##  R6                  2.2.2      2017-06-17
+##  randomForest      * 4.6-12     2015-10-07
+##  Rcpp                0.12.14    2017-11-23
+##  RcppRoll            0.2.2      2015-04-05
+##  recipes             0.1.0      2017-07-27
+##  reshape2            1.4.3      2017-12-11
+##  rlang               0.1.2      2017-08-09
+##  rmarkdown           1.8        2017-11-17
+##  robustbase        * 0.92-7     2016-12-09
+##  ROCR              * 1.0-7      2015-03-26
+##  rpart               4.1-11     2017-04-21
+##  rprojroot           1.2        2017-01-16
+##  scales              0.5.0.9000 2017-10-12
+##  sfsmisc             1.1-1      2017-06-08
+##  splines             3.4.2      2017-10-10
+##  stats             * 3.4.2      2017-10-10
+##  stats4              3.4.2      2017-10-10
+##  stringi             1.1.5      2017-04-07
+##  stringr             1.2.0      2017-02-18
+##  survival            2.41-3     2017-04-04
+##  tibble              1.3.4      2017-08-22
+##  timeDate            3012.100   2015-01-23
+##  tools               3.4.2      2017-10-10
+##  utils             * 3.4.2      2017-10-10
+##  withr               2.1.0.9000 2017-12-05
+##  yaml                2.1.15     2017-12-01
+##  source                                     
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  cran (@0.9.1)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (rmflight/fakeDataWithError@ccd8714)
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (tidyverse/ggplot2@bfff1d8)         
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  local                                      
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@0.2.1)                              
+##  cran (@1.7.1)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (gaborcsardi/pkgconfig@96a1413)     
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@0.2.4)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@0.12.14)                            
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  cran (@1.4.3)                              
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  Github (hadley/scales@d767915)             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  local                                      
+##  local                                      
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.4.2)                             
+##  local                                      
+##  local                                      
+##  Github (jimhester/withr@fe81c00)           
+##  cran (@2.1.15)</code></pre>
+</div>
+
+      </div>
+
+      
+
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

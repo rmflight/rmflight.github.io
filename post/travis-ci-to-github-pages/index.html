@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/travis-ci-to-github-pages/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/travis-ci-to-github-pages/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/travis-ci-to-github-pages/">
+  <meta property="og:title" content="Travis-CI to GitHub Pages | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2014-11-05T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2014-11-05T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Travis-CI to GitHub Pages | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Travis-CI to GitHub Pages</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2014-11-05 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2014-11-05
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Travis-CI%20to%20GitHub%20Pages&amp;url=%2fpost%2ftravis-ci-to-github-pages%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2ftravis-ci-to-github-pages%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2ftravis-ci-to-github-pages%2f&amp;title=Travis-CI%20to%20GitHub%20Pages"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2ftravis-ci-to-github-pages%2f&amp;title=Travis-CI%20to%20GitHub%20Pages"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Travis-CI%20to%20GitHub%20Pages&amp;body=%2fpost%2ftravis-ci-to-github-pages%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <p>I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing <code>R</code> package vignettes to the web after building and checking on <em>travis-ci</em>. <a href="https://twitter.com/hadleywickham">Hadley Wickham</a> pointed to using such a scheme to push the web version of his book after each update and the <code>S3</code> deploy hooks on <em>travis-ci</em>. Deploying your html content to <code>S3</code> is great, but given the availability of the <code>gh-pages</code> branch on GitHub, I thought it would be neat to work out how to deploy the html output from an <code>R</code> package vignette to the <code>gh-pages</code> branch on GitHub. This is useful because more and more packages are being hosted only on GitHub and building and testing use the <em>travis-ci</em> service, and it takes work to remember to <code>knit</code> and push stuff separately to the <code>gh-pages</code> branch. In addition, although it is possible to <code>deploy</code> one’s html output to other services from within <em>travis-ci</em>, there is not an <strong>easy</strong> pushbutton solution to deploying to GitHub pages. After some searching and looking, this is what I have come up with for my own package.</p>
+<p>All subsequent steps assume that:</p>
+<ul>
+<li>You are hosting your package development on GitHub</li>
+<li>You have html content in the <em>gh-pages</em> branch of your package repo (see more about <em>gh-pages</em> <a href="https://help.github.com/articles/creating-project-pages-manually/">here</a> and <a href="https://help.github.com/categories/github-pages-basics/">here</a>)</li>
+<li>You already have your package doing building and testing using <em>travis-ci</em>. See the <a href="https://github.com/craigcitro/r-travis"><code>r-travis</code></a> project for more information on how to set this up.</li>
+</ul>
+<div id="oauth" class="section level2">
+<h2>OAUTH</h2>
+<p>To start, you will need to generate an <code>OAUTH</code> token on GitHub that will be used to allow you to push back to your GitHub repo. This will be some really long alphanumeric string. You can generate one by going to <code>settings</code> -&gt; <code>applications</code> -&gt; <code>personal access tokens</code> -&gt; <code>generate new token</code>. Make sure to copy this into a file that is <strong>not</strong> under version control.</p>
+<p>You will also need to install the <code>travis</code> ruby framework.</p>
+<pre><code>gem install travis</code></pre>
+<p>After installing, navigate to your <code>git</code> repo for the project you want to enable automatic pushing of content for, and then login to <em>travis-ci</em> and secure the GitHub token.</p>
+<pre><code>travis login
+
+travis encrypt GH_TOKEN=&quot;yourgithubtoken&quot;</code></pre>
+<p>This will generate output that should be copied to your <code>.travis.yml</code> file. Essentially we have created an environment variable <code>GH_TOKEN</code> with your actual GitHub token, that is encrypted on the <em>travis-ci</em> servers. So this way you don’t expose your actual GitHub token to anyone who looks at your <code>.travis.yml</code> file.</p>
+</div>
+<div id="deploy-script" class="section level2">
+<h2>Deploy Script</h2>
+<p>We also need a bash script that will actually push the content for us. As part of the <code>R</code> process on <em>travis-ci</em>, we get a <code>tar.gz</code> file of the package with the compiled vignette. So we just need to <code>untar</code> that file, copy the html file, and create the <code>git</code> repo and push. The code below is what I have done for my own package, <a href="https://github.com/rmflight/categoryCompare"><code>categoryCompare</code></a>. I saved this code in the file <code>.push_gh_pages.sh</code>.</p>
+<pre><code>#!/bin/bash
+
+rm -rf out || exit 0;
+mkdir out;
+
+GH_REPO=&quot;@github.com/rmflight/categoryCompare.git&quot;
+
+FULL_REPO=&quot;https://$GH_TOKEN$GH_REPO&quot;
+
+for files in &#39;*.tar.gz&#39;; do
+        tar xfz $files
+done
+
+cd out
+git init
+git config user.name &quot;rmflight-travis&quot;
+git config user.email &quot;travis&quot;
+cp ../categoryCompare/inst/doc/categoryCompare_vignette.html index.html
+
+git add .
+git commit -m &quot;deployed to github pages&quot;
+git push --force --quiet $FULL_REPO master:gh-pages</code></pre>
+<p>Note that we remove the directory where we want to create our <code>git</code> repo, create it, setup the <code>remote</code> repo with the token string, and then we <code>untar</code> and <code>unzip</code> the previously built package, and copy over the file that we want to be the index.html page on the <code>gh-pages</code> branch. Finally we add it, commit it, and do a force push.</p>
+<p>This script is actually part of the package repo, but does not get included in the built <code>tar.gz</code> file (add it to <code>.Rbuildignore</code>). This makes it easy to keep it in sync with any changes to the overall package itself.</p>
+<p>Note that this is completely overriding the current contents of the <code>gh-pages</code> branch. If you wanted to do something nicer (<em>i.e.</em> preserving commits or working with an index page pointing to multiple vignettes), you could <code>pull</code> just the <code>gh-pages</code> branch first, and then make modifications.</p>
+</div>
+<div id="modifying-.travis.yml" class="section level2">
+<h2>Modifying .travis.yml</h2>
+<p>In addition, we need to add three lines to the <code>.travis.yml</code> file.</p>
+<pre><code># under env: global:
+  - secure: &quot;yoursecurestring&quot;
+
+# under before_install:
+  - chmod 755 ./.push_gh_pages.sh
+
+# under after_success:
+  - ./.push_gh_pages.sh</code></pre>
+<ul>
+<li>Adding the <code>GH_TOKEN</code> to the global environment variables</li>
+<li>Making the deploy script executable</li>
+<li>Adding the running of the deploy script <code>after_success</code>, so only when build and check and tests run successfully</li>
+</ul>
+<p>And it seems to work quite nicely. As an example, my <a href="https://github.com/rmflight/categoryCompare"><code>categoryCompare</code></a> package now has it’s vignette on the <a href="http://rmflight.github.io/categoryCompare/"><code>gh-pages</code> branch</a>, and this will get updated every time I push a commit.</p>
+</div>
+<div id="update" class="section level2">
+<h2>Update</h2>
+<p>As <a href="https://twitter.com/cpsievert">Carson</a> pointed out below, there was an error in the second code block. <code>travis secure</code> should be <code>travis encrypt</code>, as you are <strong>encrypting</strong> the credentials. <strong>secure</strong> is for decrypting something that was already encrypted. Thanks for catching it!</p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/reproducibility">reproducibility</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></li>
+    
+    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    
+    <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
+    
+    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
+    
+    <li><a href="/post/r-job-notifications-using-twitter/">R Job Notifications Using Twitter</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+
