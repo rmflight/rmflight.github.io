@@ -11,6 +11,57 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>docopt &amp; Numeric Options</title>
+      <link>/post/docopt-numeric-options/</link>
+      <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/docopt-numeric-options/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you use the &lt;code&gt;docopt&lt;/code&gt; package to create command line &lt;code&gt;R&lt;/code&gt; executables that take options, there is something to know about numeric command line options: they should have &lt;code&gt;as.double&lt;/code&gt; before using them in your script.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Setup&lt;/h2&gt;
+&lt;p&gt;Lets set up a new &lt;code&gt;docopt&lt;/code&gt; string, that includes both string and numeric arguments.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;quot;
+Usage:
+  test_numeric.R [--string=&amp;lt;string_value&amp;gt;] [--numeric=&amp;lt;numeric_value&amp;gt;]
+  test_numeric.R (-h | --help)
+  test_numeric.R
+
+Description: Testing how values are passed using docopt.
+
+Options:
+  --string=&amp;lt;string_value&amp;gt;  A string value [default: Hi!]
+  --numeric=&amp;lt;numeric_value&amp;gt;   A numeric value [default: 10]
+
+&amp;quot; -&amp;gt; doc&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(methods)
+library(docopt)
+
+script_options &amp;lt;- docopt(doc)
+
+script_options&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## List of 8
+##  $ --string : chr &amp;quot;Hi!&amp;quot;
+##  $ --numeric: chr &amp;quot;10&amp;quot;
+##  $ -h       : logi FALSE
+##  $ --help   : logi FALSE
+##  $ string   : chr &amp;quot;Hi!&amp;quot;
+##  $ numeric  : chr &amp;quot;10&amp;quot;
+##  $ h        : logi FALSE
+##  $ help     : logi FALSE
+## NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is very easy to see here, that the &lt;code&gt;numeric&lt;/code&gt; argument is indeed a string, and if you want to use it as numeric, it should first be converted using &lt;code&gt;as.double&lt;/code&gt;, &lt;code&gt;as.integer&lt;/code&gt;, or even &lt;code&gt;as.numeric&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cant-you-easily-tell-its-character&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Can’t You Easily Tell It’s Character?&lt;/h2&gt;
+&lt;p&gt;I just bring this up because I recently used &lt;code&gt;docopt&lt;/code&gt; to provide interfaces to three executables scripts, and I spent a lot of time &lt;code&gt;printing&lt;/code&gt; the &lt;code&gt;doc&lt;/code&gt; strings, and I somehow never noticed that the numeric values were actually character and needed to be converted to a numeric first. Hopefully this will save someone else some time in that regard.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Custom Deployment Script</title>
       <link>/post/custom-deployment-script/</link>
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
@@ -975,63 +1026,6 @@ git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When I started my second PostDoc position (transitioning from transcriptomics to metabolomics), I was up front with my supervisor that I did not feel that I was the type of person who could manage their own lab with independent funding, but that I wanted to find a place where I could stay on as staff while contributing research. My PI was sympathetic, and we worked well together, so he was immediately amenable to that, as long as the funding situation would provide.&lt;/p&gt;
 &lt;p&gt;Fortunately, within a year of joining the lab, we and our collaborators landed a large center grant that provides stable funding for 5 years, and everyone involved (my PI, the other PI’s, myself) would be happy if I stayed on as staff after my time as a PostDoc. Already, as a PostDoc in this group I have a lot of latitude and freedom to pursue avenues of research, as long as they are somehow aligned with the overall goals of the lab. I am also finding myself involved in supervising various undergraduate and graduate projects, as well as proposing new avenues for research.&lt;/p&gt;
 &lt;p&gt;I know the opportunity to stay on as staff in a research group is relatively rare in the current funding climate, and my job will be largely to develop novel methods and software to advance our understanding of metabolism in various biological states, as well as provide means to secure additional funding for the lab.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Analyses as Packages</title>
-      <link>/post/analyses-as-packages/</link>
-      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/analyses-as-packages/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Instead of writing an analysis as a single or set of &lt;code&gt;R&lt;/code&gt; scripts, use a &lt;code&gt;package&lt;/code&gt; and include the analysis as a &lt;code&gt;vignette&lt;/code&gt; of the package. Read below for the why, the &lt;a href=&#34;/post/vignette-analysis&#34;&gt;how is in the next post&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;analyses-and-reports&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Analyses and Reports&lt;/h2&gt;
-&lt;p&gt;As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work. As I have continued working in &lt;code&gt;R&lt;/code&gt;, I have progressed from having a simple &lt;code&gt;.R&lt;/code&gt; script (or collection of related scripts) to using a package to structure as much of my research as possible, including analyses that generate reports.&lt;/p&gt;
-&lt;p&gt;Note that I have been meaning to write this post for a while, but the tipping point was seeing &lt;a href=&#34;https://twitter.com/hspter/statuses/489075887460339712&#34;&gt;these tweets&lt;/a&gt; from &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/dnusinow&#34;&gt;David Nusinow&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I am all about the many short scripts rather than one long script when doing an analysis. I think I am alone here.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-packages&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why Packages&lt;/h2&gt;
-&lt;p&gt;Packages are &lt;code&gt;R&lt;/code&gt;’s method for sharing code in a sensible way, making it possible for others to easily (more often than not) use functions that you have written (I’m looking at you &lt;code&gt;python&lt;/code&gt;!). Why not use them? They also give you access to &lt;code&gt;R&lt;/code&gt;’s facilities for documentation and sharing computable documents. &lt;a href=&#34;https://twitter.com/hadleywickham&#34;&gt;Hadley Wickham&lt;/a&gt; has a nice section on packages in his &lt;a href=&#34;http://adv-r.had.co.nz/Philosophy.html&#34;&gt;Advanced R&lt;/a&gt; book.&lt;/p&gt;
-&lt;p&gt;I use a lot of Hadley’s packages in the following sections, because they are useful, and promote practices that make it extremely practical to use packages as a way to make an analysis a self-contained unit.&lt;/p&gt;
-&lt;p&gt;Duncan Murdoch has a nice slide deck on why to use packages and vignettes &lt;a href=&#34;http://www.stats.uwo.ca/faculty/murdoch/ism2013/5Vignettes.pdf&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;div id=&#34;structure&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Structure&lt;/h3&gt;
-&lt;p&gt;I want to breifly review the structure of package directories, you can read more about packages in Hadley’s book (link above), and in the official &lt;code&gt;R&lt;/code&gt; &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html&#34;&gt;documentation from &lt;code&gt;CRAN&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Packages impose a relatively simple structure on your project directory. &lt;code&gt;/R&lt;/code&gt; contains the &lt;code&gt;.R&lt;/code&gt; files with your actual functions, and &lt;code&gt;/data&lt;/code&gt; can contain any &lt;code&gt;.RData&lt;/code&gt; or &lt;code&gt;.rda&lt;/code&gt; files that you might need. Other data types (&lt;code&gt;.txt&lt;/code&gt;, &lt;code&gt;.tab&lt;/code&gt;, &lt;code&gt;.csv&lt;/code&gt;) can also go in &lt;code&gt;/data&lt;/code&gt;, or they may go in &lt;code&gt;/inst/extdata&lt;/code&gt;. Note that in &lt;code&gt;/inst/extdata&lt;/code&gt; you can specify any directory structure that seems appropriate.&lt;/p&gt;
-&lt;p&gt;Other required files are &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file&#34;&gt;&lt;code&gt;DESCRIPTION&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html#Package-namespaces&#34;&gt;&lt;code&gt;NAMESPACE&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;You may also have &lt;code&gt;.Rmd&lt;/code&gt; or &lt;code&gt;.Rnw&lt;/code&gt; / &lt;code&gt;.Rtex&lt;/code&gt; files in &lt;code&gt;/vignettes&lt;/code&gt; that generate &lt;code&gt;html&lt;/code&gt; or &lt;code&gt;pdf&lt;/code&gt; output that combines prose and &lt;code&gt;R&lt;/code&gt; code into a single document. This is where things get really interesting in being able to package up an analysis, especially when combined with functions.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;functions&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Functions&lt;/h3&gt;
-&lt;p&gt;Almost any analysis I have done involves writing at least one function, generally more, because I almost never do anything once in an analysis. Packages are &lt;strong&gt;the&lt;/strong&gt; primary method of sharing functions in &lt;code&gt;R&lt;/code&gt; that make sure that your functions play nice with the &lt;code&gt;R&lt;/code&gt; NAMESPACE, and allow one to define function dependencies from other packages. If you define a function in a package (and &lt;code&gt;export&lt;/code&gt; it), it immediately becomes re-usable in multiple analyses, without worrying about suffering from copypasta.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;function-documentation&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Function Documentation&lt;/h3&gt;
-&lt;p&gt;The easiest way to document functions is by using &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/index.html&#34;&gt;&lt;code&gt;roxygen2&lt;/code&gt;&lt;/a&gt; (see the intro &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html&#34;&gt;vignette&lt;/a&gt;). This allows you to worry about the documentation right next to the function itself, and not worry about writing separate documentation files in &lt;code&gt;/inst/doc&lt;/code&gt; (really, you don’t want to do it, I have, and it is painful). The &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html&#34;&gt;keywords&lt;/a&gt; in &lt;code&gt;roxygen2&lt;/code&gt; make sense, and are not hard to remember.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Data&lt;/h3&gt;
-&lt;p&gt;As mentioned above, you can include data with your package. The neat thing about including data, is you can document it and have that documentation available as part of the package.&lt;/p&gt;
-&lt;p&gt;I find it really useful to put any raw data that you want to work with in &lt;code&gt;/inst/extdata&lt;/code&gt; in whatever format it exists, and then process the data and save it as an &lt;code&gt;.RData&lt;/code&gt; file in &lt;code&gt;/data&lt;/code&gt;, with associated documentation. It is also really useful if part of the calculations are long running, then you can save the results as an associated data file, and simply load it when needed in the analysis.&lt;/p&gt;
-&lt;p&gt;Small note about documenting data sets. You put the &lt;code&gt;roxygen2&lt;/code&gt; comments in another file, and also need to provide &lt;code&gt;@name&lt;/code&gt; explicitly, and follow the documentation block with &lt;code&gt;NULL&lt;/code&gt;. Check the &lt;code&gt;roxygen2&lt;/code&gt; vignette “Generating Rd files” for a specific example.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-vignettes-as-a-reporting-method&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why Vignettes as a Reporting Method&lt;/h2&gt;
-&lt;p&gt;One great feature of packages is that one can include multiple &lt;code&gt;vignettes&lt;/code&gt;, long form text mixed with &lt;code&gt;code&lt;/code&gt; (and/or figures) to explain or highlight functionality in a package. Normally these are used to write tutorials, demonstrate features, or group together documentation that wouldn’t normally be together in the general documentation. However, there are no limits as to what can actually be contained within the &lt;code&gt;vignette&lt;/code&gt; as far as content, or how many &lt;code&gt;vignettes&lt;/code&gt; a package can have.&lt;/p&gt;
-&lt;p&gt;For packages hosted by CRAN, &lt;code&gt;vignettes&lt;/code&gt; are an optional component. However, the Bioconductor project requires that &lt;code&gt;vignettes&lt;/code&gt; be included in each package.&lt;/p&gt;
-&lt;p&gt;So, &lt;code&gt;R&lt;/code&gt; packages have a method to include long form prose that can be mixed with &lt;code&gt;R&lt;/code&gt; code directly as part of the package, within which you have already put your functions and associated data.&lt;/p&gt;
-&lt;p&gt;Prior to &lt;code&gt;R&lt;/code&gt; 3.0, one generally had to write vignettes using &lt;code&gt;sweave&lt;/code&gt;, a combination of &lt;code&gt;latex&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; code that generates a PDF file. However, since v3.0, it is possible to write vignettes using &lt;code&gt;R markdown&lt;/code&gt; (and actually some other markup formats), which generates HTML output. The advantages to using &lt;code&gt;R markdown&lt;/code&gt; over &lt;code&gt;sweave&lt;/code&gt; are that the syntax for writing &lt;code&gt;markdown&lt;/code&gt; is much simpler, and much more readable in it’s raw format.&lt;/p&gt;
-&lt;p&gt;Given that a package allows us to define sets of related functions, data, and documentation (with dependencies defined) all in one place that others can subsequently install and make use of and build on, why wouldn’t you want to use packages and vignettes to write long form analyses?&lt;/p&gt;
-&lt;p&gt;From some of my descriptions above, it may appear that this incurs some overhead. However, thanks to the &lt;strong&gt;#hadleyverse&lt;/strong&gt; and &lt;code&gt;rstudio&lt;/code&gt;, it is rather trivial (note that &lt;code&gt;rstudio&lt;/code&gt; is not essential, but I find it does make it easier). In my &lt;a href=&#34;/posts/2014/07/vignetteAnalysis.html&#34;&gt;next post&lt;/a&gt; I am going to give a worked example from start to finish of generating an analysis that is a vignette as part of a package.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

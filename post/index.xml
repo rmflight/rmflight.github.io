@@ -11,6 +11,57 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>docopt &amp; Numeric Options</title>
+      <link>/post/docopt-numeric-options/</link>
+      <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/docopt-numeric-options/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you use the &lt;code&gt;docopt&lt;/code&gt; package to create command line &lt;code&gt;R&lt;/code&gt; executables that take options, there is something to know about numeric command line options: they should have &lt;code&gt;as.double&lt;/code&gt; before using them in your script.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Setup&lt;/h2&gt;
+&lt;p&gt;Lets set up a new &lt;code&gt;docopt&lt;/code&gt; string, that includes both string and numeric arguments.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;quot;
+Usage:
+  test_numeric.R [--string=&amp;lt;string_value&amp;gt;] [--numeric=&amp;lt;numeric_value&amp;gt;]
+  test_numeric.R (-h | --help)
+  test_numeric.R
+
+Description: Testing how values are passed using docopt.
+
+Options:
+  --string=&amp;lt;string_value&amp;gt;  A string value [default: Hi!]
+  --numeric=&amp;lt;numeric_value&amp;gt;   A numeric value [default: 10]
+
+&amp;quot; -&amp;gt; doc&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(methods)
+library(docopt)
+
+script_options &amp;lt;- docopt(doc)
+
+script_options&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## List of 8
+##  $ --string : chr &amp;quot;Hi!&amp;quot;
+##  $ --numeric: chr &amp;quot;10&amp;quot;
+##  $ -h       : logi FALSE
+##  $ --help   : logi FALSE
+##  $ string   : chr &amp;quot;Hi!&amp;quot;
+##  $ numeric  : chr &amp;quot;10&amp;quot;
+##  $ h        : logi FALSE
+##  $ help     : logi FALSE
+## NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is very easy to see here, that the &lt;code&gt;numeric&lt;/code&gt; argument is indeed a string, and if you want to use it as numeric, it should first be converted using &lt;code&gt;as.double&lt;/code&gt;, &lt;code&gt;as.integer&lt;/code&gt;, or even &lt;code&gt;as.numeric&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cant-you-easily-tell-its-character&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Can’t You Easily Tell It’s Character?&lt;/h2&gt;
+&lt;p&gt;I just bring this up because I recently used &lt;code&gt;docopt&lt;/code&gt; to provide interfaces to three executables scripts, and I spent a lot of time &lt;code&gt;printing&lt;/code&gt; the &lt;code&gt;doc&lt;/code&gt; strings, and I somehow never noticed that the numeric values were actually character and needed to be converted to a numeric first. Hopefully this will save someone else some time in that regard.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Custom Deployment Script</title>
       <link>/post/custom-deployment-script/</link>
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
@@ -1022,108 +1073,6 @@ git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Prior to &lt;code&gt;R&lt;/code&gt; 3.0, one generally had to write vignettes using &lt;code&gt;sweave&lt;/code&gt;, a combination of &lt;code&gt;latex&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; code that generates a PDF file. However, since v3.0, it is possible to write vignettes using &lt;code&gt;R markdown&lt;/code&gt; (and actually some other markup formats), which generates HTML output. The advantages to using &lt;code&gt;R markdown&lt;/code&gt; over &lt;code&gt;sweave&lt;/code&gt; are that the syntax for writing &lt;code&gt;markdown&lt;/code&gt; is much simpler, and much more readable in it’s raw format.&lt;/p&gt;
 &lt;p&gt;Given that a package allows us to define sets of related functions, data, and documentation (with dependencies defined) all in one place that others can subsequently install and make use of and build on, why wouldn’t you want to use packages and vignettes to write long form analyses?&lt;/p&gt;
 &lt;p&gt;From some of my descriptions above, it may appear that this incurs some overhead. However, thanks to the &lt;strong&gt;#hadleyverse&lt;/strong&gt; and &lt;code&gt;rstudio&lt;/code&gt;, it is rather trivial (note that &lt;code&gt;rstudio&lt;/code&gt; is not essential, but I find it does make it easier). In my &lt;a href=&#34;/posts/2014/07/vignetteAnalysis.html&#34;&gt;next post&lt;/a&gt; I am going to give a worked example from start to finish of generating an analysis that is a vignette as part of a package.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Creating an Analysis as a Package and Vignette</title>
-      <link>/post/vignette-analysis/</link>
-      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/vignette-analysis/</guid>
-      <description>&lt;p&gt;Following from my &lt;a href=&#34;/post/analyses-as-packages&#34;&gt;last post&lt;/a&gt;, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the &lt;a href=&#34;http://nsaunders.wordpress.com/2012/08/16/twitter-coverage-of-the-ismb-2012-meeting-some-statistics/&#34;&gt;2012&lt;/a&gt; and &lt;a href=&#34;https://github.com/stephenturner/twitterchive&#34;&gt;2014&lt;/a&gt; ISMB conference (thanks to &lt;a href=&#34;https://twitter.com/nsaunders&#34;&gt;Neil&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/genetics_blog&#34;&gt;Stephen&lt;/a&gt; for compiling the data).&lt;/p&gt;
-&lt;p&gt;I will link to individual commits so that you can see how things change as we go along.&lt;/p&gt;
-&lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Setup&lt;/h2&gt;
-&lt;div id=&#34;initialization&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Initialization&lt;/h3&gt;
-&lt;p&gt;To start, we will initialize the package. &lt;code&gt;devtools&lt;/code&gt; or &lt;code&gt;rstudio&lt;/code&gt; make this rather easy:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(devtools)
-create(&amp;quot;~/Documents/projects/personal/ismbTweetAnalysis&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;Creating package ismbTweetAnalysis in ~/Documents/projects/personal
-No DESCRIPTION found. Creating with values:
-
-Package: ismbTweetAnalysis
-Title: What the package does (short line)
-Version: 0.1
-Authors@R: &amp;quot;First Last &amp;lt;first.last@example.com&amp;gt; [aut, cre]&amp;quot;
-Description: What the package does (paragraph)
-Depends: R (&amp;gt;= 3.0.3)
-License: What license is it under?
-LazyData: true
-Adding Rstudio project file to ismbTweetAnalysis&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Alternatively, you can use &lt;code&gt;File &amp;gt; New Project &amp;gt; New Directory &amp;gt; R Package&lt;/code&gt; in &lt;code&gt;rstudio&lt;/code&gt;. Don’t forget to &lt;code&gt;Create a git repository&lt;/code&gt; (or &lt;code&gt;git init&lt;/code&gt; in the directory). Note that the &lt;code&gt;devtools&lt;/code&gt; created package will pass &lt;code&gt;CRAN&lt;/code&gt; tests, whereas the &lt;code&gt;rstudio&lt;/code&gt; will not.&lt;/p&gt;
-&lt;p&gt;Open the &lt;code&gt;DESCRIPTION&lt;/code&gt; file, and you will need to change the &lt;code&gt;Title&lt;/code&gt;, &lt;code&gt;Authors&lt;/code&gt; or &lt;code&gt;Authors@R&lt;/code&gt;, &lt;code&gt;Description&lt;/code&gt;, &lt;code&gt;License&lt;/code&gt;, and add &lt;code&gt;VignetteBuilder: knitr&lt;/code&gt; at the end. &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/16ddb22e252520d6088dc17d4c63e9c41dc32314&#34;&gt;Here&lt;/a&gt; is what my initial setup looks like.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;rstudio-project-options&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;RStudio Project Options&lt;/h3&gt;
-&lt;p&gt;In addition, to make our life easier, we will change some options in the &lt;code&gt;rstudio&lt;/code&gt; project.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Tools &amp;gt; Project Options &amp;gt; Build Tools&lt;/code&gt;, check &lt;code&gt;Generate documentation with Roxygen&lt;/code&gt;, and select turn on all the options. We want to &lt;code&gt;roxygenize&lt;/code&gt; when we &lt;code&gt;Build &amp;amp; Reload&lt;/code&gt; especially, and have &lt;code&gt;roxygen&lt;/code&gt; control the &lt;code&gt;NAMESPACE&lt;/code&gt; file so we don’t worry about it.&lt;/p&gt;
-&lt;p&gt;Alternatively, you can use &lt;code&gt;document&lt;/code&gt; with &lt;code&gt;reload=TRUE&lt;/code&gt; in &lt;code&gt;devtools&lt;/code&gt; to update documentation and reload the functions.&lt;/p&gt;
-&lt;p&gt;Having &lt;strong&gt;this&lt;/strong&gt; particular option of &lt;code&gt;documenting&lt;/code&gt; and &lt;code&gt;reloading&lt;/code&gt; the package every time I write a new function is what makes this easy. I write the new function, &lt;code&gt;document&lt;/code&gt;/&lt;code&gt;reload&lt;/code&gt;, and I can keep chugging along with my analysis document. And if I have to restart, I just &lt;code&gt;run all&lt;/code&gt; chunks to get back to where I need to be.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Data&lt;/h2&gt;
-&lt;p&gt;Now we need some data. Neil’s data from 2012 uses a CSV format, however the tweets themselves have commas, so we will download the &lt;code&gt;rdata&lt;/code&gt; file and use that, and also Stephen’s data from 2014. However, there are three separate files for 2014, so we will download all three files and combine them. Both initial data sets will go in the &lt;code&gt;/inst/extdata&lt;/code&gt; folder, and we will clean them up.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/391aee099f08c94d26e183e2d9a80781afa722bc&#34;&gt;Here&lt;/a&gt; we have added our 4 data files.&lt;/p&gt;
-&lt;div id=&#34;vignette&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Vignette&lt;/h3&gt;
-&lt;p&gt;We are going to write this analysis as the vignette of the package, using &lt;code&gt;R markdown&lt;/code&gt; as the language. To do that we need to create the file and add some boilerplate at the top so that the vignette gets generated properly. &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/c1de77bfc803435b3af32f641b165615aaabb57b&#34;&gt;Here&lt;/a&gt; is the initial vignette, it is nothing but the &lt;code&gt;engine&lt;/code&gt; and &lt;code&gt;index&lt;/code&gt; definition, which are important.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;start-the-analysis&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Start the Analysis!&lt;/h1&gt;
-&lt;p&gt;At this point we can start the analysis. The actual analysis will be done in the &lt;code&gt;Rmd&lt;/code&gt; vignette file. The basic process is to add prose describing the analysis, with actual code to generate results and figures embedded in the &lt;code&gt;Rmd&lt;/code&gt;, and adding functions and documentation (as &lt;code&gt;roxygen&lt;/code&gt; tags) in the &lt;code&gt;.R&lt;/code&gt; file, while doing iterations of &lt;code&gt;document&lt;/code&gt; or &lt;code&gt;Build/Reload&lt;/code&gt; along the way. Iterations of &lt;code&gt;document&lt;/code&gt; / &lt;code&gt;Build/Reload&lt;/code&gt; after writing new functions in the &lt;code&gt;.R&lt;/code&gt; file will make them available to us in our workspace, with tab-completion in &lt;code&gt;rstudio&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;The following are bullet point summaries of points when I committed or built/reloaded, with links to the commit so you can see what has changed in the package.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/f3dabdc3f7fb981489ba35e18bd458a983b33698&#34;&gt;Adding description of data sources to analysis&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/be314c3edb8953adc4351e90c2b038285cb78d3b&#34;&gt;Munging 2012 data a little, saving, and documenting&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Now we can load up this data with &lt;code&gt;data(ismb2012)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/f90268c97e5a94c5cd052f40d7f394d81e8adc61&#34;&gt;Function written and exported for reading ST’s data files&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/f46a8b21bf3a168ff469925fab38c6ee8ccb9a08&#34;&gt;Read in, combine, and re-save ST’s archive&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Note that this and previous chunk have &lt;code&gt;eval=FALSE&lt;/code&gt;, so that they are not run in the analysis, but they were run interactively while I was doing the work.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/30509c15f3c9590dc07dbbb26d59733664f01f65&#34;&gt;Simple histogram of 2012 tweets by day&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/13138980de9531e92fe03a7d0db40302e5dac3c5&#34;&gt;Making a counting function by &lt;code&gt;screenName&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/72434fd84d222f2284c97c771fa0d0f3d3577ac7&#34;&gt;Examining the top tweeters using previous function&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/aff15c9205667879ab9669c26f6bc8ff47d153b8&#34;&gt;Fixing data files, because of issues with having the same named object in different RData files&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/7e65de3a88ee0495fe9b92f9291bc590d69eab9e&#34;&gt;Examining top tweeters in 2014&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/285926ebe051992d46a91040aaed0a14142f279c&#34;&gt;Density of tweets with respect to starting time of conference&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/93b05400d158414a725b456b1698a941c6c80b42&#34;&gt;Counting how often a specific tweet was retweeted&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/3e25bdaec902630943d694706ed576dca0e74d62&#34;&gt;Getting raw tweet ranks for each individual&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/6987116ce6c6ebe78dfaac9590b80806c08f9e6f&#34;&gt;Examining the ranks by total retweeted tweets per user&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;And at this point I’m going to stop there. Now we have an analysis (that we will make into a nice output shortly), and we have munged 2 data sets, and wrote 6 functions, that may be useful in other contexts.&lt;/p&gt;
-&lt;div id=&#34;preview-report&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Preview Report&lt;/h2&gt;
-&lt;p&gt;To preview the report, you can use the &lt;code&gt;Knit HTML&lt;/code&gt; button in &lt;code&gt;rstudio&lt;/code&gt;, or also use &lt;code&gt;knitr&lt;/code&gt; directly. This will give you an html preview of the final report.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;generate-vignette&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Generate Vignette&lt;/h2&gt;
-&lt;p&gt;Once happy with the report, you can use &lt;code&gt;devtools::build_vignettes()&lt;/code&gt; to generate the vignette files that will be copied to the relevant locations.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;commit-and-push-it-all&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Commit and Push it ALL!&lt;/h2&gt;
-&lt;p&gt;At this point, if you are happy with the package and analysis as a whole, you should commit all the package files to version control and make it available. In this case this means:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;inst/doc: the output vignette&lt;/li&gt;
-&lt;li&gt;man: the function documentation&lt;/li&gt;
-&lt;li&gt;DESCRIPTION: our description file&lt;/li&gt;
-&lt;li&gt;NAMESPACE: the file documenting our namespace&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;You can see this commit &lt;a href=&#34;https://github.com/rmflight/ismbTweetAnalysis/commit/7387a727708f8413ff68be1a5e285777b85ca7c7&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Now your package can be installed by others using &lt;code&gt;devtools::install_github()&lt;/code&gt;. You could also submit your package to &lt;code&gt;CRAN&lt;/code&gt; or &lt;code&gt;Bioconductor&lt;/code&gt; if so desired.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;not-covered&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Not Covered&lt;/h2&gt;
-&lt;p&gt;Now this was a simple example. Ideally I should have included tests for my functions, you can read up &lt;a href=&#34;https://github.com/hadley/testthat&#34;&gt;1&lt;/a&gt; &lt;a href=&#34;http://adv-r.had.co.nz/Testing.html&#34;&gt;2&lt;/a&gt; on how to do that. In addition, none of my functions use methods (&lt;a href=&#34;http://adv-r.had.co.nz/OO-essentials.html&#34;&gt;see why they are useful&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;I hope that you find this example useful, and will consider using &lt;code&gt;packages&lt;/code&gt; more often even for &lt;strong&gt;simple&lt;/strong&gt; analyses.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Reproducibility: One issue that may come up is how to make sure that you or someone else can directly reproduce the work in your package. Again, Hadley Wickham and the &lt;code&gt;rstudio&lt;/code&gt; team have been thinking about this, and there is now the &lt;a href=&#34;http://rstudio.github.io/packrat/&#34;&gt;&lt;code&gt;packrat&lt;/code&gt; package&lt;/a&gt; to make a project completely self-contained with all of it’s dependencies.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Edit 2014-07-28&lt;/em&gt; - added note on reproducibility at the end.&lt;/p&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 </description>
     </item>
