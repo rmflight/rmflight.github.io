@@ -11,6 +11,50 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Licensing R Packages that Include Others Code</title>
+      <link>/post/licensing-r-packages-that-include-others-code/</link>
+      <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/licensing-r-packages-that-include-others-code/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I recently created the &lt;a href=&#34;https://CRAN.R-project.org/package=knitrProgressBar&#34;&gt;&lt;code&gt;knitrProgressBar&lt;/code&gt;&lt;/a&gt; package. It is a really simple package, that takes the &lt;code&gt;dplyr&lt;/code&gt; progress bars and makes it possible for them to write progress to a supplied file connection. The &lt;code&gt;dplyr&lt;/code&gt; package itself is licensed under MIT, so I felt fine taking the code directly from &lt;code&gt;dplyr&lt;/code&gt; itself. In addition, I didn’t want my package to depend on &lt;code&gt;dplyr&lt;/code&gt;, so I wanted that code self-contained in my own package, and I wanted to be able to modify underlying mechanics that might have been more complicated if I had just made a new class of progress bar that inherited from &lt;code&gt;dplyr&lt;/code&gt;’s.&lt;/p&gt;
+&lt;p&gt;I also wanted to be able to release my code on CRAN, not just on GitHub. I knew to accomplish that I would have to have all the license stuff correct. However, I had not seen any guide on how to &lt;strong&gt;license&lt;/strong&gt; a package and give proper attribution in the &lt;code&gt;Authors@R&lt;/code&gt; field.&lt;/p&gt;
+&lt;p&gt;Note that I did ask this question on &lt;a href=&#34;https://stackoverflow.com/questions/48525023/properly-license-r-package-that-includes-other-mit-code&#34;&gt;StackOverflow&lt;/a&gt; and &lt;a href=&#34;https://discuss.ropensci.org/t/licensing-a-new-package-that-uses-code-from-another-source/1046&#34;&gt;ROpenSci&lt;/a&gt; forums as well.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;information-from-cran&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Information from CRAN&lt;/h2&gt;
+&lt;p&gt;I should note here, that the CRAN author guidelines do provide a &lt;strong&gt;small&lt;/strong&gt; hint in this regard in the &lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-exts.html&#34;&gt;Writing R Extensions&lt;/a&gt; guide:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that all significant contributors must be included: if you wrote an R wrapper for the work of others included in the src directory, you are not the sole (and maybe not even the main) author.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;However, there is not any guidance provided on &lt;strong&gt;how&lt;/strong&gt; these should ideally be listed.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;full-answer&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Full Answer&lt;/h2&gt;
+&lt;p&gt;I am the main author and maintainer of the new package, that is easy. The original code is MIT licensed, authored by several persons, and has copyright held by RStudio.&lt;/p&gt;
+&lt;p&gt;My solution then was to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/knitrProgressBar/blob/master/R/progress.R#L6&#34;&gt;add the MIT license&lt;/a&gt; from &lt;code&gt;dplyr&lt;/code&gt; to the file that has the progress bar code&lt;/li&gt;
+&lt;li&gt;add &lt;a href=&#34;https://github.com/rmflight/knitrProgressBar/blob/master/DESCRIPTION#L5&#34;&gt;all the authors&lt;/a&gt; of &lt;code&gt;dplyr&lt;/code&gt; as &lt;strong&gt;contributors&lt;/strong&gt; to my package, with a comment as to &lt;strong&gt;why&lt;/strong&gt; they are listed&lt;/li&gt;
+&lt;li&gt;add RStudio as a &lt;strong&gt;copyright holder&lt;/strong&gt; to my package, with a comment that this only applies to the one file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So the &lt;code&gt;Authors@R&lt;/code&gt; line in my &lt;code&gt;DESCRIPTION&lt;/code&gt; ended up being:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Authors@R: c(person(given = c(&amp;quot;Robert&amp;quot;, &amp;quot;M&amp;quot;), family = &amp;quot;Flight&amp;quot;, email = &amp;quot;rflight79@gmail.com&amp;quot;, role = c(&amp;quot;aut&amp;quot;, &amp;quot;cre&amp;quot;)),
+            person(&amp;quot;Hadley&amp;quot;, &amp;quot;Wickham&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;Romain&amp;quot;, &amp;quot;Francois&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;Lionel&amp;quot;, &amp;quot;Henry&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;Kirill&amp;quot;, &amp;quot;Müller&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;RStudio&amp;quot;, role = &amp;quot;cph&amp;quot;, comment = &amp;quot;Copyright holder of included dplyr fragments&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>docopt &amp; Numeric Options</title>
       <link>/post/docopt-numeric-options/</link>
       <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
@@ -1016,63 +1060,6 @@ git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When I started my second PostDoc position (transitioning from transcriptomics to metabolomics), I was up front with my supervisor that I did not feel that I was the type of person who could manage their own lab with independent funding, but that I wanted to find a place where I could stay on as staff while contributing research. My PI was sympathetic, and we worked well together, so he was immediately amenable to that, as long as the funding situation would provide.&lt;/p&gt;
 &lt;p&gt;Fortunately, within a year of joining the lab, we and our collaborators landed a large center grant that provides stable funding for 5 years, and everyone involved (my PI, the other PI’s, myself) would be happy if I stayed on as staff after my time as a PostDoc. Already, as a PostDoc in this group I have a lot of latitude and freedom to pursue avenues of research, as long as they are somehow aligned with the overall goals of the lab. I am also finding myself involved in supervising various undergraduate and graduate projects, as well as proposing new avenues for research.&lt;/p&gt;
 &lt;p&gt;I know the opportunity to stay on as staff in a research group is relatively rare in the current funding climate, and my job will be largely to develop novel methods and software to advance our understanding of metabolism in various biological states, as well as provide means to secure additional funding for the lab.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Analyses as Packages</title>
-      <link>/post/analyses-as-packages/</link>
-      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/analyses-as-packages/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Instead of writing an analysis as a single or set of &lt;code&gt;R&lt;/code&gt; scripts, use a &lt;code&gt;package&lt;/code&gt; and include the analysis as a &lt;code&gt;vignette&lt;/code&gt; of the package. Read below for the why, the &lt;a href=&#34;/post/vignette-analysis&#34;&gt;how is in the next post&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;analyses-and-reports&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Analyses and Reports&lt;/h2&gt;
-&lt;p&gt;As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work. As I have continued working in &lt;code&gt;R&lt;/code&gt;, I have progressed from having a simple &lt;code&gt;.R&lt;/code&gt; script (or collection of related scripts) to using a package to structure as much of my research as possible, including analyses that generate reports.&lt;/p&gt;
-&lt;p&gt;Note that I have been meaning to write this post for a while, but the tipping point was seeing &lt;a href=&#34;https://twitter.com/hspter/statuses/489075887460339712&#34;&gt;these tweets&lt;/a&gt; from &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/dnusinow&#34;&gt;David Nusinow&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I am all about the many short scripts rather than one long script when doing an analysis. I think I am alone here.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-packages&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why Packages&lt;/h2&gt;
-&lt;p&gt;Packages are &lt;code&gt;R&lt;/code&gt;’s method for sharing code in a sensible way, making it possible for others to easily (more often than not) use functions that you have written (I’m looking at you &lt;code&gt;python&lt;/code&gt;!). Why not use them? They also give you access to &lt;code&gt;R&lt;/code&gt;’s facilities for documentation and sharing computable documents. &lt;a href=&#34;https://twitter.com/hadleywickham&#34;&gt;Hadley Wickham&lt;/a&gt; has a nice section on packages in his &lt;a href=&#34;http://adv-r.had.co.nz/Philosophy.html&#34;&gt;Advanced R&lt;/a&gt; book.&lt;/p&gt;
-&lt;p&gt;I use a lot of Hadley’s packages in the following sections, because they are useful, and promote practices that make it extremely practical to use packages as a way to make an analysis a self-contained unit.&lt;/p&gt;
-&lt;p&gt;Duncan Murdoch has a nice slide deck on why to use packages and vignettes &lt;a href=&#34;http://www.stats.uwo.ca/faculty/murdoch/ism2013/5Vignettes.pdf&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;div id=&#34;structure&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Structure&lt;/h3&gt;
-&lt;p&gt;I want to breifly review the structure of package directories, you can read more about packages in Hadley’s book (link above), and in the official &lt;code&gt;R&lt;/code&gt; &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html&#34;&gt;documentation from &lt;code&gt;CRAN&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Packages impose a relatively simple structure on your project directory. &lt;code&gt;/R&lt;/code&gt; contains the &lt;code&gt;.R&lt;/code&gt; files with your actual functions, and &lt;code&gt;/data&lt;/code&gt; can contain any &lt;code&gt;.RData&lt;/code&gt; or &lt;code&gt;.rda&lt;/code&gt; files that you might need. Other data types (&lt;code&gt;.txt&lt;/code&gt;, &lt;code&gt;.tab&lt;/code&gt;, &lt;code&gt;.csv&lt;/code&gt;) can also go in &lt;code&gt;/data&lt;/code&gt;, or they may go in &lt;code&gt;/inst/extdata&lt;/code&gt;. Note that in &lt;code&gt;/inst/extdata&lt;/code&gt; you can specify any directory structure that seems appropriate.&lt;/p&gt;
-&lt;p&gt;Other required files are &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file&#34;&gt;&lt;code&gt;DESCRIPTION&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;http://cran.r-project.org/doc/manuals/r-release/R-exts.html#Package-namespaces&#34;&gt;&lt;code&gt;NAMESPACE&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;You may also have &lt;code&gt;.Rmd&lt;/code&gt; or &lt;code&gt;.Rnw&lt;/code&gt; / &lt;code&gt;.Rtex&lt;/code&gt; files in &lt;code&gt;/vignettes&lt;/code&gt; that generate &lt;code&gt;html&lt;/code&gt; or &lt;code&gt;pdf&lt;/code&gt; output that combines prose and &lt;code&gt;R&lt;/code&gt; code into a single document. This is where things get really interesting in being able to package up an analysis, especially when combined with functions.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;functions&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Functions&lt;/h3&gt;
-&lt;p&gt;Almost any analysis I have done involves writing at least one function, generally more, because I almost never do anything once in an analysis. Packages are &lt;strong&gt;the&lt;/strong&gt; primary method of sharing functions in &lt;code&gt;R&lt;/code&gt; that make sure that your functions play nice with the &lt;code&gt;R&lt;/code&gt; NAMESPACE, and allow one to define function dependencies from other packages. If you define a function in a package (and &lt;code&gt;export&lt;/code&gt; it), it immediately becomes re-usable in multiple analyses, without worrying about suffering from copypasta.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;function-documentation&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Function Documentation&lt;/h3&gt;
-&lt;p&gt;The easiest way to document functions is by using &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/index.html&#34;&gt;&lt;code&gt;roxygen2&lt;/code&gt;&lt;/a&gt; (see the intro &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html&#34;&gt;vignette&lt;/a&gt;). This allows you to worry about the documentation right next to the function itself, and not worry about writing separate documentation files in &lt;code&gt;/inst/doc&lt;/code&gt; (really, you don’t want to do it, I have, and it is painful). The &lt;a href=&#34;http://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html&#34;&gt;keywords&lt;/a&gt; in &lt;code&gt;roxygen2&lt;/code&gt; make sense, and are not hard to remember.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Data&lt;/h3&gt;
-&lt;p&gt;As mentioned above, you can include data with your package. The neat thing about including data, is you can document it and have that documentation available as part of the package.&lt;/p&gt;
-&lt;p&gt;I find it really useful to put any raw data that you want to work with in &lt;code&gt;/inst/extdata&lt;/code&gt; in whatever format it exists, and then process the data and save it as an &lt;code&gt;.RData&lt;/code&gt; file in &lt;code&gt;/data&lt;/code&gt;, with associated documentation. It is also really useful if part of the calculations are long running, then you can save the results as an associated data file, and simply load it when needed in the analysis.&lt;/p&gt;
-&lt;p&gt;Small note about documenting data sets. You put the &lt;code&gt;roxygen2&lt;/code&gt; comments in another file, and also need to provide &lt;code&gt;@name&lt;/code&gt; explicitly, and follow the documentation block with &lt;code&gt;NULL&lt;/code&gt;. Check the &lt;code&gt;roxygen2&lt;/code&gt; vignette “Generating Rd files” for a specific example.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-vignettes-as-a-reporting-method&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why Vignettes as a Reporting Method&lt;/h2&gt;
-&lt;p&gt;One great feature of packages is that one can include multiple &lt;code&gt;vignettes&lt;/code&gt;, long form text mixed with &lt;code&gt;code&lt;/code&gt; (and/or figures) to explain or highlight functionality in a package. Normally these are used to write tutorials, demonstrate features, or group together documentation that wouldn’t normally be together in the general documentation. However, there are no limits as to what can actually be contained within the &lt;code&gt;vignette&lt;/code&gt; as far as content, or how many &lt;code&gt;vignettes&lt;/code&gt; a package can have.&lt;/p&gt;
-&lt;p&gt;For packages hosted by CRAN, &lt;code&gt;vignettes&lt;/code&gt; are an optional component. However, the Bioconductor project requires that &lt;code&gt;vignettes&lt;/code&gt; be included in each package.&lt;/p&gt;
-&lt;p&gt;So, &lt;code&gt;R&lt;/code&gt; packages have a method to include long form prose that can be mixed with &lt;code&gt;R&lt;/code&gt; code directly as part of the package, within which you have already put your functions and associated data.&lt;/p&gt;
-&lt;p&gt;Prior to &lt;code&gt;R&lt;/code&gt; 3.0, one generally had to write vignettes using &lt;code&gt;sweave&lt;/code&gt;, a combination of &lt;code&gt;latex&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; code that generates a PDF file. However, since v3.0, it is possible to write vignettes using &lt;code&gt;R markdown&lt;/code&gt; (and actually some other markup formats), which generates HTML output. The advantages to using &lt;code&gt;R markdown&lt;/code&gt; over &lt;code&gt;sweave&lt;/code&gt; are that the syntax for writing &lt;code&gt;markdown&lt;/code&gt; is much simpler, and much more readable in it’s raw format.&lt;/p&gt;
-&lt;p&gt;Given that a package allows us to define sets of related functions, data, and documentation (with dependencies defined) all in one place that others can subsequently install and make use of and build on, why wouldn’t you want to use packages and vignettes to write long form analyses?&lt;/p&gt;
-&lt;p&gt;From some of my descriptions above, it may appear that this incurs some overhead. However, thanks to the &lt;strong&gt;#hadleyverse&lt;/strong&gt; and &lt;code&gt;rstudio&lt;/code&gt;, it is rather trivial (note that &lt;code&gt;rstudio&lt;/code&gt; is not essential, but I find it does make it easier). In my &lt;a href=&#34;/posts/2014/07/vignetteAnalysis.html&#34;&gt;next post&lt;/a&gt; I am going to give a worked example from start to finish of generating an analysis that is a vignette as part of a package.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

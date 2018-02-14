@@ -11,6 +11,50 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Licensing R Packages that Include Others Code</title>
+      <link>/post/licensing-r-packages-that-include-others-code/</link>
+      <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/licensing-r-packages-that-include-others-code/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I recently created the &lt;a href=&#34;https://CRAN.R-project.org/package=knitrProgressBar&#34;&gt;&lt;code&gt;knitrProgressBar&lt;/code&gt;&lt;/a&gt; package. It is a really simple package, that takes the &lt;code&gt;dplyr&lt;/code&gt; progress bars and makes it possible for them to write progress to a supplied file connection. The &lt;code&gt;dplyr&lt;/code&gt; package itself is licensed under MIT, so I felt fine taking the code directly from &lt;code&gt;dplyr&lt;/code&gt; itself. In addition, I didn’t want my package to depend on &lt;code&gt;dplyr&lt;/code&gt;, so I wanted that code self-contained in my own package, and I wanted to be able to modify underlying mechanics that might have been more complicated if I had just made a new class of progress bar that inherited from &lt;code&gt;dplyr&lt;/code&gt;’s.&lt;/p&gt;
+&lt;p&gt;I also wanted to be able to release my code on CRAN, not just on GitHub. I knew to accomplish that I would have to have all the license stuff correct. However, I had not seen any guide on how to &lt;strong&gt;license&lt;/strong&gt; a package and give proper attribution in the &lt;code&gt;Authors@R&lt;/code&gt; field.&lt;/p&gt;
+&lt;p&gt;Note that I did ask this question on &lt;a href=&#34;https://stackoverflow.com/questions/48525023/properly-license-r-package-that-includes-other-mit-code&#34;&gt;StackOverflow&lt;/a&gt; and &lt;a href=&#34;https://discuss.ropensci.org/t/licensing-a-new-package-that-uses-code-from-another-source/1046&#34;&gt;ROpenSci&lt;/a&gt; forums as well.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;information-from-cran&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Information from CRAN&lt;/h2&gt;
+&lt;p&gt;I should note here, that the CRAN author guidelines do provide a &lt;strong&gt;small&lt;/strong&gt; hint in this regard in the &lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-exts.html&#34;&gt;Writing R Extensions&lt;/a&gt; guide:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that all significant contributors must be included: if you wrote an R wrapper for the work of others included in the src directory, you are not the sole (and maybe not even the main) author.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;However, there is not any guidance provided on &lt;strong&gt;how&lt;/strong&gt; these should ideally be listed.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;full-answer&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Full Answer&lt;/h2&gt;
+&lt;p&gt;I am the main author and maintainer of the new package, that is easy. The original code is MIT licensed, authored by several persons, and has copyright held by RStudio.&lt;/p&gt;
+&lt;p&gt;My solution then was to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/knitrProgressBar/blob/master/R/progress.R#L6&#34;&gt;add the MIT license&lt;/a&gt; from &lt;code&gt;dplyr&lt;/code&gt; to the file that has the progress bar code&lt;/li&gt;
+&lt;li&gt;add &lt;a href=&#34;https://github.com/rmflight/knitrProgressBar/blob/master/DESCRIPTION#L5&#34;&gt;all the authors&lt;/a&gt; of &lt;code&gt;dplyr&lt;/code&gt; as &lt;strong&gt;contributors&lt;/strong&gt; to my package, with a comment as to &lt;strong&gt;why&lt;/strong&gt; they are listed&lt;/li&gt;
+&lt;li&gt;add RStudio as a &lt;strong&gt;copyright holder&lt;/strong&gt; to my package, with a comment that this only applies to the one file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So the &lt;code&gt;Authors@R&lt;/code&gt; line in my &lt;code&gt;DESCRIPTION&lt;/code&gt; ended up being:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Authors@R: c(person(given = c(&amp;quot;Robert&amp;quot;, &amp;quot;M&amp;quot;), family = &amp;quot;Flight&amp;quot;, email = &amp;quot;rflight79@gmail.com&amp;quot;, role = c(&amp;quot;aut&amp;quot;, &amp;quot;cre&amp;quot;)),
+            person(&amp;quot;Hadley&amp;quot;, &amp;quot;Wickham&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;Romain&amp;quot;, &amp;quot;Francois&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;Lionel&amp;quot;, &amp;quot;Henry&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;Kirill&amp;quot;, &amp;quot;Müller&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
+            person(&amp;quot;RStudio&amp;quot;, role = &amp;quot;cph&amp;quot;, comment = &amp;quot;Copyright holder of included dplyr fragments&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>docopt &amp; Numeric Options</title>
       <link>/post/docopt-numeric-options/</link>
       <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
@@ -997,35 +1041,6 @@ git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;update&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Update&lt;/h2&gt;
 &lt;p&gt;As &lt;a href=&#34;https://twitter.com/cpsievert&#34;&gt;Carson&lt;/a&gt; pointed out below, there was an error in the second code block. &lt;code&gt;travis secure&lt;/code&gt; should be &lt;code&gt;travis encrypt&lt;/code&gt;, as you are &lt;strong&gt;encrypting&lt;/strong&gt; the credentials. &lt;strong&gt;secure&lt;/strong&gt; is for decrypting something that was already encrypted. Thanks for catching it!&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>My Career Goals</title>
-      <link>/post/my-career-goals/</link>
-      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/my-career-goals/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;I don’t want to be a PI because I enjoy spending time with my family, and don’t think I can handle the stress of juggling multiple grants, people, and deadlines. I want to be a staff member in a group that affords relative autonomy, while providing some security. If I’m lucky enough, my current position will enable that.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-bad-news&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Bad News&lt;/h2&gt;
-&lt;p&gt;If you keep up with the news in academia, this is a horrible time to be a &lt;em&gt;postdoc&lt;/em&gt; (post-doctoral) or &lt;em&gt;PI&lt;/em&gt; (principal investigator). The amount of money available for grants is at an all time low, and the likelihood of getting a grant is dismal. If you want to be successful, then you will need to work incredibly hard, sacrifice everything, and it is likely that you still won’t get grants that allow you to have an independent research lab at a decent university.&lt;/p&gt;
-&lt;p&gt;Of course, this is worst in the biomedical field, due to a glut of NIH research money and universities allowing researchers salary to be composed largely of grant money, with very little money from the university itself. In addition grant money has been allowed to be used to support trainees; undergraduate, graduate, and postdoctoral. The compensation for the trainees was relatively minimal, leading to a glut of highly trained, poorly paid people who hope to move up the academic ladder. The large numbers of which has likely contributed to the current funding situation.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-good-news&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Good News&lt;/h2&gt;
-&lt;p&gt;The NIH and NSF are &lt;em&gt;starting&lt;/em&gt; to encourage research labs to hire staff at reasonable pay, and support trainees from specific grants. Although I keep hearing about this in general, I don’t know of any specific changes in grant applications that are causing any real changes.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;my-own-path&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;My Own Path&lt;/h2&gt;
-&lt;p&gt;During my senior undergraduate and masters work, I realized that I probably couldn’t be a student forever, but I had hopes. During my PhD, however, I saw many PI’s who sacrified their time with families for their teaching, research, and administrative duties. This was even more pronounced during my first PostDoc, and made me question my continued progress in academia. I actually had a job offer as a research programmer with a research hospital during my first PostDoc, which I turned down because I realized that it was likely in that position (at least as advertised) there would be limited opportunity to pursue my own research ideas. However, grant funding success rate was continuing to plummet (see above), and I was not able to push out a first author paper before finishing my first PostDoc, so being successful in a faculty search was looking grim.&lt;/p&gt;
-&lt;p&gt;When I started my second PostDoc position (transitioning from transcriptomics to metabolomics), I was up front with my supervisor that I did not feel that I was the type of person who could manage their own lab with independent funding, but that I wanted to find a place where I could stay on as staff while contributing research. My PI was sympathetic, and we worked well together, so he was immediately amenable to that, as long as the funding situation would provide.&lt;/p&gt;
-&lt;p&gt;Fortunately, within a year of joining the lab, we and our collaborators landed a large center grant that provides stable funding for 5 years, and everyone involved (my PI, the other PI’s, myself) would be happy if I stayed on as staff after my time as a PostDoc. Already, as a PostDoc in this group I have a lot of latitude and freedom to pursue avenues of research, as long as they are somehow aligned with the overall goals of the lab. I am also finding myself involved in supervising various undergraduate and graduate projects, as well as proposing new avenues for research.&lt;/p&gt;
-&lt;p&gt;I know the opportunity to stay on as staff in a research group is relatively rare in the current funding climate, and my job will be largely to develop novel methods and software to advance our understanding of metabolism in various biological states, as well as provide means to secure additional funding for the lab.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
