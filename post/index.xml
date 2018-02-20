@@ -11,6 +11,150 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>knitrProgressBar</title>
+      <link>/post/knitrprogressbar/</link>
+      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/knitrprogressbar/</guid>
+      <description>---
+title: knitrProgressBar
+author: Robert M Flight
+date: &#39;2018-02-19&#39;
+slug: knitrprogressbar
+categories: []
+tags:
+  - R
+  - packages
+---
+
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you like &lt;code&gt;dplyr&lt;/code&gt; progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out &lt;code&gt;knitrProgressBar&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/package=knitrProgressBar&#34;&gt;cran&lt;/a&gt; &lt;a href=&#34;https://github.com/rmflight/knitrProgressBar&#34;&gt;github&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-yet-another-progress-bar&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why Yet Another Progress Bar??&lt;/h2&gt;
+&lt;p&gt;I didn’t set out to create &lt;strong&gt;another&lt;/strong&gt; progress bar package. But I really liked &lt;code&gt;dplyr&lt;/code&gt;s style of progress bar, and how they worked under the hood (thanks to the &lt;a href=&#34;https://rud.is/b/2017/03/27/all-in-on-r%E2%81%B4-progress-bars-on-first-post/&#34;&gt;examples&lt;/a&gt; from Bob Rudis).&lt;/p&gt;
+&lt;p&gt;As I used them, I noticed that no progress was displayed if you did &lt;code&gt;rmarkdown::render()&lt;/code&gt; or &lt;code&gt;knitr::knit()&lt;/code&gt;. That just didn’t seem right to me, as that means you get no progress indicator if you want to use caching facilities of &lt;code&gt;knitr&lt;/code&gt;. So this package was born.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How??&lt;/h2&gt;
+&lt;p&gt;These are pretty easy to setup and use.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(knitrProgressBar)
+
+# borrowed from example by @hrbrmstr
+arduously_long_nchar &amp;lt;- function(input_var, .pb=NULL) {
+  
+  update_progress(.pb) # function from knitrProgressBar
+  
+  Sys.sleep(0.01)
+  
+  nchar(input_var)
+  
+}
+
+# using stdout() here so progress is part of document
+pb &amp;lt;- progress_estimated(26, progress_location = stdout())
+
+purrr::map(letters, arduously_long_nchar, .pb = pb)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+|=====                                            | 12% ~0 s remaining     
+|===============                                  | 31% ~0 s remaining     
+|========================                         | 50% ~0 s remaining     
+|=================================                | 69% ~0 s remaining     
+|===========================================      | 88% ~0 s remaining     
+Completed after 0 s&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] 1
+## 
+## [[3]]
+## [1] 1
+## 
+## [[4]]
+## [1] 1
+## 
+## [[5]]
+## [1] 1
+## 
+## [[6]]
+## [1] 1
+## 
+## [[7]]
+## [1] 1
+## 
+## [[8]]
+## [1] 1
+## 
+## [[9]]
+## [1] 1
+## 
+## [[10]]
+## [1] 1
+## 
+## [[11]]
+## [1] 1
+## 
+## [[12]]
+## [1] 1
+## 
+## [[13]]
+## [1] 1
+## 
+## [[14]]
+## [1] 1
+## 
+## [[15]]
+## [1] 1
+## 
+## [[16]]
+## [1] 1
+## 
+## [[17]]
+## [1] 1
+## 
+## [[18]]
+## [1] 1
+## 
+## [[19]]
+## [1] 1
+## 
+## [[20]]
+## [1] 1
+## 
+## [[21]]
+## [1] 1
+## 
+## [[22]]
+## [1] 1
+## 
+## [[23]]
+## [1] 1
+## 
+## [[24]]
+## [1] 1
+## 
+## [[25]]
+## [1] 1
+## 
+## [[26]]
+## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The main difference to &lt;code&gt;dplyr&lt;/code&gt;s progress bars is that here you have the option to set &lt;strong&gt;where&lt;/strong&gt; the progress gets written to, either automatically using the built-in &lt;code&gt;make_kpb_output_decisions()&lt;/code&gt;, or directly. Also, I have provided the &lt;code&gt;update_progress&lt;/code&gt; function to actually do the updating or finalizing properly.&lt;/p&gt;
+&lt;p&gt;There are also package specific options to control &lt;strong&gt;how&lt;/strong&gt; the decisions are made.&lt;/p&gt;
+&lt;p&gt;See the &lt;a href=&#34;https://rmflight.github.io/knitrProgressBar/&#34;&gt;main&lt;/a&gt; documentation, as well as the &lt;a href=&#34;https://rmflight.github.io/knitrProgressBar/articles/example_progress_bars.html&#34;&gt;included vignette&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multi-processing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Multi-Processing&lt;/h2&gt;
+&lt;p&gt;As of V1.1.0 (should be on CRAN soon), the package also supports indicating progress on multi-processed jobs. See the included &lt;a href=&#34;https://rmflight.github.io/knitrProgressBar/articles/multiprocessing.html&#34;&gt;vignette&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;p&gt;By the way, I know this method is not ideal, but I could not get the combination of &lt;code&gt;later&lt;/code&gt; and &lt;code&gt;processx&lt;/code&gt; to work in my case. If anyone is willing to help out, that would be great.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Licensing R Packages that Include Others Code</title>
       <link>/post/licensing-r-packages-that-include-others-code/</link>
       <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
@@ -1031,35 +1175,6 @@ git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;update&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Update&lt;/h2&gt;
 &lt;p&gt;As &lt;a href=&#34;https://twitter.com/cpsievert&#34;&gt;Carson&lt;/a&gt; pointed out below, there was an error in the second code block. &lt;code&gt;travis secure&lt;/code&gt; should be &lt;code&gt;travis encrypt&lt;/code&gt;, as you are &lt;strong&gt;encrypting&lt;/strong&gt; the credentials. &lt;strong&gt;secure&lt;/strong&gt; is for decrypting something that was already encrypted. Thanks for catching it!&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>My Career Goals</title>
-      <link>/post/my-career-goals/</link>
-      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/my-career-goals/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;I don’t want to be a PI because I enjoy spending time with my family, and don’t think I can handle the stress of juggling multiple grants, people, and deadlines. I want to be a staff member in a group that affords relative autonomy, while providing some security. If I’m lucky enough, my current position will enable that.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-bad-news&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Bad News&lt;/h2&gt;
-&lt;p&gt;If you keep up with the news in academia, this is a horrible time to be a &lt;em&gt;postdoc&lt;/em&gt; (post-doctoral) or &lt;em&gt;PI&lt;/em&gt; (principal investigator). The amount of money available for grants is at an all time low, and the likelihood of getting a grant is dismal. If you want to be successful, then you will need to work incredibly hard, sacrifice everything, and it is likely that you still won’t get grants that allow you to have an independent research lab at a decent university.&lt;/p&gt;
-&lt;p&gt;Of course, this is worst in the biomedical field, due to a glut of NIH research money and universities allowing researchers salary to be composed largely of grant money, with very little money from the university itself. In addition grant money has been allowed to be used to support trainees; undergraduate, graduate, and postdoctoral. The compensation for the trainees was relatively minimal, leading to a glut of highly trained, poorly paid people who hope to move up the academic ladder. The large numbers of which has likely contributed to the current funding situation.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-good-news&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Good News&lt;/h2&gt;
-&lt;p&gt;The NIH and NSF are &lt;em&gt;starting&lt;/em&gt; to encourage research labs to hire staff at reasonable pay, and support trainees from specific grants. Although I keep hearing about this in general, I don’t know of any specific changes in grant applications that are causing any real changes.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;my-own-path&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;My Own Path&lt;/h2&gt;
-&lt;p&gt;During my senior undergraduate and masters work, I realized that I probably couldn’t be a student forever, but I had hopes. During my PhD, however, I saw many PI’s who sacrified their time with families for their teaching, research, and administrative duties. This was even more pronounced during my first PostDoc, and made me question my continued progress in academia. I actually had a job offer as a research programmer with a research hospital during my first PostDoc, which I turned down because I realized that it was likely in that position (at least as advertised) there would be limited opportunity to pursue my own research ideas. However, grant funding success rate was continuing to plummet (see above), and I was not able to push out a first author paper before finishing my first PostDoc, so being successful in a faculty search was looking grim.&lt;/p&gt;
-&lt;p&gt;When I started my second PostDoc position (transitioning from transcriptomics to metabolomics), I was up front with my supervisor that I did not feel that I was the type of person who could manage their own lab with independent funding, but that I wanted to find a place where I could stay on as staff while contributing research. My PI was sympathetic, and we worked well together, so he was immediately amenable to that, as long as the funding situation would provide.&lt;/p&gt;
-&lt;p&gt;Fortunately, within a year of joining the lab, we and our collaborators landed a large center grant that provides stable funding for 5 years, and everyone involved (my PI, the other PI’s, myself) would be happy if I stayed on as staff after my time as a PostDoc. Already, as a PostDoc in this group I have a lot of latitude and freedom to pursue avenues of research, as long as they are somehow aligned with the overall goals of the lab. I am also finding myself involved in supervising various undergraduate and graduate projects, as well as proposing new avenues for research.&lt;/p&gt;
-&lt;p&gt;I know the opportunity to stay on as staff in a research group is relatively rare in the current funding climate, and my job will be largely to develop novel methods and software to advance our understanding of metabolism in various biological states, as well as provide means to secure additional funding for the lab.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

@@ -11,7 +11,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/linking-to-manually-inserted-images-in-hugo/">
+  <link rel="alternate" hreflang="en-us" href="/post/knitrprogressbar/">
 
   
   
@@ -57,7 +57,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/linking-to-manually-inserted-images-in-hugo/">
+  <link rel="canonical" href="/post/knitrprogressbar/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -65,19 +65,19 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/post/linking-to-manually-inserted-images-in-hugo/">
-  <meta property="og:title" content="Linking to Manually Inserted Images in Blogdown / Hugo | Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/knitrprogressbar/">
+  <meta property="og:title" content="knitrProgressBar | Deciphering Life: One Bit at a Time">
   <meta property="og:description" content="">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2017-12-27T00:00:00&#43;00:00">
+  <meta property="article:published_time" content="2018-02-19T00:00:00&#43;00:00">
   
-  <meta property="article:modified_time" content="2017-12-27T00:00:00&#43;00:00">
-  
-
+  <meta property="article:modified_time" content="2018-02-19T00:00:00&#43;00:00">
   
 
-  <title>Linking to Manually Inserted Images in Blogdown / Hugo | Deciphering Life: One Bit at a Time</title>
+  
+
+  <title>knitrProgressBar | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -191,7 +191,7 @@
 
   <div class="article-container">
     <div class="article-inner">
-      <h1 itemprop="name">Linking to Manually Inserted Images in Blogdown / Hugo</h1>
+      <h1 itemprop="name">knitrProgressBar</h1>
 
       
 
@@ -199,15 +199,15 @@
 
   <span class="article-date">
     
-    <time datetime="2017-12-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2017-12-27
+    <time datetime="2018-02-19 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2018-02-19
     </time>
   </span>
 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 min read
+    3 min read
   </span>
   
 
@@ -225,35 +225,35 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo&amp;url=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f"
+         href="https://twitter.com/intent/tweet?text=knitrProgressBar&amp;url=%2fpost%2fknitrprogressbar%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fknitrprogressbar%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f&amp;title=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fknitrprogressbar%2f&amp;title=knitrProgressBar"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f&amp;title=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fknitrprogressbar%2f&amp;title=knitrProgressBar"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo&amp;body=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f">
+         href="mailto:?subject=knitrProgressBar&amp;body=%2fpost%2fknitrprogressbar%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -267,18 +267,140 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <div id="manual-linking" class="section level2">
-<h2>Manual Linking?</h2>
-<p>Using <code>blogdown</code> for generating websites and blog-posts from <code>Rmarkdown</code> files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (<a href="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg">like this figure from wikipedia</a>).</p>
+        ---
+title: knitrProgressBar
+author: Robert M Flight
+date: '2018-02-19'
+slug: knitrprogressbar
+categories: []
+tags:
+  - R
+  - packages
+---
+
+
+
+<div id="tldr" class="section level2">
+<h2>TL;DR</h2>
+<p>If you like <code>dplyr</code> progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out <code>knitrProgressBar</code> (<a href="https://cran.r-project.org/package=knitrProgressBar">cran</a> <a href="https://github.com/rmflight/knitrProgressBar">github</a>).</p>
 </div>
-<div id="where-to" class="section level2">
-<h2>Where to??</h2>
-<p>To do this, you want the text of your <code>&lt;img&gt;</code> tag to your image to be:</p>
-<pre><code>&lt;img src = &quot;/img/image_file.png&quot;&gt;&lt;/img&gt;</code></pre>
-<p>And then put the image itself in the directory <code>/static/img/image_file.png</code></p>
-<p><img src = "/img/Standard_deviation_diagram.svg"></img></p>
-<p><em>By M. W. Toews, <a href="http://creativecommons.org/licenses/by/2.5">CC BY 2.5</a>, via Wikimedia Commons, <a href="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg">source</a></em></p>
-<p>This information is also mentioned in <a href="https://bookdown.org/yihui/blogdown/static-files.html">section 2.7 of the Blogdown book</a>. Obviously I need to do more reading.</p>
+<div id="why-yet-another-progress-bar" class="section level2">
+<h2>Why Yet Another Progress Bar??</h2>
+<p>I didn’t set out to create <strong>another</strong> progress bar package. But I really liked <code>dplyr</code>s style of progress bar, and how they worked under the hood (thanks to the <a href="https://rud.is/b/2017/03/27/all-in-on-r%E2%81%B4-progress-bars-on-first-post/">examples</a> from Bob Rudis).</p>
+<p>As I used them, I noticed that no progress was displayed if you did <code>rmarkdown::render()</code> or <code>knitr::knit()</code>. That just didn’t seem right to me, as that means you get no progress indicator if you want to use caching facilities of <code>knitr</code>. So this package was born.</p>
+</div>
+<div id="how" class="section level2">
+<h2>How??</h2>
+<p>These are pretty easy to setup and use.</p>
+<pre class="r"><code>library(knitrProgressBar)
+
+# borrowed from example by @hrbrmstr
+arduously_long_nchar &lt;- function(input_var, .pb=NULL) {
+  
+  update_progress(.pb) # function from knitrProgressBar
+  
+  Sys.sleep(0.01)
+  
+  nchar(input_var)
+  
+}
+
+# using stdout() here so progress is part of document
+pb &lt;- progress_estimated(26, progress_location = stdout())
+
+purrr::map(letters, arduously_long_nchar, .pb = pb)</code></pre>
+<pre><code>## 
+|=====                                            | 12% ~0 s remaining     
+|===============                                  | 31% ~0 s remaining     
+|========================                         | 50% ~0 s remaining     
+|=================================                | 69% ~0 s remaining     
+|===========================================      | 88% ~0 s remaining     
+Completed after 0 s</code></pre>
+<pre><code>## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] 1
+## 
+## [[3]]
+## [1] 1
+## 
+## [[4]]
+## [1] 1
+## 
+## [[5]]
+## [1] 1
+## 
+## [[6]]
+## [1] 1
+## 
+## [[7]]
+## [1] 1
+## 
+## [[8]]
+## [1] 1
+## 
+## [[9]]
+## [1] 1
+## 
+## [[10]]
+## [1] 1
+## 
+## [[11]]
+## [1] 1
+## 
+## [[12]]
+## [1] 1
+## 
+## [[13]]
+## [1] 1
+## 
+## [[14]]
+## [1] 1
+## 
+## [[15]]
+## [1] 1
+## 
+## [[16]]
+## [1] 1
+## 
+## [[17]]
+## [1] 1
+## 
+## [[18]]
+## [1] 1
+## 
+## [[19]]
+## [1] 1
+## 
+## [[20]]
+## [1] 1
+## 
+## [[21]]
+## [1] 1
+## 
+## [[22]]
+## [1] 1
+## 
+## [[23]]
+## [1] 1
+## 
+## [[24]]
+## [1] 1
+## 
+## [[25]]
+## [1] 1
+## 
+## [[26]]
+## [1] 1</code></pre>
+<p>The main difference to <code>dplyr</code>s progress bars is that here you have the option to set <strong>where</strong> the progress gets written to, either automatically using the built-in <code>make_kpb_output_decisions()</code>, or directly. Also, I have provided the <code>update_progress</code> function to actually do the updating or finalizing properly.</p>
+<p>There are also package specific options to control <strong>how</strong> the decisions are made.</p>
+<p>See the <a href="https://rmflight.github.io/knitrProgressBar/">main</a> documentation, as well as the <a href="https://rmflight.github.io/knitrProgressBar/articles/example_progress_bars.html">included vignette</a>.</p>
+</div>
+<div id="multi-processing" class="section level2">
+<h2>Multi-Processing</h2>
+<p>As of V1.1.0 (should be on CRAN soon), the package also supports indicating progress on multi-processed jobs. See the included <a href="https://rmflight.github.io/knitrProgressBar/articles/multiprocessing.html">vignette</a> for more information.</p>
+<p>By the way, I know this method is not ideal, but I could not get the combination of <code>later</code> and <code>processx</code> to work in my case. If anyone is willing to help out, that would be great.</p>
 </div>
 
       </div>
@@ -288,11 +410,9 @@
 
 <div class="article-tags">
   
-  <a class="btn btn-primary btn-outline" href="/tags/hugo">hugo</a>
-  
   <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/blogdown">blogdown</a>
+  <a class="btn btn-primary btn-outline" href="/tags/packages">packages</a>
   
 </div>
 
@@ -310,15 +430,15 @@
   <h3>Related</h3>
   <ul>
     
-    <li><a href="/post/custom-deployment-script/">Custom Deployment Script</a></li>
+    <li><a href="/post/licensing-r-packages-that-include-others-code/">Licensing R Packages that Include Others Code</a></li>
     
-    <li><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></li>
-    
-    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
     
     <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
     
-    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
+    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    
+    <li><a href="/post/self-written-function-help/">Self-Written Function Help</a></li>
     
   </ul>
 </div>

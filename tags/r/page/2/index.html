@@ -72,7 +72,7 @@
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2014-02-20T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2014-04-08T00:00:00&#43;00:00">
   
 
   
@@ -196,6 +196,16 @@
   
   
   <div>
+    <h2><a href="/post/categorycompare-paper-finally-out/">categoryCompare Paper Finally Out!</a></h2>
+    <div class="article-style">
+      
+      I can finally say that the publication on my Bioconductor package categoryCompare is finally published in the Bioinformatics and Computational Biology section of Frontiers in Genetics. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.
+TL;DR The software package has been in development in one form or another since 2010, released to Bioconductor in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/self-written-function-help/">Self-Written Function Help</a></h2>
     <div class="article-style">
       
@@ -281,16 +291,6 @@ Now, to be clear up front, I am not trying to be mean to Ramnath, discredit his 
       
       Inspired by this post, I wanted to examine the locations and density of Tim Hortons restaurants in Canada. Using Stats Canada data, each census tract is queried on Foursquare for Tims locations.
 Setup options(stringsAsFactors=F) require(timmysDensity) require(plyr) require(maps) require(ggplot2) require(geosphere)  Statistics Canada Census Data The actual Statistics Canada data at the dissemination block level can be downloaded from here. You will want to download the Excel format, read it, and then save it as either tab-delimited or CSV using a non-standard delimiter, I used a semi-colon (;).
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/storing-package-data-in-custom-environments/">Storing Package Data in Custom Environments</a></h2>
-    <div class="article-style">
-      
-      If you do R package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global options. This is done by packages grDevices and parallel. Sometimes this doesn’t seem to work quite right (see this issue for example.
-Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify.
       
     </div>
   </div>

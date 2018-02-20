@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/knitrprogressbar/</loc>
+      <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/licensing-r-packages-that-include-others-code/</loc>
       <lastmod>2018-02-14T00:00:00+00:00</lastmod>
     </url>
@@ -648,7 +657,7 @@
     <url>
     
       <loc>/tags/packages/</loc>
-      <lastmod>2018-02-14T00:00:00+00:00</lastmod>
+      <lastmod>2018-02-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -717,7 +726,7 @@
     <url>
     
       <loc>/tags/r/</loc>
-      <lastmod>2018-02-14T00:00:00+00:00</lastmod>
+      <lastmod>2018-02-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
