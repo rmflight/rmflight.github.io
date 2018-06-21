@@ -11,6 +11,37 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Turn Robert&#39;s Beard Purple!</title>
+      <link>/post/turn-roberts-beard-purple/</link>
+      <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/turn-roberts-beard-purple/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If I &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;raise $100 by August 25ths The Walk to End Alzheimer’s&lt;/a&gt;, I will have my beard dyed purple in support of Alzheimer’s awareness.&lt;/p&gt;
+&lt;p&gt;If you are in another country, donate to your local Alzheimer’s charity and &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;email me&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; so I count it towards my total.&lt;/p&gt;
+&lt;p&gt;Links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;My donation page&lt;/a&gt; (&lt;a href=&#34;https://www.charitywatch.org/ratings-and-metrics/alzheimers-association-national-office/461&#34;&gt;Charity report&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://secure2.convio.net/alz/site/Donation2;jsessionid=00000000.app202b?df_id=1683&amp;amp;mfc_pref=T&amp;amp;1683.donation=form1&amp;amp;s_locale=en_CA&amp;amp;NONCE_TOKEN=D46EF58FAD6FA1276A4C99FBED9E9155&#34;&gt;Alzheimer Society Canada&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://secure.alzheimers.org.uk/?gclid=CjwKCAjw9qfZBRA5EiwAiq0AbScJN_IE7JW3arALIYmd2F2gzMk3ZV32sT9FGyR3yx_spMlgUzqMkhoCgUEQAvD_BwE&#34;&gt;Alzheimer’s Society UK&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-a-purple-beard&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why a Purple Beard??&lt;/h2&gt;
+&lt;p&gt;I decided to participate in the Walk To End Alzheimer’s this year, coming up on August 25th here in Lexington. I will be walking the 2 miles in support of my Mom, who was diagnosed with early onset Alzheimer’s some time ago (she will turn 68 this summer).&lt;/p&gt;
+&lt;p&gt;Why am I walking?? Because I’ve seen a little bit of what Alzheimer’s does, and although my Mom won’t benefit from new treatments, we need to find effective treatments for this devastating disease.&lt;/p&gt;
+&lt;p&gt;As an incentive to donate, if I reach my &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;fundraising goal of $100&lt;/a&gt;, I will have my beard dyed Alzheimer’s Association purple! The wonderful folks at &lt;a href=&#34;http://bak4morestudio.com/&#34;&gt;Bak 4 More studios&lt;/a&gt; have agreed to help me dye my beard purple before the Walk date. I will make sure to take lots of video and pictures of the process, which I am told will probably involve two trips to the studio, one to lighten my beard and a second to actually apply the purple color.&lt;/p&gt;
+&lt;p&gt;Using the magic of computers, I’ve tried to show here what that might look like. I’m sure it will look 100X better than these, this is just to give a possible idea.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/selfie_walk_lores.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;I also realize that not everyone may be able to donate to the American Alzheimer’s Association, so if you want to support my fundraising for the Walk (and turn my beard purple) by donating to your local Alzheimer’s charity, just &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;send me an email&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; with the amount you donated and to which charity, and I will count your donation towards your local charity towards my goal. I will also respond to your email so that you know I’ve counted it.&lt;/p&gt;
+&lt;p&gt;I will NOT be trimming my beard between now and the Walk date, so there will be even &lt;strong&gt;more purple beard&lt;/strong&gt; to go around, with 9 weeks between now and then.&lt;/p&gt;
+&lt;p&gt;Thank you for helping me raise funds for the Walk to End Alzheimer’s, and feel free to spread this post far and wide.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>knitrProgressBar Package</title>
       <link>/post/knitrprogressbar/</link>
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
@@ -1043,57 +1074,6 @@ ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)&lt;/code&gt;&lt
 &lt;div id=&#34;disclaimers&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Disclaimers&lt;/h2&gt;
 &lt;p&gt;I was given an F1000Research! t-shirt as a reward for commenting on a &lt;a href=&#34;http://blog.f1000research.com/2013/08/23/peer-review-credit-where-credits-due/#comment-1020559658&#34;&gt;blog-post&lt;/a&gt; regarding incentives for peer-review. I like the shirt. Having done my review, I am also eligible to get a 50% discount on the article processing charges if I submit an article to F1000Research in the next 12 months.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Being a PhD Student and Post-Doc with Migraines</title>
-      <link>/post/being-a-phd-student-and-post-doc-with-migraines/</link>
-      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/being-a-phd-student-and-post-doc-with-migraines/</guid>
-      <description>&lt;p&gt;A blog post on the &lt;a href=&#34;http://jabberwocky.weecology.org/2014/10/13/how-technology-can-help-scientists-with-chronic-illnesses-or-technology-ftw/&#34;&gt;Weecology group blog&lt;/a&gt; by &lt;a href=&#34;https://twitter.com/elitabaldridge&#34;&gt;Elita Baldridge&lt;/a&gt; on being a PhD student with fibromyalgia, and how they are working through that, caused me to pause and reflect on my experience as a PhD student and PostDoc with migraines. For those who haven’t read my blog, I do research in bioinformatics, specifically in transcriptomics and metabolomics. I spend almost all of my research hours in front of a computer writing code, generating plots, and trying to make sense of -omics level data.&lt;/p&gt;
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Being in academia with migraines is a challenge, but probably less challenging than some other fields or disabilities. Moving cities and discovering Excedrin has made my migraines more bearable.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;migraine&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Migraine&lt;/h2&gt;
-&lt;p&gt;For those who don’t know, migraines are a rather unusual neurological event that result in a bunch of symptoms, the most well known generally being aura (frequently visual, although auditory and olfactory are also known) followed by what is described as intense, debilitating pain, which may or may not be accompanied by extreme nausea and / or vomiting and tiredness.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;my-migraines&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;My Migraines&lt;/h2&gt;
-&lt;p&gt;I have suffered from migraines since at least my early teens (possibly younger), but mine seem to be rather mild in comparison to what I have read about others experiences. In contrast to many other migraineurs, I do not experience visual aura, and in general my pain levels tend to be on the milder side. However, I do experience mood swings during my prodrome (period prior to pain), going from a generally nice guy to someone who considers killing you just for looking at me wrong; as well as confusion, and I also experience &lt;a href=&#34;http://en.wikipedia.org/wiki/Aphasia&#34;&gt;expressive aphasia&lt;/a&gt;, wherein I can no longer remember proper nouns, but can describe properties of the object in question (for example, instead of a &lt;strong&gt;pencil&lt;/strong&gt;, I might say “the writing implement with a lead center”). In addition to the pain of the migraine, which is often a pounding localized to one location of my skull, I often also experience extreme sensitivity to touch, to the point of not being able to sleep on a few occasions; as well as nausea, however never to the point of actually throwing up. Less frequently I will experience sensitivity to light or sound.&lt;/p&gt;
-&lt;p&gt;As far as I can tell, my primary migraine trigger is changes in the weather, particularly large or frequent changes in barometric pressure. If the weather is stable (either nice or bad), the frequency and severity of my migraines are greatly reduced.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;phd&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PhD&lt;/h2&gt;
-&lt;p&gt;During my undergraduate and masters degrees, I actually didn’t notice that much of an effect from my migraines. At some point, after a lot of investigation of my headaches, and alternative therapies, I did finally get a diagnosis of migraine, and a prescription for &lt;a href=&#34;http://www.rxlist.com/maxalt-drug.htm&#34;&gt;Maxalt&lt;/a&gt;, a triptan used to treat migraines. I used this very sparingly, due to the side effects, and the cost.&lt;/p&gt;
-&lt;p&gt;My PhD was at &lt;a href=&#34;http://www.dal.ca/&#34;&gt;Dalhousie University&lt;/a&gt; in Halifax, NS, Canada. If you don’t know, &lt;a href=&#34;http://en.wikipedia.org/wiki/Halifax,_Nova_Scotia&#34;&gt;Halifax&lt;/a&gt; is a harbor city on the east coast of Nova Scotia, and as a result of its location has extremely variable weather, as it gets the west -&amp;gt; east weather from the rest of Canada, as well as weather systems going south -&amp;gt; north up the eastern seaboard of the United States. This results in a large amount of barometric pressure changes, and resulted in a lot of migraines for me. In general, my coping strategy when possible was to go home, take 2 tylenol, and go to bed for the rest of the day and sleep it off. As a PhD student in an analytical chemistry lab doing no wet lab work but only programming, this was often a viable option. My PhD supervisor was very supportive, in that as long as grades were good and project progress was being made, he was not particular about hours spent in the lab.&lt;/p&gt;
-&lt;p&gt;Of course, as a PhD student, there were often times this was not possible. I took regular upper level classes in my first 2 years, and I never informed any of my instructors about my migraines, but often just suffered through classes when necessary. In addition, I TA’d first and second year chemistry lab. Given the other symptoms of my migraines, I actually feel sorry for the students I instructed. I know many times I had trouble resolving what were probably trivial mistakes by first year students, and losing my cool over something that was not that difficult to fix. Second year was a bit better in that the students had more experience in a lab setting, however I TA’d analytical chemistry, which essentially involved generating a series of standards, measuring the standards, and then measuring a sample with unknown concentration. There was generally fewer ways for any given lab experiment to fail in the 2nd year lab, putting a lighter cognitive load on me most days.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;seminars-and-conferences&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Seminars and Conferences&lt;/h2&gt;
-&lt;p&gt;Of course, as a student I had to attend weekly departmental seminars, and present a couple of times as well. I also traveled to a few conferences and presented talks and posters. To my recollection, I have not suffered a severe migraine during my own talks at a conference. However, I have had different occasions where I have had to skip out on conference sessions due to a migraine, and have been even less likely to socialize and network than I usually would because of migraines. This is hard, because one of the primary purposes of attending conferences is exposure to new research and people.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;postdoc&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PostDoc&lt;/h2&gt;
-&lt;p&gt;My first PostDoc was at the University of Louisville in Louisville, KY, USA. My move to the US coincided with two things: 1) The introduction of Excedrin Migraine, and 2) My wife giving birth to our son. &lt;strong&gt;1&lt;/strong&gt; is important because Excedrin has allowed me to &lt;em&gt;manage&lt;/em&gt; my migraines. The side effects from Maxalt were almost as bad as the migraine itself, and it was bloody expensive (even with my wifes great drug plan). As a PostDoc supporting my wife and son, I always stopped to think about whether I actually needed it. Excedrin Migraine worked quite well in alleviating the pain from my migraines without introducing new side effects. I should note at this time that I was not a regular tea or coffee drinker, so the effect is not likely due to a caffeine addiction.&lt;/p&gt;
-&lt;p&gt;Then I discovered that the regular Excedrin worked about the same, and was available in a generic form at many big box stores at an extremely low price ($4 for 100 tablets). I haven’t taken any Maxalt in over 3 years, and probably buy the generic Excedrin 100 count for $4 at WalMart every few months. Is this good for my stomach?? Maybe not. Do I need to watch myself if I get a cut within a short amount of time after taking Excedrin (ASA inhibits clotting)?? Yep. But it seems to mess with my head a lot less than the triptans I have taken (I have also tried Zomig in addition to the Maxalt).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2&lt;/strong&gt; is important because the arrival of our son resulted in a lot of increased stress (and don’t get me wrong, a lot of happiness and joy as well). Although not a primary trigger for my migraines, it definitely did not help. And having a migraine with a crying baby in the background is a special kind of torture (I was reminded of this again the other day with my 8 month old daughter).&lt;/p&gt;
-&lt;p&gt;However, the move to the midwest US has resulted in a general decrease in the severity of my migraines, but I’m not sure about the frequency. Since moving here, I’ve only had to leave work because of a migraine once or twice a year, instead of the once a month that I used to in Nova Scotia.&lt;/p&gt;
-&lt;p&gt;Obviously, my productivity at work during a migraine is reduced compared to not being in a migraine. However, there are often periods in academia when things just need to get done (collaborator has a paper or grant deadline, etc), and going home for me means a combined hour of walking and public transit, and a very small likelyhood of getting anything done even after the migraine has passed (having a 4 year old and 8 month old contributes to this a lot, but I wouldn’t have it any other way).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;challenges&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Challenges&lt;/h2&gt;
-&lt;p&gt;As I previously said, my migraines appear to be rather mild based on the descriptions of other peoples migraines I have encountered (see the &lt;a href=&#34;http://www.reddit.com/r/migraine&#34;&gt;migraine subreddit&lt;/a&gt; for some painful descriptions from other migaineurs). However, they can make some interactions difficult. My normally cheerful and upbeat demeanor can quickly turn sour, and I have been acutely aware of some rather awkward social interactions during a migraine. Thankfully, many times I am able to simply avoid others at work when I have a migraine, and I generally take pains to think twice before speaking as well (which is a good thing to do in general). I don’t teach, and the number of meetings that I &lt;strong&gt;have&lt;/strong&gt; to attend in a given week is rather small, thankfully (not just because of my migraines).&lt;/p&gt;
-&lt;p&gt;The pain and mental confusion from my migraines can make getting work done difficult, and although Excedrin seems to do a wonderful job of dulling the pain, nothing can help with the mental confusion. Having a migraine in the middle of working on a large data analysis with many possible directions, or managing many different projects takes an incredible amount of mental effort when I am in a migraine. I have had times when I sit in front of my computer completely stunned because I cannot figure out what needs to be done next. At these points I frequently occupy myself with mindless tasks that need to be done, sending meeting emails, downloading papers to read, and trying to stay off of social media time sucks like Facebook and Reddit, as I tend to get heavily engrossed in those more so than usual.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;prophylactic&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Prophylactic&lt;/h2&gt;
-&lt;p&gt;This past year I finally tried CBD (cannibidiol) oil, an oil where only CBD has been extracted from the marijuana plant. Taking this twice a day, every day, has greatly reduced the number of migraines I have, and seems to reduce their intensity as well. It’s greatest effect is on the pain levels I encounter, and not so much the other neurological effects of the migraines.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Updated on 2017-12-28 with information on CBD oil.&lt;/em&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

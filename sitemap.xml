@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/turn-roberts-beard-purple/</loc>
+      <lastmod>2018-06-20T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/knitrprogressbar/</loc>
       <lastmod>2018-02-19T00:00:00+00:00</lastmod>
     </url>
@@ -437,6 +446,16 @@
     
     <url>
     
+      <loc>/tags/alzheimers/</loc>
+      <lastmod>2018-06-20T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/bioconductor/</loc>
       <lastmod>2014-04-08T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -518,6 +537,16 @@
     
       <loc>/tags/documentation/</loc>
       <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/fundraising/</loc>
+      <lastmod>2018-06-20T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

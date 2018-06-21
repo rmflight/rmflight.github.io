@@ -11,6 +11,37 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Turn Robert&#39;s Beard Purple!</title>
+      <link>/post/turn-roberts-beard-purple/</link>
+      <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/turn-roberts-beard-purple/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If I &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;raise $100 by August 25ths The Walk to End Alzheimer’s&lt;/a&gt;, I will have my beard dyed purple in support of Alzheimer’s awareness.&lt;/p&gt;
+&lt;p&gt;If you are in another country, donate to your local Alzheimer’s charity and &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;email me&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; so I count it towards my total.&lt;/p&gt;
+&lt;p&gt;Links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;My donation page&lt;/a&gt; (&lt;a href=&#34;https://www.charitywatch.org/ratings-and-metrics/alzheimers-association-national-office/461&#34;&gt;Charity report&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://secure2.convio.net/alz/site/Donation2;jsessionid=00000000.app202b?df_id=1683&amp;amp;mfc_pref=T&amp;amp;1683.donation=form1&amp;amp;s_locale=en_CA&amp;amp;NONCE_TOKEN=D46EF58FAD6FA1276A4C99FBED9E9155&#34;&gt;Alzheimer Society Canada&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://secure.alzheimers.org.uk/?gclid=CjwKCAjw9qfZBRA5EiwAiq0AbScJN_IE7JW3arALIYmd2F2gzMk3ZV32sT9FGyR3yx_spMlgUzqMkhoCgUEQAvD_BwE&#34;&gt;Alzheimer’s Society UK&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-a-purple-beard&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why a Purple Beard??&lt;/h2&gt;
+&lt;p&gt;I decided to participate in the Walk To End Alzheimer’s this year, coming up on August 25th here in Lexington. I will be walking the 2 miles in support of my Mom, who was diagnosed with early onset Alzheimer’s some time ago (she will turn 68 this summer).&lt;/p&gt;
+&lt;p&gt;Why am I walking?? Because I’ve seen a little bit of what Alzheimer’s does, and although my Mom won’t benefit from new treatments, we need to find effective treatments for this devastating disease.&lt;/p&gt;
+&lt;p&gt;As an incentive to donate, if I reach my &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;fundraising goal of $100&lt;/a&gt;, I will have my beard dyed Alzheimer’s Association purple! The wonderful folks at &lt;a href=&#34;http://bak4morestudio.com/&#34;&gt;Bak 4 More studios&lt;/a&gt; have agreed to help me dye my beard purple before the Walk date. I will make sure to take lots of video and pictures of the process, which I am told will probably involve two trips to the studio, one to lighten my beard and a second to actually apply the purple color.&lt;/p&gt;
+&lt;p&gt;Using the magic of computers, I’ve tried to show here what that might look like. I’m sure it will look 100X better than these, this is just to give a possible idea.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/selfie_walk_lores.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;I also realize that not everyone may be able to donate to the American Alzheimer’s Association, so if you want to support my fundraising for the Walk (and turn my beard purple) by donating to your local Alzheimer’s charity, just &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;send me an email&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; with the amount you donated and to which charity, and I will count your donation towards your local charity towards my goal. I will also respond to your email so that you know I’ve counted it.&lt;/p&gt;
+&lt;p&gt;I will NOT be trimming my beard between now and the Walk date, so there will be even &lt;strong&gt;more purple beard&lt;/strong&gt; to go around, with 9 weeks between now and then.&lt;/p&gt;
+&lt;p&gt;Thank you for helping me raise funds for the Walk to End Alzheimer’s, and feel free to spread this post far and wide.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>knitrProgressBar Package</title>
       <link>/post/knitrprogressbar/</link>
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
@@ -1084,84 +1115,6 @@ ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)&lt;/code&gt;&lt
 &lt;h2&gt;Prophylactic&lt;/h2&gt;
 &lt;p&gt;This past year I finally tried CBD (cannibidiol) oil, an oil where only CBD has been extracted from the marijuana plant. Taking this twice a day, every day, has greatly reduced the number of migraines I have, and seems to reduce their intensity as well. It’s greatest effect is on the pain levels I encounter, and not so much the other neurological effects of the migraines.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Updated on 2017-12-28 with information on CBD oil.&lt;/em&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Travis-CI to GitHub Pages</title>
-      <link>/post/travis-ci-to-github-pages/</link>
-      <pubDate>Wed, 05 Nov 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/post/travis-ci-to-github-pages/</guid>
-      <description>&lt;p&gt;I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing &lt;code&gt;R&lt;/code&gt; package vignettes to the web after building and checking on &lt;em&gt;travis-ci&lt;/em&gt;. &lt;a href=&#34;https://twitter.com/hadleywickham&#34;&gt;Hadley Wickham&lt;/a&gt; pointed to using such a scheme to push the web version of his book after each update and the &lt;code&gt;S3&lt;/code&gt; deploy hooks on &lt;em&gt;travis-ci&lt;/em&gt;. Deploying your html content to &lt;code&gt;S3&lt;/code&gt; is great, but given the availability of the &lt;code&gt;gh-pages&lt;/code&gt; branch on GitHub, I thought it would be neat to work out how to deploy the html output from an &lt;code&gt;R&lt;/code&gt; package vignette to the &lt;code&gt;gh-pages&lt;/code&gt; branch on GitHub. This is useful because more and more packages are being hosted only on GitHub and building and testing use the &lt;em&gt;travis-ci&lt;/em&gt; service, and it takes work to remember to &lt;code&gt;knit&lt;/code&gt; and push stuff separately to the &lt;code&gt;gh-pages&lt;/code&gt; branch. In addition, although it is possible to &lt;code&gt;deploy&lt;/code&gt; one’s html output to other services from within &lt;em&gt;travis-ci&lt;/em&gt;, there is not an &lt;strong&gt;easy&lt;/strong&gt; pushbutton solution to deploying to GitHub pages. After some searching and looking, this is what I have come up with for my own package.&lt;/p&gt;
-&lt;p&gt;All subsequent steps assume that:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;You are hosting your package development on GitHub&lt;/li&gt;
-&lt;li&gt;You have html content in the &lt;em&gt;gh-pages&lt;/em&gt; branch of your package repo (see more about &lt;em&gt;gh-pages&lt;/em&gt; &lt;a href=&#34;https://help.github.com/articles/creating-project-pages-manually/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://help.github.com/categories/github-pages-basics/&#34;&gt;here&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;You already have your package doing building and testing using &lt;em&gt;travis-ci&lt;/em&gt;. See the &lt;a href=&#34;https://github.com/craigcitro/r-travis&#34;&gt;&lt;code&gt;r-travis&lt;/code&gt;&lt;/a&gt; project for more information on how to set this up.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&#34;oauth&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;OAUTH&lt;/h2&gt;
-&lt;p&gt;To start, you will need to generate an &lt;code&gt;OAUTH&lt;/code&gt; token on GitHub that will be used to allow you to push back to your GitHub repo. This will be some really long alphanumeric string. You can generate one by going to &lt;code&gt;settings&lt;/code&gt; -&amp;gt; &lt;code&gt;applications&lt;/code&gt; -&amp;gt; &lt;code&gt;personal access tokens&lt;/code&gt; -&amp;gt; &lt;code&gt;generate new token&lt;/code&gt;. Make sure to copy this into a file that is &lt;strong&gt;not&lt;/strong&gt; under version control.&lt;/p&gt;
-&lt;p&gt;You will also need to install the &lt;code&gt;travis&lt;/code&gt; ruby framework.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;gem install travis&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After installing, navigate to your &lt;code&gt;git&lt;/code&gt; repo for the project you want to enable automatic pushing of content for, and then login to &lt;em&gt;travis-ci&lt;/em&gt; and secure the GitHub token.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;travis login
-
-travis encrypt GH_TOKEN=&amp;quot;yourgithubtoken&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This will generate output that should be copied to your &lt;code&gt;.travis.yml&lt;/code&gt; file. Essentially we have created an environment variable &lt;code&gt;GH_TOKEN&lt;/code&gt; with your actual GitHub token, that is encrypted on the &lt;em&gt;travis-ci&lt;/em&gt; servers. So this way you don’t expose your actual GitHub token to anyone who looks at your &lt;code&gt;.travis.yml&lt;/code&gt; file.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;deploy-script&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Deploy Script&lt;/h2&gt;
-&lt;p&gt;We also need a bash script that will actually push the content for us. As part of the &lt;code&gt;R&lt;/code&gt; process on &lt;em&gt;travis-ci&lt;/em&gt;, we get a &lt;code&gt;tar.gz&lt;/code&gt; file of the package with the compiled vignette. So we just need to &lt;code&gt;untar&lt;/code&gt; that file, copy the html file, and create the &lt;code&gt;git&lt;/code&gt; repo and push. The code below is what I have done for my own package, &lt;a href=&#34;https://github.com/rmflight/categoryCompare&#34;&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt;. I saved this code in the file &lt;code&gt;.push_gh_pages.sh&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-rm -rf out || exit 0;
-mkdir out;
-
-GH_REPO=&amp;quot;@github.com/rmflight/categoryCompare.git&amp;quot;
-
-FULL_REPO=&amp;quot;https://$GH_TOKEN$GH_REPO&amp;quot;
-
-for files in &amp;#39;*.tar.gz&amp;#39;; do
-        tar xfz $files
-done
-
-cd out
-git init
-git config user.name &amp;quot;rmflight-travis&amp;quot;
-git config user.email &amp;quot;travis&amp;quot;
-cp ../categoryCompare/inst/doc/categoryCompare_vignette.html index.html
-
-git add .
-git commit -m &amp;quot;deployed to github pages&amp;quot;
-git push --force --quiet $FULL_REPO master:gh-pages&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note that we remove the directory where we want to create our &lt;code&gt;git&lt;/code&gt; repo, create it, setup the &lt;code&gt;remote&lt;/code&gt; repo with the token string, and then we &lt;code&gt;untar&lt;/code&gt; and &lt;code&gt;unzip&lt;/code&gt; the previously built package, and copy over the file that we want to be the index.html page on the &lt;code&gt;gh-pages&lt;/code&gt; branch. Finally we add it, commit it, and do a force push.&lt;/p&gt;
-&lt;p&gt;This script is actually part of the package repo, but does not get included in the built &lt;code&gt;tar.gz&lt;/code&gt; file (add it to &lt;code&gt;.Rbuildignore&lt;/code&gt;). This makes it easy to keep it in sync with any changes to the overall package itself.&lt;/p&gt;
-&lt;p&gt;Note that this is completely overriding the current contents of the &lt;code&gt;gh-pages&lt;/code&gt; branch. If you wanted to do something nicer (&lt;em&gt;i.e.&lt;/em&gt; preserving commits or working with an index page pointing to multiple vignettes), you could &lt;code&gt;pull&lt;/code&gt; just the &lt;code&gt;gh-pages&lt;/code&gt; branch first, and then make modifications.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;modifying-.travis.yml&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Modifying .travis.yml&lt;/h2&gt;
-&lt;p&gt;In addition, we need to add three lines to the &lt;code&gt;.travis.yml&lt;/code&gt; file.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# under env: global:
-  - secure: &amp;quot;yoursecurestring&amp;quot;
-
-# under before_install:
-  - chmod 755 ./.push_gh_pages.sh
-
-# under after_success:
-  - ./.push_gh_pages.sh&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;Adding the &lt;code&gt;GH_TOKEN&lt;/code&gt; to the global environment variables&lt;/li&gt;
-&lt;li&gt;Making the deploy script executable&lt;/li&gt;
-&lt;li&gt;Adding the running of the deploy script &lt;code&gt;after_success&lt;/code&gt;, so only when build and check and tests run successfully&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;And it seems to work quite nicely. As an example, my &lt;a href=&#34;https://github.com/rmflight/categoryCompare&#34;&gt;&lt;code&gt;categoryCompare&lt;/code&gt;&lt;/a&gt; package now has it’s vignette on the &lt;a href=&#34;http://rmflight.github.io/categoryCompare/&#34;&gt;&lt;code&gt;gh-pages&lt;/code&gt; branch&lt;/a&gt;, and this will get updated every time I push a commit.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;update&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Update&lt;/h2&gt;
-&lt;p&gt;As &lt;a href=&#34;https://twitter.com/cpsievert&#34;&gt;Carson&lt;/a&gt; pointed out below, there was an error in the second code block. &lt;code&gt;travis secure&lt;/code&gt; should be &lt;code&gt;travis encrypt&lt;/code&gt;, as you are &lt;strong&gt;encrypting&lt;/strong&gt; the credentials. &lt;strong&gt;secure&lt;/strong&gt; is for decrypting something that was already encrypted. Thanks for catching it!&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
