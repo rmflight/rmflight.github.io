@@ -11,7 +11,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/licensing-r-packages-that-include-others-code/">
+  <link rel="alternate" hreflang="en-us" href="/post/iranges-for-non-integer-overlaps/">
 
   
   
@@ -57,7 +57,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/licensing-r-packages-that-include-others-code/">
+  <link rel="canonical" href="/post/iranges-for-non-integer-overlaps/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -65,19 +65,19 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/post/licensing-r-packages-that-include-others-code/">
-  <meta property="og:title" content="Licensing R Packages that Include Others Code | Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/iranges-for-non-integer-overlaps/">
+  <meta property="og:title" content="Using IRanges for Non-Integer Overlaps | Deciphering Life: One Bit at a Time">
   <meta property="og:description" content="">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2018-02-14T00:00:00&#43;00:00">
+  <meta property="article:published_time" content="2018-06-23T00:00:00&#43;00:00">
   
-  <meta property="article:modified_time" content="2018-02-14T00:00:00&#43;00:00">
-  
-
+  <meta property="article:modified_time" content="2018-06-23T00:00:00&#43;00:00">
   
 
-  <title>Licensing R Packages that Include Others Code | Deciphering Life: One Bit at a Time</title>
+  
+
+  <title>Using IRanges for Non-Integer Overlaps | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -191,7 +191,7 @@
 
   <div class="article-container">
     <div class="article-inner">
-      <h1 itemprop="name">Licensing R Packages that Include Others Code</h1>
+      <h1 itemprop="name">Using IRanges for Non-Integer Overlaps</h1>
 
       
 
@@ -199,15 +199,15 @@
 
   <span class="article-date">
     
-    <time datetime="2018-02-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-02-14
+    <time datetime="2018-06-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2018-06-23
     </time>
   </span>
 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    3 min read
+    4 min read
   </span>
   
 
@@ -225,35 +225,35 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Licensing%20R%20Packages%20that%20Include%20Others%20Code&amp;url=%2fpost%2flicensing-r-packages-that-include-others-code%2f"
+         href="https://twitter.com/intent/tweet?text=Using%20IRanges%20for%20Non-Integer%20Overlaps&amp;url=%2fpost%2firanges-for-non-integer-overlaps%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2flicensing-r-packages-that-include-others-code%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2firanges-for-non-integer-overlaps%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2flicensing-r-packages-that-include-others-code%2f&amp;title=Licensing%20R%20Packages%20that%20Include%20Others%20Code"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2firanges-for-non-integer-overlaps%2f&amp;title=Using%20IRanges%20for%20Non-Integer%20Overlaps"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2flicensing-r-packages-that-include-others-code%2f&amp;title=Licensing%20R%20Packages%20that%20Include%20Others%20Code"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2firanges-for-non-integer-overlaps%2f&amp;title=Using%20IRanges%20for%20Non-Integer%20Overlaps"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Licensing%20R%20Packages%20that%20Include%20Others%20Code&amp;body=%2fpost%2flicensing-r-packages-that-include-others-code%2f">
+         href="mailto:?subject=Using%20IRanges%20for%20Non-Integer%20Overlaps&amp;body=%2fpost%2firanges-for-non-integer-overlaps%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -269,38 +269,110 @@
       <div class="article-style" itemprop="articleBody">
         <div id="tldr" class="section level2">
 <h2>TL;DR</h2>
-<p>If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.</p>
+<p>The <a href="https://bioconductor.org/packages/IRanges/"><code>IRanges</code></a> package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a <strong>large</strong> constant factor and round them. The constant depends on how much accuracy you need.</p>
+</div>
+<div id="iranges" class="section level2">
+<h2>IRanges??</h2>
+<p><a href="https://bioconductor.org/packages/IRanges/"><code>IRanges</code></a> is a bioconductor package for interval algebra of <strong>i</strong>nteger <strong>ranges</strong>. It is used extensively in the <code>GenomicRanges</code> package for finding overlaps between various genomic features. For genomic features, <strong>integers</strong> make sense, because one cannot have fractional base locations.</p>
+<p>However, <code>IRanges</code> uses <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red-black trees</a> as it’s data structure, which provide very fast searches of overlaps. This makes it very attractive for <strong>any</strong> problem that involves overlapping ranges.</p>
 </div>
 <div id="motivation" class="section level2">
 <h2>Motivation</h2>
-<p>I recently created the <a href="https://CRAN.R-project.org/package=knitrProgressBar"><code>knitrProgressBar</code></a> package. It is a really simple package, that takes the <code>dplyr</code> progress bars and makes it possible for them to write progress to a supplied file connection. The <code>dplyr</code> package itself is licensed under MIT, so I felt fine taking the code directly from <code>dplyr</code> itself. In addition, I didn’t want my package to depend on <code>dplyr</code>, so I wanted that code self-contained in my own package, and I wanted to be able to modify underlying mechanics that might have been more complicated if I had just made a new class of progress bar that inherited from <code>dplyr</code>’s.</p>
-<p>I also wanted to be able to release my code on CRAN, not just on GitHub. I knew to accomplish that I would have to have all the license stuff correct. However, I had not seen any guide on how to <strong>license</strong> a package and give proper attribution in the <code>Authors@R</code> field.</p>
-<p>Note that I did ask this question on <a href="https://stackoverflow.com/questions/48525023/properly-license-r-package-that-includes-other-mit-code">StackOverflow</a> and <a href="https://discuss.ropensci.org/t/licensing-a-new-package-that-uses-code-from-another-source/1046">ROpenSci</a> forums as well.</p>
+<p>My motivation comes from mass-spectrometry data, where I want to count the number of raw data points and / or the number of peaks in a <strong>large</strong> number of M/Z windows. Large here means on the order of 1,000,000 M/Z windows.</p>
+<p>Generating the windows is not hard, but searching the list of points / peaks for which ones are within the bounds of a window takes <strong>a really long time</strong>. Long enough that I needed some other method.</p>
 </div>
-<div id="information-from-cran" class="section level2">
-<h2>Information from CRAN</h2>
-<p>I should note here, that the CRAN author guidelines do provide a <strong>small</strong> hint in this regard in the <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html">Writing R Extensions</a> guide:</p>
-<blockquote>
-<p>Note that all significant contributors must be included: if you wrote an R wrapper for the work of others included in the src directory, you are not the sole (and maybe not even the main) author.</p>
-</blockquote>
-<p>However, there is not any guidance provided on <strong>how</strong> these should ideally be listed.</p>
+<div id="iranges-to-the-rescue" class="section level2">
+<h2>IRanges to the Rescue!</h2>
+<p>So my idea was to use <code>IRanges</code>. But there is a problem, <code>IRanges</code> is for integer ranges. How do we use this for non-integer data? Simple, multiply and round the fractional numbers to generate integers.</p>
+<p>It turns out that multiplying our mass-spec data by <code>20,000</code> gives us differences down to the <code>0.00005</code> place, which is more than enough accuracy for the size of the windows we are interested in. If needed, <code>IRanges</code> can handle <code>1600 * 1e6</code>, but currently will crash at <code>1600 * 1e7</code>.</p>
 </div>
-<div id="full-answer" class="section level2">
-<h2>Full Answer</h2>
-<p>I am the main author and maintainer of the new package, that is easy. The original code is MIT licensed, authored by several persons, and has copyright held by RStudio.</p>
-<p>My solution then was to:</p>
-<ul>
-<li><a href="https://github.com/rmflight/knitrProgressBar/blob/master/R/progress.R#L6">add the MIT license</a> from <code>dplyr</code> to the file that has the progress bar code</li>
-<li>add <a href="https://github.com/rmflight/knitrProgressBar/blob/master/DESCRIPTION#L5">all the authors</a> of <code>dplyr</code> as <strong>contributors</strong> to my package, with a comment as to <strong>why</strong> they are listed</li>
-<li>add RStudio as a <strong>copyright holder</strong> to my package, with a comment that this only applies to the one file</li>
-</ul>
-<p>So the <code>Authors@R</code> line in my <code>DESCRIPTION</code> ended up being:</p>
-<pre><code>Authors@R: c(person(given = c(&quot;Robert&quot;, &quot;M&quot;), family = &quot;Flight&quot;, email = &quot;rflight79@gmail.com&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;)),
-            person(&quot;Hadley&quot;, &quot;Wickham&quot;, role = &quot;ctb&quot;, comment = &quot;Author of included dplyr fragments&quot;),
-            person(&quot;Romain&quot;, &quot;Francois&quot;, role = &quot;ctb&quot;, comment = &quot;Author of included dplyr fragments&quot;),
-            person(&quot;Lionel&quot;, &quot;Henry&quot;, role = &quot;ctb&quot;, comment = &quot;Author of included dplyr fragments&quot;),
-            person(&quot;Kirill&quot;, &quot;Müller&quot;, role = &quot;ctb&quot;, comment = &quot;Author of included dplyr fragments&quot;),
-            person(&quot;RStudio&quot;, role = &quot;cph&quot;, comment = &quot;Copyright holder of included dplyr fragments&quot;))</code></pre>
+<div id="how-fast-is-it" class="section level2">
+<h2>How Fast Is It?</h2>
+<p>Lets actually test differences in speed by counting how many overlapping points there are.</p>
+<pre class="r"><code>library(IRanges)
+library(ggplot2)
+load(&quot;../../data/iranges_example_data.rda&quot;)
+
+head(mz_points)</code></pre>
+<pre><code>## IRanges object with 6 ranges and 1 metadata column:
+##           start       end     width |               mz
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |        &lt;numeric&gt;
+##   [1]   2970182   2970182         1 | 148.509100524992
+##   [2]   2970183   2970183         1 | 148.509161249802
+##   [3]   2970184   2970184         1 |  148.50922197465
+##   [4]   2970186   2970186         1 | 148.509282699535
+##   [5]   3000526   3000526         1 | 150.026298638453
+##   [6]   3000527   3000527         1 | 150.026360296201</code></pre>
+<pre class="r"><code>head(mz_windows)</code></pre>
+<pre><code>## IRanges object with 6 ranges and 2 metadata columns:
+##           start       end     width |         mz_start           mz_end
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |        &lt;numeric&gt;        &lt;numeric&gt;
+##   [1]   2960000   2960011        12 |              148 148.000554529159
+##   [2]   2960001   2960012        12 | 148.000055452916 148.000609982075
+##   [3]   2960002   2960013        12 | 148.000110905832 148.000665434991
+##   [4]   2960003   2960014        12 | 148.000166358748 148.000720887907
+##   [5]   2960004   2960016        13 | 148.000221811664 148.000776340823
+##   [6]   2960006   2960017        12 |  148.00027726458 148.000831793739</code></pre>
+<p>I have some example data with 3447542 windows, and 991816 points. We will count how many point there are in each window using the below functions, with differing number of windows.</p>
+<div id="functions" class="section level3">
+<h3>Functions</h3>
+<pre class="r"><code>count_overlaps_naive &lt;- function(mz_start, mz_end, points){
+  sum((points &gt;= mz_start) &amp; (points &lt;= mz_end))
+}
+
+iterate_windows &lt;- function(windows, points){
+  purrr::pmap_int(windows, count_overlaps_naive, points)
+}
+
+run_times_iterating &lt;- function(windows, points){
+  t &lt;- Sys.time()
+  window_counts &lt;- iterate_windows(windows, points)
+  t2 &lt;- Sys.time()
+  run_time &lt;- difftime(t2, t, units = &quot;secs&quot;)
+  run_time
+}
+
+run_times_countoverlaps &lt;- function(windows, points){
+  t &lt;- Sys.time()
+  window_counts &lt;- countOverlaps(points, windows)
+  t2 &lt;- Sys.time()
+  run_time &lt;- difftime(t2, t, units = &quot;secs&quot;)
+  run_time
+}</code></pre>
+</div>
+<div id="define-samples-of-different-sizes" class="section level3">
+<h3>Define Samples of Different Sizes</h3>
+<pre class="r"><code>set.seed(1234)
+
+sample_sizes &lt;- c(10, 100, 1000, 10000, 50000, 100000)
+
+window_samples &lt;- purrr::map(sample_sizes, function(x){sample(length(mz_windows), size = x)})</code></pre>
+</div>
+<div id="run-it" class="section level3">
+<h3>Run It</h3>
+<pre class="r"><code>iranges_times &lt;- purrr::map_dbl(window_samples, function(x){
+  run_times_countoverlaps(mz_windows[x], mz_points)
+})
+
+window_frame &lt;- as.data.frame(mcols(mz_windows))
+
+naive_times &lt;- purrr::map_dbl(window_samples, function(x){
+  run_times_iterating(window_frame[x, ], mz_points)
+})</code></pre>
+</div>
+<div id="plot-them" class="section level3">
+<h3>Plot Them</h3>
+<pre class="r"><code>all_times &lt;- data.frame(size = rep(sample_sizes, 2),
+                        time = c(iranges_times, naive_times),
+                        method = rep(c(&quot;iranges&quot;, &quot;naive&quot;), each = 6))
+
+p &lt;- ggplot(all_times, aes(x = log10(size), y = time, color = method)) + geom_point() + geom_line() + labs(y = &quot;time (s)&quot;, x = &quot;log10(# of windows)&quot;, title = &quot;Naive &amp; IRanges Timings&quot;) + theme(legend.position = c(0.2, 0.8))
+p</code></pre>
+<p><img src="/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-1.svg" width="672" /></p>
+<pre class="r"><code>p + ylim(c(0, 1))</code></pre>
+<p><img src="/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-2.svg" width="672" /></p>
+<p>As the two figures show, the naive solution, while a little faster under 1000 regions, is quickly outperformed by <code>IRanges</code>, whose time increases much more slowly.</p>
+</div>
 </div>
 
       </div>
@@ -312,9 +384,7 @@
   
   <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/packages">packages</a>
-  
-  <a class="btn btn-primary btn-outline" href="/tags/open-science">open-science</a>
+  <a class="btn btn-primary btn-outline" href="/tags/iranges">iranges</a>
   
 </div>
 
@@ -332,15 +402,15 @@
   <h3>Related</h3>
   <ul>
     
-    <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
+    <li><a href="/post/knitrprogressbar/">knitrProgressBar Package</a></li>
     
-    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
+    <li><a href="/post/licensing-r-packages-that-include-others-code/">Licensing R Packages that Include Others Code</a></li>
     
-    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    <li><a href="/post/docopt-numeric-options/">docopt &amp; Numeric Options</a></li>
     
-    <li><a href="/post/self-written-function-help/">Self-Written Function Help</a></li>
+    <li><a href="/post/custom-deployment-script/">Custom Deployment Script</a></li>
     
-    <li><a href="/post/package-version-increment-pre-and-post-commit-hooks/">Package Version Increment Pre- and Post-Commit Hooks</a></li>
+    <li><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></li>
     
   </ul>
 </div>

@@ -11,6 +11,122 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Using IRanges for Non-Integer Overlaps</title>
+      <link>/post/iranges-for-non-integer-overlaps/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/iranges-for-non-integer-overlaps/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&#34;https://bioconductor.org/packages/IRanges/&#34;&gt;&lt;code&gt;IRanges&lt;/code&gt;&lt;/a&gt; package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a &lt;strong&gt;large&lt;/strong&gt; constant factor and round them. The constant depends on how much accuracy you need.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;iranges&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;IRanges??&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://bioconductor.org/packages/IRanges/&#34;&gt;&lt;code&gt;IRanges&lt;/code&gt;&lt;/a&gt; is a bioconductor package for interval algebra of &lt;strong&gt;i&lt;/strong&gt;nteger &lt;strong&gt;ranges&lt;/strong&gt;. It is used extensively in the &lt;code&gt;GenomicRanges&lt;/code&gt; package for finding overlaps between various genomic features. For genomic features, &lt;strong&gt;integers&lt;/strong&gt; make sense, because one cannot have fractional base locations.&lt;/p&gt;
+&lt;p&gt;However, &lt;code&gt;IRanges&lt;/code&gt; uses &lt;a href=&#34;https://en.wikipedia.org/wiki/Red%E2%80%93black_tree&#34;&gt;red-black trees&lt;/a&gt; as it’s data structure, which provide very fast searches of overlaps. This makes it very attractive for &lt;strong&gt;any&lt;/strong&gt; problem that involves overlapping ranges.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;My motivation comes from mass-spectrometry data, where I want to count the number of raw data points and / or the number of peaks in a &lt;strong&gt;large&lt;/strong&gt; number of M/Z windows. Large here means on the order of 1,000,000 M/Z windows.&lt;/p&gt;
+&lt;p&gt;Generating the windows is not hard, but searching the list of points / peaks for which ones are within the bounds of a window takes &lt;strong&gt;a really long time&lt;/strong&gt;. Long enough that I needed some other method.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;iranges-to-the-rescue&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;IRanges to the Rescue!&lt;/h2&gt;
+&lt;p&gt;So my idea was to use &lt;code&gt;IRanges&lt;/code&gt;. But there is a problem, &lt;code&gt;IRanges&lt;/code&gt; is for integer ranges. How do we use this for non-integer data? Simple, multiply and round the fractional numbers to generate integers.&lt;/p&gt;
+&lt;p&gt;It turns out that multiplying our mass-spec data by &lt;code&gt;20,000&lt;/code&gt; gives us differences down to the &lt;code&gt;0.00005&lt;/code&gt; place, which is more than enough accuracy for the size of the windows we are interested in. If needed, &lt;code&gt;IRanges&lt;/code&gt; can handle &lt;code&gt;1600 * 1e6&lt;/code&gt;, but currently will crash at &lt;code&gt;1600 * 1e7&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-fast-is-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How Fast Is It?&lt;/h2&gt;
+&lt;p&gt;Lets actually test differences in speed by counting how many overlapping points there are.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(IRanges)
+library(ggplot2)
+load(&amp;quot;../../data/iranges_example_data.rda&amp;quot;)
+
+head(mz_points)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## IRanges object with 6 ranges and 1 metadata column:
+##           start       end     width |               mz
+##       &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; |        &amp;lt;numeric&amp;gt;
+##   [1]   2970182   2970182         1 | 148.509100524992
+##   [2]   2970183   2970183         1 | 148.509161249802
+##   [3]   2970184   2970184         1 |  148.50922197465
+##   [4]   2970186   2970186         1 | 148.509282699535
+##   [5]   3000526   3000526         1 | 150.026298638453
+##   [6]   3000527   3000527         1 | 150.026360296201&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(mz_windows)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## IRanges object with 6 ranges and 2 metadata columns:
+##           start       end     width |         mz_start           mz_end
+##       &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; |        &amp;lt;numeric&amp;gt;        &amp;lt;numeric&amp;gt;
+##   [1]   2960000   2960011        12 |              148 148.000554529159
+##   [2]   2960001   2960012        12 | 148.000055452916 148.000609982075
+##   [3]   2960002   2960013        12 | 148.000110905832 148.000665434991
+##   [4]   2960003   2960014        12 | 148.000166358748 148.000720887907
+##   [5]   2960004   2960016        13 | 148.000221811664 148.000776340823
+##   [6]   2960006   2960017        12 |  148.00027726458 148.000831793739&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I have some example data with 3447542 windows, and 991816 points. We will count how many point there are in each window using the below functions, with differing number of windows.&lt;/p&gt;
+&lt;div id=&#34;functions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Functions&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;count_overlaps_naive &amp;lt;- function(mz_start, mz_end, points){
+  sum((points &amp;gt;= mz_start) &amp;amp; (points &amp;lt;= mz_end))
+}
+
+iterate_windows &amp;lt;- function(windows, points){
+  purrr::pmap_int(windows, count_overlaps_naive, points)
+}
+
+run_times_iterating &amp;lt;- function(windows, points){
+  t &amp;lt;- Sys.time()
+  window_counts &amp;lt;- iterate_windows(windows, points)
+  t2 &amp;lt;- Sys.time()
+  run_time &amp;lt;- difftime(t2, t, units = &amp;quot;secs&amp;quot;)
+  run_time
+}
+
+run_times_countoverlaps &amp;lt;- function(windows, points){
+  t &amp;lt;- Sys.time()
+  window_counts &amp;lt;- countOverlaps(points, windows)
+  t2 &amp;lt;- Sys.time()
+  run_time &amp;lt;- difftime(t2, t, units = &amp;quot;secs&amp;quot;)
+  run_time
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;define-samples-of-different-sizes&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Define Samples of Different Sizes&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(1234)
+
+sample_sizes &amp;lt;- c(10, 100, 1000, 10000, 50000, 100000)
+
+window_samples &amp;lt;- purrr::map(sample_sizes, function(x){sample(length(mz_windows), size = x)})&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;run-it&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Run It&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;iranges_times &amp;lt;- purrr::map_dbl(window_samples, function(x){
+  run_times_countoverlaps(mz_windows[x], mz_points)
+})
+
+window_frame &amp;lt;- as.data.frame(mcols(mz_windows))
+
+naive_times &amp;lt;- purrr::map_dbl(window_samples, function(x){
+  run_times_iterating(window_frame[x, ], mz_points)
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-them&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plot Them&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_times &amp;lt;- data.frame(size = rep(sample_sizes, 2),
+                        time = c(iranges_times, naive_times),
+                        method = rep(c(&amp;quot;iranges&amp;quot;, &amp;quot;naive&amp;quot;), each = 6))
+
+p &amp;lt;- ggplot(all_times, aes(x = log10(size), y = time, color = method)) + geom_point() + geom_line() + labs(y = &amp;quot;time (s)&amp;quot;, x = &amp;quot;log10(# of windows)&amp;quot;, title = &amp;quot;Naive &amp;amp; IRanges Timings&amp;quot;) + theme(legend.position = c(0.2, 0.8))
+p&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-1.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ylim(c(0, 1))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-2.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As the two figures show, the naive solution, while a little faster under 1000 regions, is quickly outperformed by &lt;code&gt;IRanges&lt;/code&gt;, whose time increases much more slowly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Turn Robert&#39;s Beard Purple!</title>
       <link>/post/turn-roberts-beard-purple/</link>
       <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
@@ -1043,42 +1159,6 @@ ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)&lt;/code&gt;&lt
 &lt;p class=&#34;caption&#34;&gt;new pca&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The new sequencing design seems much more reasonable, and the PCA plot has many characteristics of the original one from the original comparative analysis by Mouse ENCODE (see above), in that yes, there are species specific differences, but there also appears to be a way to collapse along PC2 and PC3 where the tissues will line up with each other, which I kind of would expect.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>First Open Post-Publication Peer Review, with Credit!</title>
-      <link>/post/first-open-post-publication-peer-review-with-credit/</link>
-      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/first-open-post-publication-peer-review-with-credit/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Reviewed &lt;a href=&#34;https://twitter.com/@biodataganache&#34;&gt;Jason McDermott’s&lt;/a&gt; &lt;a href=&#34;http://f1000research.com/articles/4-60/v1&#34;&gt;MDRPred paper&lt;/a&gt; on F1000Research!, where my review is posted along side the paper, &lt;a href=&#34;http://f1000research.com/articles/4-60/v1#referee-response-7889&#34;&gt;with a DOI&lt;/a&gt;, completely in the open with my name attached. Was a pleasant experience, aided by the fact that Jason wrote a good paper.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;f1000research&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;F1000Research!&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://f1000research.com/&#34;&gt;F1000Research!&lt;/a&gt; is a new publishing startup from F1000 that has a model of post-publication peer review, whereby upon submission the manuscript undergoes basic quality checks (no real editorial control), and then is published. Once the article is published, reviewers are invited to review, and they have 10 days to submit their review. Reviews are signed, and given a DOI. Reviewers are asked to assign one of &lt;strong&gt;Approved&lt;/strong&gt;, &lt;strong&gt;Approved with Reservations&lt;/strong&gt;, &lt;strong&gt;Not Approved&lt;/strong&gt; status to the article.&lt;/p&gt;
-&lt;p&gt;When the article gets two revieweres giving &lt;strong&gt;Approved&lt;/strong&gt; status (likely after at least one round of review and resubmission), then it will be submitted to PubMed for indexing.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;how-did-i-end-up-reviewing-this&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;How Did I End Up Reviewing This??&lt;/h2&gt;
-&lt;p&gt;Long story short, I’ve been following Jason on twitter for a while, and I happened to see him tweet and blog about trying to get an F1000Research article up as a citeable supporting publication for a grant going in. I thought it was a nifty idea, and although I actually at the time did not have much of an idea of what Jason’s research actually involved, communicated with him that when the article went live I would be willing to be recommended as a reviewer. Imagine my surprise that I actually had enough domain knowledge that I could actually review the article.&lt;/p&gt;
-&lt;p&gt;That is saying something, given that the paper has a neat combination of genetic algorithms, regular expressions, and protein function prediction (really, you should go give it a read). By the way, this is also the first paper I’ve reviewed in a long time that did not have serious methodological problems, or where claims are made with no substantiation, and I could not identify any serious statistical issues.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-open-part&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Open Part&lt;/h2&gt;
-&lt;p&gt;Although I don’t do a lot of reviewing, I had to admit that this was one of the best reviewing assignments I’ve had in a while. Although I believe that peer review is essential to science, and it needs to be more open (I’ve started signing my reviews for other journals), this was the first time I knew my review was open (my name would be known to the authors’ by default) and public. I have to say that this likely improved the care and thoroughness in doing the actual review as I went through the article, given that both the authors and anyone else who comes across the article and my review can see if the issues I raise are real, or if I’m trying to make myself look good. And my name will be publicly associated with it!&lt;/p&gt;
-&lt;p&gt;Note that this &lt;strong&gt;openness&lt;/strong&gt; did not keep me from criticizing particular aspects of the paper. There are lots of things that need to be changed in the article before I will give it an &lt;strong&gt;Approved&lt;/strong&gt; status, and I laid those out in my review.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;postpublication&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PostPublication&lt;/h2&gt;
-&lt;p&gt;I really appreciated that I get to review a &lt;strong&gt;published&lt;/strong&gt; article, because it means that the whole thing is typeset, figures and tables are in their logical place (not at the end of the document!!!), the line spacing is readable, etc. Note to other publishers, at least let authors put the figures in-line for review if you are not going to type-set the article before it goes to reviewers.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;disclaimers&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Disclaimers&lt;/h2&gt;
-&lt;p&gt;I was given an F1000Research! t-shirt as a reward for commenting on a &lt;a href=&#34;http://blog.f1000research.com/2013/08/23/peer-review-credit-where-credits-due/#comment-1020559658&#34;&gt;blog-post&lt;/a&gt; regarding incentives for peer-review. I like the shirt. Having done my review, I am also eligible to get a 50% discount on the article processing charges if I submit an article to F1000Research in the next 12 months.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
