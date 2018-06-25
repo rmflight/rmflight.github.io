@@ -274,7 +274,7 @@
 <div id="iranges" class="section level2">
 <h2>IRanges??</h2>
 <p><a href="https://bioconductor.org/packages/IRanges/"><code>IRanges</code></a> is a bioconductor package for interval algebra of <strong>i</strong>nteger <strong>ranges</strong>. It is used extensively in the <code>GenomicRanges</code> package for finding overlaps between various genomic features. For genomic features, <strong>integers</strong> make sense, because one cannot have fractional base locations.</p>
-<p>However, <code>IRanges</code> uses <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red-black trees</a> as it’s data structure, which provide very fast searches of overlaps. This makes it very attractive for <strong>any</strong> problem that involves overlapping ranges.</p>
+<p>However, <code>IRanges</code> uses <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red-black trees</a> as its data structure, which provide very fast searches of overlaps. This makes it very attractive for <strong>any</strong> problem that involves overlapping ranges.</p>
 </div>
 <div id="motivation" class="section level2">
 <h2>Motivation</h2>
@@ -313,7 +313,7 @@ head(mz_points)</code></pre>
 ##   [4]   2960003   2960014        12 | 148.000166358748 148.000720887907
 ##   [5]   2960004   2960016        13 | 148.000221811664 148.000776340823
 ##   [6]   2960006   2960017        12 |  148.00027726458 148.000831793739</code></pre>
-<p>I have some example data with 3447542 windows, and 991816 points. We will count how many point there are in each window using the below functions, with differing number of windows.</p>
+<p>I have some <a href="https://github.com/rmflight/researchBlog_blogdown/blob/master/data/iranges_example_data.rda">example data</a> with 3447542 windows, and 991816 points. We will count how many point there are in each window using the below functions, with differing number of windows.</p>
 <div id="functions" class="section level3">
 <h3>Functions</h3>
 <pre class="r"><code>count_overlaps_naive &lt;- function(mz_start, mz_end, points){

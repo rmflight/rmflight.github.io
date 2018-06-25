@@ -267,16 +267,36 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <p>I have been watching the activity in <a href="http://rstudio.org"><code>RStudio</code></a> and <a href="http://yihui.name/knitr/"><code>knitr</code></a> for a while, and have even been using <code>Rmd</code> (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed <a href="http://yihui.name/en/2012/03/a-really-fast-statistics-journal/">writing papers</a> in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using <code>knitr</code> as a way to create reproducible blog posts that include code (including yours truly).</p>
-<p>The idea of writing a paper that actually includes the necessary code to perform the analysis, and is actually readable in its raw form, and that someone else could actually run was pretty appealing. Unfortunately, I had not had the time or opportunity to actually try it, until recently our group submitted a conference paper that included a lot of analysis in <code>R</code> that seemed like the perfect opportunity to try this. (I will link to the paper here when I hear more, or get clearance from my PI). Originally we wrote the paper in Microsoft(r) Word, but after submission I decided to see what it would have taken to write it as an <code>Rmd</code> document that could then generate <code>markdown</code> or <code>html</code>.</p>
-<p>It turned out that it was not that hard, but it did force me to do some things differently. This is what I want to discuss here.</p>
+        <p>I have been watching the activity in <a href="http://rstudio.org"><code>RStudio</code></a> and <a href="http://yihui.name/knitr/"><code>knitr</code></a> for a while, and
+have even been using <code>Rmd</code> (R markdown) files in my own work as a way to easily provide commentary on an actual dataset
+analysis. Yihui has proposed <a href="http://yihui.name/en/2012/03/a-really-fast-statistics-journal/">writing papers</a> in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using <code>knitr</code> as a way
+to create reproducible blog posts that include code (including yours truly).</p>
+<p>The idea of writing a paper that actually includes the necessary code to perform the analysis, and is actually readable
+in its raw form, and that someone else could actually run was pretty appealing. Unfortunately, I had not had the time
+or opportunity to actually try it, until recently our group submitted a conference paper that included a lot of analysis in <code>R</code> that seemed like the perfect opportunity to try this.
+(I will link to the paper here when I hear more, or get clearance from my PI). Originally we wrote the paper in Microsoft(r) Word, but after submission I decided to see what it would have taken to write it as an <code>Rmd</code> document that could
+then generate <code>markdown</code> or <code>html</code>.</p>
+<p>It turned out that it was not that hard, but it did force me to do some things differently. This is what I want to
+discuss here.</p>
 <div id="advantages" class="section level2">
 <h2>Advantages</h2>
-<p>I actually found it much easier to have the text with the analysis (in contrast to having to be separate in a Word document), and upon doing the conversion, discovered some possible numerical errors that crept in because of having to copy numerical results separately (that is the nice thing about being able to insert variable directly into the text). In addition, the Word template for the submission didn’t play nice with automatic table and figure numbering, so our table and figure numbering got messed up in the submission. So overall, I’d say it worked out better with the <code>Rmd</code> file overall, even with the having to create functions to handle table and figure numbering properly myself (see below).</p>
+<p>I actually found it much easier to have the text with the analysis (in contrast to having to be separate in a Word
+document), and upon doing the conversion, discovered some possible numerical errors that crept in because of having
+to copy numerical results separately (that is the nice thing about being able to insert variable directly into the text).
+In addition, the Word template for the submission didn’t play nice with automatic table and figure numbering, so our
+table and figure numbering got messed up in the submission. So overall, I’d say it worked out better with the <code>Rmd</code> file
+overall, even with the having to create functions to handle table and figure numbering properly myself (see below).</p>
 </div>
 <div id="tables-and-figures" class="section level2">
 <h2>Tables and Figures</h2>
-<p>As I’m sure most of you know, Word (and other WYSIWYG editors) have ability to keep track of your object numbers, this is especially nice for keeping your figure and table numbers straight. Of course, there is no such ability built into a static text file, but I found it was easy to write a couple of functions for this. The way I came up with is to have a variable that contains a label for the figure or table, a function that increments the counter when new figures or tables are added, and a function that prints the associated number for a particular label. This does require a bit of forethought on the part of the writer, because you may have to add a table or figure label to the variable long before you actually create it, but as long as you use sane (i.e. descriptive) labels, it shouldn’t be a big deal. Let me show you what I mean.</p>
+<p>As I’m sure most of you know, Word (and other WYSIWYG editors) have ability to keep track of your object numbers, this
+is especially nice for keeping your figure and table numbers straight. Of course, there is no such ability built into
+a static text file, but I found it was easy to write a couple of functions for this. The way I came up with is to have
+a variable that contains a label for the figure or table, a function that increments the counter when new figures or
+tables are added, and a function that prints the associated number for a particular label. This does require a bit of
+forethought on the part of the writer, because you may have to add a table or figure label to the variable long before
+you actually create it, but as long as you use sane (i.e. descriptive) labels, it shouldn’t be a big deal. Let me show
+you what I mean.</p>
 <div id="counting" class="section level3">
 <h3>Counting</h3>
 <pre class="r"><code>incCount &lt;- function(inObj, useName){
@@ -288,8 +308,12 @@
 }
 figCount &lt;- c(&quot;_&quot;=0)
 tableCount &lt;- c(&quot;_&quot;=0)</code></pre>
-<p>The <code>incCount</code> function is very simple, it takes an object, checks the maximum count, and then adds an incremental value with the supplied name. In this example, I initialized the <code>figCount</code> and <code>tableCount</code> objects with a non-sensical named value of zero.</p>
-<p>Now in the process of writing, I decide I’m going to need a table on the amount of time spent by post-docs writing blog posts in different years of their post-doc training. Lets call this <code>t.blogPostDocs</code>. Notice that this is a fairly descriptive name. We can assign it a number like so:</p>
+<p>The <code>incCount</code> function is very simple, it takes an object, checks the maximum count, and then adds an incremental value
+with the supplied name. In this example, I initialized the <code>figCount</code> and <code>tableCount</code> objects with a non-sensical named
+value of zero.</p>
+<p>Now in the process of writing, I decide I’m going to need a table on the amount of time spent by post-docs writing blog
+posts in different years of their post-doc training. Lets call this <code>t.blogPostDocs</code>. Notice that this is a fairly
+descriptive name. We can assign it a number like so:</p>
 <pre class="r"><code>tableCount &lt;- incCount(tableCount, &quot;t.blogPostDocs&quot;)
 tableCount</code></pre>
 <pre><code>##              _ t.blogPostDocs 
@@ -297,7 +321,8 @@ tableCount</code></pre>
 </div>
 <div id="inserting" class="section level3">
 <h3>Inserting</h3>
-<p>So now we have a variable with a named number we can refer to. But how do we insert it into the text? We are going to use another function that will let us insert either the text with a link, or just the text itself.</p>
+<p>So now we have a variable with a named number we can refer to. But how do we insert it into the text? We are going to
+use another function that will let us insert either the text with a link, or just the text itself.</p>
 <pre class="r"><code>pasteLabel &lt;- function(preText, inObj, objName, insLink=TRUE){
     objNum &lt;- inObj[objName]
     
@@ -309,12 +334,16 @@ tableCount</code></pre>
 }</code></pre>
 <p>This function allows us to insert the table number like so:</p>
 <pre class="r"><code>r I(pasteLabel(&quot;Table&quot;, tableCount, &quot;t.blogPostDocs&quot;))</code></pre>
-<p>This would be inserted into a normal <code>inline</code> code block. The <code>I</code> makes sure that the text will appear as normal text, and not get formatted as a code block. The default behavior is to insert as a relative link, thereby enabling the use of relative links to link where a table / figure is mentioned to its actual location. For example, we can insert the anchor link like so:</p>
+<p>This would be inserted into a normal <code>inline</code> code block. The <code>I</code> makes sure that the text will appear as normal text,
+and not get formatted as a code block. The default behavior is to insert as a relative link, thereby enabling the use
+of relative links to link where a table / figure is mentioned to its actual location. For example, we can insert the
+anchor link like so:</p>
 <pre><code>&lt;a id=&quot;t.blogPostDocs&quot;&gt;&lt;/a&gt;</code></pre>
 </div>
 <div id="markdown-tables" class="section level3">
 <h3>Markdown Tables</h3>
-<p>Followed by the actual table text. This brings up the subject of <code>markdown</code> tables. I also wrote a function (thanks to Yihui again) that transforms a normal <code>R</code> <code>data.frame</code> to a <code>markdown</code> table.</p>
+<p>Followed by the actual table text. This brings up the subject of <code>markdown</code> tables. I also wrote a function (thanks to
+Yihui again) that transforms a normal <code>R</code> <code>data.frame</code> to a <code>markdown</code> table.</p>
 <pre class="r"><code>tableCat &lt;- function(inFrame){
     outText &lt;- paste(names(inFrame), collapse=&quot; | &quot;)
     outText &lt;- c(outText, paste(rep(&quot;---&quot;, ncol(inFrame)), collapse=&quot; | &quot;))
@@ -369,8 +398,10 @@ postDocInsert</code></pre>
 </div>
 <div id="figures" class="section level3">
 <h3>Figures</h3>
-<p>Oftentimes, you will have code that generates the figure, and then you want to insert the figure at a different point. This is accomplished by the judicious use of <code>echo</code> and <code>include</code> chunk options.</p>
-<p>For example, we can create a <code>ggplot2</code> figure and store it in a variable in one chunk, and then <code>print</code> it in a later chunk to actually insert it into the text body.</p>
+<p>Oftentimes, you will have code that generates the figure, and then you want to insert the figure at a different point.
+This is accomplished by the judicious use of <code>echo</code> and <code>include</code> chunk options.</p>
+<p>For example, we can create a <code>ggplot2</code> figure and store it in a variable in one chunk, and then <code>print</code> it in a later
+chunk to actually insert it into the text body.</p>
 <pre class="r"><code>plotData &lt;- data.frame(x=rnorm(1000, 1, 5), y=rnorm(1000, 0, 2))
 plotKeep &lt;- ggplot(plotData, aes(x=x, y=y)) + geom_point()
 figCounts &lt;- incCount(figCount, &quot;f.randomFigure&quot;)</code></pre>
@@ -381,11 +412,16 @@ figCounts &lt;- incCount(figCount, &quot;f.randomFigure&quot;)</code></pre>
 </div>
 <div id="numerical-result-formatting" class="section level2">
 <h2>Numerical result formatting</h2>
-<p>When <code>R</code> prints a number, it normally likes to do so with lots of digits. This is not probably what you want either in a table or when reporting a number in a sentence. You can control that by using the <code>format</code> function. When generating a new variable, the number of digits to display when printing will be saved, and when used on a variable directly, only the defined number of digits will display.</p>
+<p>When <code>R</code> prints a number, it normally likes to do so with lots of digits. This is not probably what you want either in
+a table or when reporting a number in a sentence. You can control that by using the <code>format</code> function. When generating
+a new variable, the number of digits to display when printing will be saved, and when used on a variable directly,
+only the defined number of digits will display.</p>
 </div>
 <div id="echo-and-include" class="section level2">
 <h2>Echo and Include</h2>
-<p>This brings up the issue of how to keep the code from appearing in the text body. I found depending on the particulars, either using <code>echo=FALSE</code> or <code>include=FALSE</code> would do the job. This is meant to be a paper, a reproducible one, but a paper nonetheless, and therefore the code should not end up in the text body.</p>
+<p>This brings up the issue of how to keep the code from appearing in the text body. I found depending on the particulars,
+either using <code>echo=FALSE</code> or <code>include=FALSE</code> would do the job. This is meant to be a paper, a reproducible one, but a
+paper nonetheless, and therefore the code should not end up in the text body.</p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
@@ -393,12 +429,16 @@ figCounts &lt;- incCount(figCount, &quot;f.randomFigure&quot;)</code></pre>
 </div>
 <div id="html-generation" class="section level2">
 <h2>HTML generation</h2>
-<p>Because I use <code>RStudio</code>, I set up a modified function For generating a full <code>html</code> version of the paper, changing the default <code>RStudio</code> <code>markdown</code> render options like so:</p>
+<p>Because I use <code>RStudio</code>, I set up a modified function For generating a full <code>html</code> version of the paper, changing the
+default <code>RStudio</code> <code>markdown</code> render options like so:</p>
 <pre><code>htmlOptions &lt;- markdownHTMLOptions(defaults=TRUE)
 htmlOptions &lt;- htmlOptions[htmlOptions != &quot;hard_wrap&quot;]
 markdownToHTML(inputFile, outputFile, options = htmlOptions)</code></pre>
-<p>This should be added to a <code>.Rprofile</code> file either in your <code>home</code> directory or in the directory you start <code>R</code> in (this is especially useful for modification on a per project basis).</p>
-<p>I do this because when I write my documents, I want the source to be readable online. If this is a <code>github</code> hosted repo, that means being displayed in the <code>github</code> file browser, which does not do line wrapping. So I set up a 120 character line in my editor, and try very hard to stick to that.</p>
+<p>This should be added to a <code>.Rprofile</code> file either in your <code>home</code> directory or in the directory you start <code>R</code> in (this
+is especially useful for modification on a per project basis).</p>
+<p>I do this because when I write my documents, I want the source to be readable online. If this is a <code>github</code> hosted repo,
+that means being displayed in the <code>github</code> file browser, which does not do line wrapping. So I set up a 120 character
+line in my editor, and try very hard to stick to that.</p>
 </div>
 <div id="function-source" class="section level2">
 <h2>Function source</h2>
@@ -410,13 +450,13 @@ markdownToHTML(inputFile, outputFile, options = htmlOptions)</code></pre>
 <p>Posted on October 9, 2012, at <a href="http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html" class="uri">http://robertmflight.blogspot.com/2012/10/writing-papers-using-r-markdown.html</a></p>
 <p>Edit: added section on formatting numerical results</p>
 <p>Edit: added session info</p>
-<pre><code>R version 3.4.2 (2017-09-28)
+<pre><code>R version 3.5.0 (2018-04-23)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 16.04.3 LTS
+Running under: Ubuntu 16.04.4 LTS
 
 Matrix products: default
-BLAS: /software/R-3.4.2/lib/R/lib/libRblas.so
-LAPACK: /software/R-3.4.2/lib/R/lib/libRlapack.so
+BLAS: /software/R-3.5.0/lib/R/lib/libRblas.so
+LAPACK: /software/R-3.5.0/lib/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -427,21 +467,22 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] methods   stats     graphics  grDevices utils     datasets  base     
+[1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] ggplot2_2.2.1.9000
+[1] ggplot2_2.2.1
 
 loaded via a namespace (and not attached):
- [1] Rcpp_0.12.14      bookdown_0.5      digest_0.6.12    
- [4] rprojroot_1.2     plyr_1.8.4        grid_3.4.2       
- [7] gtable_0.2.0      backports_1.1.1   magrittr_1.5     
-[10] scales_0.5.0.9000 evaluate_0.10.1   blogdown_0.4     
-[13] rlang_0.1.2       stringi_1.1.5     lazyeval_0.2.1   
-[16] rmarkdown_1.8     labeling_0.3      tools_3.4.2      
-[19] stringr_1.2.0     munsell_0.4.3     yaml_2.1.15      
-[22] compiler_3.4.2    colorspace_1.3-2  htmltools_0.3.6  
-[25] knitr_1.17        tibble_1.3.4     </code></pre>
+ [1] Rcpp_0.12.17      knitr_1.20        magrittr_1.5     
+ [4] munsell_0.4.3     colorspace_1.3-2  rlang_0.2.0.9001 
+ [7] stringr_1.3.1     plyr_1.8.4        tools_3.5.0      
+[10] grid_3.5.0        gtable_0.2.0      xfun_0.1         
+[13] htmltools_0.3.6   yaml_2.1.18       lazyeval_0.2.1   
+[16] rprojroot_1.3-2   digest_0.6.15     tibble_1.4.2     
+[19] bookdown_0.7      evaluate_0.10.1   rmarkdown_1.9    
+[22] blogdown_0.5      labeling_0.3      stringi_1.2.2    
+[25] compiler_3.5.0    pillar_1.2.1      scales_0.5.0.9000
+[28] backports_1.1.2  </code></pre>
 </div>
 
       </div>

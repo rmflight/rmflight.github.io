@@ -271,7 +271,10 @@
 <div id="tldr" class="section level2">
 <h2>TL;DR</h2>
 <p>The software package has been in development in one form or another since 2010, released to <code>Bioconductor</code> in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you. All of the supplementary data and methods are available as an <code>R</code> package on <a href="https://github.com/rmflight/ccPaper">github</a>. Version control using <code>git</code> was instrumental in getting this work out in a timely manner. There is still a bunch of work to do on the package.</p>
-<p>If I did it again, I would: * Write the manuscript using <code>R</code> markdown, as a vignette in a package * Ask to be able to make reviewer points issues on Github * Submit a preprint with submission</p>
+<p>If I did it again, I would:
+* Write the manuscript using <code>R</code> markdown, as a vignette in a package
+* Ask to be able to make reviewer points issues on Github
+* Submit a preprint with submission</p>
 </div>
 <div id="inspiration" class="section level2">
 <h2>Inspiration</h2>
@@ -334,15 +337,22 @@
 <h2>To Do</h2>
 <p>As with most software projects, there is still plenty to be done.</p>
 <ul>
-<li>Incorporate new functionality from <code>paper</code> branch into <code>dev</code></li>
-<li><p>Specifically ability to do <code>GSEA</code> built in (probably using <code>limma</code>’s <code>romer</code> and <code>roast</code> functions), and new visualization options</p></li>
+<li>Incorporate new functionality from <code>paper</code> branch into <code>dev</code>
+<ul>
+<li>Specifically ability to do <code>GSEA</code> built in (probably using <code>limma</code>’s <code>romer</code> and <code>roast</code>
+functions), and new visualization options</li>
+</ul></li>
 <li><p>Change from <code>latex</code> vignette to <code>R</code> markdown (this is technically done, but hasn’t made it into the dev branch)</p></li>
 <li><p>Switch to <code>roxygen2</code> documentation (will be interesting due to use of S4 objects and methods)</p></li>
 <li><p>Implement proper testing using <code>testthat</code></p></li>
-<li>Refactor a lot of code to improve speed, use <code>R</code> conventions</li>
-<li><p>I was still a relatively <code>R</code> newbie when I wrote the package, and as I looked at the code while making changes for the reviewers, I noticed some places where I had done some silly things, mainly because I didn’t know better when I did it.</p></li>
-<li>Consider splitting visualization into its own package</li>
-<li><p>Although I developed the visualization specifically for <code>categoryCompare</code>, I think it is generic enough that others might benefit from having it available separately. Therefore I need to think about separating it out, and how best to go about it without making it hard for <code>categoryCompare</code> to keep working as it already does.</p></li>
+<li>Refactor a lot of code to improve speed, use <code>R</code> conventions
+<ul>
+<li>I was still a relatively <code>R</code> newbie when I wrote the package, and as I looked at the code while making changes for the reviewers, I noticed some places where I had done some silly things, mainly because I didn’t know better when I did it.</li>
+</ul></li>
+<li>Consider splitting visualization into its own package
+<ul>
+<li>Although I developed the visualization specifically for <code>categoryCompare</code>, I think it is generic enough that others might benefit from having it available separately. Therefore I need to think about separating it out, and how best to go about it without making it hard for <code>categoryCompare</code> to keep working as it already does.</li>
+</ul></li>
 <li><p>Make it easy to investigate the actual genes with particularly interesting annotations, and how they are linked together by annotations or other data sources, as well as their original expression levels in the experiments.</p></li>
 </ul>
 </div>
@@ -360,8 +370,10 @@
 <li><p>Write the paper as a vignette of the ccPaper package itself, and generate Word documents for collaborators who insist on Word docs using Pandoc</p></li>
 <li><p>Start a github repo for the paper, and ask collaborators to try and work on it there</p></li>
 <li><p>Submit a preprint when submitted, so that we start getting feedback on the manuscript early</p></li>
-<li>Ask for permission to set up reviewer comments as issues on the github repo to easily track how well we are addressing them.</li>
-<li><p>Wouldn’t it be cool in a totally open peer review journal to actually do all of the peer review on a service like Github, and have reviewers leave issues, tag them, and comment directly on the text of the publication using the commenting feature of commenting on commits?</p></li>
+<li>Ask for permission to set up reviewer comments as issues on the github repo to easily track how well we are addressing them.
+<ul>
+<li>Wouldn’t it be cool in a totally open peer review journal to actually do all of the peer review on a service like Github, and have reviewers leave issues, tag them, and comment directly on the text of the publication using the commenting feature of commenting on commits?</li>
+</ul></li>
 </ul>
 </div>
 

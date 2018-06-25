@@ -269,19 +269,35 @@
       <div class="article-style" itemprop="articleBody">
         <div id="tldr" class="section level2">
 <h2>TL;DR</h2>
-<p>Partial least squares (PLS) discriminant-analysis (DA) can ridiculously over fit even on completely random data. The quality of the PLS-DA model can be assessed using cross-validation, but cross-validation is not typically performed in many metabolomics publications. Random forest, in contrast, because of the <em>forest</em> of decision tree learners, and the out-of-bag (OOB) samples used for testing each tree, automatically provides an indication of the quality of the model.</p>
+<p>Partial least squares (PLS) discriminant-analysis (DA) can ridiculously over fit
+even on completely random data. The quality of the PLS-DA model can be assessed
+using cross-validation, but cross-validation is not typically performed in many
+metabolomics publications. Random forest, in contrast, because of the <em>forest</em> of
+decision tree learners, and the out-of-bag (OOB) samples used for testing each tree,
+automatically provides an indication of the quality of the model.</p>
 </div>
 <div id="why" class="section level2">
 <h2>Why?</h2>
-<p>I’ve recently been working on some machine learning work using <strong>random forests</strong> (RF) <a href="https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf">Breimann, 2001</a> on metabolomics data. This has been relatively successful, with decent sensitivity and specificity, and hopefully I’ll be able to post more soon. However, PLS (Wold, 1975) is a standard technique used in metabolomics due to the prevalence of analytical chemists in metabolomics and a long familiarity with the method. Importantly, my collaborators frequently use PLS-DA to generate plots to show that the various classes of samples are separable.</p>
-<p>However, it has long been known that PLS (and all of it’s variants, PLS-DA, OPLS, OPLS-DA, etc) can easily generate models that over fit the data, and that over fitting of the model needs to be assessed if the model is going to be used in subsequent analyses.</p>
+<p>I’ve recently been working on some machine learning work using <strong>random forests</strong>
+(RF) <a href="https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf">Breimann, 2001</a> on metabolomics data. This has been relatively successful,
+with decent sensitivity and specificity, and hopefully I’ll be able to post more
+soon. However, PLS (Wold, 1975) is a standard technique used in metabolomics
+due to the prevalence of analytical chemists in metabolomics and a long familiarity
+with the method. Importantly, my collaborators frequently use PLS-DA to generate
+plots to show that the various classes of samples are separable.</p>
+<p>However, it has long been known that PLS (and all of it’s variants, PLS-DA, OPLS,
+OPLS-DA, etc) can easily generate models that over fit the data, and that over fitting
+of the model needs to be assessed if the model is going to be used in subsequent
+analyses.</p>
 </div>
 <div id="random-data" class="section level2">
 <h2>Random Data</h2>
-<p>To illustrate the behavior of both RF and PLS-DA, we will generate some random data where each of the samples are randomly assigned to one of two classes.</p>
+<p>To illustrate the behavior of both RF and PLS-DA, we will generate some random data
+where each of the samples are randomly assigned to one of two classes.</p>
 <div id="feature-intensities" class="section level3">
 <h3>Feature Intensities</h3>
-<p>We will generate a data set with 1000 features, where each feature’s mean value is from a uniform distribution with a range of 1-10000.</p>
+<p>We will generate a data set with 1000 features, where each feature’s mean value
+is from a uniform distribution with a range of 1-10000.</p>
 <pre class="r"><code>library(cowplot)</code></pre>
 <pre><code>## Loading required package: ggplot2</code></pre>
 <pre><code>## 
@@ -298,7 +314,9 @@ init_values &lt;- runif(n_point, 0, max_value)</code></pre>
 ggplot(init_data, aes(x = data)) + geom_histogram() + ggtitle(&quot;Initial Data&quot;)</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_initial-1.png" width="672" /></p>
-<p>For each of these features, their distribution across samples will be based on a random normal distribution where the mean is the initial feature value and a standard deviation of 200. The number of samples is 100.</p>
+<p>For each of these features, their distribution across samples will be based on
+a random normal distribution where the mean is the initial feature value and a
+standard deviation of 200. The number of samples is 100.</p>
 <pre class="r"><code>n_sample &lt;- 100
 error_values &lt;- add_uniform_noise(n_sample, init_values, 200)</code></pre>
 <p>Just for information, the <code>add_uniform_noise</code> function is this:</p>
@@ -319,14 +337,17 @@ error_values &lt;- add_uniform_noise(n_sample, init_values, 200)</code></pre>
 ##     }
 ##     return(out_value)
 ## }
+## &lt;bytecode: 0x5d3e3a0&gt;
 ## &lt;environment: namespace:fakeDataWithError&gt;</code></pre>
-<p>I created it as part of a package that is able to add different kinds of noise to data.</p>
+<p>I created it as part of a package that is able to add different kinds of noise
+to data.</p>
 <p>The distribution of values for a single feature looks like this:</p>
 <pre class="r"><code>error_data &lt;- data.frame(feature_1 = error_values[1,])
 ggplot(error_data, aes(x = feature_1)) + geom_histogram() + ggtitle(&quot;Error Data&quot;)</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_error-1.png" width="672" /></p>
-<p>And we will assign the first 50 samples to <strong>class_1</strong> and the second 50 samples to <strong>class_2</strong>.</p>
+<p>And we will assign the first 50 samples to <strong>class_1</strong> and the second 50 samples
+to <strong>class_2</strong>.</p>
 <pre class="r"><code>sample_class &lt;- rep(c(&quot;class_1&quot;, &quot;class_2&quot;), each = 50)
 sample_class</code></pre>
 <pre><code>##   [1] &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot; &quot;class_1&quot;
@@ -348,7 +369,8 @@ sample_class</code></pre>
 </div>
 <div id="pca" class="section level2">
 <h2>PCA</h2>
-<p>Just to show that the data is pretty random, lets use principal components analysis (PCA) to do a decomposition, and plot the first two components:</p>
+<p>Just to show that the data is pretty random, lets use principal components
+analysis (PCA) to do a decomposition, and plot the first two components:</p>
 <pre class="r"><code>tmp_pca &lt;- prcomp(t(error_values), center = TRUE, scale. = TRUE)
 pca_data &lt;- as.data.frame(tmp_pca$x[, 1:2])
 pca_data$class &lt;- as.factor(sample_class)
@@ -359,7 +381,7 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = class)) + geom_point(size = 4)</c
 <h2>Random Forest</h2>
 <p>Let’s use RF first, and see how things look.</p>
 <pre class="r"><code>library(randomForest)</code></pre>
-<pre><code>## randomForest 4.6-12</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
 <pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;randomForest&#39;</code></pre>
@@ -367,7 +389,8 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = class)) + geom_point(size = 4)</c
 ## 
 ##     margin</code></pre>
 <pre class="r"><code>rf_model &lt;- randomForest(t(error_values), y = as.factor(sample_class))</code></pre>
-<p>The confusion matrix comparing actual <em>vs</em> predicted classes based on the out of bag (OOB) samples:</p>
+<p>The confusion matrix comparing actual <em>vs</em> predicted classes based on the
+out of bag (OOB) samples:</p>
 <pre class="r"><code>knitr::kable(rf_model$confusion)</code></pre>
 <table>
 <thead>
@@ -381,19 +404,19 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = class)) + geom_point(size = 4)</c
 <tbody>
 <tr class="odd">
 <td>class_1</td>
-<td align="right">28</td>
-<td align="right">22</td>
-<td align="right">0.44</td>
+<td align="right">21</td>
+<td align="right">29</td>
+<td align="right">0.58</td>
 </tr>
 <tr class="even">
 <td>class_2</td>
-<td align="right">23</td>
-<td align="right">27</td>
-<td align="right">0.46</td>
+<td align="right">28</td>
+<td align="right">22</td>
+<td align="right">0.56</td>
 </tr>
 </tbody>
 </table>
-<p>And an overall error of 0.4866246.</p>
+<p>And an overall error of 0.5760364.</p>
 </div>
 <div id="pls-da" class="section level2">
 <h2>PLS-DA</h2>
@@ -405,11 +428,17 @@ pls_scores &lt;- data.frame(comp1 = pls_model$scores[,1], comp2 = pls_model$scor
 <p>And plot the PLS scores:</p>
 <pre class="r"><code>ggplot(pls_scores, aes(x = comp1, y = comp2, color = class)) + geom_point(size = 4) + ggtitle(&quot;PLS-DA of Random Data&quot;)</code></pre>
 <p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_plsda-1.png" width="672" /></p>
-<p>And voila! Perfectly separated data! If I didn’t tell you that it was random, would you suspect it?</p>
+<p>And voila! Perfectly separated data! If I didn’t tell you that it was random, would
+you suspect it?</p>
 </div>
 <div id="cross-validated-pls-da" class="section level2">
 <h2>Cross-validated PLS-DA</h2>
-<p>Of course, one way to truly assess the worth of the model would be to use cross-validation, where a fraction of data is held back, and the model trained on the rest. Predictions are then made on the held back fraction, and because we know the truth, we will then calculate the <strong>area under the reciever operator curve</strong> (AUROC) or area under the curve (AUC) created by plotting true positives <em>vs</em> false positives.</p>
+<p>Of course, one way to truly assess the worth of the model would be to use
+cross-validation, where a fraction of data is held back, and the model trained
+on the rest. Predictions are then made on the held back fraction, and because we
+know the truth, we will then calculate the <strong>area under the reciever operator curve</strong>
+(AUROC) or area under the curve (AUC) created by plotting true positives <em>vs</em>
+false positives.</p>
 <p>To do this we will need two functions:</p>
 <ol style="list-style-type: decimal">
 <li>Generates all of the CV folds</li>
@@ -455,207 +484,228 @@ plsda_cv &lt;- function(xtrain, ytrain, xtest, ytest){
 <pre class="r"><code>cv_vals &lt;- gen_cv(t(error_values), factor(sample_class), nrep = 100, kfold = 5)
 
 mean(cv_vals)</code></pre>
-<pre><code>## [1] 0.4182644</code></pre>
+<pre><code>## [1] 0.4198336</code></pre>
 <pre class="r"><code>sd(cv_vals)</code></pre>
-<pre><code>## [1] 0.1086778</code></pre>
+<pre><code>## [1] 0.1134857</code></pre>
 <pre class="r"><code>cv_frame &lt;- data.frame(auc = as.vector(cv_vals))
 ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)</code></pre>
 <p><img src="/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/rep_plsda-1.png" width="672" /></p>
-<p>So we get an average AUC of 0.4182644, which is pretty awful. This implies that even though there was good separation on the scores, maybe the model is not actually that good, and we should be cautious of any predictions being made.</p>
-<p>Of course, the PCA at the beginning of the analysis shows that there is no <em>real</em> separation in the data in the first place.</p>
+<p>So we get an average AUC of 0.4198336, which is pretty awful. This implies
+that even though there was good separation on the scores, maybe the model is
+not actually that good, and we should be cautious of any predictions being made.</p>
+<p>Of course, the PCA at the beginning of the analysis shows that there is no <em>real</em>
+separation in the data in the first place.</p>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## Session info -------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       
-##  version  R version 3.4.2 (2017-09-28)
+##  version  R version 3.5.0 (2018-04-23)
 ##  system   x86_64, linux-gnu           
 ##  ui       X11                         
 ##  language en_US                       
 ##  collate  en_US.UTF-8                 
-##  tz       posixrules                  
-##  date     2017-12-28</code></pre>
+##  tz       America/New_York            
+##  date     2018-06-25</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package           * version    date      
 ##  assertthat          0.2.0      2017-04-11
-##  backports           1.1.1      2017-09-25
-##  base              * 3.4.2      2017-10-10
-##  bindr               0.1        2016-11-13
-##  bindrcpp            0.2        2017-06-17
+##  backports           1.1.2      2017-12-13
+##  base              * 3.5.0      2018-04-30
+##  bindr               0.1.1      2018-03-13
+##  bindrcpp            0.2.2      2018-03-29
 ##  bitops              1.0-6      2013-08-17
-##  blogdown            0.4        2017-12-12
-##  bookdown            0.5        2017-08-20
-##  caret             * 6.0-77     2017-09-07
+##  blogdown            0.5        2018-01-24
+##  bookdown            0.7        2018-02-18
+##  broom               0.4.4      2018-03-29
+##  caret             * 6.0-79     2018-03-29
 ##  caTools             1.17.1     2014-09-10
 ##  class               7.3-14     2015-08-30
 ##  codetools           0.2-15     2016-10-05
 ##  colorspace          1.3-2      2016-12-14
-##  compiler            3.4.2      2017-10-10
-##  cowplot           * 0.9.1      2017-11-16
+##  compiler            3.5.0      2018-04-30
+##  cowplot           * 0.9.2      2017-12-17
 ##  CVST                0.2-1      2013-12-10
 ##  cvTools           * 0.3.2      2012-05-14
-##  datasets          * 3.4.2      2017-10-10
-##  ddalpha             1.3.1      2017-09-27
+##  datasets          * 3.5.0      2018-04-30
+##  ddalpha             1.3.1.1    2018-02-02
 ##  DEoptimR            1.0-8      2016-11-19
-##  devtools            1.13.3     2017-08-02
-##  digest              0.6.12     2017-01-27
+##  devtools            1.13.5     2018-02-18
+##  digest              0.6.15     2018-01-28
 ##  dimRed              0.1.0      2017-05-04
-##  dplyr               0.7.4      2017-09-28
-##  DRR                 0.0.2      2016-09-15
+##  dplyr               0.7.5      2018-05-19
+##  DRR                 0.0.3      2018-01-06
 ##  evaluate            0.10.1     2017-06-24
-##  fakeDataWithError * 0.0.1      2017-12-29
-##  foreach             1.4.3      2015-10-13
+##  fakeDataWithError * 0.0.1      2018-04-02
+##  foreach             1.4.4      2017-12-12
+##  foreign             0.8-70     2017-11-28
 ##  gdata               2.18.0     2017-06-06
-##  ggplot2           * 2.2.1.9000 2017-12-13
-##  glue                1.1.1      2017-06-21
+##  ggplot2           * 2.2.1      2016-12-30
+##  glue                1.2.0      2017-10-29
 ##  gower               0.1.2      2017-02-23
 ##  gplots            * 3.0.1      2016-03-30
-##  graphics          * 3.4.2      2017-10-10
-##  grDevices         * 3.4.2      2017-10-10
-##  grid                3.4.2      2017-10-10
+##  graphics          * 3.5.0      2018-04-30
+##  grDevices         * 3.5.0      2018-04-30
+##  grid                3.5.0      2018-04-30
 ##  gtable              0.2.0      2016-02-26
 ##  gtools              3.5.0      2015-05-29
 ##  highr               0.6        2016-05-09
 ##  htmltools           0.3.6      2017-04-28
 ##  ipred               0.9-6      2017-03-01
-##  iterators           1.0.8      2015-10-13
+##  iterators           1.0.9      2017-12-12
 ##  kernlab             0.9-25     2016-10-03
 ##  KernSmooth          2.23-15    2015-06-29
-##  knitr               1.17       2017-08-10
+##  knitr               1.20       2018-02-20
 ##  labeling            0.3        2014-08-23
 ##  lattice           * 0.20-35    2017-03-25
-##  lava                1.5.1      2017-09-27
+##  lava                1.6.1      2018-03-28
 ##  lazyeval            0.2.1      2017-10-29
-##  lubridate           1.7.1      2017-11-03
+##  lubridate           1.7.3      2018-02-27
 ##  magrittr            1.5        2014-11-22
-##  MASS                7.3-47     2017-04-21
-##  Matrix              1.2-11     2017-08-16
+##  MASS                7.3-49     2018-02-23
+##  Matrix              1.2-13     2018-04-02
 ##  memoise             1.1.0      2017-04-21
-##  methods           * 3.4.2      2017-10-10
+##  methods           * 3.5.0      2018-04-30
+##  mnormt              1.5-5      2016-10-15
 ##  ModelMetrics        1.1.0      2016-08-26
 ##  munsell             0.4.3      2016-02-13
-##  nlme                3.1-131    2017-02-06
+##  nlme                3.1-136    2018-03-09
 ##  nnet                7.3-12     2016-02-02
-##  pkgconfig           2.0.1      2017-12-07
+##  parallel            3.5.0      2018-04-30
+##  pillar              1.2.1      2018-02-27
+##  pkgconfig           2.0.1      2017-03-21
 ##  pls                 2.6-0      2016-12-18
 ##  plyr                1.8.4      2016-06-08
 ##  prodlim             1.6.1      2017-03-06
-##  purrr               0.2.4      2017-10-18
+##  psych               1.8.3.3    2018-03-30
+##  purrr               0.2.5      2018-05-29
 ##  R6                  2.2.2      2017-06-17
-##  randomForest      * 4.6-12     2015-10-07
-##  Rcpp                0.12.14    2017-11-23
+##  randomForest      * 4.6-14     2018-03-25
+##  Rcpp                0.12.17    2018-05-18
 ##  RcppRoll            0.2.2      2015-04-05
-##  recipes             0.1.0      2017-07-27
+##  recipes             0.1.2      2018-01-11
 ##  reshape2            1.4.3      2017-12-11
-##  rlang               0.1.2      2017-08-09
-##  rmarkdown           1.8        2017-11-17
-##  robustbase        * 0.92-7     2016-12-09
+##  rlang               0.2.0.9001 2018-06-07
+##  rmarkdown           1.9        2018-03-01
+##  robustbase        * 0.92-8     2017-11-01
 ##  ROCR              * 1.0-7      2015-03-26
-##  rpart               4.1-11     2017-04-21
-##  rprojroot           1.2        2017-01-16
-##  scales              0.5.0.9000 2017-10-12
-##  sfsmisc             1.1-1      2017-06-08
-##  splines             3.4.2      2017-10-10
-##  stats             * 3.4.2      2017-10-10
-##  stats4              3.4.2      2017-10-10
-##  stringi             1.1.5      2017-04-07
-##  stringr             1.2.0      2017-02-18
+##  rpart               4.1-13     2018-02-23
+##  rprojroot           1.3-2      2018-01-03
+##  scales              0.5.0.9000 2018-04-02
+##  sfsmisc             1.1-2      2018-03-05
+##  splines             3.5.0      2018-04-30
+##  stats             * 3.5.0      2018-04-30
+##  stats4              3.5.0      2018-04-30
+##  stringi             1.2.2      2018-05-02
+##  stringr             1.3.1      2018-05-10
 ##  survival            2.41-3     2017-04-04
-##  tibble              1.3.4      2017-08-22
-##  timeDate            3012.100   2015-01-23
-##  tools               3.4.2      2017-10-10
-##  utils             * 3.4.2      2017-10-10
-##  withr               2.1.0.9000 2017-12-05
-##  yaml                2.1.15     2017-12-01
+##  tibble              1.4.2      2018-01-22
+##  tidyr               0.8.0      2018-01-29
+##  tidyselect          0.2.4      2018-02-26
+##  timeDate            3043.102   2018-02-21
+##  tools               3.5.0      2018-04-30
+##  utils             * 3.5.0      2018-04-30
+##  withr               2.1.2      2018-04-02
+##  xfun                0.1        2018-01-22
+##  yaml                2.1.18     2018-03-08
 ##  source                                     
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
-##  cran (@0.9.1)                              
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  cran (@0.7.5)                              
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  Github (rmflight/fakeDataWithError@ccd8714)
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  Github (tidyverse/ggplot2@bfff1d8)         
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
 ##  local                                      
 ##  local                                      
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  cran (@0.2.1)                              
-##  cran (@1.7.1)                              
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  Github (gaborcsardi/pkgconfig@96a1413)     
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  cran (@0.2.4)                              
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  cran (@0.12.14)                            
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  cran (@1.4.3)                              
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  local                                      
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  cran (@0.2.5)                              
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  cran (@0.12.17)                            
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  Github (r-lib/rlang@ba4fb06)               
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  Github (hadley/scales@d767915)             
-##  CRAN (R 3.4.2)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
 ##  local                                      
 ##  local                                      
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
-##  CRAN (R 3.4.2)                             
+##  cran (@1.2.2)                              
+##  cran (@1.3.1)                              
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)                             
 ##  local                                      
 ##  local                                      
-##  Github (jimhester/withr@fe81c00)           
-##  cran (@2.1.15)</code></pre>
+##  Github (jimhester/withr@79d7b0d)           
+##  CRAN (R 3.5.0)                             
+##  CRAN (R 3.5.0)</code></pre>
 </div>
 
       </div>

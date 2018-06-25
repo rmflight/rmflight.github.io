@@ -279,8 +279,10 @@
 <p>First off, you probably want to put your functions into <a href="http://cran.r-project.org/doc/manuals/R-exts.html#Package-structure">packages</a>. Really, it’s not that hard. A <a href="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file"><code>DESCRIPTION</code></a> file, <a href="http://cran.r-project.org/doc/manuals/R-exts.html#Package-namespaces"><code>NAMESPACE</code></a>, and an <code>R</code> directory with your function definitions. If you are using <code>RStudio</code>, then you can create a new <strong>project</strong> as a package. Alternatively, you can set up a new package directory using <code>package.skeleton</code>.</p>
 <p>If you are using <code>RStudio</code>, I recommend setting your package options:</p>
 <ul>
-<li>Generate package documentation with <code>roxygen</code> (roxygen2)</li>
+<li>Generate package documentation with <code>roxygen</code> (roxygen2)
+<ul>
 <li>Select all the options (especially regenerate <code>Rd</code> files on <code>Build &amp; Reload</code>)</li>
+</ul></li>
 </ul>
 <p>Whenever you make changes to your package functions, you simply <code>commit</code> (you are using version control, right??), and then <code>Build &amp; Reload</code> (if using <code>RStudio</code>) or <code>install()</code> if using <code>devtools</code>.</p>
 </div>

@@ -290,7 +290,7 @@ actPVals &lt;- 1 - pchisq(randomData, 1)
 eTime &lt;- Sys.time()
 rwayDiff &lt;- difftime(eTime, bTime)
 rwayDiff</code></pre>
-<pre><code>## Time difference of 0.5137203 secs</code></pre>
+<pre><code>## Time difference of 0.4845898 secs</code></pre>
 </div>
 <div id="naive-way" class="section level3">
 <h3>Naive way</h3>
@@ -303,7 +303,7 @@ for (iP in 1:nPoint){
 eTime &lt;- Sys.time()
 naiveDiff &lt;- difftime(eTime, bTime)
 naiveDiff</code></pre>
-<pre><code>## Time difference of 1.418367 secs</code></pre>
+<pre><code>## Time difference of 1.353317 secs</code></pre>
 <p>So this takes almost 10 times longer. Which of course, is why you are encouraged to do vectorized calculations whenever possible in <code>R</code>, but you already knew that, didn’t you?</p>
 </div>
 <div id="lookup-table" class="section level3">
@@ -321,9 +321,9 @@ pTable &lt;- 1 - pchisq(chiVals, 1) # the actual chi-square p-values for those d
 <p>To find a value, we just multiply the distance by 10000 (the number of divisions), and add 1 (because <code>R</code> uses 1 based indexing instead of zero).</p>
 <pre class="r"><code>testVal &lt;- sample(chiVals, 1) # grab a value from the chiVals previously generated
 pTable[(testVal * nDivision) + 1]</code></pre>
-<pre><code>## [1] 0.1577358</code></pre>
+<pre><code>## [1] 0.003205405</code></pre>
 <pre class="r"><code>1 - pchisq(testVal, 1)</code></pre>
-<pre><code>## [1] 0.1577358</code></pre>
+<pre><code>## [1] 0.003205405</code></pre>
 <p>How long does this take compared to the other approaches?</p>
 <pre class="r"><code>tableRes &lt;- numeric(nPoint)
 bTime &lt;- Sys.time()
@@ -333,7 +333,7 @@ for (iP in 1:nPoint){
 eTime &lt;- Sys.time()
 tableDiff &lt;- difftime(eTime, bTime)
 tableDiff</code></pre>
-<pre><code>## Time difference of 0.09745979 secs</code></pre>
+<pre><code>## Time difference of 0.1199708 secs</code></pre>
 <p>So somewhere in-between the two. So not as good as doing a vectorized call, but better than making a call each time. Which is actually what I expected. What about any loss in precision of the values returned?</p>
 <pre class="r"><code>tableRawPrecision &lt;- abs(tableRes - actPVals) / actPVals * 100
 
@@ -342,7 +342,7 @@ ggplot(precTable, aes(x=org, y=table)) + geom_point()</code></pre>
 <p><img src="/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(precTable, aes(x=org, y=percError)) + geom_point()</code></pre>
 <p><img src="/post/2013-10-17-pre-calculating-large-tables-of-values_files/figure-html/tablePres-2.png" width="672" /></p>
-<p>So, according to this, we are only introducing error at 0.8037041%, which isn’t much. And the values look like the are well correlated, so we should be good.</p>
+<p>So, according to this, we are only introducing error at 0.7820325%, which isn’t much. And the values look like the are well correlated, so we should be good.</p>
 <p>Now, how do these approaches compare when using <code>c++</code>?</p>
 </div>
 </div>

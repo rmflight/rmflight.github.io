@@ -298,7 +298,11 @@
 <p class="caption">Y Golad Fig 1</p>
 </div>
 <p>Do you notice a problem with this design?</p>
-<p>. . . . .</p>
+<p>.
+.
+.
+.
+.</p>
 <p>Hopefully you noticed that species (one of the main effects to investigate) is not randomly or even semi-randomly distributed across sequencers and / or lanes, but is almost perfectly confounded with sequencer / lane. It doesn’t matter if one technician handled all the samples, this is potentially a large batch effect / confounding variable.</p>
 <p>And Yoav shows that ignoring the batch effect produces data much like that reported in the Lin et al PNAS pub, while removing the batch effect using <a href="http://bioinformatics.oxfordjournals.org/content/28/6/882">ComBat</a> results in the tissues clustering together.</p>
 </div>
@@ -306,12 +310,18 @@
 <h2>Is the Data Still Useful?</h2>
 <p><a href="https://docs.google.com/presentation/d/1_yA8RHdfodOV-5IoR-yb317KwaWgXFAvJntaIm8HYaU/edit?usp=sharing">I presented</a> these papers and the discussion around them at our weekly Systems Biology and Omics Integration (<a href="http://sboi.bioinformatics.uky.edu">SBOI</a>) Journal Club on June 1, 2015. There were a couple of concerns with the overall study:</p>
 <ul>
-<li>Is ENCODE data still useful?</li>
+<li>Is ENCODE data still useful?
+<ul>
 <li>some people seemed to be concerned that this brought the general ENCODE project into question. I think by the end we agreed that in general it is probably ok to be using ENCODE data, but this particular study was questionable.</li>
-<li>What does the data tell us?</li>
+</ul></li>
+<li>What does the data tell us?
+<ul>
 <li>based on the correction that Yoav did and reanalysis, is there anything actually telling in the data? Unfortunately, because species is so confounded with machine, I don’t think there is much of a conclusion to draw about species differences <em>vs</em> tissue similarity based on this data. There was some disagreement on this point.</li>
-<li>Full experimental designs should be published, and requested by reviewers</li>
+</ul></li>
+<li>Full experimental designs should be published, and requested by reviewers
+<ul>
 <li>Really, why a reviewer on the paper <strong>did not</strong> request more information about the experimental design is beyond me, especially given the claims of the manuscript. Why it is not the norm to provide this kind of experimental design information in a manuscript is also a good question.</li>
+</ul></li>
 </ul>
 <p>Finally, I think the best use of the 2014 PNAS pub and this dataset is an example of <strong>how not</strong> to design a biological experiment.</p>
 </div>

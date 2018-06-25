@@ -269,11 +269,14 @@
       <div class="article-style" itemprop="articleBody">
         <div id="tldr" class="section level2">
 <h2>TL;DR</h2>
-<p>If you use the <code>docopt</code> package to create command line <code>R</code> executables that take options, there is something to know about numeric command line options: they should have <code>as.double</code> before using them in your script.</p>
+<p>If you use the <code>docopt</code> package to create command line <code>R</code> executables that take
+options, there is something to know about numeric command line options: they should
+have <code>as.double</code> before using them in your script.</p>
 </div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
-<p>Lets set up a new <code>docopt</code> string, that includes both string and numeric arguments.</p>
+<p>Lets set up a new <code>docopt</code> string, that includes both string and
+numeric arguments.</p>
 <pre class="r"><code>&quot;
 Usage:
   test_numeric.R [--string=&lt;string_value&gt;] [--numeric=&lt;numeric_value&gt;]
@@ -303,11 +306,17 @@ script_options</code></pre>
 ##  $ h        : logi FALSE
 ##  $ help     : logi FALSE
 ## NULL</code></pre>
-<p>It is very easy to see here, that the <code>numeric</code> argument is indeed a string, and if you want to use it as numeric, it should first be converted using <code>as.double</code>, <code>as.integer</code>, or even <code>as.numeric</code>.</p>
+<p>It is very easy to see here, that the <code>numeric</code> argument is indeed a string, and
+if you want to use it as numeric, it should first be converted using <code>as.double</code>,
+<code>as.integer</code>, or even <code>as.numeric</code>.</p>
 </div>
 <div id="cant-you-easily-tell-its-character" class="section level2">
 <h2>Can’t You Easily Tell It’s Character?</h2>
-<p>I just bring this up because I recently used <code>docopt</code> to provide interfaces to three executables scripts, and I spent a lot of time <code>printing</code> the <code>doc</code> strings, and I somehow never noticed that the numeric values were actually character and needed to be converted to a numeric first. Hopefully this will save someone else some time in that regard.</p>
+<p>I just bring this up because I recently used <code>docopt</code> to provide interfaces to
+three executables scripts, and I spent a lot of time <code>printing</code> the <code>doc</code> strings,
+and I somehow never noticed that the numeric values were actually character and
+needed to be converted to a numeric first. Hopefully this will save someone else
+some time in that regard.</p>
 </div>
 
       </div>
@@ -341,9 +350,9 @@ script_options</code></pre>
     
     <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
     
-    <li><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></li>
-    
     <li><a href="/post/custom-deployment-script/">Custom Deployment Script</a></li>
+    
+    <li><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></li>
     
     <li><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></li>
     
