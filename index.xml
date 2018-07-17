@@ -11,6 +11,209 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Split - Unsplit Anti-Pattern</title>
+      <link>/post/split-unsplit-anti-pattern/</link>
+      <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/split-unsplit-anti-pattern/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you notice yourself using &lt;code&gt;split&lt;/code&gt; -&amp;gt; &lt;code&gt;unsplit&lt;/code&gt; / &lt;code&gt;rbind&lt;/code&gt; on two object to
+match items up, maybe you should be using &lt;code&gt;dplyr::join_&lt;/code&gt; instead. Read below
+for concrete examples.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I have had a lot of calculations lately that involve some sort of &lt;code&gt;normalization&lt;/code&gt;
+or scaling a group of related values, each group by a different factor.&lt;/p&gt;
+&lt;p&gt;Lets setup an example where we will have &lt;code&gt;1e5&lt;/code&gt; values in &lt;code&gt;10&lt;/code&gt; groups, each group
+of values being &lt;code&gt;normalized&lt;/code&gt; by their own value.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(microbenchmark)
+library(profvis)
+set.seed(1234)
+n_point &amp;lt;- 1e5
+to_normalize &amp;lt;- data.frame(value = rnorm(n_point), group = sample(seq_len(10), n_point, replace = TRUE))
+
+normalization &amp;lt;- data.frame(group = seq_len(10), normalization = rnorm(10))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For each &lt;code&gt;group&lt;/code&gt; in &lt;code&gt;to_normalize&lt;/code&gt;, we want to apply the normalization factor in
+&lt;code&gt;normalization&lt;/code&gt;. In this case, I’m going to do a simple subtraction.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;match-them&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Match Them!&lt;/h2&gt;
+&lt;p&gt;My initial implementation was to iterate over the groups, and use &lt;code&gt;%in%&lt;/code&gt; to
+&lt;code&gt;match&lt;/code&gt; each &lt;code&gt;group&lt;/code&gt; from the normalization factors and the data to be normalized,
+and modify in place. &lt;strong&gt;Don’t do this!!&lt;/strong&gt; It was
+the slowest method I’ve used in my real package code!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;match_normalization &amp;lt;- function(normalize_data, normalization_factors){
+  use_groups &amp;lt;- normalization_factors$group
+  
+  for (igroup in use_groups) {
+    normalize_data[normalize_data$group %in% igroup, &amp;quot;value&amp;quot;] &amp;lt;- 
+      normalize_data[normalize_data$group %in% igroup, &amp;quot;value&amp;quot;] - normalization_factors[normalization_factors$group %in% igroup, &amp;quot;normalization&amp;quot;]
+  }
+  normalize_data
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization)))
+knitr::kable(micro_results)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37.93602&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;40.23026&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;42.19333&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;41.44218&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;42.70328&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70.9454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Not bad for the test data. But can we do better?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;split-them&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Split Them!&lt;/h2&gt;
+&lt;p&gt;My next thought was to split them by their &lt;code&gt;group&lt;/code&gt;s, and then iterate again over
+the groups using &lt;code&gt;purrr::map&lt;/code&gt;, and then unlist them.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;split_normalization &amp;lt;- function(normalize_data, normalization_factors){
+  split_norm &amp;lt;- split(normalization_factors$normalization, normalization_factors$group)
+  
+  split_data &amp;lt;- split(normalize_data, normalize_data$group)
+  
+  out_data &amp;lt;- purrr::map2(split_data, split_norm, function(.x, .y){
+    .x$value &amp;lt;- .x$value - .y
+    .x
+  })
+  do.call(rbind, out_data)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results2 &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization),
+               split_normalization(to_normalize, normalization)))
+knitr::kable(micro_results2)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;41.25470&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;47.41014&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;52.46320&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;51.22454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;56.02441&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100.2324&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;68.82265&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;80.19980&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;86.39694&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;85.98446&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.30600&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;148.1777&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;join-them&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Join Them!&lt;/h2&gt;
+&lt;p&gt;My final thought was to join the two data.frame’s together using &lt;code&gt;dplyr&lt;/code&gt;, and then
+they are automatically matched up.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;join_normalization &amp;lt;- function(normalize_data, normalization_factors){
+  normalize_data &amp;lt;- dplyr::right_join(normalize_data, normalization_factors,
+                                      by = &amp;quot;group&amp;quot;)
+  
+  normalize_data$value &amp;lt;- normalize_data$value - normalize_data$normalization
+  normalize_data[, c(&amp;quot;value&amp;quot;, &amp;quot;group&amp;quot;)]
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results3 &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization),
+               split_normalization(to_normalize, normalization),
+               join_normalization(to_normalize, normalization)))
+knitr::kable(micro_results3)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;39.030586&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46.793487&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;51.20821&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;49.311902&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;53.876978&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;109.9914&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70.381722&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;80.093530&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;85.62029&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;84.895922&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;87.885402&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;143.6245&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;join_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.043585&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.343492&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.72770&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.479771&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.683511&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;140.9011&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;So on my computer, the &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;match&lt;/code&gt; implementations are mostly comparable,
+although on my motivating real world example, I actually got a 3X speedup by
+using the &lt;code&gt;split&lt;/code&gt; method. That may be because of issues related to &lt;code&gt;DataFrame&lt;/code&gt;
+and matching elements within that structure. The &lt;code&gt;join&lt;/code&gt; method is 10-14X faster
+than the others, which is what I’ve seen in my motivating work. I also think
+it makes the code easier to read and reason over, because you can see what
+is being subtracted from what directly in the code.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using IRanges for Non-Integer Overlaps</title>
       <link>/post/iranges-for-non-integer-overlaps/</link>
       <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
@@ -1212,86 +1415,6 @@ separation in the data in the first place.&lt;/p&gt;
 &lt;div id=&#34;reproducibility&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Reproducibility&lt;/h2&gt;
 &lt;p&gt;Although we have admittedly dropped the ball on this, there will be a tarball of all of the scripts used to generate the results including a README explaining how to run them available soon.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Mouse / Human Transcriptomics and Batch Effects</title>
-      <link>/post/mouse-human-transcriptomics-and-batch-effects/</link>
-      <pubDate>Mon, 01 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/mouse-human-transcriptomics-and-batch-effects/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;This &lt;a href=&#34;http://dx.doi.org/10.1073/pnas.1413624111&#34;&gt;2014 PNAS paper by S. Lin et al (Lin et al., PNAS, 2014)&lt;/a&gt; that compares transcription of tissues between species has a flawed experimental design, where species is almost perfectly confounded with machine / lane on which the sequencing was done. Y. Golad and O. Mizrahi-Man have &lt;a href=&#34;http://f1000research.com/articles/4-121/v1&#34;&gt;published a manuscript&lt;/a&gt; describing the confounding and the results of removing it. This was possible because the original authors supplied the information about which publically available files were used in the original analysis. The data from this experiment is probably only suitable as an example of what not to do in high-throughput biology experimental design, and that there &lt;em&gt;may&lt;/em&gt; be similarities in human and mouse transcriptional programs.&lt;/p&gt;
-&lt;p&gt;We discussed these papers in the Systems Biology and Omics Integration University of Kentucky Journal Club on June 1, 2015. I lead that discussion.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;mouse-human-transcriptomic-differences&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Mouse / Human Transcriptomic Differences&lt;/h2&gt;
-&lt;p&gt;In 2014, two papers were published by members of the ENCODE project purporting that tissue gene expression clustered more by species than by tissue. In the first (&lt;a href=&#34;http://www.nature.com/nature/journal/v515/n7527/full/nature13992.html&#34;&gt;ENCODE Consortium, Nature, 2014, doi:10.1038/nature13992 2014&lt;/a&gt;), a large number of experiments were combined and compared. &lt;a href=&#34;http://www.nature.com/nature/journal/v515/n7527/fig_tab/nature13992_F2.html&#34;&gt;Figure 2a&lt;/a&gt; shows a PCA plot of expression in across 10 tissues in human and mouse.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;http://www.nature.com/nature/journal/v515/n7527/images/nature13992-f2.jpg&#34; alt=&#34;ENCODE paper figuer 2&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;ENCODE paper figuer 2&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;Interestingly enough, if you collapse PC1 (definitely species), then the tissues start to look quite similar. Which does not seem that unexpected, there are species specific differences, but the tissues are doing something similar in each species.&lt;/p&gt;
-&lt;p&gt;This was not the end of the story, however. A subsequent publication (&lt;a href=&#34;http://www.pnas.org/content/111/48/17224&#34;&gt;S Lin et al., PNAS, 2014, doi: 10.1073/pnas.1413624111&lt;/a&gt;) went further in doing fresh sequencing of 13 tissues in both species, still showing bigger differences between species than between tissues.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;is-everything-as-it-seems&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Is Everything As it Seems?&lt;/h2&gt;
-&lt;p&gt;On April 28, Y. Gilad sent out &lt;a href=&#34;https://twitter.com/Y_Gilad/status/593088451462963202&#34;&gt;this tweet&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;We reanalyzed the data from &lt;a href=&#34;http://t.co/Fv7z9WwLJ4&#34;&gt;http://t.co/Fv7z9WwLJ4&lt;/a&gt; and found the following: &lt;a href=&#34;http://t.co/37eVs8Kln9&#34;&gt;pic.twitter.com/37eVs8Kln9&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;The left figure shows the original data, clustering by species, and on the right, reprocessed data, clustering by tissue. Now, I have to admit when he posted this I was kind of ticked off. Where was the blog-post or manuscript showing what exactly was done? If you look at the comments to Yoav on that tweet, it seems others were wondering the same thing. Thankfully, on May 19, the manuscript hit &lt;a href=&#34;http://f1000research.com/articles/4-121/v1&#34;&gt;F1000Research (Gilad Y and Mizrahi-Man O. A reanalysis of mouse ENCODE comparative gene expression data [v1; ref status: approved with reservations 1, http://f1000r.es/5ez] F1000Research 2015, 4:121 (doi: 10.12688/f1000research.6536.1))&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;batch-effects&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Batch Effects&lt;/h2&gt;
-&lt;p&gt;Yoav asked for the list of data files that were used in the PNAS paper, and then examined the read id line to extract the experimental design. This experimental design is captured in Figure 1:&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure1.gif&#34; alt=&#34;Y Golad Fig 1&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;Y Golad Fig 1&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;Do you notice a problem with this design?&lt;/p&gt;
-&lt;p&gt;.
-.
-.
-.
-.&lt;/p&gt;
-&lt;p&gt;Hopefully you noticed that species (one of the main effects to investigate) is not randomly or even semi-randomly distributed across sequencers and / or lanes, but is almost perfectly confounded with sequencer / lane. It doesn’t matter if one technician handled all the samples, this is potentially a large batch effect / confounding variable.&lt;/p&gt;
-&lt;p&gt;And Yoav shows that ignoring the batch effect produces data much like that reported in the Lin et al PNAS pub, while removing the batch effect using &lt;a href=&#34;http://bioinformatics.oxfordjournals.org/content/28/6/882&#34;&gt;ComBat&lt;/a&gt; results in the tissues clustering together.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;is-the-data-still-useful&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Is the Data Still Useful?&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1_yA8RHdfodOV-5IoR-yb317KwaWgXFAvJntaIm8HYaU/edit?usp=sharing&#34;&gt;I presented&lt;/a&gt; these papers and the discussion around them at our weekly Systems Biology and Omics Integration (&lt;a href=&#34;http://sboi.bioinformatics.uky.edu&#34;&gt;SBOI&lt;/a&gt;) Journal Club on June 1, 2015. There were a couple of concerns with the overall study:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Is ENCODE data still useful?
-&lt;ul&gt;
-&lt;li&gt;some people seemed to be concerned that this brought the general ENCODE project into question. I think by the end we agreed that in general it is probably ok to be using ENCODE data, but this particular study was questionable.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;What does the data tell us?
-&lt;ul&gt;
-&lt;li&gt;based on the correction that Yoav did and reanalysis, is there anything actually telling in the data? Unfortunately, because species is so confounded with machine, I don’t think there is much of a conclusion to draw about species differences &lt;em&gt;vs&lt;/em&gt; tissue similarity based on this data. There was some disagreement on this point.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Full experimental designs should be published, and requested by reviewers
-&lt;ul&gt;
-&lt;li&gt;Really, why a reviewer on the paper &lt;strong&gt;did not&lt;/strong&gt; request more information about the experimental design is beyond me, especially given the claims of the manuscript. Why it is not the norm to provide this kind of experimental design information in a manuscript is also a good question.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Finally, I think the best use of the 2014 PNAS pub and this dataset is an example of &lt;strong&gt;how not&lt;/strong&gt; to design a biological experiment.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;addendum&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;&lt;a id=&#34;addendum&#34;&gt;&lt;/a&gt; Addendum&lt;/h2&gt;
-&lt;p&gt;As I looked at the comment section of the Gilad &amp;amp; Man article yesterday (June 1, 2015), I noticed that there were direct replies from S. Lin in a couple of places. In particular is a comment that Lin et al did a second set of sequencing with a new design, and reanalysed the data. Links are provided to two figures, a table of the new design and a new 3D PCA plot:&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/slin_table1part2.jpg&#34; alt=&#34;new design&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;new design&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/slin_fig1part2.jpg&#34; alt=&#34;new pca&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;new pca&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;The new sequencing design seems much more reasonable, and the PCA plot has many characteristics of the original one from the original comparative analysis by Mouse ENCODE (see above), in that yes, there are species specific differences, but there also appears to be a way to collapse along PC2 and PC3 where the tissues will line up with each other, which I kind of would expect.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

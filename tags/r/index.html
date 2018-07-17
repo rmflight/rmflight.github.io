@@ -72,7 +72,7 @@
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2018-06-23T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2018-07-17T00:00:00&#43;00:00">
   
 
   
@@ -196,6 +196,17 @@
   
   
   <div>
+    <h2><a href="/post/split-unsplit-anti-pattern/">Split - Unsplit Anti-Pattern</a></h2>
+    <div class="article-style">
+      
+      TL;DR If you notice yourself using split -&gt; unsplit / rbind on two object to match items up, maybe you should be using dplyr::join_ instead. Read below for concrete examples.
+ Motivation I have had a lot of calculations lately that involve some sort of normalization or scaling a group of related values, each group by a different factor.
+Lets setup an example where we will have 1e5 values in 10 groups, each group of values being normalized by their own value.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/iranges-for-non-integer-overlaps/">Using IRanges for Non-Integer Overlaps</a></h2>
     <div class="article-style">
       
@@ -283,16 +294,6 @@ As I used them, I noticed that no progress was displayed if you did rmarkdown::r
       Following from my last post, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the 2012 and 2014 ISMB conference (thanks to Neil and Stephen for compiling the data).
 I will link to individual commits so that you can see how things change as we go along.
 Setup Initialization To start, we will initialize the package.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></h2>
-    <div class="article-style">
-      
-      tl;dr Imposing a different structure than R packages for distributing R code is a bad idea, especially now that R package tools have gotten to the point where managing a package has become much easier.
- ProjectTemplate ?? My last two posts (1, 2) provided an argument and an example of why one should use R packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package ProjectTemplate.
       
     </div>
   </div>

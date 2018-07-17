@@ -11,6 +11,209 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Split - Unsplit Anti-Pattern</title>
+      <link>/post/split-unsplit-anti-pattern/</link>
+      <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/split-unsplit-anti-pattern/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you notice yourself using &lt;code&gt;split&lt;/code&gt; -&amp;gt; &lt;code&gt;unsplit&lt;/code&gt; / &lt;code&gt;rbind&lt;/code&gt; on two object to
+match items up, maybe you should be using &lt;code&gt;dplyr::join_&lt;/code&gt; instead. Read below
+for concrete examples.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I have had a lot of calculations lately that involve some sort of &lt;code&gt;normalization&lt;/code&gt;
+or scaling a group of related values, each group by a different factor.&lt;/p&gt;
+&lt;p&gt;Lets setup an example where we will have &lt;code&gt;1e5&lt;/code&gt; values in &lt;code&gt;10&lt;/code&gt; groups, each group
+of values being &lt;code&gt;normalized&lt;/code&gt; by their own value.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(microbenchmark)
+library(profvis)
+set.seed(1234)
+n_point &amp;lt;- 1e5
+to_normalize &amp;lt;- data.frame(value = rnorm(n_point), group = sample(seq_len(10), n_point, replace = TRUE))
+
+normalization &amp;lt;- data.frame(group = seq_len(10), normalization = rnorm(10))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For each &lt;code&gt;group&lt;/code&gt; in &lt;code&gt;to_normalize&lt;/code&gt;, we want to apply the normalization factor in
+&lt;code&gt;normalization&lt;/code&gt;. In this case, I’m going to do a simple subtraction.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;match-them&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Match Them!&lt;/h2&gt;
+&lt;p&gt;My initial implementation was to iterate over the groups, and use &lt;code&gt;%in%&lt;/code&gt; to
+&lt;code&gt;match&lt;/code&gt; each &lt;code&gt;group&lt;/code&gt; from the normalization factors and the data to be normalized,
+and modify in place. &lt;strong&gt;Don’t do this!!&lt;/strong&gt; It was
+the slowest method I’ve used in my real package code!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;match_normalization &amp;lt;- function(normalize_data, normalization_factors){
+  use_groups &amp;lt;- normalization_factors$group
+  
+  for (igroup in use_groups) {
+    normalize_data[normalize_data$group %in% igroup, &amp;quot;value&amp;quot;] &amp;lt;- 
+      normalize_data[normalize_data$group %in% igroup, &amp;quot;value&amp;quot;] - normalization_factors[normalization_factors$group %in% igroup, &amp;quot;normalization&amp;quot;]
+  }
+  normalize_data
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization)))
+knitr::kable(micro_results)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37.93602&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;40.23026&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;42.19333&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;41.44218&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;42.70328&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70.9454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Not bad for the test data. But can we do better?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;split-them&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Split Them!&lt;/h2&gt;
+&lt;p&gt;My next thought was to split them by their &lt;code&gt;group&lt;/code&gt;s, and then iterate again over
+the groups using &lt;code&gt;purrr::map&lt;/code&gt;, and then unlist them.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;split_normalization &amp;lt;- function(normalize_data, normalization_factors){
+  split_norm &amp;lt;- split(normalization_factors$normalization, normalization_factors$group)
+  
+  split_data &amp;lt;- split(normalize_data, normalize_data$group)
+  
+  out_data &amp;lt;- purrr::map2(split_data, split_norm, function(.x, .y){
+    .x$value &amp;lt;- .x$value - .y
+    .x
+  })
+  do.call(rbind, out_data)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results2 &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization),
+               split_normalization(to_normalize, normalization)))
+knitr::kable(micro_results2)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;41.25470&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;47.41014&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;52.46320&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;51.22454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;56.02441&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100.2324&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;68.82265&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;80.19980&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;86.39694&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;85.98446&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.30600&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;148.1777&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;join-them&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Join Them!&lt;/h2&gt;
+&lt;p&gt;My final thought was to join the two data.frame’s together using &lt;code&gt;dplyr&lt;/code&gt;, and then
+they are automatically matched up.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;join_normalization &amp;lt;- function(normalize_data, normalization_factors){
+  normalize_data &amp;lt;- dplyr::right_join(normalize_data, normalization_factors,
+                                      by = &amp;quot;group&amp;quot;)
+  
+  normalize_data$value &amp;lt;- normalize_data$value - normalize_data$normalization
+  normalize_data[, c(&amp;quot;value&amp;quot;, &amp;quot;group&amp;quot;)]
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results3 &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization),
+               split_normalization(to_normalize, normalization),
+               join_normalization(to_normalize, normalization)))
+knitr::kable(micro_results3)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;39.030586&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46.793487&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;51.20821&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;49.311902&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;53.876978&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;109.9914&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70.381722&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;80.093530&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;85.62029&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;84.895922&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;87.885402&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;143.6245&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;join_normalization(to_normalize, normalization)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.043585&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.343492&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.72770&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.479771&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.683511&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;140.9011&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;So on my computer, the &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;match&lt;/code&gt; implementations are mostly comparable,
+although on my motivating real world example, I actually got a 3X speedup by
+using the &lt;code&gt;split&lt;/code&gt; method. That may be because of issues related to &lt;code&gt;DataFrame&lt;/code&gt;
+and matching elements within that structure. The &lt;code&gt;join&lt;/code&gt; method is 10-14X faster
+than the others, which is what I’ve seen in my motivating work. I also think
+it makes the code easier to read and reason over, because you can see what
+is being subtracted from what directly in the code.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using IRanges for Non-Integer Overlaps</title>
       <link>/post/iranges-for-non-integer-overlaps/</link>
       <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
@@ -1282,42 +1485,6 @@ separation in the data in the first place.&lt;/p&gt;
 &lt;p class=&#34;caption&#34;&gt;new pca&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The new sequencing design seems much more reasonable, and the PCA plot has many characteristics of the original one from the original comparative analysis by Mouse ENCODE (see above), in that yes, there are species specific differences, but there also appears to be a way to collapse along PC2 and PC3 where the tissues will line up with each other, which I kind of would expect.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>First Open Post-Publication Peer Review, with Credit!</title>
-      <link>/post/first-open-post-publication-peer-review-with-credit/</link>
-      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/first-open-post-publication-peer-review-with-credit/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Reviewed &lt;a href=&#34;https://twitter.com/@biodataganache&#34;&gt;Jason McDermott’s&lt;/a&gt; &lt;a href=&#34;http://f1000research.com/articles/4-60/v1&#34;&gt;MDRPred paper&lt;/a&gt; on F1000Research!, where my review is posted along side the paper, &lt;a href=&#34;http://f1000research.com/articles/4-60/v1#referee-response-7889&#34;&gt;with a DOI&lt;/a&gt;, completely in the open with my name attached. Was a pleasant experience, aided by the fact that Jason wrote a good paper.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;f1000research&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;F1000Research!&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://f1000research.com/&#34;&gt;F1000Research!&lt;/a&gt; is a new publishing startup from F1000 that has a model of post-publication peer review, whereby upon submission the manuscript undergoes basic quality checks (no real editorial control), and then is published. Once the article is published, reviewers are invited to review, and they have 10 days to submit their review. Reviews are signed, and given a DOI. Reviewers are asked to assign one of &lt;strong&gt;Approved&lt;/strong&gt;, &lt;strong&gt;Approved with Reservations&lt;/strong&gt;, &lt;strong&gt;Not Approved&lt;/strong&gt; status to the article.&lt;/p&gt;
-&lt;p&gt;When the article gets two revieweres giving &lt;strong&gt;Approved&lt;/strong&gt; status (likely after at least one round of review and resubmission), then it will be submitted to PubMed for indexing.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;how-did-i-end-up-reviewing-this&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;How Did I End Up Reviewing This??&lt;/h2&gt;
-&lt;p&gt;Long story short, I’ve been following Jason on twitter for a while, and I happened to see him tweet and blog about trying to get an F1000Research article up as a citeable supporting publication for a grant going in. I thought it was a nifty idea, and although I actually at the time did not have much of an idea of what Jason’s research actually involved, communicated with him that when the article went live I would be willing to be recommended as a reviewer. Imagine my surprise that I actually had enough domain knowledge that I could actually review the article.&lt;/p&gt;
-&lt;p&gt;That is saying something, given that the paper has a neat combination of genetic algorithms, regular expressions, and protein function prediction (really, you should go give it a read). By the way, this is also the first paper I’ve reviewed in a long time that did not have serious methodological problems, or where claims are made with no substantiation, and I could not identify any serious statistical issues.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-open-part&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Open Part&lt;/h2&gt;
-&lt;p&gt;Although I don’t do a lot of reviewing, I had to admit that this was one of the best reviewing assignments I’ve had in a while. Although I believe that peer review is essential to science, and it needs to be more open (I’ve started signing my reviews for other journals), this was the first time I knew my review was open (my name would be known to the authors’ by default) and public. I have to say that this likely improved the care and thoroughness in doing the actual review as I went through the article, given that both the authors and anyone else who comes across the article and my review can see if the issues I raise are real, or if I’m trying to make myself look good. And my name will be publicly associated with it!&lt;/p&gt;
-&lt;p&gt;Note that this &lt;strong&gt;openness&lt;/strong&gt; did not keep me from criticizing particular aspects of the paper. There are lots of things that need to be changed in the article before I will give it an &lt;strong&gt;Approved&lt;/strong&gt; status, and I laid those out in my review.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;postpublication&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PostPublication&lt;/h2&gt;
-&lt;p&gt;I really appreciated that I get to review a &lt;strong&gt;published&lt;/strong&gt; article, because it means that the whole thing is typeset, figures and tables are in their logical place (not at the end of the document!!!), the line spacing is readable, etc. Note to other publishers, at least let authors put the figures in-line for review if you are not going to type-set the article before it goes to reviewers.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;disclaimers&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Disclaimers&lt;/h2&gt;
-&lt;p&gt;I was given an F1000Research! t-shirt as a reward for commenting on a &lt;a href=&#34;http://blog.f1000research.com/2013/08/23/peer-review-credit-where-credits-due/#comment-1020559658&#34;&gt;blog-post&lt;/a&gt; regarding incentives for peer-review. I like the shirt. Having done my review, I am also eligible to get a 50% discount on the article processing charges if I submit an article to F1000Research in the next 12 months.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
