@@ -11,6 +11,78 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Finding Modes Using Kernel Density Estimates</title>
+      <link>/post/finding-modes-using-kernel-density-estimates/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/finding-modes-using-kernel-density-estimates/</guid>
+      <description>&lt;div id=&#34;tl-dr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL; DR&lt;/h2&gt;
+&lt;p&gt;If you have a unimodal distribution of values, you can use R’s &lt;code&gt;density&lt;/code&gt; or
+Scipy’s &lt;code&gt;gaussian_kde&lt;/code&gt; to create density estimates of the data, and then
+take the maxima of the density estimate to get the &lt;code&gt;mode&lt;/code&gt;. See below for
+actual examples in R and Python.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mode-in-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mode in R&lt;/h2&gt;
+&lt;p&gt;First, lets do this in R. Need some values to work with.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+set.seed(1234)
+n_point &amp;lt;- 1000
+data_df &amp;lt;- data.frame(values = rnorm(n_point))
+
+ggplot(data_df, aes(x = values)) + geom_histogram()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/density_mode-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data_df, aes(x = values)) + geom_density()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/density_mode-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can do a kernel density, which will return an object with a bunch of peices.
+One of these is &lt;code&gt;y&lt;/code&gt;, which is the actual density value for each value of &lt;code&gt;x&lt;/code&gt; that was used! So
+we can find the &lt;code&gt;mode&lt;/code&gt; by querying &lt;code&gt;x&lt;/code&gt; for the maxima in &lt;code&gt;y&lt;/code&gt;!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;density_estimate &amp;lt;- density(data_df$values)
+
+mode_value &amp;lt;- density_estimate$x[which.max(density_estimate$y)]
+mode_value&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.04599328&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plot the density estimate with the mode location.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;density_df &amp;lt;- data.frame(value = density_estimate$x, density = density_estimate$y)
+
+ggplot(density_df, aes(x = value, y = density)) + geom_line() + geom_vline(xintercept = mode_value, color = &amp;quot;red&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/plot_density-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Lets do something similar in Python. Start by generating a set of random values.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+values = np.random.normal(size = 1000)
+plt.hist(values)
+plt.show()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;And then use &lt;code&gt;gaussian_kde&lt;/code&gt; to get a kernel estimator of the density, and then
+call the &lt;code&gt;pdf&lt;/code&gt; method on the original values.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;kernel = stats.gaussian_kde(values)
+height = kernel.pdf(values)
+mode_value = values[np.argmax(height)]
+print(mode_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## -0.09150664440509323&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plot to show indeed we have it right. Note we sort the values first so the PDF
+looks right.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;values2 = np.sort(values.copy())
+height2 = kernel.pdf(values2)
+plt.clf()
+plt.cla()
+plt.close()
+plt.plot(values2, height2)
+plt.axvline(mode_value)
+plt.show()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Split - Unsplit Anti-Pattern</title>
       <link>/post/split-unsplit-anti-pattern/</link>
       <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
@@ -1344,77 +1416,6 @@ separation in the data in the first place.&lt;/p&gt;
 ##  Github (jimhester/withr@79d7b0d)           
 ##  CRAN (R 3.5.0)                             
 ##  CRAN (R 3.5.0)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Novel Zinc Coordination Geometries</title>
-      <link>/post/novel-zinc-coordination-geometries/</link>
-      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/novel-zinc-coordination-geometries/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a &lt;strong&gt;less-biased&lt;/strong&gt; method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries. Proteins. &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1002/prot.24834/full&#34;&gt;doi: 10.1002/prot.24834&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;zinc-coordination&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Zinc Coordination&lt;/h2&gt;
-&lt;p&gt;As I’m sure many people know, zinc is a very important metal for biology. It is one of the most numerous metal ions, and plays a role in many different types of proteins. Zinc ions in protein structures can have anywhere from 4 to 6 ligands, in many different coordination geometries.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/prot24834-fig-0001.png&#34; alt=&#34;zinc coordination geometries&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;zinc coordination geometries&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;Figure 1 from Yao et al., 2015&lt;/p&gt;
-&lt;p&gt;How the zinc ion is coordinated is going to depend on the protein sequence of amino acids that surround it, and knowledge of the protein sequence should enable knowledge of how the zinc ions are coordinated. Therefore, being able to characterize zinc ion coordination geometries (CGs) from structural data (such as protein structures in the world-wide protein data bank) and associate them with protein sequences is very important.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;previous-attempts&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Previous Attempts&lt;/h2&gt;
-&lt;p&gt;Other groups had done this previously, and we now have hidden-markov models for determining zinc binding thanks to this work. However, in all the cases that we could find, the determination of CG was made by comparison to &lt;strong&gt;previously known&lt;/strong&gt; geometries that have been described from zinc-compound crystal structures.&lt;/p&gt;
-&lt;p&gt;When the biologically based CGs are compared to previously known, there will be a bunch of CGs that are &lt;strong&gt;outliers&lt;/strong&gt; or will remain &lt;strong&gt;unclassified&lt;/strong&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;our-initial-attempt&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Our Initial Attempt&lt;/h2&gt;
-&lt;p&gt;When Sen (the lead author, currently a third year PhD student in the University of Louisville Bioinformatics program) first tried to use bootstrapping and a expectation-maximization algorithm to automatically classify the zinc CGs, she started getting rather &lt;strong&gt;funny&lt;/strong&gt; results, as in, why is the algorithm not converging and we are getting these &lt;strong&gt;huge variances&lt;/strong&gt; in the various measures that characterize the CGs.&lt;/p&gt;
-&lt;p&gt;A single visualization was key in unlocking what was going on. Figure 2 in the paper is a histogram of the minimum angle (where angle is ligand-zinc-ligand) in degrees.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/prot24834-fig-0002.png&#34; alt=&#34;minimum angle histogram&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;minimum angle histogram&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;Based on Figure 1, we would expect the minimum angle to be &lt;strong&gt;90&lt;/strong&gt;, but as you can see in Figure 2, there are an awful lot of angles less than &lt;strong&gt;90&lt;/strong&gt;. We are very sure that they are real given the definition of zinc-ligand bond-length that was used to define potential ligands, and the statistical decision used to define &lt;strong&gt;how many&lt;/strong&gt; ligands a given zinc ion has.&lt;/p&gt;
-&lt;p&gt;So we have a bunch of zinc-ions that make ligand-zinc-ligand bond angles at 60, and even 30 degrees! It turns out that these small angles are largely (but not all) due to bidentate ligands, where for example the zinc ion forms bonds with two oxygen’s from an aspartate or glutamate amino acid.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;separate-out-compressed-and-cluster&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Separate Out Compressed and Cluster!&lt;/h2&gt;
-&lt;p&gt;To make the problem tractable, we first have to separate out the compressed angle zinc sites, and then we can do clustering on the set of ligand-zinc-ligand angles to determine in a mostly un-biased fashion what CGs are present and which zinc-site belongs to which CG.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;clustering&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Clustering&lt;/h2&gt;
-&lt;p&gt;The use of k-means clustering on the angles also required developing a way to order the ligand-zinc-ligand angles in such a way that they are comparable across all of the different CGs. The final method used in the paper was to order them using &lt;em&gt;largest-sortedmiddle-opposite&lt;/em&gt;, which is the largest angle, the middle angles sorted in order, and lastly the opposite of the largest angle. This keeps them from being scrambled from site to site, and allows them to be comparable across zinc sites.&lt;/p&gt;
-&lt;p&gt;Also, because the number of true clusters was unknown as we are trying to discover in an unbiased way all CGs, the number of clusters was varied, and for each &lt;em&gt;k&lt;/em&gt;-clusters, replicate clusterings done, and the stability of the clusters was assessed by cluster membership and locations across replicates.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;novel-cgs&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Novel CGs&lt;/h2&gt;
-&lt;p&gt;Based on all this work, we were able to compare generated clusters from both the &lt;em&gt;normal&lt;/em&gt; and &lt;em&gt;compressed&lt;/em&gt; groups with canonical CGs to determine if a CG from clustering corresponds to a &lt;strong&gt;known&lt;/strong&gt; CG or a &lt;strong&gt;novel&lt;/strong&gt; CG. The &lt;strong&gt;normal&lt;/strong&gt; clusters mostly corresponded to &lt;strong&gt;known&lt;/strong&gt; CGs or unsurprising variants thereof. What was really interesting is that there were multiple clusters corresponding to a tetrahedral CG. To determine if the &lt;em&gt;compressed&lt;/em&gt; CGs were merely a &lt;em&gt;compressed&lt;/em&gt; variant of the canonical, the compressed angle was removed from the comparison to generate a probability of assignment. At least one of the &lt;em&gt;compressed&lt;/em&gt; groups appear to be novel, in that it has not been described before, either structurally or functionally.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;functional-characterization&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Functional Characterization&lt;/h2&gt;
-&lt;p&gt;We also wanted to determine if there was a functional component to the CGs, &lt;em&gt;i.e.&lt;/em&gt; different CGs have different functionality (this is my primary but not only contribution to this manuscript). To do this we annotated all of the PDB sequences using &lt;a href=&#34;http://www.ebi.ac.uk/Tools/pfa/iprscan5/&#34;&gt;&lt;em&gt;InterProScan&lt;/em&gt;&lt;/a&gt;, and kept annotations that intersected the range of amino-acids that potentially interact with the zinc ion. This bit is tricky, because many different CGs can have many different functionality, merely doing hypergeometric-enrichment of annotations in each cluster doesn’t lead to a convincing picture; as we quickly found out (it was the first thing I tried). However, if we generate a measure of functional similarity between clusters (based on a faux covariance, really, read the paper, it is rather neat) and compare this functional cluster similarity measure with a cluster distance based on the angles, there is an extremely high Spearman correlation of 0.88 for the &lt;em&gt;normal&lt;/em&gt; and 0.66 for the &lt;em&gt;compressed&lt;/em&gt; CGs, implying that CG and function are intimately related.&lt;/p&gt;
-&lt;p&gt;&lt;img src = &#34;/img/prot24834-fig-0009.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src = &#34;/img/prot24834-fig-0010.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
-&lt;p&gt;Finally, we considered &lt;strong&gt;all&lt;/strong&gt; &lt;em&gt;normal&lt;/em&gt; and &lt;em&gt;compressed&lt;/em&gt; clusters as separate groups and performed hypergeometric-enrichment on both the &lt;em&gt;InterProScan&lt;/em&gt; and &lt;em&gt;EC&lt;/em&gt; number annotations, finding enriched annotations specific to each group of clusters.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;implications&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Implications&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Making too many assumptions about biological structure can be a bad thing. Given that, however, if you are using canonical structures for assignment and you get a ton of &lt;strong&gt;outliers&lt;/strong&gt;, maybe you need to re-examine your data and methods.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Machine learning methods such as &lt;em&gt;random-forest&lt;/em&gt;, &lt;em&gt;k-means clustering&lt;/em&gt;, and statistical classification can be readily used to discover and assign metal-ion CG. If you are careful, and separate out the &lt;em&gt;compressed&lt;/em&gt; from &lt;em&gt;normal&lt;/em&gt; first.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;There is a rather tight relationship between a zinc-ion’s CG and the functionality of the protein it is embedded within.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;reproducibility&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Reproducibility&lt;/h2&gt;
-&lt;p&gt;Although we have admittedly dropped the ball on this, there will be a tarball of all of the scripts used to generate the results including a README explaining how to run them available soon.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

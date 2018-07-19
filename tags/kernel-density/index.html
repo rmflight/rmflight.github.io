@@ -13,7 +13,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/tags/r/">
+  <link rel="alternate" hreflang="en-us" href="/tags/kernel-density/">
 
   
   
@@ -59,7 +59,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/tags/r/">
+  <link rel="canonical" href="/tags/kernel-density/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -67,8 +67,8 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/tags/r/">
-  <meta property="og:title" content="R | Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/tags/kernel-density/">
+  <meta property="og:title" content="Kernel density | Deciphering Life: One Bit at a Time">
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
@@ -77,7 +77,7 @@
 
   
 
-  <title>R | Deciphering Life: One Bit at a Time</title>
+  <title>Kernel density | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -189,7 +189,7 @@
 
 <div class="universal-wrapper">
 
-  <h1>R</h1>
+  <h1>Kernel density</h1>
 
   
 
@@ -206,109 +206,8 @@ library(ggplot2) set.seed(1234) n_point &lt;- 1000 data_df &lt;- data.
     </div>
   </div>
   
-  <div>
-    <h2><a href="/post/split-unsplit-anti-pattern/">Split - Unsplit Anti-Pattern</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you notice yourself using split -&gt; unsplit / rbind on two object to match items up, maybe you should be using dplyr::join_ instead. Read below for concrete examples.
- Motivation I have had a lot of calculations lately that involve some sort of normalization or scaling a group of related values, each group by a different factor.
-Lets setup an example where we will have 1e5 values in 10 groups, each group of values being normalized by their own value.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/iranges-for-non-integer-overlaps/">Using IRanges for Non-Integer Overlaps</a></h2>
-    <div class="article-style">
-      
-      TL;DR The IRanges package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a large constant factor and round them. The constant depends on how much accuracy you need.
- IRanges?? IRanges is a bioconductor package for interval algebra of integer ranges. It is used extensively in the GenomicRanges package for finding overlaps between various genomic features. For genomic features, integers make sense, because one cannot have fractional base locations.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/knitrprogressbar/">knitrProgressBar Package</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you like dplyr progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out knitrProgressBar (cran github).
- Why Yet Another Progress Bar?? I didn’t set out to create another progress bar package. But I really liked dplyrs style of progress bar, and how they worked under the hood (thanks to the examples from Bob Rudis).
-As I used them, I noticed that no progress was displayed if you did rmarkdown::render() or knitr::knit().
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/licensing-r-packages-that-include-others-code/">Licensing R Packages that Include Others Code</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.
- Motivation I recently created the knitrProgressBar package. It is a really simple package, that takes the dplyr progress bars and makes it possible for them to write progress to a supplied file connection. The dplyr package itself is licensed under MIT, so I felt fine taking the code directly from dplyr itself.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/docopt-numeric-options/">docopt &amp; Numeric Options</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you use the docopt package to create command line R executables that take options, there is something to know about numeric command line options: they should have as.double before using them in your script.
- Setup Lets set up a new docopt string, that includes both string and numeric arguments.
-&quot; Usage: test_numeric.R [&ndash;string=&lt;string_value&gt;] [&ndash;numeric=&lt;numeric_value&gt;] test_numeric.R (-h | &ndash;help) test_numeric.R Description: Testing how values are passed using docopt. Options: &ndash;string=&lt;string_value&gt; A string value [default: Hi!
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/custom-deployment-script/">Custom Deployment Script</a></h2>
-    <div class="article-style">
-      
-      TL;DR Use a short bash script to do deployment from your own computer directly to your *.github.io domain.
- Why? So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the /public directory to the repo for my github.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></h2>
-    <div class="article-style">
-      
-      Manual Linking? Using blogdown for generating websites and blog-posts from Rmarkdown files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (like this figure from wikipedia).
- Where to?
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></h2>
-    <div class="article-style">
-      
-      I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing R package vignettes to the web after building and checking on travis-ci. Hadley Wickham pointed to using such a scheme to push the web version of his book after each update and the S3 deploy hooks on travis-ci. Deploying your html content to S3 is great, but given the availability of the gh-pages branch on GitHub, I thought it would be neat to work out how to deploy the html output from an R package vignette to the gh-pages branch on GitHub.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/analyses-as-packages/">Analyses as Packages</a></h2>
-    <div class="article-style">
-      
-      TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
- Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.
-      
-    </div>
-  </div>
-  
 
   
-<nav>
-  <ul class="pager">
-    
-    
-    <li><a href="/tags/r/page/2/">&gt;</a></li>
-    
-  </ul>
-</nav>
-
 
 
 </div>
