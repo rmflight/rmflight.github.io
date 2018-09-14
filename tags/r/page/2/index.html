@@ -196,6 +196,16 @@
   
   
   <div>
+    <h2><a href="/post/analyses-as-packages/">Analyses as Packages</a></h2>
+    <div class="article-style">
+      
+      TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
+ Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></h2>
     <div class="article-style">
       
@@ -282,16 +292,6 @@ Package Version Incrementing A good practice to get into is incrementing the min
     <div class="article-style">
       
       I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/portable-peronal-packages/">Portable, Peronal Packages</a></h2>
-    <div class="article-style">
-      
-      ProgrammingR had an interesting post recently about keeping a set of R functions that are used often as a gist on Github, and sourceing that file at the beginning of R analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement unit testing.
-However, the best way to have sets of R functions is as a package, that can then be installed and loaded by anyone.
       
     </div>
   </div>

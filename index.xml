@@ -11,6 +11,85 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Don&#39;t do PCA After Statistical Testing!</title>
+      <link>/post/don-t-do-pca-after-statistical-testing/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/don-t-do-pca-after-statistical-testing/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you do a statistical test &lt;strong&gt;before&lt;/strong&gt; a dimensional reduction method like
+PCA, the highest source of variance is likely to be whatever you tested
+statistically.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wait-why&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Wait, Why??&lt;/h2&gt;
+&lt;p&gt;Let me describe the situation. You’ve done an &lt;code&gt;-omics&lt;/code&gt; level analysis on your
+system of interest. You run a t-test (or ANOVA, etc) on each of the features
+in your data (gene, protein, metabolite, etc). Filter down to those things that
+were statistically significant, and then finally, you decide to look at the data
+using a dimensionality reduction method such as &lt;em&gt;principal components analysis&lt;/em&gt;
+(PCA) so you can &lt;strong&gt;see&lt;/strong&gt; what is going on.&lt;/p&gt;
+&lt;p&gt;I have seen this published at least once (in a Diabetes metabolomics paper,
+if anyone knows it, please send it to me so I can link it), and have seen
+collaborators do this after coaching from others in non-statistical departments.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-problem&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;The problem is that PCA is just looking at either feature-feature covariances
+or sample-sample covariances. If you have trimmed the data to those things that
+have statistically significant differences, then you have completely modified
+the covariances, and PCA is likely to pick up on that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;an-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;An Example&lt;/h2&gt;
+&lt;p&gt;Let’s actually do an example where there are no differences initially, and
+then see if we can introduce an artificial difference.&lt;/p&gt;
+&lt;div id=&#34;random-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Random Data&lt;/h3&gt;
+&lt;p&gt;We start with completely random data, 10000 features, and 100 samples.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n_feat = 10000
+n_sample = 100
+random_data = matrix(rnorm(n_feat * n_sample), nrow = n_feat, ncol = n_sample)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we will do a t-test on each row, taking the first 50 samples as class 1
+and the other 50 samples as class 2.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t_test_res = purrr::map_df(seq(1, nrow(random_data)), function(in_row){
+  tidy(t.test(random_data[in_row, 1:50], random_data[in_row, 51:100]))
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How many are significant at a p-value of 0.05?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filter(t_test_res, p.value &amp;lt;= 0.05) %&amp;gt;% dim()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 514  10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Obviously, these are false positives, but they are enough for us to illustrate
+the problem.&lt;/p&gt;
+&lt;p&gt;First, lets do PCA on the whole data set of 10^{4} features.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_classes = data.frame(class = c(rep(&amp;quot;A&amp;quot;, 50), rep(&amp;quot;B&amp;quot;, 50)))
+
+all_pca = prcomp(t(random_data), center = TRUE, scale. = FALSE)
+visqc_pca(all_pca, groups = sample_classes$class)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-14-don-t-do-pca-after-statistical-testing_files/figure-html/all_pca-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Obviously, there is no difference in the groups, and the % explained variance
+is very low.&lt;/p&gt;
+&lt;p&gt;Second, lets do it on just those things that were significant:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sig_pca = prcomp(t(random_data[which(t_test_res$p.value &amp;lt;= 0.05), ]), center = TRUE,
+                 scale. = FALSE)
+
+visqc_pca(sig_pca, groups = sample_classes$class)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-14-don-t-do-pca-after-statistical-testing_files/figure-html/sig_pca-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;And look at that! We have separation of the two groups! But …., this is
+completely random data, that didn’t have any separation, &lt;strong&gt;until we did the
+statistical test&lt;/strong&gt;!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;take-away&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Take Away&lt;/h2&gt;
+&lt;p&gt;Be careful of the order in which you do things. If you want to do dimensionality
+reduction to look for issues with the samples, then do that &lt;strong&gt;before&lt;/strong&gt; any statistical
+testing on the individual features.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Finding Modes Using Kernel Density Estimates</title>
       <link>/post/finding-modes-using-kernel-density-estimates/</link>
       <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
@@ -967,455 +1046,6 @@ for data analysis methods would discuss how they are going to look at the data
 to assess it’s quality, and how they are going to do unit testing, and will have
 to start saying that they are going to do unit testing of their analysis method.&lt;/p&gt;
 &lt;p&gt;I’d be interested in others’ thoughts on this as well.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Random Forest vs PLS on Random Data</title>
-      <link>/post/random-forest-vs-pls-on-random-data/</link>
-      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/post/random-forest-vs-pls-on-random-data/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Partial least squares (PLS) discriminant-analysis (DA) can ridiculously over fit
-even on completely random data. The quality of the PLS-DA model can be assessed
-using cross-validation, but cross-validation is not typically performed in many
-metabolomics publications. Random forest, in contrast, because of the &lt;em&gt;forest&lt;/em&gt; of
-decision tree learners, and the out-of-bag (OOB) samples used for testing each tree,
-automatically provides an indication of the quality of the model.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why?&lt;/h2&gt;
-&lt;p&gt;I’ve recently been working on some machine learning work using &lt;strong&gt;random forests&lt;/strong&gt;
-(RF) &lt;a href=&#34;https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf&#34;&gt;Breimann, 2001&lt;/a&gt; on metabolomics data. This has been relatively successful,
-with decent sensitivity and specificity, and hopefully I’ll be able to post more
-soon. However, PLS (Wold, 1975) is a standard technique used in metabolomics
-due to the prevalence of analytical chemists in metabolomics and a long familiarity
-with the method. Importantly, my collaborators frequently use PLS-DA to generate
-plots to show that the various classes of samples are separable.&lt;/p&gt;
-&lt;p&gt;However, it has long been known that PLS (and all of it’s variants, PLS-DA, OPLS,
-OPLS-DA, etc) can easily generate models that over fit the data, and that over fitting
-of the model needs to be assessed if the model is going to be used in subsequent
-analyses.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;random-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Random Data&lt;/h2&gt;
-&lt;p&gt;To illustrate the behavior of both RF and PLS-DA, we will generate some random data
-where each of the samples are randomly assigned to one of two classes.&lt;/p&gt;
-&lt;div id=&#34;feature-intensities&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Feature Intensities&lt;/h3&gt;
-&lt;p&gt;We will generate a data set with 1000 features, where each feature’s mean value
-is from a uniform distribution with a range of 1-10000.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(cowplot)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;cowplot&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
-## 
-##     ggsave&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(fakeDataWithError)
-set.seed(1234)
-n_point &amp;lt;- 1000
-max_value &amp;lt;- 10000
-init_values &amp;lt;- runif(n_point, 0, max_value)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;init_data &amp;lt;- data.frame(data = init_values)
-ggplot(init_data, aes(x = data)) + geom_histogram() + ggtitle(&amp;quot;Initial Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_initial-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;For each of these features, their distribution across samples will be based on
-a random normal distribution where the mean is the initial feature value and a
-standard deviation of 200. The number of samples is 100.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n_sample &amp;lt;- 100
-error_values &amp;lt;- add_uniform_noise(n_sample, init_values, 200)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Just for information, the &lt;code&gt;add_uniform_noise&lt;/code&gt; function is this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;add_uniform_noise&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## function (n_rep, value, sd, use_zero = FALSE) 
-## {
-##     n_value &amp;lt;- length(value)
-##     n_sd &amp;lt;- n_rep * n_value
-##     out_sd &amp;lt;- rnorm(n_sd, 0, sd)
-##     out_sd &amp;lt;- matrix(out_sd, nrow = n_value, ncol = n_rep)
-##     if (!use_zero) {
-##         tmp_value &amp;lt;- matrix(value, nrow = n_value, ncol = n_rep, 
-##             byrow = FALSE)
-##         out_value &amp;lt;- tmp_value + out_sd
-##     }
-##     else {
-##         out_value &amp;lt;- out_sd
-##     }
-##     return(out_value)
-## }
-## &amp;lt;bytecode: 0x5d3e3a0&amp;gt;
-## &amp;lt;environment: namespace:fakeDataWithError&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I created it as part of a package that is able to add different kinds of noise
-to data.&lt;/p&gt;
-&lt;p&gt;The distribution of values for a single feature looks like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;error_data &amp;lt;- data.frame(feature_1 = error_values[1,])
-ggplot(error_data, aes(x = feature_1)) + geom_histogram() + ggtitle(&amp;quot;Error Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_error-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;And we will assign the first 50 samples to &lt;strong&gt;class_1&lt;/strong&gt; and the second 50 samples
-to &lt;strong&gt;class_2&lt;/strong&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_class &amp;lt;- rep(c(&amp;quot;class_1&amp;quot;, &amp;quot;class_2&amp;quot;), each = 50)
-sample_class&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##   [1] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##   [8] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##  [15] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##  [22] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##  [29] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##  [36] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##  [43] &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot; &amp;quot;class_1&amp;quot;
-##  [50] &amp;quot;class_1&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [57] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [64] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [71] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [78] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [85] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [92] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;
-##  [99] &amp;quot;class_2&amp;quot; &amp;quot;class_2&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;pca&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PCA&lt;/h2&gt;
-&lt;p&gt;Just to show that the data is pretty random, lets use principal components
-analysis (PCA) to do a decomposition, and plot the first two components:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tmp_pca &amp;lt;- prcomp(t(error_values), center = TRUE, scale. = TRUE)
-pca_data &amp;lt;- as.data.frame(tmp_pca$x[, 1:2])
-pca_data$class &amp;lt;- as.factor(sample_class)
-ggplot(pca_data, aes(x = PC1, y = PC2, color = class)) + geom_point(size = 4)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/pca_data-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;random-forest&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Random Forest&lt;/h2&gt;
-&lt;p&gt;Let’s use RF first, and see how things look.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(randomForest)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## randomForest 4.6-14&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Type rfNews() to see new features/changes/bug fixes.&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;randomForest&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
-## 
-##     margin&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rf_model &amp;lt;- randomForest(t(error_values), y = as.factor(sample_class))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The confusion matrix comparing actual &lt;em&gt;vs&lt;/em&gt; predicted classes based on the
-out of bag (OOB) samples:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::kable(rf_model$confusion)&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;class_1&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;class_2&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;class.error&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td&gt;class_1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;21&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;29&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.58&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td&gt;class_2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;28&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;22&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.56&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;And an overall error of 0.5760364.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;pls-da&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PLS-DA&lt;/h2&gt;
-&lt;p&gt;So PLS-DA is really just PLS with &lt;strong&gt;y&lt;/strong&gt; variable that is binary.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(caret)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pls_model &amp;lt;- plsda(t(error_values), as.factor(sample_class), ncomp = 2)
-pls_scores &amp;lt;- data.frame(comp1 = pls_model$scores[,1], comp2 = pls_model$scores[,2], class = sample_class)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And plot the PLS scores:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(pls_scores, aes(x = comp1, y = comp2, color = class)) + geom_point(size = 4) + ggtitle(&amp;quot;PLS-DA of Random Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/plot_plsda-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;And voila! Perfectly separated data! If I didn’t tell you that it was random, would
-you suspect it?&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;cross-validated-pls-da&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Cross-validated PLS-DA&lt;/h2&gt;
-&lt;p&gt;Of course, one way to truly assess the worth of the model would be to use
-cross-validation, where a fraction of data is held back, and the model trained
-on the rest. Predictions are then made on the held back fraction, and because we
-know the truth, we will then calculate the &lt;strong&gt;area under the reciever operator curve&lt;/strong&gt;
-(AUROC) or area under the curve (AUC) created by plotting true positives &lt;em&gt;vs&lt;/em&gt;
-false positives.&lt;/p&gt;
-&lt;p&gt;To do this we will need two functions:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Generates all of the CV folds&lt;/li&gt;
-&lt;li&gt;Generates PLS-DA model, does prediction on hold out, calculates AUC&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(cvTools)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: robustbase&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ROCR)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: gplots&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;gplots&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:stats&amp;#39;:
-## 
-##     lowess&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gen_cv &amp;lt;- function(xdata, ydata, nrep, kfold){
-  n_sample &amp;lt;- length(ydata)
-  all_index &amp;lt;- seq(1, n_sample)
-  cv_data &amp;lt;- cvFolds(n_sample, K = kfold, R = nrep, type = &amp;quot;random&amp;quot;)
-  
-  rep_values &amp;lt;- vapply(seq(1, nrep), function(in_rep){
-    use_rep &amp;lt;- cv_data$subsets[, in_rep]
-    cv_values &amp;lt;- vapply(seq(1, kfold), function(in_fold){
-      test_index &amp;lt;- use_rep[cv_data$which == in_fold]
-      train_index &amp;lt;- all_index[-test_index]
-      
-      plsda_cv(xdata[train_index, ], ydata[train_index], xdata[test_index, ],
-               ydata[test_index])
-    }, numeric(1))
-  }, numeric(kfold))
-}
-
-plsda_cv &amp;lt;- function(xtrain, ytrain, xtest, ytest){
-  pls_model &amp;lt;- plsda(xtrain, ytrain, ncomp = 2)
-  pls_pred &amp;lt;- predict(pls_model, xtest, type = &amp;quot;prob&amp;quot;)
-  
-  use_pred &amp;lt;- pls_pred[, 2, 1]
-  
-  pred_perf &amp;lt;- ROCR::prediction(use_pred, ytest)
-  pred_auc &amp;lt;- ROCR::performance(pred_perf, &amp;quot;auc&amp;quot;)@y.values[[1]]
-  return(pred_auc)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And now lets do a bunch of replicates (100).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cv_vals &amp;lt;- gen_cv(t(error_values), factor(sample_class), nrep = 100, kfold = 5)
-
-mean(cv_vals)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4198336&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sd(cv_vals)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.1134857&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cv_frame &amp;lt;- data.frame(auc = as.vector(cv_vals))
-ggplot(cv_frame, aes(x = auc)) + geom_histogram(binwidth = 0.01)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2015-12-12-random-forest-vs-pls-on-random-data_files/figure-html/rep_plsda-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;So we get an average AUC of 0.4198336, which is pretty awful. This implies
-that even though there was good separation on the scores, maybe the model is
-not actually that good, and we should be cautious of any predictions being made.&lt;/p&gt;
-&lt;p&gt;Of course, the PCA at the beginning of the analysis shows that there is no &lt;em&gt;real&lt;/em&gt;
-separation in the data in the first place.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::session_info()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Session info -------------------------------------------------------------&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##  setting  value                       
-##  version  R version 3.5.0 (2018-04-23)
-##  system   x86_64, linux-gnu           
-##  ui       X11                         
-##  language en_US                       
-##  collate  en_US.UTF-8                 
-##  tz       America/New_York            
-##  date     2018-06-25&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Packages -----------------------------------------------------------------&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##  package           * version    date      
-##  assertthat          0.2.0      2017-04-11
-##  backports           1.1.2      2017-12-13
-##  base              * 3.5.0      2018-04-30
-##  bindr               0.1.1      2018-03-13
-##  bindrcpp            0.2.2      2018-03-29
-##  bitops              1.0-6      2013-08-17
-##  blogdown            0.5        2018-01-24
-##  bookdown            0.7        2018-02-18
-##  broom               0.4.4      2018-03-29
-##  caret             * 6.0-79     2018-03-29
-##  caTools             1.17.1     2014-09-10
-##  class               7.3-14     2015-08-30
-##  codetools           0.2-15     2016-10-05
-##  colorspace          1.3-2      2016-12-14
-##  compiler            3.5.0      2018-04-30
-##  cowplot           * 0.9.2      2017-12-17
-##  CVST                0.2-1      2013-12-10
-##  cvTools           * 0.3.2      2012-05-14
-##  datasets          * 3.5.0      2018-04-30
-##  ddalpha             1.3.1.1    2018-02-02
-##  DEoptimR            1.0-8      2016-11-19
-##  devtools            1.13.5     2018-02-18
-##  digest              0.6.15     2018-01-28
-##  dimRed              0.1.0      2017-05-04
-##  dplyr               0.7.5      2018-05-19
-##  DRR                 0.0.3      2018-01-06
-##  evaluate            0.10.1     2017-06-24
-##  fakeDataWithError * 0.0.1      2018-04-02
-##  foreach             1.4.4      2017-12-12
-##  foreign             0.8-70     2017-11-28
-##  gdata               2.18.0     2017-06-06
-##  ggplot2           * 2.2.1      2016-12-30
-##  glue                1.2.0      2017-10-29
-##  gower               0.1.2      2017-02-23
-##  gplots            * 3.0.1      2016-03-30
-##  graphics          * 3.5.0      2018-04-30
-##  grDevices         * 3.5.0      2018-04-30
-##  grid                3.5.0      2018-04-30
-##  gtable              0.2.0      2016-02-26
-##  gtools              3.5.0      2015-05-29
-##  highr               0.6        2016-05-09
-##  htmltools           0.3.6      2017-04-28
-##  ipred               0.9-6      2017-03-01
-##  iterators           1.0.9      2017-12-12
-##  kernlab             0.9-25     2016-10-03
-##  KernSmooth          2.23-15    2015-06-29
-##  knitr               1.20       2018-02-20
-##  labeling            0.3        2014-08-23
-##  lattice           * 0.20-35    2017-03-25
-##  lava                1.6.1      2018-03-28
-##  lazyeval            0.2.1      2017-10-29
-##  lubridate           1.7.3      2018-02-27
-##  magrittr            1.5        2014-11-22
-##  MASS                7.3-49     2018-02-23
-##  Matrix              1.2-13     2018-04-02
-##  memoise             1.1.0      2017-04-21
-##  methods           * 3.5.0      2018-04-30
-##  mnormt              1.5-5      2016-10-15
-##  ModelMetrics        1.1.0      2016-08-26
-##  munsell             0.4.3      2016-02-13
-##  nlme                3.1-136    2018-03-09
-##  nnet                7.3-12     2016-02-02
-##  parallel            3.5.0      2018-04-30
-##  pillar              1.2.1      2018-02-27
-##  pkgconfig           2.0.1      2017-03-21
-##  pls                 2.6-0      2016-12-18
-##  plyr                1.8.4      2016-06-08
-##  prodlim             1.6.1      2017-03-06
-##  psych               1.8.3.3    2018-03-30
-##  purrr               0.2.5      2018-05-29
-##  R6                  2.2.2      2017-06-17
-##  randomForest      * 4.6-14     2018-03-25
-##  Rcpp                0.12.17    2018-05-18
-##  RcppRoll            0.2.2      2015-04-05
-##  recipes             0.1.2      2018-01-11
-##  reshape2            1.4.3      2017-12-11
-##  rlang               0.2.0.9001 2018-06-07
-##  rmarkdown           1.9        2018-03-01
-##  robustbase        * 0.92-8     2017-11-01
-##  ROCR              * 1.0-7      2015-03-26
-##  rpart               4.1-13     2018-02-23
-##  rprojroot           1.3-2      2018-01-03
-##  scales              0.5.0.9000 2018-04-02
-##  sfsmisc             1.1-2      2018-03-05
-##  splines             3.5.0      2018-04-30
-##  stats             * 3.5.0      2018-04-30
-##  stats4              3.5.0      2018-04-30
-##  stringi             1.2.2      2018-05-02
-##  stringr             1.3.1      2018-05-10
-##  survival            2.41-3     2017-04-04
-##  tibble              1.4.2      2018-01-22
-##  tidyr               0.8.0      2018-01-29
-##  tidyselect          0.2.4      2018-02-26
-##  timeDate            3043.102   2018-02-21
-##  tools               3.5.0      2018-04-30
-##  utils             * 3.5.0      2018-04-30
-##  withr               2.1.2      2018-04-02
-##  xfun                0.1        2018-01-22
-##  yaml                2.1.18     2018-03-08
-##  source                                     
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  cran (@0.7.5)                              
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  Github (rmflight/fakeDataWithError@ccd8714)
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  local                                      
-##  local                                      
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  cran (@0.2.5)                              
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  cran (@0.12.17)                            
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  Github (r-lib/rlang@ba4fb06)               
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  Github (hadley/scales@d767915)             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  local                                      
-##  local                                      
-##  cran (@1.2.2)                              
-##  cran (@1.3.1)                              
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)                             
-##  local                                      
-##  local                                      
-##  Github (jimhester/withr@79d7b0d)           
-##  CRAN (R 3.5.0)                             
-##  CRAN (R 3.5.0)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
     </item>

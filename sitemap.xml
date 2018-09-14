@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/don-t-do-pca-after-statistical-testing/</loc>
+      <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/finding-modes-using-kernel-density-estimates/</loc>
       <lastmod>2018-07-19T00:00:00+00:00</lastmod>
     </url>
@@ -494,7 +503,7 @@
     <url>
     
       <loc>/tags/bioinformatics/</loc>
-      <lastmod>2014-06-05T00:00:00+00:00</lastmod>
+      <lastmod>2018-09-14T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -742,6 +751,16 @@
     
     <url>
     
+      <loc>/tags/pca/</loc>
+      <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/pdf/</loc>
       <lastmod>2018-07-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -822,7 +841,7 @@
     <url>
     
       <loc>/tags/r/</loc>
-      <lastmod>2018-07-19T00:00:00+00:00</lastmod>
+      <lastmod>2018-09-14T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

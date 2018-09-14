@@ -72,7 +72,7 @@
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2018-07-19T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2018-09-14T00:00:00&#43;00:00">
   
 
   
@@ -196,6 +196,16 @@
   
   
   <div>
+    <h2><a href="/post/don-t-do-pca-after-statistical-testing/">Don&#39;t do PCA After Statistical Testing!</a></h2>
+    <div class="article-style">
+      
+      TL;DR If you do a statistical test before a dimensional reduction method like PCA, the highest source of variance is likely to be whatever you tested statistically.
+ Wait, Why?? Let me describe the situation. You’ve done an -omics level analysis on your system of interest. You run a t-test (or ANOVA, etc) on each of the features in your data (gene, protein, metabolite, etc). Filter down to those things that were statistically significant, and then finally, you decide to look at the data using a dimensionality reduction method such as principal components analysis (PCA) so you can see what is going on.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/finding-modes-using-kernel-density-estimates/">Finding Modes Using Kernel Density Estimates</a></h2>
     <div class="article-style">
       
@@ -284,16 +294,6 @@ As I used them, I noticed that no progress was displayed if you did rmarkdown::r
     <div class="article-style">
       
       I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing R package vignettes to the web after building and checking on travis-ci. Hadley Wickham pointed to using such a scheme to push the web version of his book after each update and the S3 deploy hooks on travis-ci. Deploying your html content to S3 is great, but given the availability of the gh-pages branch on GitHub, I thought it would be neat to work out how to deploy the html output from an R package vignette to the gh-pages branch on GitHub.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/analyses-as-packages/">Analyses as Packages</a></h2>
-    <div class="article-style">
-      
-      TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
- Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.
       
     </div>
   </div>
