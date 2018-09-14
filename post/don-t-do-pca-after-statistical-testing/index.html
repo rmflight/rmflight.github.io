@@ -312,7 +312,7 @@ and the other 50 samples as class 2.</p>
 <pre><code>## [1] 514  10</code></pre>
 <p>Obviously, these are false positives, but they are enough for us to illustrate
 the problem.</p>
-<p>First, lets do PCA on the whole data set of 10^{4} features.</p>
+<p>First, lets do PCA on the whole data set of 10000 features.</p>
 <pre class="r"><code>sample_classes = data.frame(class = c(rep(&quot;A&quot;, 50), rep(&quot;B&quot;, 50)))
 
 all_pca = prcomp(t(random_data), center = TRUE, scale. = FALSE)
@@ -392,7 +392,7 @@ testing on the individual features.</p>
   <div class="container">
     <p class="powered-by">
 
-      &copy; 2017 Robert M Flight &middot; 
+      &copy; 2018 Robert M Flight &middot; 
 
       Powered by
       <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the

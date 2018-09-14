@@ -6,7 +6,7 @@
     <description>Recent content in Posts on Deciphering Life: One Bit at a Time</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2017 Robert M Flight</copyright>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
     <lastBuildDate>Sun, 01 Jan 2017 00:00:00 -0500</lastBuildDate>
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
@@ -61,7 +61,7 @@ and the other 50 samples as class 2.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 514  10&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Obviously, these are false positives, but they are enough for us to illustrate
 the problem.&lt;/p&gt;
-&lt;p&gt;First, lets do PCA on the whole data set of 10^{4} features.&lt;/p&gt;
+&lt;p&gt;First, lets do PCA on the whole data set of 10000 features.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_classes = data.frame(class = c(rep(&amp;quot;A&amp;quot;, 50), rep(&amp;quot;B&amp;quot;, 50)))
 
 all_pca = prcomp(t(random_data), center = TRUE, scale. = FALSE)
