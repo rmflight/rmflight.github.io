@@ -11,6 +11,110 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Nicer PNG Graphics</title>
+      <link>/post/nicer-png-graphics/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/nicer-png-graphics/</guid>
+      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;If you are getting crappy looking &lt;em&gt;png&lt;/em&gt; images from &lt;code&gt;rmarkdown&lt;/code&gt; html or word
+documents, try using &lt;code&gt;type=&#39;cairo&#39;&lt;/code&gt; or &lt;code&gt;dev=&#39;CairoPNG&#39;&lt;/code&gt; in your chunk options.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;png-graphics&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PNG Graphics??&lt;/h2&gt;
+&lt;p&gt;So, I write a &lt;strong&gt;lot&lt;/strong&gt; of reports using &lt;code&gt;rmarkdown&lt;/code&gt; and &lt;code&gt;knitr&lt;/code&gt;, and have been
+using &lt;code&gt;knitr&lt;/code&gt; for quite a while. My job involves doing analyses for collaborators
+and communicating results. &lt;em&gt;Most&lt;/em&gt; of the time, I will generate a pdf report,
+and I get beautiful graphics, thanks to the &lt;code&gt;eps&lt;/code&gt; graphics device. However,
+there are times when I want to generate either word or html reports, and
+in those cases, I tend to get very crappy looking graphics. See this example
+image below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+p = ggplot(mtcars, aes(mpg, wt)) +
+  geom_point(size = 3) +
+  labs(x=&amp;quot;Fuel efficiency (mpg)&amp;quot;, y=&amp;quot;Weight (tons)&amp;quot;,
+       title=&amp;quot;Seminal ggplot2 scatterplot example&amp;quot;,
+       subtitle=&amp;quot;A plot that is only useful for demonstration purposes&amp;quot;,
+       caption=&amp;quot;Brought to you by the letter &amp;#39;g&amp;#39;&amp;quot;)
+p&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/first_image-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Note: This was generated on self-compiled R under Ubuntu 16.04. As we can
+see, &lt;code&gt;knitr&lt;/code&gt; is using the &lt;code&gt;png&lt;/code&gt; device, because we are generating html output.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::opts_chunk$get(&amp;quot;dev&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;png&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;increased-resolution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Increased Resolution&lt;/h2&gt;
+&lt;p&gt;Of course, we just need to &lt;strong&gt;increase the resolution&lt;/strong&gt;! So let’s do so. Just to
+go whole hog on this, let’s increase it to 300!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, 300 dpi&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_300-1.png&#34; width=&#34;2100&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;If you compare this one to the previous, you can see that the quality is
+&lt;em&gt;marginally&lt;/em&gt; better, but doesn’t seem to be anything like what you should
+be able to get.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;use-svg&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Use SVG??&lt;/h2&gt;
+&lt;p&gt;Alternatively, we could tell &lt;code&gt;knitr&lt;/code&gt; to use the &lt;code&gt;svg&lt;/code&gt; device instead! Vector
+graphics always look nice!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, dev = &amp;#39;svg&amp;#39;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_svg-1.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It’s so crisp! But, for word documents especially, this could be a problem,
+as the images might not show up. The nice thing about &lt;em&gt;png&lt;/em&gt; is it should be
+usable in just about any format!&lt;/p&gt;
+&lt;p&gt;And, if you have a plot with a &lt;em&gt;lot&lt;/em&gt; of points (&amp;gt; 200), the &lt;em&gt;svg&lt;/em&gt; will start to
+take up some serious disk space, as every single point is encoded in the &lt;em&gt;svg&lt;/em&gt; file.
+This is also a good reason to use &lt;em&gt;png&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;png-via-cairo&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PNG via Cairo&lt;/h2&gt;
+&lt;p&gt;After pulling out my hair yesterday as I tried to generate nice &lt;em&gt;png&lt;/em&gt; images embedded
+in a word report (and settling on converting every figure from svg to png and saving
+to a folder to pass on, see &lt;a href=&#34;https://gist.github.com/rmflight/bb61ad1fd8ba6e44f734#make-png-of-high-density-svgs&#34;&gt;this&lt;/a&gt;),
+I finally decided to try a different device.&lt;/p&gt;
+&lt;p&gt;Now, your R installation does need to have either &lt;code&gt;cairo&lt;/code&gt; capabilities, or be able
+to use the &lt;code&gt;Cairo&lt;/code&gt; package. Mine has both.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;capabilities()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        jpeg         png        tiff       tcltk         X11        aqua 
+##        TRUE        TRUE        TRUE       FALSE        TRUE       FALSE 
+##    http/ftp     sockets      libxml        fifo      cledit       iconv 
+##        TRUE        TRUE        TRUE        TRUE       FALSE        TRUE 
+##         NLS     profmem       cairo         ICU long.double     libcurl 
+##        TRUE       FALSE        TRUE        TRUE        TRUE        TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;packageVersion(&amp;quot;Cairo&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;#39;1.5.9&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s change the device (two different ways) and plot it again. First, we will
+still use the &lt;code&gt;png&lt;/code&gt; device, but add the &lt;code&gt;type = &amp;quot;cairo&amp;quot;&lt;/code&gt; argument (see &lt;code&gt;?png&lt;/code&gt;). Just for information,
+that looks like the below in the chunk options:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;r plot_cairo, dev.args = list(type = &amp;quot;cairo&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, type = &amp;#39;cairo&amp;#39;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_cairo-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Wow! This looks great! So much nicer than the other device. Secondly, let’s use
+the &lt;code&gt;CairoPNG&lt;/code&gt; device (&lt;code&gt;dev = &amp;quot;CairoPNG&amp;quot;&lt;/code&gt;)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, dev = &amp;#39;CairoPNG&amp;#39;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_cairopng-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we can also increase the resolution as well.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, dev = &amp;#39;CairoPNG&amp;#39;, dpi = 300&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_cairopng_300-1.png&#34; width=&#34;2100&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;So there you have it. Very crisp &lt;em&gt;png&lt;/em&gt; images, with higher resolutions if needed,
+and no jaggedness, without resorting to conversion via &lt;code&gt;inkscape&lt;/code&gt; (my previous go to).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;incorporating-into-reports&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Incorporating Into Reports&lt;/h2&gt;
+&lt;p&gt;As I previously mentioned, I often default to pdf reports, but will then generate
+a word or html report if necessary. How do you avoid changing the options even
+in a setup chunk if you want this to happen every time you specify &lt;code&gt;word_document&lt;/code&gt;
+as the output type? This is what I settled on, the setup chunk checks the output type
+(based on being called from &lt;code&gt;rmarkdown::render&lt;/code&gt;), and sets it appropriately.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if (knitr::opts_knit$get(&amp;quot;rmarkdown.pandoc.to&amp;quot;) != &amp;quot;latex&amp;quot;) {
+  knitr::opts_chunk$set(dpi = 300, dev.args = list(type = &amp;quot;cairo&amp;quot;))
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Don&#39;t do PCA After Statistical Testing!</title>
       <link>/post/don-t-do-pca-after-statistical-testing/</link>
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
@@ -940,113 +1044,6 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
       
       <guid>/talk/example-talk/</guid>
       <description>&lt;p&gt;Embed your slides or video here using &lt;a href=&#34;https://sourcethemes.com/academic/post/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;shortcodes&lt;/a&gt;. Further details can easily be added using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Authentication of Key Resources for Data Analysis</title>
-      <link>/post/authentication-of-key-resources-for-data-analysis/</link>
-      <pubDate>Wed, 23 Mar 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/post/authentication-of-key-resources-for-data-analysis/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;NIH recently introduced a reproducibility initiative, extending to including the
-“Authentication of Key Resources” page in grant applications from Jan 25, 2016.
-Seems to be intended for grants involving biological reagents, but we included
-it in our recent R03 grant developing new data analysis methods. We believe that
-this type of thing should become common for all grants, not just those that use
-biological/chemical resources.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;nih-and-reproducibility&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;NIH and Reproducibility&lt;/h2&gt;
-&lt;p&gt;There has been a lot of things published recently about the &lt;em&gt;reproducibility
-crisis&lt;/em&gt; in science (see refs). The federal funding agencies are starting to
-respond to this, and beginning with grants submitted after January 25, 2016,
-grants are &lt;a href=&#34;http://grants.nih.gov/reproducibility/index.htm&#34;&gt;supposed to address the
-reproducibility&lt;/a&gt; of the work
-proposed, including the presence of various confounding factors (i.e. sex of
-animals, the source of cell lines, etc). In addition to this, there is a new
-document that can be added to grants, the &lt;a href=&#34;http://nexus.od.nih.gov/all/2016/01/29/authentication-of-key-biological-andor-chemical-resources-in-nih-grant-applications/&#34;&gt;&lt;strong&gt;Authentication
-Plan&lt;/strong&gt;&lt;/a&gt;,
-which as far as I can tell is intended specifically for:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;key biological and/or chemical resources used in the proposed studies&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Now, this makes sense. Some sources of irreproducibility include, but are not
-limited to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;unvalidated antibodies&lt;/li&gt;
-&lt;li&gt;cell lines that are not what was thought&lt;/li&gt;
-&lt;li&gt;impure chemicals&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I think this is a &lt;strong&gt;good thing&lt;/strong&gt;. What does it have to do with data analysis?&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;data-code-authentication&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Data / Code Authentication&lt;/h2&gt;
-&lt;p&gt;When we were submitting a recent R03 proposal for developing novel data analysis
-methods and statistical tools, the grant management office asked us about the
-&lt;strong&gt;Authentication of Key Resources&lt;/strong&gt; attachment, which we completely missed. Upon
-review of the guidelines, we initially determined that this document did not
-apply. However, we decided to go ahead and take some initiative.&lt;/p&gt;
-&lt;div id=&#34;data-authentication&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Data Authentication?&lt;/h3&gt;
-&lt;p&gt;When dealing with multiple samples from high-throughput samples, there are
-frequently a few easy ways to examine the data quality, and although it can be
-hard to verify that the data &lt;strong&gt;is what the supplier says it is&lt;/strong&gt;, which would be
-true &lt;strong&gt;authentication&lt;/strong&gt;, there are some ways to verify that the various samples
-in the dataset are at least self-consistent within each sample class (normal and
-disease, condition 1 and condition 2).&lt;/p&gt;
-&lt;p&gt;My go-to for data self-consistency are principal components analysis (PCA) and
-correlation heat-maps. Correlation heat-maps involve calculating
-all of the pairwise sample to sample correlations using all of the non-zero
-sample features (those that are non-zero in the two pairs being compared). These
-heatmaps, combined with the sample class information, and clustering within each
-class, are a nice visual way to eyeball samples that have potential problems. A
-simple example for RNA-seq transcriptomics was shown in &lt;a href=&#34;https://dx.doi.org/10.1093/bioinformatics/btv425&#34;&gt;Gierliński et al.,
-Statistical models for RNA-seq data derived from a two-condition 48-replicate
-experiment Bioinformatics (2015) 31 (22): 3625-3630, Figure
-1&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/yeast_48rep_cor_heatmap.jpg&#34; alt=&#34;Gierlinkski et al heatmap, Figure 1&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;Gierlinkski et al heatmap, Figure 1&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;The other measures they used in this paper are also very nice, in plotting the
-median correlation of a sample against all other samples, and the fraction of
-outlier features in a given sample (see figure 2 of Gierlinkski et al). The
-final measure they propose is not generally applicable to all -omics data
-however.&lt;/p&gt;
-&lt;p&gt;PCA on the data, followed by visualizing the scores on the first few principal
-components, and colored by sample class (or experimental condition) is similar
-in spirit to the correlation heat-map. In fact, it is very similar, because PCA
-is actually decomposing on the covariance of the samples, which is very related
-to the correlations (an early algorithm actually used the correlation matrix).&lt;/p&gt;
-&lt;p&gt;Both of these methods can highlight possible problems with individual samples,
-and make sure that the set of data going into the analysis is at least
-self-consistent, which is important when doing classification or differential
-abundance analyses.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;code-authentication&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Code Authentication&lt;/h3&gt;
-&lt;p&gt;The other thing we highlighted in the document was &lt;strong&gt;code&lt;/strong&gt; authentication. In
-this case, we highlighted the use of unit-testing in the R packages that we are
-planning to develop. Even though this is software coming out of a research lab,
-we need to have confidence that the functions we write return the correct values
-given various inputs. In addition, code testing coverage helps evaluate that we
-are testing &lt;em&gt;all&lt;/em&gt; of the functionality by checking that all of the lines in our
-code are run by the tests. Finally, we are also planning to write tests for core
-functions provided by others (i.e. functions in other R packages), in that they
-work as we expect, by returning correct values given specific inputs.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Going forward, I think it would be a good thing if people writing research grants
-for data analysis methods would discuss how they are going to look at the data
-to assess it’s quality, and how they are going to do unit testing, and will have
-to start saying that they are going to do unit testing of their analysis method.&lt;/p&gt;
-&lt;p&gt;I’d be interested in others’ thoughts on this as well.&lt;/p&gt;
-&lt;/div&gt;
 </description>
     </item>
     

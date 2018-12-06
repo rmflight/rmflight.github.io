@@ -72,7 +72,7 @@
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2014-07-28T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2014-11-05T00:00:00&#43;00:00">
   
 
   
@@ -196,6 +196,15 @@
   
   
   <div>
+    <h2><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></h2>
+    <div class="article-style">
+      
+      I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing R package vignettes to the web after building and checking on travis-ci. Hadley Wickham pointed to using such a scheme to push the web version of his book after each update and the S3 deploy hooks on travis-ci. Deploying your html content to S3 is great, but given the availability of the gh-pages branch on GitHub, I thought it would be neat to work out how to deploy the html output from an R package vignette to the gh-pages branch on GitHub.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/analyses-as-packages/">Analyses as Packages</a></h2>
     <div class="article-style">
       
@@ -283,15 +292,6 @@ Package Version Incrementing A good practice to get into is incrementing the min
       
       TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
  Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/pre-calculating-large-tables-of-values/">Pre-Calculating Large Tables of Values</a></h2>
-    <div class="article-style">
-      
-      I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.
       
     </div>
   </div>

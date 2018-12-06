@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/nicer-png-graphics/</loc>
+      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/don-t-do-pca-after-statistical-testing/</loc>
       <lastmod>2018-09-14T00:00:00+00:00</lastmod>
     </url>
@@ -611,6 +620,16 @@
     
     <url>
     
+      <loc>/tags/graphics/</loc>
+      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/hugo/</loc>
       <lastmod>2017-12-27T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -762,7 +781,7 @@
     <url>
     
       <loc>/tags/pdf/</loc>
-      <lastmod>2018-07-19T00:00:00+00:00</lastmod>
+      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -841,7 +860,7 @@
     <url>
     
       <loc>/tags/r/</loc>
-      <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -951,7 +970,7 @@
     <url>
     
       <loc>/tags/visualization/</loc>
-      <lastmod>2015-06-17T00:00:00+00:00</lastmod>
+      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

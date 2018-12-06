@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -11,7 +13,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/linking-to-manually-inserted-images-in-hugo/">
+  <link rel="alternate" hreflang="en-us" href="/tags/graphics/">
 
   
   
@@ -57,7 +59,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/linking-to-manually-inserted-images-in-hugo/">
+  <link rel="canonical" href="/tags/graphics/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -65,19 +67,17 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/post/linking-to-manually-inserted-images-in-hugo/">
-  <meta property="og:title" content="Linking to Manually Inserted Images in Blogdown / Hugo | Deciphering Life: One Bit at a Time">
-  <meta property="og:description" content="">
+  <meta property="og:url" content="/tags/graphics/">
+  <meta property="og:title" content="Graphics | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2017-12-27T00:00:00&#43;00:00">
-  
-  <meta property="article:modified_time" content="2017-12-27T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2018-12-06T00:00:00&#43;00:00">
   
 
   
 
-  <title>Linking to Manually Inserted Images in Blogdown / Hugo | Deciphering Life: One Bit at a Time</title>
+  <title>Graphics | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -184,153 +184,32 @@
 </nav>
 
 
-<article class="article" itemscope itemtype="http://schema.org/Article">
+
+
+
+<div class="universal-wrapper">
+
+  <h1>Graphics</h1>
 
   
 
-
-  <div class="article-container">
-    <div class="article-inner">
-      <h1 itemprop="name">Linking to Manually Inserted Images in Blogdown / Hugo</h1>
-
+  
+  
+  <div>
+    <h2><a href="/post/nicer-png-graphics/">Nicer PNG Graphics</a></h2>
+    <div class="article-style">
       
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2017-12-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2017-12-27
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-  
-<div class="share-box" aria-hidden="true">
-  <ul class="share">
-    <li>
-      <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo&amp;url=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f"
-         target="_blank" rel="noopener">
-        <i class="fa fa-twitter"></i>
-      </a>
-    </li>
-    <li>
-      <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f"
-         target="_blank" rel="noopener">
-        <i class="fa fa-facebook"></i>
-      </a>
-    </li>
-    <li>
-      <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f&amp;title=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo"
-         target="_blank" rel="noopener">
-        <i class="fa fa-linkedin"></i>
-      </a>
-    </li>
-    <li>
-      <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f&amp;title=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo"
-         target="_blank" rel="noopener">
-        <i class="fa fa-weibo"></i>
-      </a>
-    </li>
-    <li>
-      <a class="email"
-         href="mailto:?subject=Linking%20to%20Manually%20Inserted%20Images%20in%20Blogdown%20%2f%20Hugo&amp;body=%2fpost%2flinking-to-manually-inserted-images-in-hugo%2f">
-        <i class="fa fa-envelope"></i>
-      </a>
-    </li>
-  </ul>
-</div>
-
-
-  
-
-</div>
-
-
-      <div class="article-style" itemprop="articleBody">
-        <div id="manual-linking" class="section level2">
-<h2>Manual Linking?</h2>
-<p>Using <code>blogdown</code> for generating websites and blog-posts from <code>Rmarkdown</code> files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (<a href="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg">like this figure from wikipedia</a>).</p>
-</div>
-<div id="where-to" class="section level2">
-<h2>Where to??</h2>
-<p>To do this, you want the text of your <code>&lt;img&gt;</code> tag to your image to be:</p>
-<pre><code>&lt;img src = &quot;/img/image_file.png&quot;&gt;&lt;/img&gt;</code></pre>
-<p>And then put the image itself in the directory <code>/static/img/image_file.png</code></p>
-<p><img src = "/img/Standard_deviation_diagram.svg"></img></p>
-<p><em>By M. W. Toews, <a href="http://creativecommons.org/licenses/by/2.5">CC BY 2.5</a>, via Wikimedia Commons, <a href="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg">source</a></em></p>
-<p>This information is also mentioned in <a href="https://bookdown.org/yihui/blogdown/static-files.html">section 2.7 of the Blogdown book</a>. Obviously I need to do more reading.</p>
-</div>
-
-      </div>
-
+      TL;DR If you are getting crappy looking png images from rmarkdown html or word documents, try using type=&lsquo;cairo&rsquo; or dev=&lsquo;CairoPNG&rsquo; in your chunk options.
+ PNG Graphics?? So, I write a lot of reports using rmarkdown and knitr, and have been using knitr for quite a while. My job involves doing analyses for collaborators and communicating results. Most of the time, I will generate a pdf report, and I get beautiful graphics, thanks to the eps graphics device.
       
-
-
-<div class="article-tags">
-  
-  <a class="btn btn-primary btn-outline" href="/tags/hugo">hugo</a>
-  
-  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
-  
-  <a class="btn btn-primary btn-outline" href="/tags/blogdown">blogdown</a>
-  
-</div>
-
-
-
     </div>
   </div>
-
-</article>
-
-
-
-<div class="article-container article-widget">
-  <div class="hr-light"></div>
-  <h3>Related</h3>
-  <ul>
-    
-    <li><a href="/post/custom-deployment-script/">Custom Deployment Script</a></li>
-    
-    <li><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></li>
-    
-    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
-    
-    <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
-    
-    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
-    
-  </ul>
-</div>
-
-
-
-
-<div class="article-container">
   
 
-</div>
+  
 
+
+</div>
 <footer class="site-footer">
   <div class="container">
     <p class="powered-by">
@@ -417,4 +296,6 @@
 
   </body>
 </html>
+
+
 
