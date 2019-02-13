@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/git/</link>
+    <description>Recent content in git on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Fri, 07 Feb 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Package Version Increment Pre- and Post-Commit Hooks</title>
+      <link>/post/package-version-increment-pre-and-post-commit-hooks/</link>
+      <pubDate>Fri, 07 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/package-version-increment-pre-and-post-commit-hooks/</guid>
+      <description>If you just want the hook scripts, check this gist. If you want to know some of the motivation behind writing them, and about the internals, then read on.
+Package Version Incrementing A good practice to get into is incrementing the minor version number (i.e. going from 0.0.1 to 0.0.2) after each git commit when developing packages (this is recommended by the Bioconductor devs as well ). This makes it very easy to know what changes are in your currently installed version, and if you remembered to actually install the most recent version for testing.</description>
+    </item>
+    
+  </channel>
+</rss>

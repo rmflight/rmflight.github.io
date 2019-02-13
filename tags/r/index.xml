@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/r/</link>
+    <description>Recent content in R on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 13 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Comparisons using for loops vs split</title>
+      <link>/post/for-loops-vs-split/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/for-loops-vs-split/</guid>
+      <description>TL;DR Sometimes for loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they might still be slow(er) than other ways of doing things.
+ Comparing Groups I have some code where I am trying to determine duplicates of a group of things. This data looks something like this:
+create_random_sets = function(n_sets = 1000){ set.seed(1234) sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .</description>
+    </item>
+    
+    <item>
+      <title>Nicer PNG Graphics</title>
+      <link>/post/nicer-png-graphics/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/nicer-png-graphics/</guid>
+      <description>TL;DR If you are getting crappy looking png images from rmarkdown html or word documents, try using type=&#39;cairo&#39; or dev=&#39;CairoPNG&#39; in your chunk options.
+ PNG Graphics?? So, I write a lot of reports using rmarkdown and knitr, and have been using knitr for quite a while. My job involves doing analyses for collaborators and communicating results. Most of the time, I will generate a pdf report, and I get beautiful graphics, thanks to the eps graphics device.</description>
+    </item>
+    
+    <item>
+      <title>Don&#39;t do PCA After Statistical Testing!</title>
+      <link>/post/don-t-do-pca-after-statistical-testing/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/don-t-do-pca-after-statistical-testing/</guid>
+      <description>TL;DR If you do a statistical test before a dimensional reduction method like PCA, the highest source of variance is likely to be whatever you tested statistically.
+ Wait, Why?? Let me describe the situation. You’ve done an -omics level analysis on your system of interest. You run a t-test (or ANOVA, etc) on each of the features in your data (gene, protein, metabolite, etc). Filter down to those things that were statistically significant, and then finally, you decide to look at the data using a dimensionality reduction method such as principal components analysis (PCA) so you can see what is going on.</description>
+    </item>
+    
+    <item>
+      <title>Finding Modes Using Kernel Density Estimates</title>
+      <link>/post/finding-modes-using-kernel-density-estimates/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/finding-modes-using-kernel-density-estimates/</guid>
+      <description>TL; DR If you have a unimodal distribution of values, you can use R’s density or Scipy’s gaussian_kde to create density estimates of the data, and then take the maxima of the density estimate to get the mode. See below for actual examples in R and Python.
+ Mode in R First, lets do this in R. Need some values to work with.
+library(ggplot2) set.seed(1234) n_point &amp;lt;- 1000 data_df &amp;lt;- data.</description>
+    </item>
+    
+    <item>
+      <title>Split - Unsplit Anti-Pattern</title>
+      <link>/post/split-unsplit-anti-pattern/</link>
+      <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/split-unsplit-anti-pattern/</guid>
+      <description>TL;DR If you notice yourself using split -&amp;gt; unsplit / rbind on two object to match items up, maybe you should be using dplyr::join_ instead. Read below for concrete examples.
+ Motivation I have had a lot of calculations lately that involve some sort of normalization or scaling a group of related values, each group by a different factor.
+Lets setup an example where we will have 1e5 values in 10 groups, each group of values being normalized by their own value.</description>
+    </item>
+    
+    <item>
+      <title>Using IRanges for Non-Integer Overlaps</title>
+      <link>/post/iranges-for-non-integer-overlaps/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/iranges-for-non-integer-overlaps/</guid>
+      <description>TL;DR The IRanges package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a large constant factor and round them. The constant depends on how much accuracy you need.
+ IRanges?? IRanges is a bioconductor package for interval algebra of integer ranges. It is used extensively in the GenomicRanges package for finding overlaps between various genomic features. For genomic features, integers make sense, because one cannot have fractional base locations.</description>
+    </item>
+    
+    <item>
+      <title>knitrProgressBar Package</title>
+      <link>/post/knitrprogressbar/</link>
+      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/knitrprogressbar/</guid>
+      <description>TL;DR If you like dplyr progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out knitrProgressBar (cran github).
+ Why Yet Another Progress Bar?? I didn’t set out to create another progress bar package. But I really liked dplyrs style of progress bar, and how they worked under the hood (thanks to the examples from Bob Rudis).</description>
+    </item>
+    
+    <item>
+      <title>Licensing R Packages that Include Others Code</title>
+      <link>/post/licensing-r-packages-that-include-others-code/</link>
+      <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/licensing-r-packages-that-include-others-code/</guid>
+      <description>TL;DR If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.
+ Motivation I recently created the knitrProgressBar package. It is a really simple package, that takes the dplyr progress bars and makes it possible for them to write progress to a supplied file connection. The dplyr package itself is licensed under MIT, so I felt fine taking the code directly from dplyr itself.</description>
+    </item>
+    
+    <item>
+      <title>docopt &amp; Numeric Options</title>
+      <link>/post/docopt-numeric-options/</link>
+      <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/docopt-numeric-options/</guid>
+      <description>TL;DR If you use the docopt package to create command line R executables that take options, there is something to know about numeric command line options: they should have as.double before using them in your script.
+ Setup Lets set up a new docopt string, that includes both string and numeric arguments.
+&amp;quot; Usage: test_numeric.R [--string=&amp;lt;string_value&amp;gt;] [--numeric=&amp;lt;numeric_value&amp;gt;] test_numeric.R (-h | --help) test_numeric.R Description: Testing how values are passed using docopt.</description>
+    </item>
+    
+    <item>
+      <title>Custom Deployment Script</title>
+      <link>/post/custom-deployment-script/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/custom-deployment-script/</guid>
+      <description>TL;DR Use a short bash script to do deployment from your own computer directly to your *.github.io domain.
+ Why? So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the /public directory to the repo for my github.</description>
+    </item>
+    
+    <item>
+      <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
+      <link>/post/linking-to-manually-inserted-images-in-hugo/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/linking-to-manually-inserted-images-in-hugo/</guid>
+      <description>Manual Linking? Using blogdown for generating websites and blog-posts from Rmarkdown files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (like this figure from wikipedia).
+ Where to?</description>
+    </item>
+    
+    <item>
+      <title>Travis-CI to GitHub Pages</title>
+      <link>/post/travis-ci-to-github-pages/</link>
+      <pubDate>Wed, 05 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/travis-ci-to-github-pages/</guid>
+      <description>I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing R package vignettes to the web after building and checking on travis-ci. Hadley Wickham pointed to using such a scheme to push the web version of his book after each update and the S3 deploy hooks on travis-ci. Deploying your html content to S3 is great, but given the availability of the gh-pages branch on GitHub, I thought it would be neat to work out how to deploy the html output from an R package vignette to the gh-pages branch on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>Analyses as Packages</title>
+      <link>/post/analyses-as-packages/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analyses-as-packages/</guid>
+      <description>TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
+ Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.</description>
+    </item>
+    
+    <item>
+      <title>Creating an Analysis as a Package and Vignette</title>
+      <link>/post/vignette-analysis/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vignette-analysis/</guid>
+      <description>Following from my last post, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the 2012 and 2014 ISMB conference (thanks to Neil and Stephen for compiling the data).
+I will link to individual commits so that you can see how things change as we go along.
+Setup Initialization To start, we will initialize the package.</description>
+    </item>
+    
+    <item>
+      <title>Packages vs ProjectTemplate</title>
+      <link>/post/packages-vs-projecttemplate/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/packages-vs-projecttemplate/</guid>
+      <description>tl;dr Imposing a different structure than R packages for distributing R code is a bad idea, especially now that R package tools have gotten to the point where managing a package has become much easier.
+ ProjectTemplate ?? My last two posts (1, 2) provided an argument and an example of why one should use R packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package ProjectTemplate.</description>
+    </item>
+    
+    <item>
+      <title>R Job Notifications Using Twitter</title>
+      <link>/post/r-job-notifications-using-twitter/</link>
+      <pubDate>Mon, 30 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-job-notifications-using-twitter/</guid>
+      <description>There has been some interesting activity about getting R to send a notification somehow when a long running job is completed. The most notable entries I have seen in this category are RPushBullet for web notifications and pingr for audio notifications.
+Although RPushBullet looks really cool (and Dirk does great work), I wondered if there was a way to do this using a free service that I already had access to, namely twitter.</description>
+    </item>
+    
+    <item>
+      <title>categoryCompare Paper Finally Out!</title>
+      <link>/post/categorycompare-paper-finally-out/</link>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/categorycompare-paper-finally-out/</guid>
+      <description>I can finally say that the publication on my Bioconductor package categoryCompare is finally published in the Bioinformatics and Computational Biology section of Frontiers in Genetics. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.
+TL;DR The software package has been in development in one form or another since 2010, released to Bioconductor in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you.</description>
+    </item>
+    
+    <item>
+      <title>Self-Written Function Help</title>
+      <link>/post/self-written-function-help/</link>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/self-written-function-help/</guid>
+      <description>I have noted at least one instance (and there are probably others) about how Python’s docStrings are so great, and wouldn’t it be nice to have a similar system in R. Especially when you can have your new function tab completion available depending on your development environment.
+This is a false statement, however. If you set up your R development environment properly, you can have these features available in R.</description>
+    </item>
+    
+    <item>
+      <title>Installing MatLab vs Installing R</title>
+      <link>/post/installing-matlab-vs-installing-r/</link>
+      <pubDate>Mon, 10 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/installing-matlab-vs-installing-r/</guid>
+      <description>I retweeted this a few days ago:
+1. Open MATLAB for first time in a few years after using #rstats. 2. Site license doesn’t work right. 3. F*** MATLAB, I’ll try to do it in R
+And as I have started the process of installing MatLab on my own machine because I want to translate a published MatLab package into R, I am reminded of how painful the process can be.</description>
+    </item>
+    
+    <item>
+      <title>Package Version Increment Pre- and Post-Commit Hooks</title>
+      <link>/post/package-version-increment-pre-and-post-commit-hooks/</link>
+      <pubDate>Fri, 07 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/package-version-increment-pre-and-post-commit-hooks/</guid>
+      <description>If you just want the hook scripts, check this gist. If you want to know some of the motivation behind writing them, and about the internals, then read on.
+Package Version Incrementing A good practice to get into is incrementing the minor version number (i.e. going from 0.0.1 to 0.0.2) after each git commit when developing packages (this is recommended by the Bioconductor devs as well ). This makes it very easy to know what changes are in your currently installed version, and if you remembered to actually install the most recent version for testing.</description>
+    </item>
+    
+    <item>
+      <title>Open vs Closed Analysis Languages</title>
+      <link>/post/open-vs-closed-analysis-languages/</link>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/open-vs-closed-analysis-languages/</guid>
+      <description>TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
+ Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)</description>
+    </item>
+    
+    <item>
+      <title>Pre-Calculating Large Tables of Values</title>
+      <link>/post/pre-calculating-large-tables-of-values/</link>
+      <pubDate>Thu, 17 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/pre-calculating-large-tables-of-values/</guid>
+      <description>I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.</description>
+    </item>
+    
+    <item>
+      <title>Portable, Peronal Packages</title>
+      <link>/post/portable-peronal-packages/</link>
+      <pubDate>Mon, 23 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/portable-peronal-packages/</guid>
+      <description>ProgrammingR had an interesting post recently about keeping a set of R functions that are used often as a gist on Github, and sourceing that file at the beginning of R analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement unit testing.
+However, the best way to have sets of R functions is as a package, that can then be installed and loaded by anyone.</description>
+    </item>
+    
+    <item>
+      <title>R, RStudio, and Release and Dev Bioconductor</title>
+      <link>/post/r-rstudio-and-release-and-dev-bioconductor/</link>
+      <pubDate>Tue, 17 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-rstudio-and-release-and-dev-bioconductor/</guid>
+      <description>I have one Bioconductor package that I am currently responsible for. Each bi-annual release of Bioconductor requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of R and multiple versions of Bioconductor libraries on a single system (assuming that you do production work and development on the same machine, right?).
+I really, really like RStudio as my working R environment, as some of you have read before.</description>
+    </item>
+    
+    <item>
+      <title>R Interface for Teaching</title>
+      <link>/post/r-interface-for-teaching/</link>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-interface-for-teaching/</guid>
+      <description>Kaitlin Thaney asked on Twitter last week about using Ramnath Vaidyanathan’s new interactive R notebook 1 2 for teaching.
+Now, to be clear up front, I am not trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don’t really think it is the right interface for teaching R.</description>
+    </item>
+    
+    <item>
+      <title>Tim Hortons Density</title>
+      <link>/post/tim-hortons-density/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tim-hortons-density/</guid>
+      <description>Inspired by this post, I wanted to examine the locations and density of Tim Hortons restaurants in Canada. Using Stats Canada data, each census tract is queried on Foursquare for Tims locations.
+Setup options(stringsAsFactors=F) require(timmysDensity) require(plyr) require(maps) require(ggplot2) require(geosphere)  Statistics Canada Census Data The actual Statistics Canada data at the dissemination block level can be downloaded from here. You will want to download the Excel format, read it, and then save it as either tab-delimited or CSV using a non-standard delimiter, I used a semi-colon (;).</description>
+    </item>
+    
+    <item>
+      <title>Storing Package Data in Custom Environments</title>
+      <link>/post/storing-package-data-in-custom-environments/</link>
+      <pubDate>Thu, 30 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/storing-package-data-in-custom-environments/</guid>
+      <description>If you do R package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global options. This is done by packages grDevices and parallel. Sometimes this doesn’t seem to work quite right (see this issue for example.
+Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify.</description>
+    </item>
+    
+    <item>
+      <title>Writing Papers Using R Markdown</title>
+      <link>/post/writing-papers-using-r-markdown/</link>
+      <pubDate>Tue, 09 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/writing-papers-using-r-markdown/</guid>
+      <description>I have been watching the activity in RStudio and knitr for a while, and have even been using Rmd (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed writing papers in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using knitr as a way to create reproducible blog posts that include code (including yours truly).</description>
+    </item>
+    
+    <item>
+      <title>Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</title>
+      <link>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</link>
+      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</guid>
+      <description>What? For those who don’t know, CDF files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as RMA, and others.
+ Why? Because we can, and because custom definitions have been shown to be quite useful. See the information over at Brainarray.
+ Why not somewhere else? A lot of times other people create custom CDF files based on their own criteria, and make it subsequently available for others to use (see the Brainarray for an example of what some are doing, as well as PlandbAffy)</description>
+    </item>
+    
+  </channel>
+</rss>

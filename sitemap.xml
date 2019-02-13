@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/for-loops-vs-split/</loc>
+      <lastmod>2019-02-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/nicer-png-graphics/</loc>
       <lastmod>2018-12-06T00:00:00+00:00</lastmod>
     </url>
@@ -481,6 +490,64 @@
     
     <url>
     
+      <loc>/categories/</loc>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/</loc>
+      <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/matlab/</loc>
+      <lastmod>2014-02-10T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/publication_types/</loc>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/r/</loc>
+      <lastmod>2019-02-13T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/</loc>
+      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/academia/</loc>
       <lastmod>2013-09-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -541,27 +608,8 @@
     
     <url>
     
-      <loc>/categories/</loc>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
       <loc>/tags/cdf/</loc>
       <lastmod>2012-07-13T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/</loc>
-      <lastmod>2016-04-20T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -700,16 +748,6 @@
     
     <url>
     
-      <loc>/tags/matlab/</loc>
-      <lastmod>2014-02-10T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
       <loc>/tags/meta-analysis/</loc>
       <lastmod>2014-04-08T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -830,15 +868,6 @@
     
     <url>
     
-      <loc>/publication_types/</loc>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
       <loc>/tags/publications/</loc>
       <lastmod>2017-03-29T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -851,16 +880,6 @@
     
       <loc>/tags/python/</loc>
       <lastmod>2018-07-19T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/r/</loc>
-      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -911,16 +930,6 @@
     
       <loc>/tags/structural-biochemistry/</loc>
       <lastmod>2015-06-17T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

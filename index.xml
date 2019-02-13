@@ -11,12 +11,137 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Comparisons using for loops vs split</title>
+      <link>/post/for-loops-vs-split/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/for-loops-vs-split/</guid>
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Sometimes &lt;code&gt;for&lt;/code&gt; loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they
+might still be slow(er) than other ways of doing things.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;comparing-groups&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Comparing Groups&lt;/h2&gt;
+&lt;p&gt;I have some code where I am trying to determine duplicates of a &lt;strong&gt;group&lt;/strong&gt; of things. This data looks something like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;create_random_sets = function(n_sets = 1000){
+  set.seed(1234)
+  
+  sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .x), 5))
+  
+  item_sets = sample(seq(1, length(sets)), 10000, replace = TRUE)
+  item_mapping = purrr::map2_df(item_sets, seq(1, length(item_sets)), function(.x, .y){
+    data.frame(v1 = as.character(.y), v2 = sets[[.x]], stringsAsFactors = FALSE)
+  })
+  item_mapping
+}
+library(dplyr)
+mapped_items = create_random_sets()
+
+head(mapped_items, 20)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    v1  v2
+## 1   1 496
+## 2   1 243
+## 3   1 201
+## 4   1 514
+## 5   1 416
+## 6   2  28
+## 7   2 189
+## 8   2   5
+## 9   2 115
+## 10  2  20
+## 11  3 310
+## 12  3 470
+## 13  3 667
+## 14  3 775
+## 15  3 680
+## 16  4  89
+## 17  4 182
+## 18  4 688
+## 19  4  31
+## 20  4 432&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;looping&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Looping&lt;/h2&gt;
+&lt;p&gt;In this case, every &lt;code&gt;item&lt;/code&gt; in &lt;code&gt;v1&lt;/code&gt; has &lt;strong&gt;5&lt;/strong&gt; things in &lt;code&gt;v2&lt;/code&gt;. I really want to group multiple things of &lt;code&gt;v1&lt;/code&gt; that have the same combination of things in &lt;code&gt;v2&lt;/code&gt;. My initial function
+to do this &lt;code&gt;split&lt;/code&gt;s everything in &lt;code&gt;v2&lt;/code&gt; by &lt;code&gt;v1&lt;/code&gt;, and then compares all the splits to each other, removing things that have been compared and found to be the same, and saving them
+as we go. This required two loops, basically &lt;code&gt;while&lt;/code&gt; there was data to check, check all the other things left in the list against it (the &lt;code&gt;for&lt;/code&gt;).
+Pre-initialize the list of things that are identical to each other so we don’t take a hit on allocation, and delete the things that have been checked or noted as identical. Although the variable names are changed, the code for that function is below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;loop_function = function(item_mapping){
+  split_items = split(item_mapping$v2, item_mapping$v1)
+  
+  matched_list = vector(&amp;quot;list&amp;quot;, length(split_items))
+  
+  save_item = 1
+  save_index = 1
+  
+  while (length(split_items) &amp;gt; 0) {
+    curr_item = names(split_items)[save_item]
+    curr_set = split_items[[save_item]]
+    
+    for (i_item in seq_along(split_items)) {
+      if (sum(split_items[[i_item]] %in% curr_set) == length(curr_set)) {
+        matching_items = unique(c(curr_item, names(split_items)[i_item]))
+        save_item = unique(c(save_item, i_item))
+      }
+    }
+    matched_list[[save_index]] = curr_set
+    split_items = split_items[-save_item]
+    save_index = save_index + 1
+    save_item = 1
+  }
+  
+  n_in_set = purrr::map_int(matched_list, length)
+  matched_list = matched_list[n_in_set &amp;gt; 0]
+  n_in_set = n_in_set[n_in_set &amp;gt; 0]
+  matched_list
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The code works, but it doesn’t really make me &lt;strong&gt;think&lt;/strong&gt; about what it’s doing, the two loops hide the fact that what is really going on is &lt;strong&gt;comparing&lt;/strong&gt; things to one another.
+Miles McBain &lt;a href=&#34;https://milesmcbain.xyz/for-loops/&#34;&gt;recently posted&lt;/a&gt; on this fact, that loops can be necessary, but one should really think about whether they are really necessary,
+or do they hide something about the data, and can we think about different ways to do the same thing.&lt;/p&gt;
+&lt;p&gt;This made me realize that what I really wanted to do was &lt;code&gt;split&lt;/code&gt; the items in &lt;code&gt;v1&lt;/code&gt; by the unique combinations of things in &lt;code&gt;v2&lt;/code&gt;, because &lt;code&gt;split&lt;/code&gt; will group things together nicely
+for you, without any extra work. But I don’t have those combinations in a way that &lt;code&gt;split&lt;/code&gt; can use them. So my solution is to iterate over the splits using &lt;code&gt;purrr&lt;/code&gt;,
+create a representation of the group as a character value, and then call &lt;code&gt;split&lt;/code&gt; again at the very end based on the &lt;code&gt;character&lt;/code&gt; representation.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;split_function = function(item_mapping){
+  mapped_data = split(item_mapping$v2, item_mapping$v1) %&amp;gt;%
+    purrr::map2_dfr(., names(.), function(.x, .y){
+      set = unique(.x)
+      tmp_frame = data.frame(item = .y, set_chr = paste(set, collapse = &amp;quot;,&amp;quot;), stringsAsFactors = FALSE)
+      tmp_frame$set = list(set)
+      tmp_frame
+    })
+  matched_list = split(mapped_data, mapped_data$set_chr)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Not only is the code cleaner, the grouping is explicit (as long as you know &lt;strong&gt;how&lt;/strong&gt; &lt;code&gt;split&lt;/code&gt; works), and its also 4x faster!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;microbenchmark::microbenchmark(
+  loop_function(mapped_items),
+  split_function(mapped_items),
+  times = 5
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Unit: seconds
+##                          expr      min       lq     mean   median       uq
+##   loop_function(mapped_items) 7.019043 7.055687 7.100018 7.098362 7.136939
+##  split_function(mapped_items) 2.105300 2.161758 2.212852 2.212383 2.242098
+##       max neval
+##  7.190062     5
+##  2.342722     5&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Nicer PNG Graphics</title>
       <link>/post/nicer-png-graphics/</link>
       <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/nicer-png-graphics/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you are getting crappy looking &lt;em&gt;png&lt;/em&gt; images from &lt;code&gt;rmarkdown&lt;/code&gt; html or word
 documents, try using &lt;code&gt;type=&#39;cairo&#39;&lt;/code&gt; or &lt;code&gt;dev=&#39;CairoPNG&#39;&lt;/code&gt; in your chunk options.&lt;/p&gt;
@@ -120,7 +245,10 @@ as the output type? This is what I settled on, the setup chunk checks the output
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/don-t-do-pca-after-statistical-testing/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you do a statistical test &lt;strong&gt;before&lt;/strong&gt; a dimensional reduction method like
 PCA, the highest source of variance is likely to be whatever you tested
@@ -199,7 +327,10 @@ testing on the individual features.&lt;/p&gt;
       <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/finding-modes-using-kernel-density-estimates/</guid>
-      <description>&lt;div id=&#34;tl-dr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tl-dr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL; DR&lt;/h2&gt;
 &lt;p&gt;If you have a unimodal distribution of values, you can use R’s &lt;code&gt;density&lt;/code&gt; or
 Scipy’s &lt;code&gt;gaussian_kde&lt;/code&gt; to create density estimates of the data, and then
@@ -271,7 +402,10 @@ plt.show()&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/split-unsplit-anti-pattern/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you notice yourself using &lt;code&gt;split&lt;/code&gt; -&amp;gt; &lt;code&gt;unsplit&lt;/code&gt; / &lt;code&gt;rbind&lt;/code&gt; on two object to
 match items up, maybe you should be using &lt;code&gt;dplyr::join_&lt;/code&gt; instead. Read below
@@ -474,7 +608,10 @@ is being subtracted from what directly in the code.&lt;/p&gt;
       <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/iranges-for-non-integer-overlaps/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;The &lt;a href=&#34;https://bioconductor.org/packages/IRanges/&#34;&gt;&lt;code&gt;IRanges&lt;/code&gt;&lt;/a&gt; package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a &lt;strong&gt;large&lt;/strong&gt; constant factor and round them. The constant depends on how much accuracy you need.&lt;/p&gt;
 &lt;/div&gt;
@@ -498,7 +635,7 @@ is being subtracted from what directly in the code.&lt;/p&gt;
 &lt;p&gt;Lets actually test differences in speed by counting how many overlapping points there are.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(IRanges)
 library(ggplot2)
-load(&amp;quot;../../data/iranges_example_data.rda&amp;quot;)
+load(&amp;quot;../../extdata/iranges_example_data.rda&amp;quot;)
 
 head(mz_points)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## IRanges object with 6 ranges and 1 metadata column:
@@ -590,7 +727,10 @@ p&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/turn-roberts-beard-purple/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If I &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;raise $100 by August 25ths The Walk to End Alzheimer’s&lt;/a&gt;, I will have my beard dyed purple in support of Alzheimer’s awareness.&lt;/p&gt;
 &lt;p&gt;If you are in another country, donate to your local Alzheimer’s charity and &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;email me&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; so I count it towards my total.&lt;/p&gt;
@@ -635,7 +775,10 @@ p&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/knitrprogressbar/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you like &lt;code&gt;dplyr&lt;/code&gt; progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out &lt;code&gt;knitrProgressBar&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/package=knitrProgressBar&#34;&gt;cran&lt;/a&gt; &lt;a href=&#34;https://github.com/rmflight/knitrProgressBar&#34;&gt;github&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
@@ -766,7 +909,10 @@ Completed after 0 s&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/licensing-r-packages-that-include-others-code/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.&lt;/p&gt;
 &lt;/div&gt;
@@ -810,7 +956,10 @@ Completed after 0 s&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/docopt-numeric-options/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you use the &lt;code&gt;docopt&lt;/code&gt; package to create command line &lt;code&gt;R&lt;/code&gt; executables that take
 options, there is something to know about numeric command line options: they should
@@ -870,7 +1019,10 @@ some time in that regard.&lt;/p&gt;
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/custom-deployment-script/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;Use a short bash script to do deployment from your own computer directly to your &lt;code&gt;*.github.io&lt;/code&gt; domain.&lt;/p&gt;
 &lt;/div&gt;
@@ -904,7 +1056,10 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/differences-in-posted-date-vs-sessioninfo/</guid>
-      <description>&lt;p&gt;If you are a newcomer to my weblog, you may notice that some posts that are &lt;code&gt;R&lt;/code&gt; tutorials generally include the output of &lt;code&gt;Sys.time()&lt;/code&gt; at the end. If you look closeley at that time and the &lt;strong&gt;Posted on&lt;/strong&gt; date, you may notice that some posts show disagreement between them. This is because I decided to move &lt;em&gt;all&lt;/em&gt; of my old blog posts from &lt;em&gt;blogspot&lt;/em&gt; to here, and keep the original posted dates.&lt;/p&gt;
+      <description>
+
+
+&lt;p&gt;If you are a newcomer to my weblog, you may notice that some posts that are &lt;code&gt;R&lt;/code&gt; tutorials generally include the output of &lt;code&gt;Sys.time()&lt;/code&gt; at the end. If you look closeley at that time and the &lt;strong&gt;Posted on&lt;/strong&gt; date, you may notice that some posts show disagreement between them. This is because I decided to move &lt;em&gt;all&lt;/em&gt; of my old blog posts from &lt;em&gt;blogspot&lt;/em&gt; to here, and keep the original posted dates.&lt;/p&gt;
 </description>
     </item>
     
@@ -914,7 +1069,10 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/linking-to-manually-inserted-images-in-hugo/</guid>
-      <description>&lt;div id=&#34;manual-linking&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;manual-linking&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Manual Linking?&lt;/h2&gt;
 &lt;p&gt;Using &lt;code&gt;blogdown&lt;/code&gt; for generating websites and blog-posts from &lt;code&gt;Rmarkdown&lt;/code&gt; files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;like this figure from wikipedia&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
@@ -936,7 +1094,10 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 18 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/i-was-part-of-the-problem/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;With the recent charges of sexual harassment against some high-profile individuals, and so many women coming forward with #metoo (and the understanding that this is really something almost &lt;em&gt;all&lt;/em&gt; women have faced), I realized that my younger self was #partoftheproblem. I think many other men are part of the problem, &lt;strong&gt;even though they might not think so&lt;/strong&gt;. I didn’t think I was part of the problem either. I hope that other men might read this and critically evaluate if they are #partoftheproblem. I also hope and pray that my own sons will do better at this if I teach them right.&lt;/p&gt;
 &lt;/div&gt;
@@ -986,7 +1147,10 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/criticizing-a-publication-and-lying-about-it/</guid>
-      <description>&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;Other researchers &lt;a href=&#34;https://dx.doi/org/10.1002/prot.25024&#34;&gt;directly criticized&lt;/a&gt; a &lt;a href=&#34;https://dx.doi.org/10.1002/prot.24834&#34;&gt;recent publication of ours&lt;/a&gt; in a “research article”. Although they raised valid points, they &lt;strong&gt;outright lied&lt;/strong&gt; about the availability of our results. In addition, they did not provide access to their own results. We have published &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25257&#34;&gt;new work&lt;/a&gt; supporting our original results, and a direct rebuttal of their critique in a &lt;a href=&#34;https://dx.doi.org/10.1002/prot.25263&#34;&gt;perspective article&lt;/a&gt;. The peer reviewers of their “research article” must have been asleep at the wheel to allow the major point, lack of access to our results, to stand.&lt;/p&gt;
 &lt;/div&gt;
@@ -1034,16 +1198,6 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Example Talk</title>
-      <link>/talk/example-talk/</link>
-      <pubDate>Sun, 01 Jan 2017 00:00:00 -0500</pubDate>
-      
-      <guid>/talk/example-talk/</guid>
-      <description>&lt;p&gt;Embed your slides or video here using &lt;a href=&#34;https://sourcethemes.com/academic/post/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;shortcodes&lt;/a&gt;. Further details can easily be added using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
 </description>
     </item>
     

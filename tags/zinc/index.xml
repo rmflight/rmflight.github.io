@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zinc on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/zinc/</link>
+    <description>Recent content in zinc on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 17 Jun 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/zinc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Novel Zinc Coordination Geometries</title>
+      <link>/post/novel-zinc-coordination-geometries/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/novel-zinc-coordination-geometries/</guid>
+      <description>TL;DR Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a less-biased method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bioinformatics on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/bioinformatics/</link>
+    <description>Recent content in bioinformatics on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Fri, 14 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/bioinformatics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Don&#39;t do PCA After Statistical Testing!</title>
+      <link>/post/don-t-do-pca-after-statistical-testing/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/don-t-do-pca-after-statistical-testing/</guid>
+      <description>TL;DR If you do a statistical test before a dimensional reduction method like PCA, the highest source of variance is likely to be whatever you tested statistically.
+ Wait, Why?? Let me describe the situation. You’ve done an -omics level analysis on your system of interest. You run a t-test (or ANOVA, etc) on each of the features in your data (gene, protein, metabolite, etc). Filter down to those things that were statistically significant, and then finally, you decide to look at the data using a dimensionality reduction method such as principal components analysis (PCA) so you can see what is going on.</description>
+    </item>
+    
+    <item>
+      <title>Bioinformatics Presentations that Lack Results (or Biological Relevance)</title>
+      <link>/post/bioinformatics-presentations-that-lack-results-or-biological-relevance/</link>
+      <pubDate>Thu, 05 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/bioinformatics-presentations-that-lack-results-or-biological-relevance/</guid>
+      <description>TL;DR In bioinformatics research we need to show validated results (if doing classification or discovery of new things), or show biological relevance. If you do neither of those things in a paper or presentation, then I’m not going to believe your method is worth anything.
+ Seminar Without Results I attended a seminar yesterday (I’m not going to comment on who gave the seminar or what it was about, so please don’t ask) where the presenter had a distinct lack of any useful results.</description>
+    </item>
+    
+  </channel>
+</rss>

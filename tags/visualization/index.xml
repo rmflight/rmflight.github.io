@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>visualization on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/visualization/</link>
+    <description>Recent content in visualization on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Thu, 06 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/visualization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Nicer PNG Graphics</title>
+      <link>/post/nicer-png-graphics/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/nicer-png-graphics/</guid>
+      <description>TL;DR If you are getting crappy looking png images from rmarkdown html or word documents, try using type=&#39;cairo&#39; or dev=&#39;CairoPNG&#39; in your chunk options.
+ PNG Graphics?? So, I write a lot of reports using rmarkdown and knitr, and have been using knitr for quite a while. My job involves doing analyses for collaborators and communicating results. Most of the time, I will generate a pdf report, and I get beautiful graphics, thanks to the eps graphics device.</description>
+    </item>
+    
+    <item>
+      <title>Novel Zinc Coordination Geometries</title>
+      <link>/post/novel-zinc-coordination-geometries/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/novel-zinc-coordination-geometries/</guid>
+      <description>TL;DR Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a less-biased method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries.</description>
+    </item>
+    
+  </channel>
+</rss>

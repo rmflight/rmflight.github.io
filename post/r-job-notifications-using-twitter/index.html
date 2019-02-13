@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -267,7 +267,10 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <p>There has been some interesting activity about getting <code>R</code> to send a notification somehow when a long running job is completed. The most notable entries I have seen in this category are <a href="http://dirk.eddelbuettel.com/code/rpushbullet.html"><code>RPushBullet</code></a> for web notifications and <a href="http://www.sumsar.net/blog/2014/01/announcing-pingr/"><code>pingr</code></a> for audio notifications.</p>
+        
+
+
+<p>There has been some interesting activity about getting <code>R</code> to send a notification somehow when a long running job is completed. The most notable entries I have seen in this category are <a href="http://dirk.eddelbuettel.com/code/rpushbullet.html"><code>RPushBullet</code></a> for web notifications and <a href="http://www.sumsar.net/blog/2014/01/announcing-pingr/"><code>pingr</code></a> for audio notifications.</p>
 <p>Although <code>RPushBullet</code> looks really cool (and Dirk does great work), I wondered if there was a way to do this using a free service that I already had access to, namely <code>twitter</code>. See, <code>twitter</code> will notify you when someone else uses your handle in a tweet. If you have <code>twitter</code> notifications on your device, it should also appear on a mobile device, and if you are using <code>tweetdeck</code> on a desktop or laptop machine, you can also set up to get notifications there.</p>
 <p>However, the default method of authenticating and caching <code>oauth</code> tokens for <code>twitteR</code> does not seem to be really useful for job notifications. However, we will take some precautions so that it is not too big a deal, and still be really useful.</p>
 <div id="how" class="section level2">

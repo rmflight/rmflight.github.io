@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>twitter on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/twitter/</link>
+    <description>Recent content in twitter on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Mon, 30 Jun 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/twitter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R Job Notifications Using Twitter</title>
+      <link>/post/r-job-notifications-using-twitter/</link>
+      <pubDate>Mon, 30 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-job-notifications-using-twitter/</guid>
+      <description>There has been some interesting activity about getting R to send a notification somehow when a long running job is completed. The most notable entries I have seen in this category are RPushBullet for web notifications and pingr for audio notifications.
+Although RPushBullet looks really cool (and Dirk does great work), I wondered if there was a way to do this using a free service that I already had access to, namely twitter.</description>
+    </item>
+    
+  </channel>
+</rss>

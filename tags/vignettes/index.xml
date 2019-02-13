@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vignettes on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/vignettes/</link>
+    <description>Recent content in vignettes on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Mon, 28 Jul 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/vignettes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Analyses as Packages</title>
+      <link>/post/analyses-as-packages/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analyses-as-packages/</guid>
+      <description>TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
+ Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.</description>
+    </item>
+    
+    <item>
+      <title>Creating an Analysis as a Package and Vignette</title>
+      <link>/post/vignette-analysis/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vignette-analysis/</guid>
+      <description>Following from my last post, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the 2012 and 2014 ISMB conference (thanks to Neil and Stephen for compiling the data).
+I will link to individual commits so that you can see how things change as we go along.
+Setup Initialization To start, we will initialize the package.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MatLab on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/matlab/</link>
+    <description>Recent content in MatLab on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Mon, 10 Feb 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/matlab/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Installing MatLab vs Installing R</title>
+      <link>/post/installing-matlab-vs-installing-r/</link>
+      <pubDate>Mon, 10 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/installing-matlab-vs-installing-r/</guid>
+      <description>I retweeted this a few days ago:
+1. Open MATLAB for first time in a few years after using #rstats. 2. Site license doesn’t work right. 3. F*** MATLAB, I’ll try to do it in R
+And as I have started the process of installing MatLab on my own machine because I want to translate a published MatLab package into R, I am reminded of how painful the process can be.</description>
+    </item>
+    
+  </channel>
+</rss>

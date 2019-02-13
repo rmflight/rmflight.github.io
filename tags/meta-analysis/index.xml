@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>meta-analysis on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/meta-analysis/</link>
+    <description>Recent content in meta-analysis on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Tue, 08 Apr 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/meta-analysis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>categoryCompare Paper Finally Out!</title>
+      <link>/post/categorycompare-paper-finally-out/</link>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/categorycompare-paper-finally-out/</guid>
+      <description>I can finally say that the publication on my Bioconductor package categoryCompare is finally published in the Bioinformatics and Computational Biology section of Frontiers in Genetics. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.
+TL;DR The software package has been in development in one form or another since 2010, released to Bioconductor in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you.</description>
+    </item>
+    
+  </channel>
+</rss>

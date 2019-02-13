@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -185,6 +185,60 @@
   
 
   
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost">
+  
+  
+  <h3 class="article-title" itemprop="name">
+    <a href="/post/for-loops-vs-split/" itemprop="url">Comparisons using for loops vs split</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-02-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2019-02-13
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    TL;DR Sometimes for loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they might still be slow(er) than other ways of doing things.
+ Comparing Groups I have some code where I am trying to determine duplicates of a group of things. This data looks something like this:
+create_random_sets = function(n_sets = 1000){ set.seed(1234) sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .
+    
+  </div>
+  <p class="read-more">
+    <a href="/post/for-loops-vs-split/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
   
     
     
@@ -546,7 +600,6 @@ Links:
     
     TL;DR If you like dplyr progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out knitrProgressBar (cran github).
  Why Yet Another Progress Bar?? I didn’t set out to create another progress bar package. But I really liked dplyrs style of progress bar, and how they worked under the hood (thanks to the examples from Bob Rudis).
-As I used them, I noticed that no progress was displayed if you did rmarkdown::render() or knitr::knit().
     
   </div>
   <p class="read-more">
@@ -653,64 +706,11 @@ As I used them, I noticed that no progress was displayed if you did rmarkdown::r
     
     TL;DR If you use the docopt package to create command line R executables that take options, there is something to know about numeric command line options: they should have as.double before using them in your script.
  Setup Lets set up a new docopt string, that includes both string and numeric arguments.
-&quot; Usage: test_numeric.R [--string=&lt;string_value&gt;] [--numeric=&lt;numeric_value&gt;] test_numeric.R (-h | --help) test_numeric.R Description: Testing how values are passed using docopt. Options: --string=&lt;string_value&gt; A string value [default: Hi!
+&quot; Usage: test_numeric.R [--string=&lt;string_value&gt;] [--numeric=&lt;numeric_value&gt;] test_numeric.R (-h | --help) test_numeric.R Description: Testing how values are passed using docopt.
     
   </div>
   <p class="read-more">
     <a href="/post/docopt-numeric-options/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/custom-deployment-script/" itemprop="url">Custom Deployment Script</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2017-12-27 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2017-12-27
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR Use a short bash script to do deployment from your own computer directly to your *.github.io domain.
- Why? So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the /public directory to the repo for my github.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/custom-deployment-script/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kernel density on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/kernel-density/</link>
+    <description>Recent content in kernel density on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Thu, 19 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/kernel-density/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Finding Modes Using Kernel Density Estimates</title>
+      <link>/post/finding-modes-using-kernel-density-estimates/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/finding-modes-using-kernel-density-estimates/</guid>
+      <description>TL; DR If you have a unimodal distribution of values, you can use R’s density or Scipy’s gaussian_kde to create density estimates of the data, and then take the maxima of the density estimate to get the mode. See below for actual examples in R and Python.
+ Mode in R First, lets do this in R. Need some values to work with.
+library(ggplot2) set.seed(1234) n_point &amp;lt;- 1000 data_df &amp;lt;- data.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>migraines on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/migraines/</link>
+    <description>Recent content in migraines on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 31 Dec 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/migraines/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Being a PhD Student and Post-Doc with Migraines</title>
+      <link>/post/being-a-phd-student-and-post-doc-with-migraines/</link>
+      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/being-a-phd-student-and-post-doc-with-migraines/</guid>
+      <description>A blog post on the Weecology group blog by Elita Baldridge on being a PhD student with fibromyalgia, and how they are working through that, caused me to pause and reflect on my experience as a PhD student and PostDoc with migraines. For those who haven’t read my blog, I do research in bioinformatics, specifically in transcriptomics and metabolomics. I spend almost all of my research hours in front of a computer writing code, generating plots, and trying to make sense of -omics level data.</description>
+    </item>
+    
+  </channel>
+</rss>

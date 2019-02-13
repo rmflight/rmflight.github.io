@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>github on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/github/</link>
+    <description>Recent content in github on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Thu, 19 Jun 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Researcher Discoverability</title>
+      <link>/post/researcher-discoverability/</link>
+      <pubDate>Thu, 19 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/researcher-discoverability/</guid>
+      <description>University of Kentucky (UK) recently partnered with the discovery portal KNODE, for helping others to discover potential collaborators at UK. KNODE looks like a large corporate venture, that is probably costing a large amount of capital to the university (and other places that use it). I wonder if the universities money would be better spent on encouraging submission of preprints, a Github Enterprise/Education package and teaching researchers and faculty how to use social media like twitter.</description>
+    </item>
+    
+  </channel>
+</rss>

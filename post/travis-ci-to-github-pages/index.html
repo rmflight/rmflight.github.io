@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -267,7 +267,10 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <p>I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing <code>R</code> package vignettes to the web after building and checking on <em>travis-ci</em>. <a href="https://twitter.com/hadleywickham">Hadley Wickham</a> pointed to using such a scheme to push the web version of his book after each update and the <code>S3</code> deploy hooks on <em>travis-ci</em>. Deploying your html content to <code>S3</code> is great, but given the availability of the <code>gh-pages</code> branch on GitHub, I thought it would be neat to work out how to deploy the html output from an <code>R</code> package vignette to the <code>gh-pages</code> branch on GitHub. This is useful because more and more packages are being hosted only on GitHub and building and testing use the <em>travis-ci</em> service, and it takes work to remember to <code>knit</code> and push stuff separately to the <code>gh-pages</code> branch. In addition, although it is possible to <code>deploy</code> one’s html output to other services from within <em>travis-ci</em>, there is not an <strong>easy</strong> pushbutton solution to deploying to GitHub pages. After some searching and looking, this is what I have come up with for my own package.</p>
+        
+
+
+<p>I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing <code>R</code> package vignettes to the web after building and checking on <em>travis-ci</em>. <a href="https://twitter.com/hadleywickham">Hadley Wickham</a> pointed to using such a scheme to push the web version of his book after each update and the <code>S3</code> deploy hooks on <em>travis-ci</em>. Deploying your html content to <code>S3</code> is great, but given the availability of the <code>gh-pages</code> branch on GitHub, I thought it would be neat to work out how to deploy the html output from an <code>R</code> package vignette to the <code>gh-pages</code> branch on GitHub. This is useful because more and more packages are being hosted only on GitHub and building and testing use the <em>travis-ci</em> service, and it takes work to remember to <code>knit</code> and push stuff separately to the <code>gh-pages</code> branch. In addition, although it is possible to <code>deploy</code> one’s html output to other services from within <em>travis-ci</em>, there is not an <strong>easy</strong> pushbutton solution to deploying to GitHub pages. After some searching and looking, this is what I have come up with for my own package.</p>
 <p>All subsequent steps assume that:</p>
 <ul>
 <li>You are hosting your package development on GitHub</li>
@@ -366,11 +369,11 @@ git push --force --quiet $FULL_REPO master:gh-pages</code></pre>
     
     <li><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></li>
     
-    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
+    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
     
     <li><a href="/post/analyses-as-packages/">Analyses as Packages</a></li>
     
-    <li><a href="/post/vignette-analysis/">Creating an Analysis as a Package and Vignette</a></li>
+    <li><a href="/post/packages-vs-projecttemplate/">Packages vs ProjectTemplate</a></li>
     
     <li><a href="/post/r-job-notifications-using-twitter/">R Job Notifications Using Twitter</a></li>
     

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>packages on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/packages/</link>
+    <description>Recent content in packages on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Mon, 19 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/packages/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>knitrProgressBar Package</title>
+      <link>/post/knitrprogressbar/</link>
+      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/knitrprogressbar/</guid>
+      <description>TL;DR If you like dplyr progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out knitrProgressBar (cran github).
+ Why Yet Another Progress Bar?? I didn’t set out to create another progress bar package. But I really liked dplyrs style of progress bar, and how they worked under the hood (thanks to the examples from Bob Rudis).</description>
+    </item>
+    
+    <item>
+      <title>Licensing R Packages that Include Others Code</title>
+      <link>/post/licensing-r-packages-that-include-others-code/</link>
+      <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/licensing-r-packages-that-include-others-code/</guid>
+      <description>TL;DR If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.
+ Motivation I recently created the knitrProgressBar package. It is a really simple package, that takes the dplyr progress bars and makes it possible for them to write progress to a supplied file connection. The dplyr package itself is licensed under MIT, so I felt fine taking the code directly from dplyr itself.</description>
+    </item>
+    
+    <item>
+      <title>Analyses as Packages</title>
+      <link>/post/analyses-as-packages/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analyses-as-packages/</guid>
+      <description>TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
+ Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.</description>
+    </item>
+    
+    <item>
+      <title>Creating an Analysis as a Package and Vignette</title>
+      <link>/post/vignette-analysis/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vignette-analysis/</guid>
+      <description>Following from my last post, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the 2012 and 2014 ISMB conference (thanks to Neil and Stephen for compiling the data).
+I will link to individual commits so that you can see how things change as we go along.
+Setup Initialization To start, we will initialize the package.</description>
+    </item>
+    
+    <item>
+      <title>Packages vs ProjectTemplate</title>
+      <link>/post/packages-vs-projecttemplate/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/packages-vs-projecttemplate/</guid>
+      <description>tl;dr Imposing a different structure than R packages for distributing R code is a bad idea, especially now that R package tools have gotten to the point where managing a package has become much easier.
+ ProjectTemplate ?? My last two posts (1, 2) provided an argument and an example of why one should use R packages to contain analyses. They were partly motivated by trends I had seen in other areas, including the appearance of the package ProjectTemplate.</description>
+    </item>
+    
+    <item>
+      <title>Self-Written Function Help</title>
+      <link>/post/self-written-function-help/</link>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/self-written-function-help/</guid>
+      <description>I have noted at least one instance (and there are probably others) about how Python’s docStrings are so great, and wouldn’t it be nice to have a similar system in R. Especially when you can have your new function tab completion available depending on your development environment.
+This is a false statement, however. If you set up your R development environment properly, you can have these features available in R.</description>
+    </item>
+    
+    <item>
+      <title>Package Version Increment Pre- and Post-Commit Hooks</title>
+      <link>/post/package-version-increment-pre-and-post-commit-hooks/</link>
+      <pubDate>Fri, 07 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/package-version-increment-pre-and-post-commit-hooks/</guid>
+      <description>If you just want the hook scripts, check this gist. If you want to know some of the motivation behind writing them, and about the internals, then read on.
+Package Version Incrementing A good practice to get into is incrementing the minor version number (i.e. going from 0.0.1 to 0.0.2) after each git commit when developing packages (this is recommended by the Bioconductor devs as well ). This makes it very easy to know what changes are in your currently installed version, and if you remembered to actually install the most recent version for testing.</description>
+    </item>
+    
+    <item>
+      <title>Portable, Peronal Packages</title>
+      <link>/post/portable-peronal-packages/</link>
+      <pubDate>Mon, 23 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/portable-peronal-packages/</guid>
+      <description>ProgrammingR had an interesting post recently about keeping a set of R functions that are used often as a gist on Github, and sourceing that file at the beginning of R analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement unit testing.
+However, the best way to have sets of R functions is as a package, that can then be installed and loaded by anyone.</description>
+    </item>
+    
+    <item>
+      <title>Storing Package Data in Custom Environments</title>
+      <link>/post/storing-package-data-in-custom-environments/</link>
+      <pubDate>Thu, 30 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/storing-package-data-in-custom-environments/</guid>
+      <description>If you do R package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global options. This is done by packages grDevices and parallel. Sometimes this doesn’t seem to work quite right (see this issue for example.
+Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify.</description>
+    </item>
+    
+  </channel>
+</rss>

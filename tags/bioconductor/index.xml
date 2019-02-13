@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bioconductor on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/bioconductor/</link>
+    <description>Recent content in bioconductor on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Tue, 08 Apr 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/bioconductor/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>categoryCompare Paper Finally Out!</title>
+      <link>/post/categorycompare-paper-finally-out/</link>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/categorycompare-paper-finally-out/</guid>
+      <description>I can finally say that the publication on my Bioconductor package categoryCompare is finally published in the Bioinformatics and Computational Biology section of Frontiers in Genetics. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.
+TL;DR The software package has been in development in one form or another since 2010, released to Bioconductor in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you.</description>
+    </item>
+    
+    <item>
+      <title>R, RStudio, and Release and Dev Bioconductor</title>
+      <link>/post/r-rstudio-and-release-and-dev-bioconductor/</link>
+      <pubDate>Tue, 17 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-rstudio-and-release-and-dev-bioconductor/</guid>
+      <description>I have one Bioconductor package that I am currently responsible for. Each bi-annual release of Bioconductor requires testing and squashing errors, warnings and bugs in a given package. Doing this means being able to work with multiple versions of R and multiple versions of Bioconductor libraries on a single system (assuming that you do production work and development on the same machine, right?).
+I really, really like RStudio as my working R environment, as some of you have read before.</description>
+    </item>
+    
+    <item>
+      <title>Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</title>
+      <link>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</link>
+      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</guid>
+      <description>What? For those who don’t know, CDF files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as RMA, and others.
+ Why? Because we can, and because custom definitions have been shown to be quite useful. See the information over at Brainarray.
+ Why not somewhere else? A lot of times other people create custom CDF files based on their own criteria, and make it subsequently available for others to use (see the Brainarray for an example of what some are doing, as well as PlandbAffy)</description>
+    </item>
+    
+  </channel>
+</rss>

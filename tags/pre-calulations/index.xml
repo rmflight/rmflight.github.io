@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pre-calulations on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/pre-calulations/</link>
+    <description>Recent content in pre-calulations on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Thu, 17 Oct 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/pre-calulations/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pre-Calculating Large Tables of Values</title>
+      <link>/post/pre-calculating-large-tables-of-values/</link>
+      <pubDate>Thu, 17 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/pre-calculating-large-tables-of-values/</guid>
+      <description>I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. i.e. given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a chi-square distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.</description>
+    </item>
+    
+  </channel>
+</rss>

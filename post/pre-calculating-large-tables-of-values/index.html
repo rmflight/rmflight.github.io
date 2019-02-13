@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -267,7 +267,10 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <p>I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. <em>i.e.</em> given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a <strong>chi-square</strong> distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.</p>
+        
+
+
+<p>I’m currently working on a project where we want to know, based on a euclidian distance measure, what is the probability that the value is a match to the another value. <em>i.e.</em> given an actual value, and a theoretical value from calculation, what is the probability that they are the same? This can be calculated using a <strong>chi-square</strong> distribution with one degree-of-freedom, easily enough by considering how much of the chi-cdf we are taking up.</p>
 <pre><code>pMatch &lt;- 1 - pchisq(distVal, 1)</code></pre>
 <p>The catch is, we want to do this a whole lot of times, in <code>c++</code>. We could use the <code>boost</code> library to calculate the <strong>chi-square</strong> each time we need it. Or we could generate a lookup table that is able to find the p-value simply based on the distance. This is especially attractive if we have a limit past which we consider the probability of a match as being zero, and if we use enough decimal points that we don’t suffer too much in precision.</p>
 <p>Although our goal is to implement this in <strong>c++</strong>, I also want to prototype, demonstrate and evaluate the approach in <code>R</code>.</p>

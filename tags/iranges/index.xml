@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iranges on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/iranges/</link>
+    <description>Recent content in iranges on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Sat, 23 Jun 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/iranges/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using IRanges for Non-Integer Overlaps</title>
+      <link>/post/iranges-for-non-integer-overlaps/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/iranges-for-non-integer-overlaps/</guid>
+      <description>TL;DR The IRanges package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a large constant factor and round them. The constant depends on how much accuracy you need.
+ IRanges?? IRanges is a bioconductor package for interval algebra of integer ranges. It is used extensively in the GenomicRanges package for finding overlaps between various genomic features. For genomic features, integers make sense, because one cannot have fractional base locations.</description>
+    </item>
+    
+  </channel>
+</rss>

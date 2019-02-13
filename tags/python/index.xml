@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/python/</link>
+    <description>Recent content in python on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Thu, 19 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Finding Modes Using Kernel Density Estimates</title>
+      <link>/post/finding-modes-using-kernel-density-estimates/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/finding-modes-using-kernel-density-estimates/</guid>
+      <description>TL; DR If you have a unimodal distribution of values, you can use R’s density or Scipy’s gaussian_kde to create density estimates of the data, and then take the maxima of the density estimate to get the mode. See below for actual examples in R and Python.
+ Mode in R First, lets do this in R. Need some values to work with.
+library(ggplot2) set.seed(1234) n_point &amp;lt;- 1000 data_df &amp;lt;- data.</description>
+    </item>
+    
+    <item>
+      <title>Open vs Closed Analysis Languages</title>
+      <link>/post/open-vs-closed-analysis-languages/</link>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/open-vs-closed-analysis-languages/</guid>
+      <description>TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
+ Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)</description>
+    </item>
+    
+  </channel>
+</rss>

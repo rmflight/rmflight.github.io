@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>notebooks on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/notebooks/</link>
+    <description>Recent content in notebooks on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Thu, 11 Jul 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/notebooks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R Interface for Teaching</title>
+      <link>/post/r-interface-for-teaching/</link>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-interface-for-teaching/</guid>
+      <description>Kaitlin Thaney asked on Twitter last week about using Ramnath Vaidyanathan’s new interactive R notebook 1 2 for teaching.
+Now, to be clear up front, I am not trying to be mean to Ramnath, discredit his work, or the effort that went into that project. I think it is really cool, and has some rather interesting potential applications, but I don’t really think it is the right interface for teaching R.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -267,7 +267,10 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <p><a href="http://www.programmingr.com/">ProgrammingR</a> had an interesting <a href="http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/">post</a> recently about keeping a set of <code>R</code> functions that are used often as a <a href="https://gist.github.com/discover"><code>gist</code></a> on <a href="https://github.com">Github</a>, and <code>source</code>ing that file at the beginning of <code>R</code> analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement <a href="http://cran.r-project.org/web/packages/testthat/index.html">unit testing</a>.</p>
+        
+
+
+<p><a href="http://www.programmingr.com/">ProgrammingR</a> had an interesting <a href="http://www.programmingr.com/content/creating-personal-portable-r-code-library-github/">post</a> recently about keeping a set of <code>R</code> functions that are used often as a <a href="https://gist.github.com/discover"><code>gist</code></a> on <a href="https://github.com">Github</a>, and <code>source</code>ing that file at the beginning of <code>R</code> analysis scripts. There is nothing inherently wrong with this, but it does end up cluttering the user workspace, and there is no real documentation on the functions, and no good way to implement <a href="http://cran.r-project.org/web/packages/testthat/index.html">unit testing</a>.</p>
 <p>However, the best way to have <strong>sets</strong> of <code>R</code> functions is as a <a href="http://adv-r.had.co.nz/Package-basics.html"><code>package</code></a>, that can then be installed and loaded by anyone. Normally packages are compiled and hosted on <a href="http://cran.r-project.org/"><code>CRAN</code></a>, <a href="http://r-forge.r-project.org/"><code>R-forge</code></a>, or <a href="http://bioconductor.org"><code>Bioconductor</code></a>. However, Github is becoming a common place to host packages, and thanks to Hadley Wickham’s <a href="http://www.rdocumentation.org/packages/devtools/functions/install_github"><code>install_github</code></a> function in the <a href="http://www.rdocumentation.org/packages/devtools"><code>devtools</code> package</a>, it is rather easy to install a package directly from Github. This does require that you have <a href="http://cran.r-project.org/bin/windows/Rtools/">r-tools</a> installed if you are using Windows (I know that can take a bit of work, but it’s not impossible), and do some extra work to create a <a href="http://adv-r.had.co.nz/Package-basics.html">proper package</a>, but the overhead is probably worth it if you are using these functions all the time.</p>
 <p>Once you have the package created and hosted on Github, it is simple to install it once, and load it when needed. If there is a particular version of the package that is required, it is even possible to tell <code>install_github</code> to install a particular version based on the <em>commit</em>, or a <em>tag</em>.</p>
 <p>Some examples of this type of package can be found on Github: <a href="https://github.com/kbroman/broman">1</a> <a href="https://github.com/childsish/lhc-R">2</a> <a href="https://github.com/juba/r-perso">3</a></p>

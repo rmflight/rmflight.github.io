@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>development on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/development/</link>
+    <description>Recent content in development on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Tue, 17 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Split - Unsplit Anti-Pattern</title>
+      <link>/post/split-unsplit-anti-pattern/</link>
+      <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/split-unsplit-anti-pattern/</guid>
+      <description>TL;DR If you notice yourself using split -&amp;gt; unsplit / rbind on two object to match items up, maybe you should be using dplyr::join_ instead. Read below for concrete examples.
+ Motivation I have had a lot of calculations lately that involve some sort of normalization or scaling a group of related values, each group by a different factor.
+Lets setup an example where we will have 1e5 values in 10 groups, each group of values being normalized by their own value.</description>
+    </item>
+    
+    <item>
+      <title>docopt &amp; Numeric Options</title>
+      <link>/post/docopt-numeric-options/</link>
+      <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/docopt-numeric-options/</guid>
+      <description>TL;DR If you use the docopt package to create command line R executables that take options, there is something to know about numeric command line options: they should have as.double before using them in your script.
+ Setup Lets set up a new docopt string, that includes both string and numeric arguments.
+&amp;quot; Usage: test_numeric.R [--string=&amp;lt;string_value&amp;gt;] [--numeric=&amp;lt;numeric_value&amp;gt;] test_numeric.R (-h | --help) test_numeric.R Description: Testing how values are passed using docopt.</description>
+    </item>
+    
+    <item>
+      <title>Analyses as Packages</title>
+      <link>/post/analyses-as-packages/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analyses-as-packages/</guid>
+      <description>TL;DR Instead of writing an analysis as a single or set of R scripts, use a package and include the analysis as a vignette of the package. Read below for the why, the how is in the next post.
+ Analyses and Reports As data science or statistical researchers, we tend to do a lot of analyses, whether for our own research or as part of a collaboration, or even for supervisors depending on where we work.</description>
+    </item>
+    
+    <item>
+      <title>Creating an Analysis as a Package and Vignette</title>
+      <link>/post/vignette-analysis/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vignette-analysis/</guid>
+      <description>Following from my last post, I am going to go step by step through the process I use to generate an analysis as a package vignette. This will be an analysis of the tweets from the 2012 and 2014 ISMB conference (thanks to Neil and Stephen for compiling the data).
+I will link to individual commits so that you can see how things change as we go along.
+Setup Initialization To start, we will initialize the package.</description>
+    </item>
+    
+  </channel>
+</rss>

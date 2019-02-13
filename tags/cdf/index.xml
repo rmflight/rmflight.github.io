@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cdf on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/cdf/</link>
+    <description>Recent content in cdf on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Fri, 13 Jul 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/cdf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Creating Custom CDF&#39;s for Affymetrix Chips in Bioconductor</title>
+      <link>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</link>
+      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</guid>
+      <description>What? For those who don’t know, CDF files are chip definition format files that define which probes belong to which probesets, and are necessary to use any of the standard summarization methods such as RMA, and others.
+ Why? Because we can, and because custom definitions have been shown to be quite useful. See the information over at Brainarray.
+ Why not somewhere else? A lot of times other people create custom CDF files based on their own criteria, and make it subsequently available for others to use (see the Brainarray for an example of what some are doing, as well as PlandbAffy)</description>
+    </item>
+    
+  </channel>
+</rss>

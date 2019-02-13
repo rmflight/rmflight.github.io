@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reproducibility on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/reproducibility/</link>
+    <description>Recent content in reproducibility on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 23 Mar 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/reproducibility/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Authentication of Key Resources for Data Analysis</title>
+      <link>/post/authentication-of-key-resources-for-data-analysis/</link>
+      <pubDate>Wed, 23 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/authentication-of-key-resources-for-data-analysis/</guid>
+      <description>TL;DR NIH recently introduced a reproducibility initiative, extending to including the “Authentication of Key Resources” page in grant applications from Jan 25, 2016. Seems to be intended for grants involving biological reagents, but we included it in our recent R03 grant developing new data analysis methods. We believe that this type of thing should become common for all grants, not just those that use biological/chemical resources.
+ NIH and Reproducibility There has been a lot of things published recently about the reproducibility crisis in science (see refs).</description>
+    </item>
+    
+    <item>
+      <title>Novel Zinc Coordination Geometries</title>
+      <link>/post/novel-zinc-coordination-geometries/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/novel-zinc-coordination-geometries/</guid>
+      <description>TL;DR Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a less-biased method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries.</description>
+    </item>
+    
+    <item>
+      <title>Travis-CI to GitHub Pages</title>
+      <link>/post/travis-ci-to-github-pages/</link>
+      <pubDate>Wed, 05 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/travis-ci-to-github-pages/</guid>
+      <description>I don’t remember how I got on this, but I believe I had a recent twitter exchange with some persons (or saw it fly by) about pushing R package vignettes to the web after building and checking on travis-ci. Hadley Wickham pointed to using such a scheme to push the web version of his book after each update and the S3 deploy hooks on travis-ci. Deploying your html content to S3 is great, but given the availability of the gh-pages branch on GitHub, I thought it would be neat to work out how to deploy the html output from an R package vignette to the gh-pages branch on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>Reproducible Methods</title>
+      <link>/post/reproducible-methods/</link>
+      <pubDate>Fri, 16 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reproducible-methods/</guid>
+      <description>Science is built on the whole idea of being able to reproduce results, i.e. if I publish something, it should be possible for someone else to reproduce it, using the description of the methods used in the publication. As biological sciences have become increasingly reliant on computational methods, this has become a bigger and bigger issue, especially as the results of experiments become dependent on independently developed computational code, or use rather sophisticated computer packages that have a variety of settings that can affect output, and multiple versions.</description>
+    </item>
+    
+    <item>
+      <title>Writing Papers Using R Markdown</title>
+      <link>/post/writing-papers-using-r-markdown/</link>
+      <pubDate>Tue, 09 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/writing-papers-using-r-markdown/</guid>
+      <description>I have been watching the activity in RStudio and knitr for a while, and have even been using Rmd (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed writing papers in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using knitr as a way to create reproducible blog posts that include code (including yours truly).</description>
+    </item>
+    
+  </channel>
+</rss>

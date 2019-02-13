@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mapping on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/mapping/</link>
+    <description>Recent content in mapping on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 05 Jun 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/mapping/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tim Hortons Density</title>
+      <link>/post/tim-hortons-density/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tim-hortons-density/</guid>
+      <description>Inspired by this post, I wanted to examine the locations and density of Tim Hortons restaurants in Canada. Using Stats Canada data, each census tract is queried on Foursquare for Tims locations.
+Setup options(stringsAsFactors=F) require(timmysDensity) require(plyr) require(maps) require(ggplot2) require(geosphere)  Statistics Canada Census Data The actual Statistics Canada data at the dissemination block level can be downloaded from here. You will want to download the Excel format, read it, and then save it as either tab-delimited or CSV using a non-standard delimiter, I used a semi-colon (;).</description>
+    </item>
+    
+  </channel>
+</rss>

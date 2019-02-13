@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>open-science on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/open-science/</link>
+    <description>Recent content in open-science on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 14 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/open-science/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Licensing R Packages that Include Others Code</title>
+      <link>/post/licensing-r-packages-that-include-others-code/</link>
+      <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/licensing-r-packages-that-include-others-code/</guid>
+      <description>TL;DR If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.
+ Motivation I recently created the knitrProgressBar package. It is a really simple package, that takes the dplyr progress bars and makes it possible for them to write progress to a supplied file connection. The dplyr package itself is licensed under MIT, so I felt fine taking the code directly from dplyr itself.</description>
+    </item>
+    
+    <item>
+      <title>Novel Zinc Coordination Geometries</title>
+      <link>/post/novel-zinc-coordination-geometries/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/novel-zinc-coordination-geometries/</guid>
+      <description>TL;DR Currently available methods to discover metal geometries make too many assumptions. We were able to discover novel zinc coordination geometries using a less-biased method that makes fewer assumptions. These novel geometries seem to also have specific functionality. This work was recently published under an #openaccess license in Proteins Journal: Yao, S., Flight, R. M., Rouchka, E. C. and Moseley, H. N. B. (2015), A less-biased analysis of metalloproteins reveals novel zinc coordination geometries.</description>
+    </item>
+    
+    <item>
+      <title>Mouse / Human Transcriptomics and Batch Effects</title>
+      <link>/post/mouse-human-transcriptomics-and-batch-effects/</link>
+      <pubDate>Mon, 01 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mouse-human-transcriptomics-and-batch-effects/</guid>
+      <description>TL;DR This 2014 PNAS paper by S. Lin et al (Lin et al., PNAS, 2014) that compares transcription of tissues between species has a flawed experimental design, where species is almost perfectly confounded with machine / lane on which the sequencing was done. Y. Golad and O. Mizrahi-Man have published a manuscript describing the confounding and the results of removing it. This was possible because the original authors supplied the information about which publically available files were used in the original analysis.</description>
+    </item>
+    
+    <item>
+      <title>First Open Post-Publication Peer Review, with Credit!</title>
+      <link>/post/first-open-post-publication-peer-review-with-credit/</link>
+      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/first-open-post-publication-peer-review-with-credit/</guid>
+      <description>TL;DR Reviewed Jason McDermott’s MDRPred paper on F1000Research!, where my review is posted along side the paper, with a DOI, completely in the open with my name attached. Was a pleasant experience, aided by the fact that Jason wrote a good paper.
+ F1000Research! F1000Research! is a new publishing startup from F1000 that has a model of post-publication peer review, whereby upon submission the manuscript undergoes basic quality checks (no real editorial control), and then is published.</description>
+    </item>
+    
+    <item>
+      <title>Researcher Discoverability</title>
+      <link>/post/researcher-discoverability/</link>
+      <pubDate>Thu, 19 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/researcher-discoverability/</guid>
+      <description>University of Kentucky (UK) recently partnered with the discovery portal KNODE, for helping others to discover potential collaborators at UK. KNODE looks like a large corporate venture, that is probably costing a large amount of capital to the university (and other places that use it). I wonder if the universities money would be better spent on encouraging submission of preprints, a Github Enterprise/Education package and teaching researchers and faculty how to use social media like twitter.</description>
+    </item>
+    
+    <item>
+      <title>PubmedCommons API</title>
+      <link>/post/pubmedcommons-api/</link>
+      <pubDate>Tue, 22 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/pubmedcommons-api/</guid>
+      <description>The announcements are out, Pubmed is introducing a commenting system pubmedcommons, theoretically providing a single location for true post-publication peer review. This is a really good idea, as NCBI is likely to be around for a lot longer than a given publisher, and the requirement for all NIH funded research to be deposited into Pubmed.
+There are some detractors, and they may have some valid points link. However, the alternative, pubpeer, I had not heard about.</description>
+    </item>
+    
+    <item>
+      <title>Open vs Closed Analysis Languages</title>
+      <link>/post/open-vs-closed-analysis-languages/</link>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/open-vs-closed-analysis-languages/</guid>
+      <description>TL;DR I think data scientists should choose to learn open languages such as R and python because they are open in the sense that anyone can obtain them, use them and modify them for free, and this has lead to large, robust groups of users, making it more likely that packages exist that you can use, and others can easily build on your own work.
+ Why the debate? This was sparked by a comment on twitter suggesting that data scientists and analysts need to be polyglots, that they should know more than one programming language or analysis framework (the full conversation of tweets can be found here)</description>
+    </item>
+    
+    <item>
+      <title>Reproducible Methods</title>
+      <link>/post/reproducible-methods/</link>
+      <pubDate>Fri, 16 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reproducible-methods/</guid>
+      <description>Science is built on the whole idea of being able to reproduce results, i.e. if I publish something, it should be possible for someone else to reproduce it, using the description of the methods used in the publication. As biological sciences have become increasingly reliant on computational methods, this has become a bigger and bigger issue, especially as the results of experiments become dependent on independently developed computational code, or use rather sophisticated computer packages that have a variety of settings that can affect output, and multiple versions.</description>
+    </item>
+    
+    <item>
+      <title>Writing Papers Using R Markdown</title>
+      <link>/post/writing-papers-using-r-markdown/</link>
+      <pubDate>Tue, 09 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/post/writing-papers-using-r-markdown/</guid>
+      <description>I have been watching the activity in RStudio and knitr for a while, and have even been using Rmd (R markdown) files in my own work as a way to easily provide commentary on an actual dataset analysis. Yihui has proposed writing papers in markdown and posting them to a blog as a way to host a statistics journal, and lots of people are now using knitr as a way to create reproducible blog posts that include code (including yours truly).</description>
+    </item>
+    
+  </channel>
+</rss>

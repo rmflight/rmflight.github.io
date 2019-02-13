@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -267,7 +267,10 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <div id="tldr" class="section level2">
+        
+
+
+<div id="tldr" class="section level2">
 <h2>TL;DR</h2>
 <p>The <a href="https://bioconductor.org/packages/IRanges/"><code>IRanges</code></a> package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a <strong>large</strong> constant factor and round them. The constant depends on how much accuracy you need.</p>
 </div>
@@ -291,7 +294,7 @@
 <p>Lets actually test differences in speed by counting how many overlapping points there are.</p>
 <pre class="r"><code>library(IRanges)
 library(ggplot2)
-load(&quot;../../data/iranges_example_data.rda&quot;)
+load(&quot;../../extdata/iranges_example_data.rda&quot;)
 
 head(mz_points)</code></pre>
 <pre><code>## IRanges object with 6 ranges and 1 metadata column:

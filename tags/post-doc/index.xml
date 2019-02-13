@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>post-doc on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/post-doc/</link>
+    <description>Recent content in post-doc on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Fri, 08 Aug 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/post-doc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My Career Goals</title>
+      <link>/post/my-career-goals/</link>
+      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/my-career-goals/</guid>
+      <description>TL;DR I don’t want to be a PI because I enjoy spending time with my family, and don’t think I can handle the stress of juggling multiple grants, people, and deadlines. I want to be a staff member in a group that affords relative autonomy, while providing some security. If I’m lucky enough, my current position will enable that.
+ The Bad News If you keep up with the news in academia, this is a horrible time to be a postdoc (post-doctoral) or PI (principal investigator).</description>
+    </item>
+    
+    <item>
+      <title>K-12 Wants Scientists!!</title>
+      <link>/post/k-12-wants-scientists/</link>
+      <pubDate>Thu, 19 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/k-12-wants-scientists/</guid>
+      <description>It seems that the PostDoc committee here at UK has an interest in providing some information on alternative careers for PostDocs outside of academia. We all know that there are not enough PI slots at universities for all of the PhDs who are going on to do PostDocs, and many will end up in alternative (I use that term loosely) careers.
+Yesterday (2013-09-18), Scott Diamond gave a seminar to PostDocs in the Medical Center at UK on getting involved in teaching science at the K-12 and college level.</description>
+    </item>
+    
+  </channel>
+</rss>

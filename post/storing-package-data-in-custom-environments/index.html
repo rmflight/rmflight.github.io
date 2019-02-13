@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.54.0" />
   <meta name="author" content="Robert M Flight">
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
@@ -267,7 +267,10 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        <p>If you do <code>R</code> package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global <code>options</code>. This is done by packages <code>grDevices</code> and <code>parallel</code>. Sometimes this doesn’t seem to work quite right (see this <a href="https://github.com/cboettig/knitcitations/issues/14">issue</a> for example.</p>
+        
+
+
+<p>If you do <code>R</code> package development, sometimes you want to be able to store variables specific to your package, without cluttering up the users workspace. One way to do this is by modifying the global <code>options</code>. This is done by packages <code>grDevices</code> and <code>parallel</code>. Sometimes this doesn’t seem to work quite right (see this <a href="https://github.com/cboettig/knitcitations/issues/14">issue</a> for example.</p>
 <p>Another way to do this is to create an environment within your package, that only package functions will be able to see, and therefore read from and modify. You get a space to put package specific stuff, the user can’t see it or modify it directly, and you just need to write functions that do the appropriate things to that environment (adding variables, reading them, etc). This sounds great in practice, but I wasn’t clear on how to do this, even after reading the <a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/environment.html">help page on environments</a>, the <a href="http://cran.r-project.org/doc/manuals/r-release/R-intro.html">R documentation</a>, or even <a href="https://github.com/hadley/devtools/wiki/Environments">Hadley’s excellent writeup</a>. From all these sources, I could glean that one can create environments, name them, modify them, etc, but wasn’t sure how to work with this within a package.</p>
 <p>I checked out the <a href="https://github.com/cboettig/knitcitations"><code>knitcitations</code></a> package to see how it was done. When I looked, I realized that it was pretty obvious in retrospect. In <code>zzz.R</code>, initialize the environment, assigning it to a variable. When you need to work with the variables inside, this variable will be accessible to your package, and you simply use the <code>get</code> and <code>assign</code> functions like you would if you were doing anything on the command line.</p>
 <p>To make sure I had it figured out, I created a very <a href="https://github.com/rmflight/testEnvironment">tiny package</a> to create a custom environment and functions for modifying it. Please feel free to examine, download, install (using <a href="https://github.com/hadley/devtools"><code>devtools</code></a>]) and see for yourself.</p>

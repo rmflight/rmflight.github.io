@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>software-carpentry on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/software-carpentry/</link>
+    <description>Recent content in software-carpentry on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Tue, 28 Jan 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/software-carpentry/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Motivated Learning</title>
+      <link>/post/motivated-learning/</link>
+      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/motivated-learning/</guid>
+      <description>As part of the instructor training of Software-Carpentry, we were asked to write a blog post about two things:
+ A story about a time you were motivated/demotivated to learn A story that will help motivate our learners drawn from personal experience  Here are mine. I thought others who read my ramblings might find them useful. Note that these are cross-posted on the Software-Carpentry teaching blog.
+Being Motivated to Learn Calculus As part of my undergraduate degree, I was required to take higher level mathematics, either calculus or linear algebra.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.54.0" />
+  <meta name="author" content="Robert M Flight">
+  <meta name="description" content="Senior Research Associate in Bioinformatics">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/for-loops-vs-split/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/for-loops-vs-split/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rmflight">
+  <meta property="twitter:creator" content="@rmflight">
+  
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/for-loops-vs-split/">
+  <meta property="og:title" content="Comparisons using for loops vs split | Deciphering Life: One Bit at a Time">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-02-13T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2019-02-13T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Comparisons using for loops vs split | Deciphering Life: One Bit at a Time</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>About</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Comparisons using for loops vs split</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-02-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2019-02-13
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Comparisons%20using%20for%20loops%20vs%20split&amp;url=%2fpost%2ffor-loops-vs-split%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2ffor-loops-vs-split%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2ffor-loops-vs-split%2f&amp;title=Comparisons%20using%20for%20loops%20vs%20split"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2ffor-loops-vs-split%2f&amp;title=Comparisons%20using%20for%20loops%20vs%20split"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Comparisons%20using%20for%20loops%20vs%20split&amp;body=%2fpost%2ffor-loops-vs-split%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        
+
+
+<div id="tldr" class="section level2">
+<h2>TL;DR</h2>
+<p>Sometimes <code>for</code> loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they
+might still be slow(er) than other ways of doing things.</p>
+</div>
+<div id="comparing-groups" class="section level2">
+<h2>Comparing Groups</h2>
+<p>I have some code where I am trying to determine duplicates of a <strong>group</strong> of things. This data looks something like this:</p>
+<pre class="r"><code>create_random_sets = function(n_sets = 1000){
+  set.seed(1234)
+  
+  sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .x), 5))
+  
+  item_sets = sample(seq(1, length(sets)), 10000, replace = TRUE)
+  item_mapping = purrr::map2_df(item_sets, seq(1, length(item_sets)), function(.x, .y){
+    data.frame(v1 = as.character(.y), v2 = sets[[.x]], stringsAsFactors = FALSE)
+  })
+  item_mapping
+}
+library(dplyr)
+mapped_items = create_random_sets()
+
+head(mapped_items, 20)</code></pre>
+<pre><code>##    v1  v2
+## 1   1 496
+## 2   1 243
+## 3   1 201
+## 4   1 514
+## 5   1 416
+## 6   2  28
+## 7   2 189
+## 8   2   5
+## 9   2 115
+## 10  2  20
+## 11  3 310
+## 12  3 470
+## 13  3 667
+## 14  3 775
+## 15  3 680
+## 16  4  89
+## 17  4 182
+## 18  4 688
+## 19  4  31
+## 20  4 432</code></pre>
+</div>
+<div id="looping" class="section level2">
+<h2>Looping</h2>
+<p>In this case, every <code>item</code> in <code>v1</code> has <strong>5</strong> things in <code>v2</code>. I really want to group multiple things of <code>v1</code> that have the same combination of things in <code>v2</code>. My initial function
+to do this <code>split</code>s everything in <code>v2</code> by <code>v1</code>, and then compares all the splits to each other, removing things that have been compared and found to be the same, and saving them
+as we go. This required two loops, basically <code>while</code> there was data to check, check all the other things left in the list against it (the <code>for</code>).
+Pre-initialize the list of things that are identical to each other so we don’t take a hit on allocation, and delete the things that have been checked or noted as identical. Although the variable names are changed, the code for that function is below.</p>
+<pre class="r"><code>loop_function = function(item_mapping){
+  split_items = split(item_mapping$v2, item_mapping$v1)
+  
+  matched_list = vector(&quot;list&quot;, length(split_items))
+  
+  save_item = 1
+  save_index = 1
+  
+  while (length(split_items) &gt; 0) {
+    curr_item = names(split_items)[save_item]
+    curr_set = split_items[[save_item]]
+    
+    for (i_item in seq_along(split_items)) {
+      if (sum(split_items[[i_item]] %in% curr_set) == length(curr_set)) {
+        matching_items = unique(c(curr_item, names(split_items)[i_item]))
+        save_item = unique(c(save_item, i_item))
+      }
+    }
+    matched_list[[save_index]] = curr_set
+    split_items = split_items[-save_item]
+    save_index = save_index + 1
+    save_item = 1
+  }
+  
+  n_in_set = purrr::map_int(matched_list, length)
+  matched_list = matched_list[n_in_set &gt; 0]
+  n_in_set = n_in_set[n_in_set &gt; 0]
+  matched_list
+}</code></pre>
+<p>The code works, but it doesn’t really make me <strong>think</strong> about what it’s doing, the two loops hide the fact that what is really going on is <strong>comparing</strong> things to one another.
+Miles McBain <a href="https://milesmcbain.xyz/for-loops/">recently posted</a> on this fact, that loops can be necessary, but one should really think about whether they are really necessary,
+or do they hide something about the data, and can we think about different ways to do the same thing.</p>
+<p>This made me realize that what I really wanted to do was <code>split</code> the items in <code>v1</code> by the unique combinations of things in <code>v2</code>, because <code>split</code> will group things together nicely
+for you, without any extra work. But I don’t have those combinations in a way that <code>split</code> can use them. So my solution is to iterate over the splits using <code>purrr</code>,
+create a representation of the group as a character value, and then call <code>split</code> again at the very end based on the <code>character</code> representation.</p>
+<pre class="r"><code>split_function = function(item_mapping){
+  mapped_data = split(item_mapping$v2, item_mapping$v1) %&gt;%
+    purrr::map2_dfr(., names(.), function(.x, .y){
+      set = unique(.x)
+      tmp_frame = data.frame(item = .y, set_chr = paste(set, collapse = &quot;,&quot;), stringsAsFactors = FALSE)
+      tmp_frame$set = list(set)
+      tmp_frame
+    })
+  matched_list = split(mapped_data, mapped_data$set_chr)
+}</code></pre>
+<p>Not only is the code cleaner, the grouping is explicit (as long as you know <strong>how</strong> <code>split</code> works), and its also 4x faster!</p>
+<pre class="r"><code>microbenchmark::microbenchmark(
+  loop_function(mapped_items),
+  split_function(mapped_items),
+  times = 5
+)</code></pre>
+<pre><code>## Unit: seconds
+##                          expr      min       lq     mean   median       uq
+##   loop_function(mapped_items) 7.019043 7.055687 7.100018 7.098362 7.136939
+##  split_function(mapped_items) 2.105300 2.161758 2.212852 2.212383 2.242098
+##       max neval
+##  7.190062     5
+##  2.342722     5</code></pre>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/nicer-png-graphics/">Nicer PNG Graphics</a></li>
+    
+    <li><a href="/post/don-t-do-pca-after-statistical-testing/">Don&#39;t do PCA After Statistical Testing!</a></li>
+    
+    <li><a href="/post/finding-modes-using-kernel-density-estimates/">Finding Modes Using Kernel Density Estimates</a></li>
+    
+    <li><a href="/post/split-unsplit-anti-pattern/">Split - Unsplit Anti-Pattern</a></li>
+    
+    <li><a href="/post/iranges-for-non-integer-overlaps/">Using IRanges for Non-Integer Overlaps</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2018 Robert M Flight &middot; 
+
+      Powered by
+      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <br>
+      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

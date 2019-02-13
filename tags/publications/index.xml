@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>publications on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/publications/</link>
+    <description>Recent content in publications on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 29 Mar 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/publications/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Criticizing a Publication, and Lying About It</title>
+      <link>/post/criticizing-a-publication-and-lying-about-it/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/criticizing-a-publication-and-lying-about-it/</guid>
+      <description>TL;DR Other researchers directly criticized a recent publication of ours in a “research article”. Although they raised valid points, they outright lied about the availability of our results. In addition, they did not provide access to their own results. We have published new work supporting our original results, and a direct rebuttal of their critique in a perspective article. The peer reviewers of their “research article” must have been asleep at the wheel to allow the major point, lack of access to our results, to stand.</description>
+    </item>
+    
+    <item>
+      <title>categoryCompare Paper Finally Out!</title>
+      <link>/post/categorycompare-paper-finally-out/</link>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/categorycompare-paper-finally-out/</guid>
+      <description>I can finally say that the publication on my Bioconductor package categoryCompare is finally published in the Bioinformatics and Computational Biology section of Frontiers in Genetics. This has been a long time coming, and I wanted to give some background on the inspiration and development of the method and software.
+TL;DR The software package has been in development in one form or another since 2010, released to Bioconductor in summer 2012, and the publication has bounced around and been revised since spring of 2013, and it is finally available to you.</description>
+    </item>
+    
+  </channel>
+</rss>

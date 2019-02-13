@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blogdown on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/blogdown/</link>
+    <description>Recent content in blogdown on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 27 Dec 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/blogdown/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Custom Deployment Script</title>
+      <link>/post/custom-deployment-script/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/custom-deployment-script/</guid>
+      <description>TL;DR Use a short bash script to do deployment from your own computer directly to your *.github.io domain.
+ Why? So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the /public directory to the repo for my github.</description>
+    </item>
+    
+    <item>
+      <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
+      <link>/post/linking-to-manually-inserted-images-in-hugo/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/linking-to-manually-inserted-images-in-hugo/</guid>
+      <description>Manual Linking? Using blogdown for generating websites and blog-posts from Rmarkdown files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (like this figure from wikipedia).
+ Where to?</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Content tagged as &#39;Academic&#39;</title>
+      <link>/tags/academic/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/academic/</guid>
+      <description>Here is a list of all the content that has been tagged as academic.</description>
+    </item>
+    
+    <item>
+      <title>MatLab</title>
+      <link>/tags/matlab/</link>
+      <pubDate>Mon, 10 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/matlab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>academia</title>
+      <link>/tags/academia/</link>
+      <pubDate>Thu, 19 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/academia/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>alzheimers</title>
+      <link>/tags/alzheimers/</link>
+      <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/alzheimers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bioconductor</title>
+      <link>/tags/bioconductor/</link>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/bioconductor/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bioinformatics</title>
+      <link>/tags/bioinformatics/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/bioinformatics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blogdown</title>
+      <link>/tags/blogdown/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/blogdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>career</title>
+      <link>/tags/career/</link>
+      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/career/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cdf</title>
+      <link>/tags/cdf/</link>
+      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/cdf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>development</title>
+      <link>/tags/development/</link>
+      <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>documentation</title>
+      <link>/tags/documentation/</link>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/documentation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fundraising</title>
+      <link>/tags/fundraising/</link>
+      <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/fundraising/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>/tags/git/</link>
+      <pubDate>Fri, 07 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
+      <link>/tags/github/</link>
+      <pubDate>Thu, 19 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>graphics</title>
+      <link>/tags/graphics/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/graphics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>/tags/hugo/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iranges</title>
+      <link>/tags/iranges/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/iranges/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>journal-club</title>
+      <link>/tags/journal-club/</link>
+      <pubDate>Wed, 15 Aug 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/journal-club/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kernel density</title>
+      <link>/tags/kernel-density/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/kernel-density/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>learning</title>
+      <link>/tags/learning/</link>
+      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>literate-programming</title>
+      <link>/tags/literate-programming/</link>
+      <pubDate>Fri, 10 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/literate-programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mapping</title>
+      <link>/tags/mapping/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/mapping/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>meta-analysis</title>
+      <link>/tags/meta-analysis/</link>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/meta-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>metoo</title>
+      <link>/tags/metoo/</link>
+      <pubDate>Wed, 18 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/metoo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>migraines</title>
+      <link>/tags/migraines/</link>
+      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/migraines/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>notebooks</title>
+      <link>/tags/notebooks/</link>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/notebooks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>open-science</title>
+      <link>/tags/open-science/</link>
+      <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/open-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>packages</title>
+      <link>/tags/packages/</link>
+      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/packages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pca</title>
+      <link>/tags/pca/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pca/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pdf</title>
+      <link>/tags/pdf/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pdf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>phdisabled</title>
+      <link>/tags/phdisabled/</link>
+      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/phdisabled/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>post-doc</title>
+      <link>/tags/post-doc/</link>
+      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/post-doc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pre-calulations</title>
+      <link>/tags/pre-calulations/</link>
+      <pubDate>Thu, 17 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pre-calulations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>probability density</title>
+      <link>/tags/probability-density/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/probability-density/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>publications</title>
+      <link>/tags/publications/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/publications/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>/tags/python/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reproducibility</title>
+      <link>/tags/reproducibility/</link>
+      <pubDate>Wed, 23 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/reproducibility/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rstudio</title>
+      <link>/tags/rstudio/</link>
+      <pubDate>Tue, 17 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/rstudio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>science</title>
+      <link>/tags/science/</link>
+      <pubDate>Thu, 19 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>software-carpentry</title>
+      <link>/tags/software-carpentry/</link>
+      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/software-carpentry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>structural-biochemistry</title>
+      <link>/tags/structural-biochemistry/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/structural-biochemistry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>teaching</title>
+      <link>/tags/teaching/</link>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/teaching/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tim-hortons</title>
+      <link>/tags/tim-hortons/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tim-hortons/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>twitter</title>
+      <link>/tags/twitter/</link>
+      <pubDate>Mon, 30 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/twitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vignettes</title>
+      <link>/tags/vignettes/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/vignettes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>visualization</title>
+      <link>/tags/visualization/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zinc</title>
+      <link>/tags/zinc/</link>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/zinc/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
