@@ -356,15 +356,15 @@ pData(pd)</code></pre>
 <pre class="r"><code>celDat = ReadAffy(filenames = rownames(pData(pd)), 
                   phenoData = pd,
                   verbose=TRUE, celfile.path=datadir)</code></pre>
-<pre><code>## 1 reading /software/R_libs/R350_bioc37/estrogen/extdata/low10-1.cel ...instantiating an AffyBatch (intensity a 409600x8 matrix)...done.
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/low10-1.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/low10-2.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/high10-1.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/high10-2.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/low48-1.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/low48-2.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/high48-1.cel
-## Reading in : /software/R_libs/R350_bioc37/estrogen/extdata/high48-2.cel</code></pre>
+<pre><code>## 1 reading /software/R_libs/R351_bioc37/estrogen/extdata/low10-1.cel ...instantiating an AffyBatch (intensity a 409600x8 matrix)...done.
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/low10-1.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/low10-2.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/high10-1.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/high10-2.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/low48-1.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/low48-2.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/high48-1.cel
+## Reading in : /software/R_libs/R351_bioc37/estrogen/extdata/high48-2.cel</code></pre>
 <p>This loads up the data, reads in the raw data, and gets it ready for us to use. Now, lets see what is in the actual <strong>CDF</strong> environment.</p>
 <pre class="r"><code>topProbes &lt;- head(ls(hgu95av2cdf)) # get a list of probesets
 topProbes</code></pre>
@@ -552,28 +552,28 @@ rma5 &lt;- exprs(rma(celDat))</code></pre>
 ## Calculating Expression</code></pre>
 <pre class="r"><code>head(rma5)</code></pre>
 <pre><code>##     low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-## 1      5.734122    5.754369     5.903906     5.729136    5.825720
-## 10     5.582165    5.811386     5.787063     5.898083    5.962949
-## 100    6.801851    6.716823     7.022468     6.738607    6.543016
-## 11     6.595278    6.541848     6.546214     6.708438    6.443099
-## 12     6.911398    6.834184     7.274076     7.042305    6.942218
-## 13     6.865432    6.874156     6.924795     6.790958    6.876161
+## 1      7.129135    7.098127     7.068482     7.233563    7.374926
+## 10     6.032985    5.979999     5.986230     5.932740    5.826887
+## 100    6.682842    6.456283     6.495291     6.519710    6.659279
+## 11     7.851354    7.915515     7.902346     8.095335    7.902186
+## 12     6.467172    6.447098     6.597328     6.417236    6.591901
+## 13     7.093439    7.165885     7.160012     7.123641    7.146212
 ##     low48-2.cel high48-1.cel high48-2.cel
-## 1      5.939507     5.776399     5.838208
-## 10     5.802626     5.947521     5.816042
-## 100    6.454238     6.812898     6.527615
-## 11     6.509004     6.473061     6.631809
-## 12     6.918109     6.897736     6.806950
-## 13     6.885058     6.921997     6.871489</code></pre>
+## 1      7.058663     7.007227     7.056640
+## 10     6.046502     6.332338     6.120624
+## 100    6.611351     6.525982     6.488238
+## 11     7.948811     8.141210     7.987187
+## 12     6.474024     6.469687     6.303738
+## 13     7.175856     7.408415     7.137689</code></pre>
 <p>I hope this information is useful to someone else. I know it made my life a lot easier.</p>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.0 (2018-04-23)
+<pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 16.04.5 LTS
+## Running under: Ubuntu 18.04.3 LTS
 ## 
 ## Matrix products: default
-## BLAS: /software/R-3.5.0/lib/R/lib/libRblas.so
-## LAPACK: /software/R-3.5.0/lib/R/lib/libRlapack.so
+## BLAS: /software/R-351/lib/R/lib/libRblas.so
+## LAPACK: /software/R-351/lib/R/lib/libRlapack.so
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -588,21 +588,20 @@ rma5 &lt;- exprs(rma(celDat))</code></pre>
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] hgu95av2cdf_2.18.0  estrogen_1.25.0     affy_1.57.0        
-## [4] Biobase_2.39.2      BiocGenerics_0.25.3
+## [1] hgu95av2cdf_2.18.0  estrogen_1.26.0     affy_1.58.0        
+## [4] Biobase_2.42.0      BiocGenerics_0.28.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.0            AnnotationDbi_1.41.4  knitr_1.20           
-##  [4] magrittr_1.5          IRanges_2.13.28       zlibbioc_1.25.0      
-##  [7] bit_1.1-12            blob_1.1.1            stringr_1.3.1        
-## [10] tools_3.5.0           xfun_0.3              DBI_1.0.0            
+##  [1] Rcpp_1.0.2            AnnotationDbi_1.42.1  knitr_1.24           
+##  [4] magrittr_1.5          IRanges_2.14.12       zlibbioc_1.28.0      
+##  [7] bit_1.1-14            blob_1.1.1            stringr_1.4.0        
+## [10] tools_3.5.1           xfun_0.8              DBI_1.0.0            
 ## [13] htmltools_0.3.6       bit64_0.9-7           yaml_2.2.0           
-## [16] rprojroot_1.3-2       digest_0.6.18         preprocessCore_1.41.0
-## [19] bookdown_0.7          affyio_1.49.2         S4Vectors_0.17.39    
-## [22] memoise_1.1.0         RSQLite_2.1.0         evaluate_0.11        
-## [25] rmarkdown_1.10        blogdown_0.5          stringi_1.2.4        
-## [28] compiler_3.5.0        BiocInstaller_1.30.0  backports_1.1.2      
-## [31] stats4_3.5.0</code></pre>
+## [16] digest_0.6.20         preprocessCore_1.42.0 bookdown_0.9         
+## [19] affyio_1.50.0         S4Vectors_0.18.3      memoise_1.1.0        
+## [22] evaluate_0.14         RSQLite_2.1.1         rmarkdown_1.15       
+## [25] blogdown_0.10         stringi_1.4.3         compiler_3.5.1       
+## [28] BiocInstaller_1.30.0  stats4_3.5.1</code></pre>
 <p>Originally published 2013/07/13, moved to <a href="http://rmflight.github.io" class="uri">http://rmflight.github.io</a> on 2013/12/04.</p>
 </div>
 

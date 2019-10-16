@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Robert M Flight</copyright>
-    <lastBuildDate>Wed, 27 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/blogdown/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Comments enabled via utterances</title>
+      <link>/post/comments-enabled-via-utterances/</link>
+      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/comments-enabled-via-utterances/</guid>
+      <description>TL;DR Utterances is a lightweight commenting platform built on GitHub issues. So you have to have a GitHub account, but I expect most people who comment on this blog already have one.
+ Why Utterances When I switched to blogdown, I lost my disqus comments. I had considered migrating them over, but never got around to it. I also thought that there had to be a way to link GitHub issues to blog posts, but didn’t investigate it much.</description>
+    </item>
     
     <item>
       <title>Custom Deployment Script</title>

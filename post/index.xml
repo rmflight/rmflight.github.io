@@ -13,13 +13,13 @@
     
     
     <item>
-      <title>Testing Utterances</title>
-      <link>/post/testing-utterances/</link>
-      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      <title>Comments enabled via utterances</title>
+      <link>/post/comments-enabled-via-utterances/</link>
+      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/testing-utterances/</guid>
-      <description> TL;DR Seeing if utterances will actually work on my site.
- </description>
+      <guid>/post/comments-enabled-via-utterances/</guid>
+      <description>TL;DR Utterances is a lightweight commenting platform built on GitHub issues. So you have to have a GitHub account, but I expect most people who comment on this blog already have one.
+ Why Utterances When I switched to blogdown, I lost my disqus comments. I had considered migrating them over, but never got around to it. I also thought that there had to be a way to link GitHub issues to blog posts, but didn’t investigate it much.</description>
     </item>
     
     <item>

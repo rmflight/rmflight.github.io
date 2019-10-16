@@ -11,17 +11,30 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Testing Utterances</title>
-      <link>/post/testing-utterances/</link>
-      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      <title>Comments enabled via utterances</title>
+      <link>/post/comments-enabled-via-utterances/</link>
+      <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/testing-utterances/</guid>
+      <guid>/post/comments-enabled-via-utterances/</guid>
       <description>
 
 
 &lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Seeing if utterances will actually work on my site.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://utteranc.es/&#34;&gt;Utterances&lt;/a&gt; is a lightweight commenting platform built
+on GitHub issues. So you have to have a GitHub account, but I expect most people
+who comment on this blog already have one.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-utterances&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why Utterances&lt;/h2&gt;
+&lt;p&gt;When I switched to &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt;, I lost
+my &lt;a href=&#34;&#34;&gt;disqus&lt;/a&gt; comments. I had considered migrating them over, but never got around
+to it. I also thought that there had to be a way to link GitHub issues to
+blog posts, but didn’t investigate it much.&lt;/p&gt;
+&lt;p&gt;Then, I came across Maëlle’s blog post about switching to &lt;a href=&#34;https://uteranc.es&#34;&gt;utterances&lt;/a&gt;
+and I was sold. I had some free time last night, and dived into how to add it
+to my site that uses the hugo academic theme.&lt;/p&gt;
+&lt;p&gt;I’m not expecting a lot of heavy commenting, but at least it’s now available!&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -139,11 +152,11 @@ create a representation of the group as a character value, and then call &lt;cod
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Unit: seconds
 ##                          expr      min       lq     mean   median       uq
-##   loop_function(mapped_items) 7.019043 7.055687 7.100018 7.098362 7.136939
-##  split_function(mapped_items) 2.105300 2.161758 2.212852 2.212383 2.242098
+##   loop_function(mapped_items) 6.625086 6.755657 6.799823 6.764101 6.784886
+##  split_function(mapped_items) 2.074691 2.077382 2.119430 2.106470 2.146626
 ##       max neval
-##  7.190062     5
-##  2.342722     5&lt;/code&gt;&lt;/pre&gt;
+##  7.069387     5
+##  2.191984     5&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -218,7 +231,7 @@ I finally decided to try a different device.&lt;/p&gt;
 to use the &lt;code&gt;Cairo&lt;/code&gt; package. Mine has both.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;capabilities()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##        jpeg         png        tiff       tcltk         X11        aqua 
-##        TRUE        TRUE        TRUE       FALSE        TRUE       FALSE 
+##       FALSE        TRUE       FALSE        TRUE        TRUE       FALSE 
 ##    http/ftp     sockets      libxml        fifo      cledit       iconv 
 ##        TRUE        TRUE        TRUE        TRUE       FALSE        TRUE 
 ##         NLS     profmem       cairo         ICU long.double     libcurl 
@@ -396,7 +409,7 @@ call the &lt;code&gt;pdf&lt;/code&gt; method on the original values.&lt;/p&gt;
 height = kernel.pdf(values)
 mode_value = values[np.argmax(height)]
 print(mode_value)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## -0.09150664440509323&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.22162730158854502&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Plot to show indeed we have it right. Note we sort the values first so the PDF
 looks right.&lt;/p&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;values2 = np.sort(values.copy())
@@ -476,12 +489,12 @@ knitr::kable(micro_results)&lt;/code&gt;&lt;/pre&gt;
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37.93602&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;40.23026&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;42.19333&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;41.44218&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;42.70328&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;70.9454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37.38068&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;39.51295&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;41.10837&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;40.21366&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;41.46579&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;71.33775&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -522,22 +535,22 @@ knitr::kable(micro_results2)&lt;/code&gt;&lt;/pre&gt;
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;41.25470&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;47.41014&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;52.46320&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;51.22454&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;56.02441&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100.2324&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37.43252&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;45.11638&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;48.32913&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;47.12768&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;50.36758&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;94.19223&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;68.82265&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;80.19980&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;86.39694&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;85.98446&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;89.30600&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;148.1777&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;77.30754&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;83.09115&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;88.22919&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;86.74504&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;90.65582&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;142.00019&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -574,32 +587,32 @@ knitr::kable(micro_results3)&lt;/code&gt;&lt;/pre&gt;
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;39.030586&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;46.793487&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;51.20821&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;49.311902&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;53.876978&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;109.9914&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37.293244&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;45.476034&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;50.465097&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;47.374326&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;52.58932&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;109.4402&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;70.381722&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;80.093530&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;85.62029&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;84.895922&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;87.885402&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;143.6245&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70.600139&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;82.395249&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;87.115287&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;86.656357&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;91.43579&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;130.6727&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;join_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.043585&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.343492&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;6.72770&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.479771&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.683511&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;140.9011&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.168829&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.525986&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.020724&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.722218&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.17179&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;171.3386&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -824,8 +837,8 @@ pb &amp;lt;- progress_estimated(26, progress_location = stdout())
 
 purrr::map(letters, arduously_long_nchar, .pb = pb)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 
-|===                                              |  8% ~1 s remaining     
-|=============                                    | 27% ~0 s remaining     
+|===                                              |  8% ~2 s remaining     
+|=============                                    | 27% ~1 s remaining     
 |======================                           | 46% ~0 s remaining     
 |================================                 | 65% ~0 s remaining     
 |=========================================        | 85% ~0 s remaining     
@@ -1040,11 +1053,16 @@ some time in that regard.&lt;/p&gt;
 
 &lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Use a short bash script to do deployment from your own computer directly to your &lt;code&gt;*.github.io&lt;/code&gt; domain.&lt;/p&gt;
+&lt;p&gt;Use a short bash script to do deployment from your own computer directly to your
+&lt;code&gt;*.github.io&lt;/code&gt; domain.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Why?&lt;/h2&gt;
-&lt;p&gt;So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the &lt;code&gt;/public&lt;/code&gt; directory to the repo for my &lt;code&gt;github.io&lt;/code&gt; site, and then push the changes.&lt;/p&gt;
+&lt;p&gt;So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t
+willing to setup a custom domain yet, and some of my posts involve a lot of personally
+created packages, etc, that I don’t want to debug installation on Travis. So, I wanted
+a simple script I could call on my laptop that would copy the &lt;code&gt;/public&lt;/code&gt; directory
+to the repo for my &lt;code&gt;github.io&lt;/code&gt; site, and then push the changes.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-script&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;The Script&lt;/h2&gt;
@@ -1061,7 +1079,11 @@ git commit -m &amp;quot;update at $commit_time&amp;quot;
 git push origin master
 
 cd $org_dir&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It changes directories, because to push from a &lt;code&gt;git&lt;/code&gt; repo I’m pretty sure you need to be in the directory, so it also makes sure to go back there at the end. It then copies the contents of &lt;code&gt;/public&lt;/code&gt; to the repo, &lt;code&gt;add&lt;/code&gt;s all the files, and then uses the current time-stamp as the commit message, and finally pushes all the updates.&lt;/p&gt;
+&lt;p&gt;It changes directories, because to push from a &lt;code&gt;git&lt;/code&gt; repo I’m pretty sure you
+need to be in the directory, so it also makes sure to go back there at the end.
+It then copies the contents of &lt;code&gt;/public&lt;/code&gt; to the repo, &lt;code&gt;add&lt;/code&gt;s all the files, and
+then uses the current time-stamp as the commit message, and finally pushes all
+the updates.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -1090,7 +1112,12 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
 
 &lt;div id=&#34;manual-linking&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Manual Linking?&lt;/h2&gt;
-&lt;p&gt;Using &lt;code&gt;blogdown&lt;/code&gt; for generating websites and blog-posts from &lt;code&gt;Rmarkdown&lt;/code&gt; files with lots of inserted code and figures seems pretty awesome, but sometimes you want to include a figure manually, either because you want to generate something manually and convert it (say for going from SVG of lots of points to hi-res PNG), or because it is a figure from something else (&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;like this figure from wikipedia&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Using &lt;code&gt;blogdown&lt;/code&gt; for generating websites and blog-posts from &lt;code&gt;Rmarkdown&lt;/code&gt; files
+with lots of inserted code and figures
+seems pretty awesome, but sometimes you want to include a figure manually, either
+because you want to generate something manually and convert it (say
+for going from SVG of lots of points to hi-res PNG), or because it is a figure
+from something else (&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;like this figure from wikipedia&lt;/a&gt;).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;where-to&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Where to??&lt;/h2&gt;
@@ -1099,7 +1126,8 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And then put the image itself in the directory &lt;code&gt;/static/img/image_file.png&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src = &#34;/img/Standard_deviation_diagram.svg&#34;&gt;&lt;/img&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;By M. W. Toews, &lt;a href=&#34;http://creativecommons.org/licenses/by/2.5&#34;&gt;CC BY 2.5&lt;/a&gt;, via Wikimedia Commons, &lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;source&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;This information is also mentioned in &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;section 2.7 of the Blogdown book&lt;/a&gt;. Obviously I need to do more reading.&lt;/p&gt;
+&lt;p&gt;This information is also mentioned in &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;section 2.7 of the Blogdown book&lt;/a&gt;. Obviously I need to
+do more reading.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -1115,44 +1143,132 @@ cd $org_dir&lt;/code&gt;&lt;/pre&gt;
 
 &lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;With the recent charges of sexual harassment against some high-profile individuals, and so many women coming forward with #metoo (and the understanding that this is really something almost &lt;em&gt;all&lt;/em&gt; women have faced), I realized that my younger self was #partoftheproblem. I think many other men are part of the problem, &lt;strong&gt;even though they might not think so&lt;/strong&gt;. I didn’t think I was part of the problem either. I hope that other men might read this and critically evaluate if they are #partoftheproblem. I also hope and pray that my own sons will do better at this if I teach them right.&lt;/p&gt;
+&lt;p&gt;With the recent charges of sexual harassment against some high-profile individuals,
+and so many women coming forward with #metoo (and the understanding that this
+is really something almost &lt;em&gt;all&lt;/em&gt; women have faced), I realized that my younger self
+was #partoftheproblem. I think many other men are part of the problem, &lt;strong&gt;even
+though they might not think so&lt;/strong&gt;. I didn’t think I was part of the problem
+either. I hope that other men might read this and critically evaluate if they
+are #partoftheproblem. I also hope and pray that my own sons will do better
+at this if I teach them right.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;how-could-i-be&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;How Could I Be?&lt;/h2&gt;
-&lt;p&gt;Let me be up front. I have never &lt;strong&gt;sexually assaulted&lt;/strong&gt; anyone, let alone considered such a thing. But that’s not really the problem, because the way I acted towards women, I think they may have been scared that I might, as I have put tons of &lt;strong&gt;unwanted attention&lt;/strong&gt; on several women over the years, starting with when I was 12 years old, in the sixth grade.&lt;/p&gt;
-&lt;p&gt;I also want to be clear, I was a horrible guy friend to women (even if they didn’t think so). If I knew a girl had a boyfriend, well then, I would &lt;strong&gt;not&lt;/strong&gt; even consider trying to hit on or express interest in that girl, and I was “friends” with plenty of women over the course of my school years who had boyfriends. But in &lt;strong&gt;most&lt;/strong&gt; cases I secretly hoped they might dump their boyfriends and go out with me instead. Also, if I knew they didn’t have a boyfriend, and I found them remotely attractive, then I would do all I could to try to become friends with them in the &lt;strong&gt;hope to eventually become their boyfriend&lt;/strong&gt;. So, my sole reason for being friends with women, really, was to eventually become romantically involved. That was my primary motivation. Looking back on it now, it makes me sick.&lt;/p&gt;
-&lt;p&gt;I’ve never had a woman tell me she was assaulted by anyone either, but given my past behavior, even if someone I knew had, I don’t think my actions made me someone that a woman would trust to tell.&lt;/p&gt;
+&lt;p&gt;Let me be up front. I have never &lt;strong&gt;sexually assaulted&lt;/strong&gt; anyone, let alone
+considered such a thing. But that’s not really the problem, because the way
+I acted towards women, I think they may have been scared that I might, as
+I have put tons of &lt;strong&gt;unwanted attention&lt;/strong&gt; on several
+women over the years, starting with when I was 12 years old, in the sixth grade.&lt;/p&gt;
+&lt;p&gt;I also want to be clear, I was a horrible guy friend to women
+(even if they didn’t think so). If I knew a girl had a boyfriend,
+well then, I would &lt;strong&gt;not&lt;/strong&gt; even consider trying to hit on or express interest in
+that girl, and I was “friends” with plenty of women over the course of my school
+years who had boyfriends. But in &lt;strong&gt;most&lt;/strong&gt; cases I secretly hoped they might dump their
+boyfriends and go out with me instead. Also, if I knew they didn’t have
+a boyfriend, and I found them remotely attractive, then I would do all I could
+to try to become friends with them in the &lt;strong&gt;hope to eventually become their boyfriend&lt;/strong&gt;.
+So, my sole reason for being friends with women, really, was to eventually
+become romantically involved. That was my primary motivation. Looking back on it
+now, it makes me sick.&lt;/p&gt;
+&lt;p&gt;I’ve never had a woman tell me she was assaulted by anyone either, but given my
+past behavior, even if someone I knew had, I don’t think my actions made me someone
+that a woman would trust to tell.&lt;/p&gt;
 &lt;p&gt;Let me give you some examples of my behavior.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;grade-school&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Grade School&lt;/h2&gt;
-&lt;p&gt;In 6th grade, I decided that I wanted a girlfriend, and I picked out one girl in my class who I wanted to be my girlfriend. I am very sure I never asked her out, to be my girlfriend, but I made sure to spend tons of time with her, and if I recall correctly, she eventually got the gist of my interest, and told me &lt;strong&gt;very clearly she wasn’t interested&lt;/strong&gt;. But &lt;strong&gt;her telling me no did not stop my unwanted advances&lt;/strong&gt; or attention. I am sure that I made her very uncomfortable the rest of that grade.&lt;/p&gt;
-&lt;p&gt;In middle school (7-9 at the time), I pretty much continued this process unabated. I would latch onto a woman that I found attractive, and make her the target of my affections, and pour out my unwanted attention upon her, &lt;strong&gt;not taking no for an answer&lt;/strong&gt;. I only stopped after long periods of continued rejection, or when that person acquired a significant other. Although not an excuse for my actions, my tactics and hopes were largely fueled by rampaging hormones, way too many romantic comedies where the nice guy always got the girl by virtue of sheer persistence (this was the 90’s), and nascent exposure to pornography.&lt;/p&gt;
-&lt;p&gt;I would find out girls numbers and call them without being asked. I would know where these girls were at all times through the day, even during lunch and between classes. I would find any excuse to be near them. Every sock-hop (weekly lunch time dance on gym floor) I would ask these girls to dance with me. I would give them valentines cards, Christmas cards, etc, in &lt;strong&gt;the hopes that they would realize what a great guy I was and go out with me.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In 6th grade, I decided that I wanted a girlfriend, and I picked out one girl in my class who
+I wanted to be my girlfriend. I am very sure I never asked her out, to be my girlfriend,
+but I made sure to spend tons of time with her, and if I recall correctly, she eventually got
+the gist of my interest, and told me &lt;strong&gt;very clearly she wasn’t interested&lt;/strong&gt;.
+But &lt;strong&gt;her telling me no did not stop my unwanted advances&lt;/strong&gt; or attention. I am sure that I made
+her very uncomfortable the rest of that grade.&lt;/p&gt;
+&lt;p&gt;In middle school (7-9 at the time), I pretty much continued this process unabated. I would latch onto a woman
+that I found attractive, and make her the target of my affections, and pour out my unwanted
+attention upon her, &lt;strong&gt;not taking no for an answer&lt;/strong&gt;. I only stopped
+after long periods of continued rejection, or when that person acquired a
+significant other. Although not an excuse for my actions,
+my tactics and hopes were largely fueled by rampaging hormones, way too many
+romantic comedies where the nice guy always got the girl by virtue
+of sheer persistence (this was the 90’s), and nascent exposure to pornography.&lt;/p&gt;
+&lt;p&gt;I would find out girls numbers and call them without being asked. I would know
+where these girls were at all times through the day, even during lunch and
+between classes. I would find any excuse to be near them. Every sock-hop (weekly
+lunch time dance on gym floor) I would ask these girls to dance with me. I would
+give them valentines cards, Christmas cards, etc, in &lt;strong&gt;the hopes that they would realize
+what a great guy I was and go out with me.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Just so we are clear, none of this got me any dates in grade school.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;undergraduate&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Undergraduate&lt;/h2&gt;
-&lt;p&gt;Now I’ve graduated high-school, I’m heading off to a local university, with lots of girls. I made lots of friends with girls who had boyfriends, in fact I think my circle of friends had way more girls in it than guys. But, I was always finding one girl who I wanted to date, and would make sure to spend extra time around them, helping them whenever possible, etc, and dropping subtle and not so subtle hints that I wanted to be their boyfriend. And there was always the hope that someone would break-up with their current boyfriend and find me, the faithful friend, waiting to comfort them.&lt;/p&gt;
-&lt;p&gt;Over the course of this time, I had three women agree to be my date. Two of those did not result in an actual date, because I started acting like a stalker after they said yes, and they wisely stayed away. In the third case, we went out twice, but me calling at random hours, and showing up at her house un-announced because I thought she was really sad freaked her out, and she stopped talking to my creepy, stalkerish, clingy self.&lt;/p&gt;
+&lt;p&gt;Now I’ve graduated high-school, I’m heading off to a local university, with lots
+of girls. I made lots of friends with girls who had boyfriends, in fact I think
+my circle of friends had way more girls in it than guys. But, I was always finding
+one girl who I wanted to date, and would make sure to spend extra time around them,
+helping them whenever possible, etc, and dropping subtle and not so subtle hints
+that I wanted to be their boyfriend. And there was always the hope that someone
+would break-up with their current boyfriend and find me, the faithful friend,
+waiting to comfort them.&lt;/p&gt;
+&lt;p&gt;Over the course of this time, I had three women agree to be my date. Two of those
+did not result in an actual date, because I started acting like a stalker after
+they said yes, and they wisely stayed away. In the third case, we went out twice,
+but me calling at random hours, and showing up at her house un-announced because
+I thought she was really sad freaked her out, and she stopped talking to my
+creepy, stalkerish, clingy self.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;post-graduate&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Post-Graduate&lt;/h2&gt;
-&lt;p&gt;Somehow, it seems, by the time I got to my PhD, I had &lt;strong&gt;mostly&lt;/strong&gt; given up on finding a girlfriend, settling down and getting married (really, that was my goal). I say mostly. I don’t know if I hadn’t met my now spouse in the first couple of months of my PhD that I would not have continued making unwanted advances on the women in my PhD program. (By the way, I met my spouse outside of work, at a Church actually, and was introduced by a mutual friend. In the 13 years I’ve known her, there are only a handful of days we haven’t talked to each other since we went on our first date).&lt;/p&gt;
+&lt;p&gt;Somehow, it seems, by the time I got to my PhD, I had &lt;strong&gt;mostly&lt;/strong&gt; given up on
+finding a girlfriend, settling down and getting married (really, that was my goal).
+I say mostly. I don’t know
+if I hadn’t met my now spouse in the first couple of months of my PhD that I
+would not have continued making unwanted advances on the women in my PhD program.
+(By the way, I met my spouse outside of work, at a Church actually, and was introduced
+by a mutual friend. In the 13 years I’ve known her, there are only a handful of days
+we haven’t talked to each other since we went on our first date).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-real-problem&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;The Real Problem&lt;/h2&gt;
-&lt;p&gt;And this is the &lt;strong&gt;real&lt;/strong&gt; problem. Too many men, my past self included, think women owe them something for being their friend, for being a &lt;strong&gt;nice guy&lt;/strong&gt;. For giving them any kind of attention, or any kind of help. Too many men believe these things, and then use their power and prestige, to demand things of women. Guys, &lt;strong&gt;women don’t owe you anything.&lt;/strong&gt; They definitely don’t owe you sex or reciprocated romantic interest because of something you did for them. They are another person worthy of respect, simply because they are a person.&lt;/p&gt;
-&lt;p&gt;In addition, real life is not a romantic comedy. Non-romantic friendships are a good thing, because we need other peoples perspectives in our lives. So, if a woman tells you &lt;strong&gt;no, she doesn’t want to date you&lt;/strong&gt;, accept it, and move on. Don’t make it awkward, especially if you are in the same work environment. &lt;strong&gt;Don’t assume that a woman is romantically interested just because she is friendly.&lt;/strong&gt; I know, radical thought. Maybe try being friends, colleagues, whatever with no romantic intentions, and no expectations of them either. Don’t be #partoftheproblem.&lt;/p&gt;
+&lt;p&gt;And this is the &lt;strong&gt;real&lt;/strong&gt; problem. Too many men, my past self included, think women owe them something for being
+their friend, for being a &lt;strong&gt;nice guy&lt;/strong&gt;. For giving them any kind of attention,
+or any kind of help. Too many men believe these things, and then use their power and
+prestige, to demand things of women. Guys, &lt;strong&gt;women don’t owe you anything.&lt;/strong&gt; They
+definitely don’t owe you sex or reciprocated romantic interest because of something
+you did for them. They are another person worthy of respect, simply because they
+are a person.&lt;/p&gt;
+&lt;p&gt;In addition, real life is not a romantic comedy. Non-romantic friendships are a good thing,
+because we need other peoples perspectives in our lives. So, if a woman tells you &lt;strong&gt;no, she doesn’t want
+to date you&lt;/strong&gt;, accept it, and move on. Don’t make it awkward, especially if you are
+in the same work environment. &lt;strong&gt;Don’t assume that a woman is romantically interested
+just because she is friendly.&lt;/strong&gt; I know, radical thought. Maybe try being friends, colleagues, whatever with
+no romantic intentions, and no expectations of them either. Don’t be #partoftheproblem.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;solutions&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Solutions&lt;/h2&gt;
-&lt;p&gt;Teach your children that they can be friends with people of the opposite sex without being romantically involved, especially as they hit puberty. Teach them that &lt;strong&gt;no means no&lt;/strong&gt;, not &lt;strong&gt;no means maybe in 3 weeks&lt;/strong&gt;, or &lt;strong&gt;no means maybe if I try hard enough&lt;/strong&gt;. And if you see other men engaging in putting unwanted attention on women, call them out on it, &lt;strong&gt;whatever form it may take&lt;/strong&gt;. I wish someone had said something to me.&lt;/p&gt;
+&lt;p&gt;Teach your children that they can be friends with people of the opposite sex
+without being romantically involved, especially as they hit puberty. Teach
+them that &lt;strong&gt;no means no&lt;/strong&gt;, not &lt;strong&gt;no means maybe in 3 weeks&lt;/strong&gt;, or &lt;strong&gt;no means
+maybe if I try hard enough&lt;/strong&gt;. And if you see other men engaging in putting
+unwanted attention on women, call them out on it, &lt;strong&gt;whatever form it may take&lt;/strong&gt;.
+I wish someone had said something to me.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;caveats&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Caveats&lt;/h2&gt;
-&lt;p&gt;I realize that our general culture is really #partoftheproblem, when we have highly sexualized advertising (especially of women to men), and the idea that &lt;strong&gt;boys will be boys&lt;/strong&gt;, tell jokes about sexual assault, and propagate the idea that &lt;strong&gt;women want it&lt;/strong&gt;, based on how they act or dress. Those are all wrong too, and our culture needs to change.&lt;/p&gt;
-&lt;p&gt;I also realize that some of what I describe about myself is rather mild in comparison to much of what gets reported, but that’s not the point. It is still unwanted attention, and I didn’t know how to take no for an answer. Those women &lt;strong&gt;didn’t want my attention&lt;/strong&gt;, and I couldn’t accept that. If I had a different temperament, I don’t know what I would have done. Enough people realized it that some friends in Undergrad stopped being around me, but no one ever told me that what I was doing was wrong, and my parents weren’t involved enough in my so-called love life to know what was going on. If they had, I think they would have told me to knock it off and stop being an idiot.&lt;/p&gt;
+&lt;p&gt;I realize that our general culture is really #partoftheproblem, when we have
+highly sexualized advertising (especially of women to men), and the idea
+that &lt;strong&gt;boys will be boys&lt;/strong&gt;, tell jokes about sexual assault, and propagate
+the idea that &lt;strong&gt;women want it&lt;/strong&gt;, based on how they act or dress. Those are all wrong
+too, and our culture needs to change.&lt;/p&gt;
+&lt;p&gt;I also realize that some of what I describe
+about myself is rather mild in comparison to much of what gets reported, but
+that’s not the point. It is still unwanted attention, and I didn’t know how
+to take no for an answer. Those women &lt;strong&gt;didn’t want my attention&lt;/strong&gt;,
+and I couldn’t accept that. If I had a different temperament, I don’t know what
+I would have done. Enough people realized it that some friends in Undergrad
+stopped being around me, but no one ever told me that what I was doing was
+wrong, and my parents weren’t involved enough in my so-called love life to know
+what was going on. If they had, I think they would have told me to knock it off
+and stop being an idiot.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
