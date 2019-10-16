@@ -6,11 +6,21 @@
     <description>Recent content in Posts on Deciphering Life: One Bit at a Time</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2018 Robert M Flight</copyright>
+    <copyright>&amp;copy; 2019 Robert M Flight</copyright>
     <lastBuildDate>Sun, 01 Jan 2017 00:00:00 -0500</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Testing Utterances</title>
+      <link>/post/testing-utterances/</link>
+      <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/testing-utterances/</guid>
+      <description> TL;DR Seeing if utterances will actually work on my site.
+ </description>
+    </item>
     
     <item>
       <title>Comparisons using for loops vs split</title>
