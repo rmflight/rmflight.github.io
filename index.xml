@@ -28,10 +28,10 @@ who comment on this blog already have one.&lt;/p&gt;
 &lt;div id=&#34;why-utterances&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Why Utterances&lt;/h2&gt;
 &lt;p&gt;When I switched to &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt;, I lost
-my &lt;a href=&#34;&#34;&gt;disqus&lt;/a&gt; comments. I had considered migrating them over, but never got around
+my disqus comments. I had considered migrating them over, but never got around
 to it. I also thought that there had to be a way to link GitHub issues to
 blog posts, but didn’t investigate it much.&lt;/p&gt;
-&lt;p&gt;Then, I came across Maëlle’s blog post about switching to &lt;a href=&#34;https://uteranc.es&#34;&gt;utterances&lt;/a&gt;
+&lt;p&gt;Then, I came across &lt;a href=&#34;https://masalmon.eu/2019/10/02/disqus/&#34;&gt;Maëlle’s blog post&lt;/a&gt; about switching to &lt;a href=&#34;https://uteranc.es&#34;&gt;utterances&lt;/a&gt;
 and I was sold. I had some free time last night, and dived into how to add it
 to my site that uses the hugo academic theme.&lt;/p&gt;
 &lt;p&gt;I’m not expecting a lot of heavy commenting, but at least it’s now available!&lt;/p&gt;
