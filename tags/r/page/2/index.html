@@ -196,6 +196,16 @@
   
   
   <div>
+    <h2><a href="/post/custom-deployment-script/">Custom Deployment Script</a></h2>
+    <div class="article-style">
+      
+      TL;DR Use a short bash script to do deployment from your own computer directly to your *.github.io domain.
+ Why? So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the /public directory to the repo for my github.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></h2>
     <div class="article-style">
       
@@ -282,16 +292,6 @@ This is a false statement, however. If you set up your R development environment
       I retweeted this a few days ago:
 1. Open MATLAB for first time in a few years after using #rstats. 2. Site license doesn’t work right. 3. F*** MATLAB, I’ll try to do it in R
 And as I have started the process of installing MatLab on my own machine because I want to translate a published MatLab package into R, I am reminded of how painful the process can be.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/package-version-increment-pre-and-post-commit-hooks/">Package Version Increment Pre- and Post-Commit Hooks</a></h2>
-    <div class="article-style">
-      
-      If you just want the hook scripts, check this gist. If you want to know some of the motivation behind writing them, and about the internals, then read on.
-Package Version Incrementing A good practice to get into is incrementing the minor version number (i.e. going from 0.0.1 to 0.0.2) after each git commit when developing packages (this is recommended by the Bioconductor devs as well ). This makes it very easy to know what changes are in your currently installed version, and if you remembered to actually install the most recent version for testing.
       
     </div>
   </div>

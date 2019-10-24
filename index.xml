@@ -11,6 +11,83 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Introducing Scientific Programming</title>
+      <link>/post/introducing-scientific-programming/</link>
+      <pubDate>Wed, 23 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introducing-scientific-programming/</guid>
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;We should get science undergraduate students programming by introducing R &amp;amp; Python in &lt;strong&gt;all&lt;/strong&gt; first year science labs, and continuing throughout the undergraduate classes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why?&lt;/h2&gt;
+&lt;p&gt;I’ve previously encountered ideas around getting &lt;strong&gt;graduate&lt;/strong&gt; students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.
+As successful as programs like Software Carpentry are for getting graduate students and others further along their scientific career into a programming and command line mindset, I think it needs to be a lot earlier, and introduced in a way that it becomes second nature.
+Ergo, undergraduate science labs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;undergraduate-science-labs&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Undergraduate Science Labs&lt;/h2&gt;
+&lt;p&gt;Based on my recollection of undergraduate labs and later being a chemistry lab teaching assistant (both during my undergraduate and graduate degrees), there is a lot of calculations going on.
+Physics labs involved performing experiments to determine underlying constants or known quantities.
+Chemistry labs often involved quantitative determinations, even more so as labs advanced over the years.
+Even my biology labs frequently involved calculations and generation of reports to hand in.
+In &lt;strong&gt;my&lt;/strong&gt; first year, calculators were relied upon, along with example worksheets showing where to fill things in and how to do the calculations.
+Over the years, Microsoft Excel was eventually introduced, and at one point during my senior Analytical Lab was basically required.&lt;/p&gt;
+&lt;p&gt;What if students were consistently introduced to another way to do the necessary calculations for their labs?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;an-alternative-to-calculators-and-excel&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;An Alternative to Calculators and Excel&lt;/h2&gt;
+&lt;p&gt;I’m imagining &lt;strong&gt;all&lt;/strong&gt; of the undergraduate science labs, Biology, Chemistry, Physics and Geology, requiring the use of either Python or R to do the quantitative calculations and produce reports.
+It would likely require an immense effort on the part of teaching faculty for each lab, teaching assistants in the lab, as well as having one or two dedicated persons who are able to help students with issues running R / Python and getting packages installed.
+Ideally, students would be introduced to generating their full reports gradually, starting with highly scaffolded lab reports where they simply have to supply a few numbers, click &lt;code&gt;knit&lt;/code&gt; (assuming we are using R within RStudio) and generate a report that can be submitted.
+Over time, the lab reports would involve more and more calculations being coded directly by the student, and more of the report written directly by them.
+This scaffolding would likely be repeated at each level of labs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;challenges-in-implementation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Challenges in Implementation&lt;/h2&gt;
+&lt;p&gt;I see three main challenges in implementing something like the above.&lt;/p&gt;
+&lt;div id=&#34;getting-all-the-departments-on-board&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Getting all the Departments On Board&lt;/h3&gt;
+&lt;p&gt;Seriously, getting all of the lab teaching faculty on board so that this happens across all of the science departments and at all levels of labs.
+Although it would be very useful even if done consistently in a single department, I think the biggest bang for the buck is going to be &lt;strong&gt;all&lt;/strong&gt; departments buying in.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;converting-all-the-labs&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Converting all the Labs&lt;/h3&gt;
+&lt;p&gt;After convincing everyone that this is a worthy goal, then there is the herculean task of figuring out how to make the labs fit into this type of framework.
+The added wrinkle to this is that labs are frequently marked on how close one got to the &lt;strong&gt;right&lt;/strong&gt; answer (known concentration of a standard, for example), which can depend both on how accurately one performs the experimental technique being taught, and how well one does the calculations (at least this was my experience as student and TA).
+Not only that, but many labs often had two parts, sometimes in the same lab period, where messing up the first part meant that you would have completely wrong answers in the second part.
+Getting even a first pass conversion would be a monumental effort on the part of someone with extensive scripting language knowledge and the teaching faculty.&lt;/p&gt;
+&lt;p&gt;There is also the question of how to convert the labs.
+I would imagine that first year would be done first, and then second, third, fourth.
+But this would also be interwoven with updates to the labs as issues are discovered within each year, and modifications made each year.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;supporting-the-students-and-faculty&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Supporting the Students and Faculty&lt;/h3&gt;
+&lt;p&gt;Let’s face it, doing things this way requires more hardware than just having a calculator in lab with you. Python and R will install on &lt;strong&gt;almost&lt;/strong&gt; any OS however, and the types of calculations necessary are not compute intensive.
+However, there will invariably be issues getting software and necessary packages installed, and keeping them up to date.
+There needs to be someone who is able to be present both in and outside lab time that can help diagnose package installation and update issues.
+This same person will also likely be tasked with helping teaching faculty and assistants install and update necessary software and packages.&lt;/p&gt;
+&lt;p&gt;Not discussed above, but ideally the design of the lab reports should also make sure that they depend on a very low number of packages, and that those packages will install on &lt;strong&gt;any&lt;/strong&gt; OS that the students come in with.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;has-anyone-done-this&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Has Anyone Done This?&lt;/h2&gt;
+&lt;p&gt;I’d be really curious if anyone has attempted anything like this.
+Please leave a comment if you know of any!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interested&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interested?&lt;/h2&gt;
+&lt;p&gt;I’ll admit, being the person behind an effort like this is probably the one thing right now that would convince me to leave my current position in trying to solve cancer metabolomics.
+Drop me a line if this sounds interesting to you!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Comments enabled via utterances</title>
       <link>/post/comments-enabled-via-utterances/</link>
       <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
@@ -1128,147 +1205,6 @@ from something else (&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/comm
 &lt;p&gt;&lt;em&gt;By M. W. Toews, &lt;a href=&#34;http://creativecommons.org/licenses/by/2.5&#34;&gt;CC BY 2.5&lt;/a&gt;, via Wikimedia Commons, &lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;source&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;This information is also mentioned in &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;section 2.7 of the Blogdown book&lt;/a&gt;. Obviously I need to
 do more reading.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>I was Part of the Problem</title>
-      <link>/post/i-was-part-of-the-problem/</link>
-      <pubDate>Wed, 18 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/post/i-was-part-of-the-problem/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;With the recent charges of sexual harassment against some high-profile individuals,
-and so many women coming forward with #metoo (and the understanding that this
-is really something almost &lt;em&gt;all&lt;/em&gt; women have faced), I realized that my younger self
-was #partoftheproblem. I think many other men are part of the problem, &lt;strong&gt;even
-though they might not think so&lt;/strong&gt;. I didn’t think I was part of the problem
-either. I hope that other men might read this and critically evaluate if they
-are #partoftheproblem. I also hope and pray that my own sons will do better
-at this if I teach them right.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;how-could-i-be&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;How Could I Be?&lt;/h2&gt;
-&lt;p&gt;Let me be up front. I have never &lt;strong&gt;sexually assaulted&lt;/strong&gt; anyone, let alone
-considered such a thing. But that’s not really the problem, because the way
-I acted towards women, I think they may have been scared that I might, as
-I have put tons of &lt;strong&gt;unwanted attention&lt;/strong&gt; on several
-women over the years, starting with when I was 12 years old, in the sixth grade.&lt;/p&gt;
-&lt;p&gt;I also want to be clear, I was a horrible guy friend to women
-(even if they didn’t think so). If I knew a girl had a boyfriend,
-well then, I would &lt;strong&gt;not&lt;/strong&gt; even consider trying to hit on or express interest in
-that girl, and I was “friends” with plenty of women over the course of my school
-years who had boyfriends. But in &lt;strong&gt;most&lt;/strong&gt; cases I secretly hoped they might dump their
-boyfriends and go out with me instead. Also, if I knew they didn’t have
-a boyfriend, and I found them remotely attractive, then I would do all I could
-to try to become friends with them in the &lt;strong&gt;hope to eventually become their boyfriend&lt;/strong&gt;.
-So, my sole reason for being friends with women, really, was to eventually
-become romantically involved. That was my primary motivation. Looking back on it
-now, it makes me sick.&lt;/p&gt;
-&lt;p&gt;I’ve never had a woman tell me she was assaulted by anyone either, but given my
-past behavior, even if someone I knew had, I don’t think my actions made me someone
-that a woman would trust to tell.&lt;/p&gt;
-&lt;p&gt;Let me give you some examples of my behavior.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;grade-school&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Grade School&lt;/h2&gt;
-&lt;p&gt;In 6th grade, I decided that I wanted a girlfriend, and I picked out one girl in my class who
-I wanted to be my girlfriend. I am very sure I never asked her out, to be my girlfriend,
-but I made sure to spend tons of time with her, and if I recall correctly, she eventually got
-the gist of my interest, and told me &lt;strong&gt;very clearly she wasn’t interested&lt;/strong&gt;.
-But &lt;strong&gt;her telling me no did not stop my unwanted advances&lt;/strong&gt; or attention. I am sure that I made
-her very uncomfortable the rest of that grade.&lt;/p&gt;
-&lt;p&gt;In middle school (7-9 at the time), I pretty much continued this process unabated. I would latch onto a woman
-that I found attractive, and make her the target of my affections, and pour out my unwanted
-attention upon her, &lt;strong&gt;not taking no for an answer&lt;/strong&gt;. I only stopped
-after long periods of continued rejection, or when that person acquired a
-significant other. Although not an excuse for my actions,
-my tactics and hopes were largely fueled by rampaging hormones, way too many
-romantic comedies where the nice guy always got the girl by virtue
-of sheer persistence (this was the 90’s), and nascent exposure to pornography.&lt;/p&gt;
-&lt;p&gt;I would find out girls numbers and call them without being asked. I would know
-where these girls were at all times through the day, even during lunch and
-between classes. I would find any excuse to be near them. Every sock-hop (weekly
-lunch time dance on gym floor) I would ask these girls to dance with me. I would
-give them valentines cards, Christmas cards, etc, in &lt;strong&gt;the hopes that they would realize
-what a great guy I was and go out with me.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Just so we are clear, none of this got me any dates in grade school.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;undergraduate&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Undergraduate&lt;/h2&gt;
-&lt;p&gt;Now I’ve graduated high-school, I’m heading off to a local university, with lots
-of girls. I made lots of friends with girls who had boyfriends, in fact I think
-my circle of friends had way more girls in it than guys. But, I was always finding
-one girl who I wanted to date, and would make sure to spend extra time around them,
-helping them whenever possible, etc, and dropping subtle and not so subtle hints
-that I wanted to be their boyfriend. And there was always the hope that someone
-would break-up with their current boyfriend and find me, the faithful friend,
-waiting to comfort them.&lt;/p&gt;
-&lt;p&gt;Over the course of this time, I had three women agree to be my date. Two of those
-did not result in an actual date, because I started acting like a stalker after
-they said yes, and they wisely stayed away. In the third case, we went out twice,
-but me calling at random hours, and showing up at her house un-announced because
-I thought she was really sad freaked her out, and she stopped talking to my
-creepy, stalkerish, clingy self.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;post-graduate&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Post-Graduate&lt;/h2&gt;
-&lt;p&gt;Somehow, it seems, by the time I got to my PhD, I had &lt;strong&gt;mostly&lt;/strong&gt; given up on
-finding a girlfriend, settling down and getting married (really, that was my goal).
-I say mostly. I don’t know
-if I hadn’t met my now spouse in the first couple of months of my PhD that I
-would not have continued making unwanted advances on the women in my PhD program.
-(By the way, I met my spouse outside of work, at a Church actually, and was introduced
-by a mutual friend. In the 13 years I’ve known her, there are only a handful of days
-we haven’t talked to each other since we went on our first date).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-real-problem&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Real Problem&lt;/h2&gt;
-&lt;p&gt;And this is the &lt;strong&gt;real&lt;/strong&gt; problem. Too many men, my past self included, think women owe them something for being
-their friend, for being a &lt;strong&gt;nice guy&lt;/strong&gt;. For giving them any kind of attention,
-or any kind of help. Too many men believe these things, and then use their power and
-prestige, to demand things of women. Guys, &lt;strong&gt;women don’t owe you anything.&lt;/strong&gt; They
-definitely don’t owe you sex or reciprocated romantic interest because of something
-you did for them. They are another person worthy of respect, simply because they
-are a person.&lt;/p&gt;
-&lt;p&gt;In addition, real life is not a romantic comedy. Non-romantic friendships are a good thing,
-because we need other peoples perspectives in our lives. So, if a woman tells you &lt;strong&gt;no, she doesn’t want
-to date you&lt;/strong&gt;, accept it, and move on. Don’t make it awkward, especially if you are
-in the same work environment. &lt;strong&gt;Don’t assume that a woman is romantically interested
-just because she is friendly.&lt;/strong&gt; I know, radical thought. Maybe try being friends, colleagues, whatever with
-no romantic intentions, and no expectations of them either. Don’t be #partoftheproblem.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;solutions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Solutions&lt;/h2&gt;
-&lt;p&gt;Teach your children that they can be friends with people of the opposite sex
-without being romantically involved, especially as they hit puberty. Teach
-them that &lt;strong&gt;no means no&lt;/strong&gt;, not &lt;strong&gt;no means maybe in 3 weeks&lt;/strong&gt;, or &lt;strong&gt;no means
-maybe if I try hard enough&lt;/strong&gt;. And if you see other men engaging in putting
-unwanted attention on women, call them out on it, &lt;strong&gt;whatever form it may take&lt;/strong&gt;.
-I wish someone had said something to me.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;caveats&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Caveats&lt;/h2&gt;
-&lt;p&gt;I realize that our general culture is really #partoftheproblem, when we have
-highly sexualized advertising (especially of women to men), and the idea
-that &lt;strong&gt;boys will be boys&lt;/strong&gt;, tell jokes about sexual assault, and propagate
-the idea that &lt;strong&gt;women want it&lt;/strong&gt;, based on how they act or dress. Those are all wrong
-too, and our culture needs to change.&lt;/p&gt;
-&lt;p&gt;I also realize that some of what I describe
-about myself is rather mild in comparison to much of what gets reported, but
-that’s not the point. It is still unwanted attention, and I didn’t know how
-to take no for an answer. Those women &lt;strong&gt;didn’t want my attention&lt;/strong&gt;,
-and I couldn’t accept that. If I had a different temperament, I don’t know what
-I would have done. Enough people realized it that some friends in Undergrad
-stopped being around me, but no one ever told me that what I was doing was
-wrong, and my parents weren’t involved enough in my so-called love life to know
-what was going on. If they had, I think they would have told me to knock it off
-and stop being an idiot.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

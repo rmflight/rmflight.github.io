@@ -11,7 +11,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/iranges-for-non-integer-overlaps/">
+  <link rel="alternate" hreflang="en-us" href="/post/introducing-scientific-programming/">
 
   
   
@@ -57,7 +57,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/iranges-for-non-integer-overlaps/">
+  <link rel="canonical" href="/post/introducing-scientific-programming/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -65,19 +65,19 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/post/iranges-for-non-integer-overlaps/">
-  <meta property="og:title" content="Using IRanges for Non-Integer Overlaps | Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/post/introducing-scientific-programming/">
+  <meta property="og:title" content="Introducing Scientific Programming | Deciphering Life: One Bit at a Time">
   <meta property="og:description" content="">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2018-06-23T00:00:00&#43;00:00">
+  <meta property="article:published_time" content="2019-10-23T00:00:00&#43;00:00">
   
-  <meta property="article:modified_time" content="2018-06-23T00:00:00&#43;00:00">
-  
-
+  <meta property="article:modified_time" content="2019-10-23T00:00:00&#43;00:00">
   
 
-  <title>Using IRanges for Non-Integer Overlaps | Deciphering Life: One Bit at a Time</title>
+  
+
+  <title>Introducing Scientific Programming | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -191,7 +191,7 @@
 
   <div class="article-container">
     <div class="article-inner">
-      <h1 itemprop="name">Using IRanges for Non-Integer Overlaps</h1>
+      <h1 itemprop="name">Introducing Scientific Programming</h1>
 
       
 
@@ -199,15 +199,15 @@
 
   <span class="article-date">
     
-    <time datetime="2018-06-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-06-23
+    <time datetime="2019-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+      2019-10-23
     </time>
   </span>
 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    5 min read
   </span>
   
 
@@ -225,35 +225,35 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Using%20IRanges%20for%20Non-Integer%20Overlaps&amp;url=%2fpost%2firanges-for-non-integer-overlaps%2f"
+         href="https://twitter.com/intent/tweet?text=Introducing%20Scientific%20Programming&amp;url=%2fpost%2fintroducing-scientific-programming%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2firanges-for-non-integer-overlaps%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fintroducing-scientific-programming%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2firanges-for-non-integer-overlaps%2f&amp;title=Using%20IRanges%20for%20Non-Integer%20Overlaps"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fintroducing-scientific-programming%2f&amp;title=Introducing%20Scientific%20Programming"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2firanges-for-non-integer-overlaps%2f&amp;title=Using%20IRanges%20for%20Non-Integer%20Overlaps"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fintroducing-scientific-programming%2f&amp;title=Introducing%20Scientific%20Programming"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Using%20IRanges%20for%20Non-Integer%20Overlaps&amp;body=%2fpost%2firanges-for-non-integer-overlaps%2f">
+         href="mailto:?subject=Introducing%20Scientific%20Programming&amp;body=%2fpost%2fintroducing-scientific-programming%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -272,110 +272,68 @@
 
 <div id="tldr" class="section level2">
 <h2>TL;DR</h2>
-<p>The <a href="https://bioconductor.org/packages/IRanges/"><code>IRanges</code></a> package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a <strong>large</strong> constant factor and round them. The constant depends on how much accuracy you need.</p>
+<p>We should get science undergraduate students programming by introducing R &amp; Python in <strong>all</strong> first year science labs, and continuing throughout the undergraduate classes.</p>
 </div>
-<div id="iranges" class="section level2">
-<h2>IRanges??</h2>
-<p><a href="https://bioconductor.org/packages/IRanges/"><code>IRanges</code></a> is a bioconductor package for interval algebra of <strong>i</strong>nteger <strong>ranges</strong>. It is used extensively in the <code>GenomicRanges</code> package for finding overlaps between various genomic features. For genomic features, <strong>integers</strong> make sense, because one cannot have fractional base locations.</p>
-<p>However, <code>IRanges</code> uses <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red-black trees</a> as its data structure, which provide very fast searches of overlaps. This makes it very attractive for <strong>any</strong> problem that involves overlapping ranges.</p>
+<div id="why" class="section level2">
+<h2>Why?</h2>
+<p>I’ve previously encountered ideas around getting <strong>graduate</strong> students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.
+As successful as programs like Software Carpentry are for getting graduate students and others further along their scientific career into a programming and command line mindset, I think it needs to be a lot earlier, and introduced in a way that it becomes second nature.
+Ergo, undergraduate science labs.</p>
 </div>
-<div id="motivation" class="section level2">
-<h2>Motivation</h2>
-<p>My motivation comes from mass-spectrometry data, where I want to count the number of raw data points and / or the number of peaks in a <strong>large</strong> number of M/Z windows. Large here means on the order of 1,000,000 M/Z windows.</p>
-<p>Generating the windows is not hard, but searching the list of points / peaks for which ones are within the bounds of a window takes <strong>a really long time</strong>. Long enough that I needed some other method.</p>
+<div id="undergraduate-science-labs" class="section level2">
+<h2>Undergraduate Science Labs</h2>
+<p>Based on my recollection of undergraduate labs and later being a chemistry lab teaching assistant (both during my undergraduate and graduate degrees), there is a lot of calculations going on.
+Physics labs involved performing experiments to determine underlying constants or known quantities.
+Chemistry labs often involved quantitative determinations, even more so as labs advanced over the years.
+Even my biology labs frequently involved calculations and generation of reports to hand in.
+In <strong>my</strong> first year, calculators were relied upon, along with example worksheets showing where to fill things in and how to do the calculations.
+Over the years, Microsoft Excel was eventually introduced, and at one point during my senior Analytical Lab was basically required.</p>
+<p>What if students were consistently introduced to another way to do the necessary calculations for their labs?</p>
 </div>
-<div id="iranges-to-the-rescue" class="section level2">
-<h2>IRanges to the Rescue!</h2>
-<p>So my idea was to use <code>IRanges</code>. But there is a problem, <code>IRanges</code> is for integer ranges. How do we use this for non-integer data? Simple, multiply and round the fractional numbers to generate integers.</p>
-<p>It turns out that multiplying our mass-spec data by <code>20,000</code> gives us differences down to the <code>0.00005</code> place, which is more than enough accuracy for the size of the windows we are interested in. If needed, <code>IRanges</code> can handle <code>1600 * 1e6</code>, but currently will crash at <code>1600 * 1e7</code>.</p>
+<div id="an-alternative-to-calculators-and-excel" class="section level2">
+<h2>An Alternative to Calculators and Excel</h2>
+<p>I’m imagining <strong>all</strong> of the undergraduate science labs, Biology, Chemistry, Physics and Geology, requiring the use of either Python or R to do the quantitative calculations and produce reports.
+It would likely require an immense effort on the part of teaching faculty for each lab, teaching assistants in the lab, as well as having one or two dedicated persons who are able to help students with issues running R / Python and getting packages installed.
+Ideally, students would be introduced to generating their full reports gradually, starting with highly scaffolded lab reports where they simply have to supply a few numbers, click <code>knit</code> (assuming we are using R within RStudio) and generate a report that can be submitted.
+Over time, the lab reports would involve more and more calculations being coded directly by the student, and more of the report written directly by them.
+This scaffolding would likely be repeated at each level of labs.</p>
 </div>
-<div id="how-fast-is-it" class="section level2">
-<h2>How Fast Is It?</h2>
-<p>Lets actually test differences in speed by counting how many overlapping points there are.</p>
-<pre class="r"><code>library(IRanges)
-library(ggplot2)
-load(&quot;../../extdata/iranges_example_data.rda&quot;)
-
-head(mz_points)</code></pre>
-<pre><code>## IRanges object with 6 ranges and 1 metadata column:
-##           start       end     width |               mz
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |        &lt;numeric&gt;
-##   [1]   2970182   2970182         1 | 148.509100524992
-##   [2]   2970183   2970183         1 | 148.509161249802
-##   [3]   2970184   2970184         1 |  148.50922197465
-##   [4]   2970186   2970186         1 | 148.509282699535
-##   [5]   3000526   3000526         1 | 150.026298638453
-##   [6]   3000527   3000527         1 | 150.026360296201</code></pre>
-<pre class="r"><code>head(mz_windows)</code></pre>
-<pre><code>## IRanges object with 6 ranges and 2 metadata columns:
-##           start       end     width |         mz_start           mz_end
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |        &lt;numeric&gt;        &lt;numeric&gt;
-##   [1]   2960000   2960011        12 |              148 148.000554529159
-##   [2]   2960001   2960012        12 | 148.000055452916 148.000609982075
-##   [3]   2960002   2960013        12 | 148.000110905832 148.000665434991
-##   [4]   2960003   2960014        12 | 148.000166358748 148.000720887907
-##   [5]   2960004   2960016        13 | 148.000221811664 148.000776340823
-##   [6]   2960006   2960017        12 |  148.00027726458 148.000831793739</code></pre>
-<p>I have some <a href="https://github.com/rmflight/researchBlog_blogdown/blob/master/data/iranges_example_data.rda">example data</a> with 3447542 windows, and 991816 points. We will count how many point there are in each window using the below functions, with differing number of windows.</p>
-<div id="functions" class="section level3">
-<h3>Functions</h3>
-<pre class="r"><code>count_overlaps_naive &lt;- function(mz_start, mz_end, points){
-  sum((points &gt;= mz_start) &amp; (points &lt;= mz_end))
-}
-
-iterate_windows &lt;- function(windows, points){
-  purrr::pmap_int(windows, count_overlaps_naive, points)
-}
-
-run_times_iterating &lt;- function(windows, points){
-  t &lt;- Sys.time()
-  window_counts &lt;- iterate_windows(windows, points)
-  t2 &lt;- Sys.time()
-  run_time &lt;- difftime(t2, t, units = &quot;secs&quot;)
-  run_time
-}
-
-run_times_countoverlaps &lt;- function(windows, points){
-  t &lt;- Sys.time()
-  window_counts &lt;- countOverlaps(points, windows)
-  t2 &lt;- Sys.time()
-  run_time &lt;- difftime(t2, t, units = &quot;secs&quot;)
-  run_time
-}</code></pre>
+<div id="challenges-in-implementation" class="section level2">
+<h2>Challenges in Implementation</h2>
+<p>I see three main challenges in implementing something like the above.</p>
+<div id="getting-all-the-departments-on-board" class="section level3">
+<h3>Getting all the Departments On Board</h3>
+<p>Seriously, getting all of the lab teaching faculty on board so that this happens across all of the science departments and at all levels of labs.
+Although it would be very useful even if done consistently in a single department, I think the biggest bang for the buck is going to be <strong>all</strong> departments buying in.</p>
 </div>
-<div id="define-samples-of-different-sizes" class="section level3">
-<h3>Define Samples of Different Sizes</h3>
-<pre class="r"><code>set.seed(1234)
-
-sample_sizes &lt;- c(10, 100, 1000, 10000, 50000, 100000)
-
-window_samples &lt;- purrr::map(sample_sizes, function(x){sample(length(mz_windows), size = x)})</code></pre>
+<div id="converting-all-the-labs" class="section level3">
+<h3>Converting all the Labs</h3>
+<p>After convincing everyone that this is a worthy goal, then there is the herculean task of figuring out how to make the labs fit into this type of framework.
+The added wrinkle to this is that labs are frequently marked on how close one got to the <strong>right</strong> answer (known concentration of a standard, for example), which can depend both on how accurately one performs the experimental technique being taught, and how well one does the calculations (at least this was my experience as student and TA).
+Not only that, but many labs often had two parts, sometimes in the same lab period, where messing up the first part meant that you would have completely wrong answers in the second part.
+Getting even a first pass conversion would be a monumental effort on the part of someone with extensive scripting language knowledge and the teaching faculty.</p>
+<p>There is also the question of how to convert the labs.
+I would imagine that first year would be done first, and then second, third, fourth.
+But this would also be interwoven with updates to the labs as issues are discovered within each year, and modifications made each year.</p>
 </div>
-<div id="run-it" class="section level3">
-<h3>Run It</h3>
-<pre class="r"><code>iranges_times &lt;- purrr::map_dbl(window_samples, function(x){
-  run_times_countoverlaps(mz_windows[x], mz_points)
-})
-
-window_frame &lt;- as.data.frame(mcols(mz_windows))
-
-naive_times &lt;- purrr::map_dbl(window_samples, function(x){
-  run_times_iterating(window_frame[x, ], mz_points)
-})</code></pre>
+<div id="supporting-the-students-and-faculty" class="section level3">
+<h3>Supporting the Students and Faculty</h3>
+<p>Let’s face it, doing things this way requires more hardware than just having a calculator in lab with you. Python and R will install on <strong>almost</strong> any OS however, and the types of calculations necessary are not compute intensive.
+However, there will invariably be issues getting software and necessary packages installed, and keeping them up to date.
+There needs to be someone who is able to be present both in and outside lab time that can help diagnose package installation and update issues.
+This same person will also likely be tasked with helping teaching faculty and assistants install and update necessary software and packages.</p>
+<p>Not discussed above, but ideally the design of the lab reports should also make sure that they depend on a very low number of packages, and that those packages will install on <strong>any</strong> OS that the students come in with.</p>
 </div>
-<div id="plot-them" class="section level3">
-<h3>Plot Them</h3>
-<pre class="r"><code>all_times &lt;- data.frame(size = rep(sample_sizes, 2),
-                        time = c(iranges_times, naive_times),
-                        method = rep(c(&quot;iranges&quot;, &quot;naive&quot;), each = 6))
-
-p &lt;- ggplot(all_times, aes(x = log10(size), y = time, color = method)) + geom_point() + geom_line() + labs(y = &quot;time (s)&quot;, x = &quot;log10(# of windows)&quot;, title = &quot;Naive &amp; IRanges Timings&quot;) + theme(legend.position = c(0.2, 0.8))
-p</code></pre>
-<p><img src="/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-1.svg" width="672" /></p>
-<pre class="r"><code>p + ylim(c(0, 1))</code></pre>
-<p><img src="/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-2.svg" width="672" /></p>
-<p>As the two figures show, the naive solution, while a little faster under 1000 regions, is quickly outperformed by <code>IRanges</code>, whose time increases much more slowly.</p>
 </div>
+<div id="has-anyone-done-this" class="section level2">
+<h2>Has Anyone Done This?</h2>
+<p>I’d be really curious if anyone has attempted anything like this.
+Please leave a comment if you know of any!</p>
+</div>
+<div id="interested" class="section level2">
+<h2>Interested?</h2>
+<p>I’ll admit, being the person behind an effort like this is probably the one thing right now that would convince me to leave my current position in trying to solve cancer metabolomics.
+Drop me a line if this sounds interesting to you!</p>
 </div>
 
       </div>
@@ -387,7 +345,7 @@ p</code></pre>
   
   <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/iranges">iranges</a>
+  <a class="btn btn-primary btn-outline" href="/tags/reproducibility">reproducibility</a>
   
 </div>
 
@@ -405,15 +363,15 @@ p</code></pre>
   <h3>Related</h3>
   <ul>
     
-    <li><a href="/post/knitrprogressbar/">knitrProgressBar Package</a></li>
+    <li><a href="/post/travis-ci-to-github-pages/">Travis-CI to GitHub Pages</a></li>
     
-    <li><a href="/post/licensing-r-packages-that-include-others-code/">Licensing R Packages that Include Others Code</a></li>
+    <li><a href="/post/writing-papers-using-r-markdown/">Writing Papers Using R Markdown</a></li>
     
-    <li><a href="/post/docopt-numeric-options/">docopt &amp; Numeric Options</a></li>
+    <li><a href="/post/for-loops-vs-split/">Comparisons using for loops vs split</a></li>
     
-    <li><a href="/post/custom-deployment-script/">Custom Deployment Script</a></li>
+    <li><a href="/post/nicer-png-graphics/">Nicer PNG Graphics</a></li>
     
-    <li><a href="/post/linking-to-manually-inserted-images-in-hugo/">Linking to Manually Inserted Images in Blogdown / Hugo</a></li>
+    <li><a href="/post/don-t-do-pca-after-statistical-testing/">Don&#39;t do PCA After Statistical Testing!</a></li>
     
   </ul>
 </div>

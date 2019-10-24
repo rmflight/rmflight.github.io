@@ -72,7 +72,7 @@
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-02-13T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2019-10-23T00:00:00&#43;00:00">
   
 
   
@@ -196,6 +196,16 @@
   
   
   <div>
+    <h2><a href="/post/introducing-scientific-programming/">Introducing Scientific Programming</a></h2>
+    <div class="article-style">
+      
+      TL;DR We should get science undergraduate students programming by introducing R &amp; Python in all first year science labs, and continuing throughout the undergraduate classes.
+ Why? I’ve previously encountered ideas around getting graduate students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="/post/for-loops-vs-split/">Comparisons using for loops vs split</a></h2>
     <div class="article-style">
       
@@ -285,16 +295,6 @@ Lets setup an example where we will have 1e5 values in 10 groups, each group of 
       TL;DR If you use the docopt package to create command line R executables that take options, there is something to know about numeric command line options: they should have as.double before using them in your script.
  Setup Lets set up a new docopt string, that includes both string and numeric arguments.
 &quot; Usage: test_numeric.R [&ndash;string=&lt;string_value&gt;] [&ndash;numeric=&lt;numeric_value&gt;] test_numeric.R (-h | &ndash;help) test_numeric.R Description: Testing how values are passed using docopt.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/custom-deployment-script/">Custom Deployment Script</a></h2>
-    <div class="article-style">
-      
-      TL;DR Use a short bash script to do deployment from your own computer directly to your *.github.io domain.
- Why? So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t willing to setup a custom domain yet, and some of my posts involve a lot of personally created packages, etc, that I don’t want to debug installation on Travis. So, I wanted a simple script I could call on my laptop that would copy the /public directory to the repo for my github.
       
     </div>
   </div>

@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Robert M Flight</copyright>
-    <lastBuildDate>Wed, 13 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introducing Scientific Programming</title>
+      <link>/post/introducing-scientific-programming/</link>
+      <pubDate>Wed, 23 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introducing-scientific-programming/</guid>
+      <description>TL;DR We should get science undergraduate students programming by introducing R &amp;amp; Python in all first year science labs, and continuing throughout the undergraduate classes.
+ Why? I’ve previously encountered ideas around getting graduate students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.</description>
+    </item>
     
     <item>
       <title>Comparisons using for loops vs split</title>
