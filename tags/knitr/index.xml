@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>knitr on Deciphering Life: One Bit at a Time</title>
+    <link>/tags/knitr/</link>
+    <description>Recent content in knitr on Deciphering Life: One Bit at a Time</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2019 Robert M Flight</copyright>
+    <lastBuildDate>Wed, 06 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/knitr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Narrower PDF Kable Tables</title>
+      <link>/post/narrower-kable-tables/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/narrower-kable-tables/</guid>
+      <description>TL;DR Don’t bother trying to roll your own function to make narrower kable tables in a PDF document, just use kableExtra.
+ Motivation I’ve been creating tables in a report where I really needed the table to fit, and because I am using PDF output, that means the tables can’t be any wider than the page. As I’m sure many readers might be aware, kable tables will gladly overrun the side of the page if they are too wide.</description>
+    </item>
+    
+  </channel>
+</rss>

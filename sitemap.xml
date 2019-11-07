@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/narrower-kable-tables/</loc>
+      <lastmod>2019-11-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/introducing-scientific-programming/</loc>
       <lastmod>2019-10-23T00:00:00+00:00</lastmod>
     </url>
@@ -547,7 +556,7 @@
     <url>
     
       <loc>/tags/r/</loc>
-      <lastmod>2019-10-23T00:00:00+00:00</lastmod>
+      <lastmod>2019-11-06T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -726,6 +735,16 @@
     
     <url>
     
+      <loc>/tags/kable/</loc>
+      <lastmod>2019-11-06T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/kernel-density/</loc>
       <lastmod>2018-07-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -736,8 +755,18 @@
     
     <url>
     
+      <loc>/tags/knitr/</loc>
+      <lastmod>2019-11-06T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/learning/</loc>
-      <lastmod>2014-01-28T00:00:00+00:00</lastmod>
+      <lastmod>2019-11-06T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

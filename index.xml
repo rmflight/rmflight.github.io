@@ -11,6 +11,69 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Narrower PDF Kable Tables</title>
+      <link>/post/narrower-kable-tables/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/narrower-kable-tables/</guid>
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;Don’t bother trying to roll your own function to make narrower &lt;code&gt;kable&lt;/code&gt; tables in a PDF document, just use &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/index.html&#34;&gt;&lt;code&gt;kableExtra&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I’ve been creating tables in a report where I really needed the table to fit, and because I am using PDF output, that means the tables can’t be any wider than the page.
+As I’m sure many readers might be aware, &lt;code&gt;kable&lt;/code&gt; tables will gladly overrun the side of the page if they are too wide.
+I’ve previously used &lt;code&gt;xtable&lt;/code&gt; tables when I’ve had this issue, but I really appreciate the simplicity of &lt;code&gt;kable&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;first-solution-custom-function&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;First Solution: Custom Function&lt;/h2&gt;
+&lt;p&gt;After some serious Googling, I discovered the &lt;code&gt;\tiny&lt;/code&gt; latex environment to change font sizes.
+Wrapping pandoc tables in this was a no go, but I discovered that it could be embedded within latex table output.
+This lead me to create a simple function that allowed me to modify latex formatted tables.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;smaller_latex_table = function(kable_table, size = &amp;quot;tiny&amp;quot;){
+  split_table = strsplit(kable_table, &amp;quot;\n&amp;quot;, )[[1]]
+  centering_loc = grepl(&amp;quot;centering&amp;quot;, split_table)
+  top_table = split_table[seq(1, which(centering_loc))]
+  bottom_table = split_table[seq(which(centering_loc)+1, length(split_table))]
+  new_table = c(top_table,
+                paste0(&amp;quot;\\&amp;quot;, size),
+                bottom_table)
+  structure(new_table, format = &amp;quot;latex&amp;quot;, class = &amp;quot;knitr_kable&amp;quot;)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This worked! And worked quite well.
+However, the downside to this is that because I had to explicity use latex tables, the tables didn’t stay in place anymore and &lt;em&gt;floated&lt;/em&gt; wherever there was free space in the document.
+Everything I tried with this to get the tables to &lt;strong&gt;hold&lt;/strong&gt; in place failed.
+So back to the drawing board.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;second-solution-kableextra&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Second Solution: kableExtra&lt;/h2&gt;
+&lt;p&gt;By this point I’ve spent a whole day’s worth of time trying to get this to work, just for some tables in my report.
+I had initially tried &lt;code&gt;kableExtra&lt;/code&gt; on the suggestion of another StackOverflow post, but I had something odd in my latex environment, and odd things going on with tinyTex install that made some ugly tables.
+After re-installing tinyTex (no small feat to &lt;a href=&#34;https://gist.github.com/rmflight/36b69b2608b070d0dcd38c87dd585d71&#34;&gt;make it discoverable&lt;/a&gt; by apt installed RStudio on Linux), I finally got both smaller tables and held in place tables via &lt;code&gt;kableExtra&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To make the tables fit the width of the page, we use &lt;code&gt;latex_options = &#39;scale_down&#39;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For holding them to where they are declared, we use &lt;code&gt;latex_options = &#39;HOLD_position&#39;&lt;/code&gt;.
+However, this also requires the tex packages &lt;code&gt;longtable&lt;/code&gt; and &lt;code&gt;float&lt;/code&gt;, which should be declared in the yaml header.&lt;/p&gt;
+&lt;p&gt;Putting it all together looks like this:&lt;/p&gt;
+&lt;pre class=&#34;yaml&#34;&gt;&lt;code&gt;## yaml header content
+title: &amp;quot;Title&amp;quot;
+author: &amp;quot;Me&amp;quot;
+output: 
+  pdf_document:
+    extra_dependencies: [&amp;quot;longtable&amp;quot;, &amp;quot;float&amp;quot;]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## table call
+knitr::kable(data.frame) %&amp;gt;%
+  kableExtra::kable_styling(latex_options = c(&amp;quot;scale_down&amp;quot;, &amp;quot;HOLD_position&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now the table will fit on the page, and stay where it was declared!&lt;/p&gt;
+&lt;p&gt;I hope I can save someone else two days of trial and error and crazy Googling!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Introducing Scientific Programming</title>
       <link>/post/introducing-scientific-programming/</link>
       <pubDate>Wed, 23 Oct 2019 00:00:00 +0000</pubDate>
@@ -1175,37 +1238,6 @@ the updates.&lt;/p&gt;
 
 
 &lt;p&gt;If you are a newcomer to my weblog, you may notice that some posts that are &lt;code&gt;R&lt;/code&gt; tutorials generally include the output of &lt;code&gt;Sys.time()&lt;/code&gt; at the end. If you look closeley at that time and the &lt;strong&gt;Posted on&lt;/strong&gt; date, you may notice that some posts show disagreement between them. This is because I decided to move &lt;em&gt;all&lt;/em&gt; of my old blog posts from &lt;em&gt;blogspot&lt;/em&gt; to here, and keep the original posted dates.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
-      <link>/post/linking-to-manually-inserted-images-in-hugo/</link>
-      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/post/linking-to-manually-inserted-images-in-hugo/</guid>
-      <description>
-
-
-&lt;div id=&#34;manual-linking&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Manual Linking?&lt;/h2&gt;
-&lt;p&gt;Using &lt;code&gt;blogdown&lt;/code&gt; for generating websites and blog-posts from &lt;code&gt;Rmarkdown&lt;/code&gt; files
-with lots of inserted code and figures
-seems pretty awesome, but sometimes you want to include a figure manually, either
-because you want to generate something manually and convert it (say
-for going from SVG of lots of points to hi-res PNG), or because it is a figure
-from something else (&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;like this figure from wikipedia&lt;/a&gt;).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;where-to&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Where to??&lt;/h2&gt;
-&lt;p&gt;To do this, you want the text of your &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tag to your image to be:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;img src = &amp;quot;/img/image_file.png&amp;quot;&amp;gt;&amp;lt;/img&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And then put the image itself in the directory &lt;code&gt;/static/img/image_file.png&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src = &#34;/img/Standard_deviation_diagram.svg&#34;&gt;&lt;/img&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;By M. W. Toews, &lt;a href=&#34;http://creativecommons.org/licenses/by/2.5&#34;&gt;CC BY 2.5&lt;/a&gt;, via Wikimedia Commons, &lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg&#34;&gt;source&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;This information is also mentioned in &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;section 2.7 of the Blogdown book&lt;/a&gt;. Obviously I need to
-do more reading.&lt;/p&gt;
-&lt;/div&gt;
 </description>
     </item>
     

@@ -33,7 +33,7 @@
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Wed, 23 Oct 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
       <description></description>
@@ -184,6 +184,15 @@
     </item>
     
     <item>
+      <title>kable</title>
+      <link>/tags/kable/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/kable/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>kernel density</title>
       <link>/tags/kernel-density/</link>
       <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
@@ -193,9 +202,18 @@
     </item>
     
     <item>
+      <title>knitr</title>
+      <link>/tags/knitr/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/knitr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>learning</title>
       <link>/tags/learning/</link>
-      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/learning/</guid>
       <description></description>
