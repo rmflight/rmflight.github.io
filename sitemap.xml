@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/using-group-by-instead-of-splitting/</loc>
+      <lastmod>2020-02-25T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/narrower-kable-tables/</loc>
       <lastmod>2019-11-06T00:00:00+00:00</lastmod>
     </url>
@@ -556,7 +565,7 @@
     <url>
     
       <loc>/tags/r/</loc>
-      <lastmod>2019-11-06T00:00:00+00:00</lastmod>
+      <lastmod>2020-02-25T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -657,6 +666,16 @@
     
       <loc>/tags/documentation/</loc>
       <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/dplyr/</loc>
+      <lastmod>2020-02-25T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

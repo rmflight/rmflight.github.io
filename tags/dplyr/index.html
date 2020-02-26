@@ -13,7 +13,7 @@
   <meta name="description" content="Senior Research Associate in Bioinformatics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/tags/r/">
+  <link rel="alternate" hreflang="en-us" href="/tags/dplyr/">
 
   
   
@@ -51,15 +51,15 @@
   
 
   
-  <link rel="alternate" href="/tags/r/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
-  <link rel="feed" href="/tags/r/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="alternate" href="/tags/dplyr/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
+  <link rel="feed" href="/tags/dplyr/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/tags/r/">
+  <link rel="canonical" href="/tags/dplyr/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -67,8 +67,8 @@
   <meta property="twitter:creator" content="@rmflight">
   
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/tags/r/">
-  <meta property="og:title" content="R | Deciphering Life: One Bit at a Time">
+  <meta property="og:url" content="/tags/dplyr/">
+  <meta property="og:title" content="dplyr | Deciphering Life: One Bit at a Time">
   <meta property="og:description" content="Senior Research Associate in Bioinformatics">
   <meta property="og:locale" content="en-us">
   
@@ -77,7 +77,7 @@
 
   
 
-  <title>R | Deciphering Life: One Bit at a Time</title>
+  <title>dplyr | Deciphering Life: One Bit at a Time</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" class="dark">
@@ -189,7 +189,7 @@
 
 <div class="universal-wrapper">
 
-  <h1>R</h1>
+  <h1>dplyr</h1>
 
   
 
@@ -205,110 +205,8 @@
     </div>
   </div>
   
-  <div>
-    <h2><a href="/post/narrower-kable-tables/">Narrower PDF Kable Tables</a></h2>
-    <div class="article-style">
-      
-      TL;DR Don’t bother trying to roll your own function to make narrower kable tables in a PDF document, just use kableExtra.
- Motivation I’ve been creating tables in a report where I really needed the table to fit, and because I am using PDF output, that means the tables can’t be any wider than the page. As I’m sure many readers might be aware, kable tables will gladly overrun the side of the page if they are too wide.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/introducing-scientific-programming/">Introducing Scientific Programming</a></h2>
-    <div class="article-style">
-      
-      TL;DR We should get science undergraduate students programming by introducing R &amp; Python in all first year science labs, and continuing throughout the undergraduate classes.
- Why? I’ve previously encountered ideas around getting graduate students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/for-loops-vs-split/">Comparisons using for loops vs split</a></h2>
-    <div class="article-style">
-      
-      TL;DR Sometimes for loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they might still be slow(er) than other ways of doing things.
- Comparing Groups I have some code where I am trying to determine duplicates of a group of things. This data looks something like this:
-create_random_sets = function(n_sets = 1000){ set.seed(1234) sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/nicer-png-graphics/">Nicer PNG Graphics</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you are getting crappy looking png images from rmarkdown html or word documents, try using type=&lsquo;cairo&rsquo; or dev=&lsquo;CairoPNG&rsquo; in your chunk options.
- PNG Graphics?? So, I write a lot of reports using rmarkdown and knitr, and have been using knitr for quite a while. My job involves doing analyses for collaborators and communicating results. Most of the time, I will generate a pdf report, and I get beautiful graphics, thanks to the eps graphics device.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/don-t-do-pca-after-statistical-testing/">Don&#39;t do PCA After Statistical Testing!</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you do a statistical test before a dimensional reduction method like PCA, the highest source of variance is likely to be whatever you tested statistically.
- Wait, Why?? Let me describe the situation. You’ve done an -omics level analysis on your system of interest. You run a t-test (or ANOVA, etc) on each of the features in your data (gene, protein, metabolite, etc). Filter down to those things that were statistically significant, and then finally, you decide to look at the data using a dimensionality reduction method such as principal components analysis (PCA) so you can see what is going on.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/finding-modes-using-kernel-density-estimates/">Finding Modes Using Kernel Density Estimates</a></h2>
-    <div class="article-style">
-      
-      TL; DR If you have a unimodal distribution of values, you can use R’s density or Scipy’s gaussian_kde to create density estimates of the data, and then take the maxima of the density estimate to get the mode. See below for actual examples in R and Python.
- Mode in R First, lets do this in R. Need some values to work with.
-library(ggplot2) set.seed(1234) n_point &lt;- 1000 data_df &lt;- data.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/split-unsplit-anti-pattern/">Split - Unsplit Anti-Pattern</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you notice yourself using split -&gt; unsplit / rbind on two object to match items up, maybe you should be using dplyr::join_ instead. Read below for concrete examples.
- Motivation I have had a lot of calculations lately that involve some sort of normalization or scaling a group of related values, each group by a different factor.
-Lets setup an example where we will have 1e5 values in 10 groups, each group of values being normalized by their own value.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/iranges-for-non-integer-overlaps/">Using IRanges for Non-Integer Overlaps</a></h2>
-    <div class="article-style">
-      
-      TL;DR The IRanges package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a large constant factor and round them. The constant depends on how much accuracy you need.
- IRanges?? IRanges is a bioconductor package for interval algebra of integer ranges. It is used extensively in the GenomicRanges package for finding overlaps between various genomic features. For genomic features, integers make sense, because one cannot have fractional base locations.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/knitrprogressbar/">knitrProgressBar Package</a></h2>
-    <div class="article-style">
-      
-      TL;DR If you like dplyr progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out knitrProgressBar (cran github).
- Why Yet Another Progress Bar?? I didn’t set out to create another progress bar package. But I really liked dplyrs style of progress bar, and how they worked under the hood (thanks to the examples from Bob Rudis).
-      
-    </div>
-  </div>
-  
 
   
-<nav>
-  <ul class="pager">
-    
-    
-    <li><a href="/tags/r/page/2/">&gt;</a></li>
-    
-  </ul>
-</nav>
-
 
 
 </div>

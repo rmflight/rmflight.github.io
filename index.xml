@@ -11,6 +11,87 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Using group_by Instead of Splits</title>
+      <link>/post/using-group-by-instead-of-splitting/</link>
+      <pubDate>Tue, 25 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/using-group-by-instead-of-splitting/</guid>
+      <description>
+
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;It is relatively easy to use &lt;code&gt;dplyr::group_by&lt;/code&gt; and &lt;code&gt;summarise&lt;/code&gt; to find items that you might want to keep or remove based on a &lt;strong&gt;part_of&lt;/strong&gt; the item or group in question. I used to use &lt;code&gt;split&lt;/code&gt; and iterate, but &lt;code&gt;group_by&lt;/code&gt; is much easier.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I have some relatively large sets of data that fall naturally into groups of items.
+Often, I find that I want to remove a group that contains either &lt;strong&gt;any of&lt;/strong&gt; or &lt;strong&gt;all of&lt;/strong&gt; particular items. Let’s create some data as an example.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+set.seed(1234)
+groups = as.character(seq(1, 1000))
+grouped_data = data.frame(items = sample(letters, 10000, replace = TRUE),
+                          groups = sample(groups, 10000, replace = TRUE),
+                          stringsAsFactors = FALSE)
+
+knitr::kable(head(grouped_data))&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;items&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;groups&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;c&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;205&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;q&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;485&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;p&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;636&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;q&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;960&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;w&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;179&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;q&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;289&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In this example, we have the 26 lowercase letters, that are part of one of groups 1-1000.
+Now, we might want to keep any groups that contain at least one “a”, for example.&lt;/p&gt;
+&lt;p&gt;I would have previously used a &lt;code&gt;split&lt;/code&gt; on the groups, and then &lt;code&gt;purrr::map_lgl&lt;/code&gt; returning TRUE or FALSE to check if what we wanted to filter on was present, and then filter out the split groups, and finally put back together the full thing.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;group-by&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Group By&lt;/h2&gt;
+&lt;p&gt;What I’ve found instead is that I can use a combination of &lt;code&gt;group_by&lt;/code&gt;, &lt;code&gt;summarise&lt;/code&gt; and then &lt;code&gt;filter&lt;/code&gt; to same effect, without splitting and iterating (yes, I know &lt;code&gt;dplyr&lt;/code&gt; is doing it under the hood for me).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# use group_by and summarize to find things we want
+groups_to_keep = grouped_data %&amp;gt;% 
+  group_by(groups) %&amp;gt;%
+  summarise(has_a = sum(items %in% &amp;quot;a&amp;quot;) &amp;gt; 0) %&amp;gt;%
+  filter(has_a)
+
+# filter on original based on above
+grouped_data2 = grouped_data %&amp;gt;%
+  filter(groups %in% groups_to_keep$groups)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This was a game changer for me in my thinking. As I’ve used &lt;code&gt;group_by&lt;/code&gt; combined with &lt;code&gt;summarise&lt;/code&gt; more and more, I’ve become amazed at what can be done without having to fully split the data apart to operate on it.&lt;/p&gt;
+&lt;p&gt;This combined with the use of &lt;code&gt;dplyr::join_&lt;/code&gt; in place of splits (see &lt;a href=&#34;http://rmflight.github.io/post/split-unsplit-anti-pattern/&#34;&gt;this other post&lt;/a&gt; for an example) is making my code faster, and often easier to reason over. I hope it helps you too!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Narrower PDF Kable Tables</title>
       <link>/post/narrower-kable-tables/</link>
       <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
@@ -1225,19 +1306,6 @@ It then copies the contents of &lt;code&gt;/public&lt;/code&gt; to the repo, &lt
 then uses the current time-stamp as the commit message, and finally pushes all
 the updates.&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Differences in Posted Date vs sessionInfo()</title>
-      <link>/post/differences-in-posted-date-vs-sessioninfo/</link>
-      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/post/differences-in-posted-date-vs-sessioninfo/</guid>
-      <description>
-
-
-&lt;p&gt;If you are a newcomer to my weblog, you may notice that some posts that are &lt;code&gt;R&lt;/code&gt; tutorials generally include the output of &lt;code&gt;Sys.time()&lt;/code&gt; at the end. If you look closeley at that time and the &lt;strong&gt;Posted on&lt;/strong&gt; date, you may notice that some posts show disagreement between them. This is because I decided to move &lt;em&gt;all&lt;/em&gt; of my old blog posts from &lt;em&gt;blogspot&lt;/em&gt; to here, and keep the original posted dates.&lt;/p&gt;
 </description>
     </item>
     

@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Robert M Flight</copyright>
-    <lastBuildDate>Wed, 06 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using group_by Instead of Splits</title>
+      <link>/post/using-group-by-instead-of-splitting/</link>
+      <pubDate>Tue, 25 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/using-group-by-instead-of-splitting/</guid>
+      <description>TL;DR It is relatively easy to use dplyr::group_by and summarise to find items that you might want to keep or remove based on a part_of the item or group in question. I used to use split and iterate, but group_by is much easier.
+ Motivation I have some relatively large sets of data that fall naturally into groups of items. Often, I find that I want to remove a group that contains either any of or all of particular items.</description>
+    </item>
     
     <item>
       <title>Narrower PDF Kable Tables</title>
