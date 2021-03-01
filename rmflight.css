@@ -1,0 +1,149 @@
+
+/* base variables */
+
+/* Edit the CSS properties in this file to create a custom
+   Distill theme. Only edit values in the right column
+   for each row; values shown are the CSS defaults.
+   To return any property to the default,
+   you may set its value to: unset
+   All rows must end with a semi-colon.                      */
+
+/* Optional: embed custom fonts here with `@import`          */
+/* This must remain at the top of this file.                 */
+
+
+
+html {
+  /*-- Main font sizes --*/
+  --title-size:      50px;
+  --body-size:       1.06rem;
+  --code-size:       14px;
+  --aside-size:      12px;
+  --fig-cap-size:    13px;
+  /*-- Main font colors --*/
+  --title-color:     #E1E8ED;
+  --header-color:    #fff;
+  --body-color:      #fff;
+  --aside-color:     #F5F8FA;
+  --fig-cap-color:   #657786;
+  --hover-color:     #1DA1F2;
+  /*-- Specify custom fonts ~~~ must be imported above   --*/
+  --heading-font:    sans-serif;
+  --mono-font:       monospace;
+  --body-font:       sans-serif;
+  --navbar-font:     sans-serif;  /* websites + blogs only */
+}
+
+body {
+  background-color:   #14171A;
+}
+
+d-title p {
+  color: #fff;
+}
+
+/*-- ARTICLE METADATA --*/
+d-byline {
+  --heading-size:    0.6rem;
+  --heading-color:   #F5F8FA;
+  --body-size:       0.8rem;
+  --body-color:      #fff;
+}
+
+/*-- ARTICLE TABLE OF CONTENTS --*/
+.d-contents {
+  --heading-size:    18px;
+  --contents-size:   13px;
+}
+
+/*-- ARTICLE APPENDIX --*/
+d-appendix {
+  --heading-size:    15px;
+  --heading-color:   #F5F8FA;
+  --text-size:       0.8em;
+  --text-color:      #fff;
+}
+
+/*-- WEBSITE HEADER + FOOTER --*/
+/* These properties only apply to Distill sites and blogs  */
+
+.distill-site-header {
+  --title-size:       18px;
+  --text-color:       #E1E8ED;
+  --text-size:        15px;
+  --hover-color:      #1DA1F2;
+  --bkgd-color:       #303030;
+}
+
+.distill-site-footer {
+  --text-color:       #E1E8ED;
+  --text-size:        15px;
+  --hover-color:      #1DA1F2;
+  --bkgd-color:       #0F2E3D;
+}
+
+/*-- Additional custom styles --*/
+/* Add any additional CSS rules below                      */
+
+.dt-tags .dt-tag {
+  color: #F5F8FA;
+}
+
+.posts-list .dt-tags .dt-tag {
+  color: #F5F8FA;
+}
+
+.posts-list .post-preview p {
+  color: #E1E8ED;
+}
+
+.posts-with-sidebar .posts-sidebar li {
+  color: #E1E8ED;
+}
+
+
+.posts-with-sidebar .posts-sidebar .category-count {
+  color: #E1E8ED;
+}
+
+.posts-list .metadata {
+  color: #F5F8FA;
+}
+
+d-article div.sourceCode code, d-article pre code {
+  color: #F5F8FA;
+}
+
+d-article a {
+  text-decoration: underline;
+}
+
+d-article a:hover {
+  color: #1DA1F2;
+}
+
+.l-text, .l-body {
+  color: #F5F8FA;
+}
+
+d-appendix a {
+  color: #F5F8FA;
+}
+
+d-appendix a:hover {
+  color: #1DA1F2;
+}
+
+
+.posts-more {
+  color: #F5F8FA;
+}
+
+.posts-more a:hover {
+  color: #1DA1F2;
+}
+
+
+.article-footer p {
+  color: #AAB8C2;
+}

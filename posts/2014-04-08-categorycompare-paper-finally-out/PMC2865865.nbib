@@ -1,0 +1,73 @@
+PMID- 20410053
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20100902
+LR  - 20181113
+IS  - 1367-4811 (Electronic)
+IS  - 1367-4803 (Print)
+IS  - 1367-4803 (Linking)
+VI  - 26
+IP  - 10
+DP  - 2010 May 15
+TI  - Meta-analysis for pathway enrichment analysis when combining multiple genomic 
+      studies.
+PG  - 1316-23
+LID - 10.1093/bioinformatics/btq148 [doi]
+AB  - MOTIVATION: Many pathway analysis (or gene set enrichment analysis) methods have 
+      been developed to identify enriched pathways under different biological states 
+      within a genomic study. As more and more microarray datasets accumulate, 
+      meta-analysis methods have also been developed to integrate information among 
+      multiple studies. Currently, most meta-analysis methods for combining genomic 
+      studies focus on biomarker detection and meta-analysis for pathway analysis has not 
+      been systematically pursued. RESULTS: We investigated two approaches of 
+      meta-analysis for pathway enrichment (MAPE) by combining statistical significance 
+      across studies at the gene level (MAPE_G) or at the pathway level (MAPE_P). 
+      Simulation results showed increased statistical power of meta-analysis approaches 
+      compared to a single study analysis and showed complementary advantages of MAPE_G 
+      and MAPE_P under different scenarios. We also developed an integrated method 
+      (MAPE_I) that incorporates advantages of both approaches. Comprehensive simulations 
+      and applications to real data on drug response of breast cancer cell lines and lung 
+      cancer tissues were evaluated to compare the performance of three MAPE variations. 
+      MAPE_P has the advantage of not requiring gene matching across studies. When MAPE_G 
+      and MAPE_P show complementary advantages, the hybrid version of MAPE_I is generally 
+      recommended. AVAILABILITY: http://www.biostat.pitt.edu/bioinfo/ CONTACT: 
+      ctseng@pitt.edu SUPPLEMENTARY INFORMATION: Supplementary data are available at 
+      Bioinformatics online.
+FAU - Shen, Kui
+AU  - Shen K
+AD  - Department of Computational Biology, University of Pittsburgh School of Medicine, 
+      Pittsburgh, PA 15213, USA.
+FAU - Tseng, George C
+AU  - Tseng GC
+LA  - eng
+GR  - KL2 RR024154/RR/NCRR NIH HHS/United States
+GR  - KL2 RR024154-04/RR/NCRR NIH HHS/United States
+PT  - Journal Article
+PT  - Research Support, N.I.H., Extramural
+PT  - Research Support, Non-U.S. Gov't
+DEP - 20100421
+TA  - Bioinformatics
+JT  - Bioinformatics (Oxford, England)
+JID - 9808944
+SB  - IM
+MH  - Cell Line, Tumor
+MH  - Databases, Genetic
+MH  - Gene Expression Profiling/methods
+MH  - Genome
+MH  - Genomics/*methods
+MH  - Humans
+MH  - Lung Neoplasms/genetics
+MH  - *Meta-Analysis as Topic
+MH  - Oligonucleotide Array Sequence Analysis/*methods
+PMC - PMC2865865
+EDAT- 2010/04/23 06:00
+MHDA- 2010/09/03 06:00
+CRDT- 2010/04/23 06:00
+PHST- 2010/04/23 06:00 [entrez]
+PHST- 2010/04/23 06:00 [pubmed]
+PHST- 2010/09/03 06:00 [medline]
+AID - btq148 [pii]
+AID - 10.1093/bioinformatics/btq148 [doi]
+PST - ppublish
+SO  - Bioinformatics. 2010 May 15;26(10):1316-23. doi: 10.1093/bioinformatics/btq148. Epub 
+      2010 Apr 21.

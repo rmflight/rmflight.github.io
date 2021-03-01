@@ -1,0 +1,19 @@
+TY  - JOUR
+AU  - Shannon, Paul T.
+AU  - Grimes, Mark
+AU  - Kutlu, Burak
+AU  - Bot, Jan J.
+AU  - Galas, David J.
+PY  - 2013
+DA  - 2013/07/09
+TI  - RCytoscape: tools for exploratory network analysis
+JO  - BMC Bioinformatics
+SP  - 217
+VL  - 14
+IS  - 1
+AB  - Biomolecular pathways and networks are dynamic and complex, and the perturbations to them which cause disease are often multiple, heterogeneous and contingent. Pathway and network visualizations, rendered on a computer or published on paper, however, tend to be static, lacking in detail, and ill-equipped to explore the variety and quantities of data available today, and the complex causes we seek to understand.
+SN  - 1471-2105
+UR  - https://doi.org/10.1186/1471-2105-14-217
+DO  - 10.1186/1471-2105-14-217
+ID  - Shannon2013
+ER  - 

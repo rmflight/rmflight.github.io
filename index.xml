@@ -1,1313 +1,636 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
-    <title>Deciphering Life: One Bit at a Time on Deciphering Life: One Bit at a Time</title>
-    <link>/</link>
-    <description>Recent content in Deciphering Life: One Bit at a Time on Deciphering Life: One Bit at a Time</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2019 Robert M Flight</copyright>
-    <lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/" rel="self" type="application/rss+xml" />
-    
+    <title>Deciphering Life: One Bit at a Time</title>
+    <link>https://rmflight.github.io/</link>
+    <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
+    <description>Musings on R, programming, -omics, open science, and whatever.
+</description>
+    <generator>Distill</generator>
+    <lastBuildDate>Sun, 28 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Things I Learned About distill</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-02-28-things-i-learned-about-distill</link>
+      <description>The various things I learned about the distill blog setup while converting posts over from my old blogdown site.</description>
+      <category>distill</category>
+      <category>blogdown</category>
+      <category>rmarkdown</category>
+      <guid>https://rmflight.github.io/posts/2021-02-28-things-i-learned-about-distill</guid>
+      <pubDate>Sun, 28 Feb 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Using group_by Instead of Splits</title>
-      <link>/post/using-group-by-instead-of-splitting/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2020-02-25-using-group-by-instead-of-splitting</link>
+      <description>How to use group_by instead of split's to summarize things.</description>
+      <category>R</category>
+      <category>dplyr</category>
+      <category>split</category>
+      <category>group-by</category>
+      <category>programming</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2020-02-25-using-group-by-instead-of-splitting</guid>
       <pubDate>Tue, 25 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/using-group-by-instead-of-splitting/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;It is relatively easy to use &lt;code&gt;dplyr::group_by&lt;/code&gt; and &lt;code&gt;summarise&lt;/code&gt; to find items that you might want to keep or remove based on a &lt;strong&gt;part_of&lt;/strong&gt; the item or group in question. I used to use &lt;code&gt;split&lt;/code&gt; and iterate, but &lt;code&gt;group_by&lt;/code&gt; is much easier.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;I have some relatively large sets of data that fall naturally into groups of items.
-Often, I find that I want to remove a group that contains either &lt;strong&gt;any of&lt;/strong&gt; or &lt;strong&gt;all of&lt;/strong&gt; particular items. Let’s create some data as an example.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
-set.seed(1234)
-groups = as.character(seq(1, 1000))
-grouped_data = data.frame(items = sample(letters, 10000, replace = TRUE),
-                          groups = sample(groups, 10000, replace = TRUE),
-                          stringsAsFactors = FALSE)
-
-knitr::kable(head(grouped_data))&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;items&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;groups&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;c&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;205&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;q&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;485&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;p&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;636&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;q&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;960&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;w&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;179&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;q&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;289&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;In this example, we have the 26 lowercase letters, that are part of one of groups 1-1000.
-Now, we might want to keep any groups that contain at least one “a”, for example.&lt;/p&gt;
-&lt;p&gt;I would have previously used a &lt;code&gt;split&lt;/code&gt; on the groups, and then &lt;code&gt;purrr::map_lgl&lt;/code&gt; returning TRUE or FALSE to check if what we wanted to filter on was present, and then filter out the split groups, and finally put back together the full thing.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;group-by&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Group By&lt;/h2&gt;
-&lt;p&gt;What I’ve found instead is that I can use a combination of &lt;code&gt;group_by&lt;/code&gt;, &lt;code&gt;summarise&lt;/code&gt; and then &lt;code&gt;filter&lt;/code&gt; to same effect, without splitting and iterating (yes, I know &lt;code&gt;dplyr&lt;/code&gt; is doing it under the hood for me).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# use group_by and summarize to find things we want
-groups_to_keep = grouped_data %&amp;gt;% 
-  group_by(groups) %&amp;gt;%
-  summarise(has_a = sum(items %in% &amp;quot;a&amp;quot;) &amp;gt; 0) %&amp;gt;%
-  filter(has_a)
-
-# filter on original based on above
-grouped_data2 = grouped_data %&amp;gt;%
-  filter(groups %in% groups_to_keep$groups)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This was a game changer for me in my thinking. As I’ve used &lt;code&gt;group_by&lt;/code&gt; combined with &lt;code&gt;summarise&lt;/code&gt; more and more, I’ve become amazed at what can be done without having to fully split the data apart to operate on it.&lt;/p&gt;
-&lt;p&gt;This combined with the use of &lt;code&gt;dplyr::join_&lt;/code&gt; in place of splits (see &lt;a href=&#34;http://rmflight.github.io/post/split-unsplit-anti-pattern/&#34;&gt;this other post&lt;/a&gt; for an example) is making my code faster, and often easier to reason over. I hope it helps you too!&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Narrower PDF Kable Tables</title>
-      <link>/post/narrower-kable-tables/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2019-11-06-narrower-kable-tables</link>
+      <description>This is how you should make narrower kable tables in rmarkdown PDF documents.</description>
+      <category>R</category>
+      <category>knitr</category>
+      <category>kable</category>
+      <category>learning</category>
+      <category>rmarkdown</category>
+      <guid>https://rmflight.github.io/posts/2019-11-06-narrower-kable-tables</guid>
       <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/narrower-kable-tables/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Don’t bother trying to roll your own function to make narrower &lt;code&gt;kable&lt;/code&gt; tables in a PDF document, just use &lt;a href=&#34;https://cran.r-project.org/web/packages/kableExtra/index.html&#34;&gt;&lt;code&gt;kableExtra&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;I’ve been creating tables in a report where I really needed the table to fit, and because I am using PDF output, that means the tables can’t be any wider than the page.
-As I’m sure many readers might be aware, &lt;code&gt;kable&lt;/code&gt; tables will gladly overrun the side of the page if they are too wide.
-I’ve previously used &lt;code&gt;xtable&lt;/code&gt; tables when I’ve had this issue, but I really appreciate the simplicity of &lt;code&gt;kable&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;first-solution-custom-function&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;First Solution: Custom Function&lt;/h2&gt;
-&lt;p&gt;After some serious Googling, I discovered the &lt;code&gt;\tiny&lt;/code&gt; latex environment to change font sizes.
-Wrapping pandoc tables in this was a no go, but I discovered that it could be embedded within latex table output.
-This lead me to create a simple function that allowed me to modify latex formatted tables.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;smaller_latex_table = function(kable_table, size = &amp;quot;tiny&amp;quot;){
-  split_table = strsplit(kable_table, &amp;quot;\n&amp;quot;, )[[1]]
-  centering_loc = grepl(&amp;quot;centering&amp;quot;, split_table)
-  top_table = split_table[seq(1, which(centering_loc))]
-  bottom_table = split_table[seq(which(centering_loc)+1, length(split_table))]
-  new_table = c(top_table,
-                paste0(&amp;quot;\\&amp;quot;, size),
-                bottom_table)
-  structure(new_table, format = &amp;quot;latex&amp;quot;, class = &amp;quot;knitr_kable&amp;quot;)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This worked! And worked quite well.
-However, the downside to this is that because I had to explicity use latex tables, the tables didn’t stay in place anymore and &lt;em&gt;floated&lt;/em&gt; wherever there was free space in the document.
-Everything I tried with this to get the tables to &lt;strong&gt;hold&lt;/strong&gt; in place failed.
-So back to the drawing board.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;second-solution-kableextra&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Second Solution: kableExtra&lt;/h2&gt;
-&lt;p&gt;By this point I’ve spent a whole day’s worth of time trying to get this to work, just for some tables in my report.
-I had initially tried &lt;code&gt;kableExtra&lt;/code&gt; on the suggestion of another StackOverflow post, but I had something odd in my latex environment, and odd things going on with tinyTex install that made some ugly tables.
-After re-installing tinyTex (no small feat to &lt;a href=&#34;https://gist.github.com/rmflight/36b69b2608b070d0dcd38c87dd585d71&#34;&gt;make it discoverable&lt;/a&gt; by apt installed RStudio on Linux), I finally got both smaller tables and held in place tables via &lt;code&gt;kableExtra&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;To make the tables fit the width of the page, we use &lt;code&gt;latex_options = &#39;scale_down&#39;&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;For holding them to where they are declared, we use &lt;code&gt;latex_options = &#39;HOLD_position&#39;&lt;/code&gt;.
-However, this also requires the tex packages &lt;code&gt;longtable&lt;/code&gt; and &lt;code&gt;float&lt;/code&gt;, which should be declared in the yaml header.&lt;/p&gt;
-&lt;p&gt;Putting it all together looks like this:&lt;/p&gt;
-&lt;pre class=&#34;yaml&#34;&gt;&lt;code&gt;## yaml header content
-title: &amp;quot;Title&amp;quot;
-author: &amp;quot;Me&amp;quot;
-output: 
-  pdf_document:
-    extra_dependencies: [&amp;quot;longtable&amp;quot;, &amp;quot;float&amp;quot;]&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## table call
-knitr::kable(data.frame) %&amp;gt;%
-  kableExtra::kable_styling(latex_options = c(&amp;quot;scale_down&amp;quot;, &amp;quot;HOLD_position&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now the table will fit on the page, and stay where it was declared!&lt;/p&gt;
-&lt;p&gt;I hope I can save someone else two days of trial and error and crazy Googling!&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Introducing Scientific Programming</title>
-      <link>/post/introducing-scientific-programming/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2019-10-23-introducing-scientific-programming</link>
+      <description>How and when should we get people in academia programming? What if we had a unified front across the science labs?</description>
+      <category>R</category>
+      <category>reproducibility</category>
+      <category>programming</category>
+      <category>academia</category>
+      <guid>https://rmflight.github.io/posts/2019-10-23-introducing-scientific-programming</guid>
       <pubDate>Wed, 23 Oct 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/introducing-scientific-programming/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;We should get science undergraduate students programming by introducing R &amp;amp; Python in &lt;strong&gt;all&lt;/strong&gt; first year science labs, and continuing throughout the undergraduate classes.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why?&lt;/h2&gt;
-&lt;p&gt;I’ve previously encountered ideas around getting &lt;strong&gt;graduate&lt;/strong&gt; students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.
-As successful as programs like Software Carpentry are for getting graduate students and others further along their scientific career into a programming and command line mindset, I think it needs to be a lot earlier, and introduced in a way that it becomes second nature.
-Ergo, undergraduate science labs.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;undergraduate-science-labs&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Undergraduate Science Labs&lt;/h2&gt;
-&lt;p&gt;Based on my recollection of undergraduate labs and later being a chemistry lab teaching assistant (both during my undergraduate and graduate degrees), there is a lot of calculations going on.
-Physics labs involved performing experiments to determine underlying constants or known quantities.
-Chemistry labs often involved quantitative determinations, even more so as labs advanced over the years.
-Even my biology labs frequently involved calculations and generation of reports to hand in.
-In &lt;strong&gt;my&lt;/strong&gt; first year, calculators were relied upon, along with example worksheets showing where to fill things in and how to do the calculations.
-Over the years, Microsoft Excel was eventually introduced, and at one point during my senior Analytical Lab was basically required.&lt;/p&gt;
-&lt;p&gt;What if students were consistently introduced to another way to do the necessary calculations for their labs?&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;an-alternative-to-calculators-and-excel&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;An Alternative to Calculators and Excel&lt;/h2&gt;
-&lt;p&gt;I’m imagining &lt;strong&gt;all&lt;/strong&gt; of the undergraduate science labs, Biology, Chemistry, Physics and Geology, requiring the use of either Python or R to do the quantitative calculations and produce reports.
-It would likely require an immense effort on the part of teaching faculty for each lab, teaching assistants in the lab, as well as having one or two dedicated persons who are able to help students with issues running R / Python and getting packages installed.
-Ideally, students would be introduced to generating their full reports gradually, starting with highly scaffolded lab reports where they simply have to supply a few numbers, click &lt;code&gt;knit&lt;/code&gt; (assuming we are using R within RStudio) and generate a report that can be submitted.
-Over time, the lab reports would involve more and more calculations being coded directly by the student, and more of the report written directly by them.
-This scaffolding would likely be repeated at each level of labs.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;challenges-in-implementation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Challenges in Implementation&lt;/h2&gt;
-&lt;p&gt;I see three main challenges in implementing something like the above.&lt;/p&gt;
-&lt;div id=&#34;getting-all-the-departments-on-board&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Getting all the Departments On Board&lt;/h3&gt;
-&lt;p&gt;Seriously, getting all of the lab teaching faculty on board so that this happens across all of the science departments and at all levels of labs.
-Although it would be very useful even if done consistently in a single department, I think the biggest bang for the buck is going to be &lt;strong&gt;all&lt;/strong&gt; departments buying in.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;converting-all-the-labs&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Converting all the Labs&lt;/h3&gt;
-&lt;p&gt;After convincing everyone that this is a worthy goal, then there is the herculean task of figuring out how to make the labs fit into this type of framework.
-The added wrinkle to this is that labs are frequently marked on how close one got to the &lt;strong&gt;right&lt;/strong&gt; answer (known concentration of a standard, for example), which can depend both on how accurately one performs the experimental technique being taught, and how well one does the calculations (at least this was my experience as student and TA).
-Not only that, but many labs often had two parts, sometimes in the same lab period, where messing up the first part meant that you would have completely wrong answers in the second part.
-Getting even a first pass conversion would be a monumental effort on the part of someone with extensive scripting language knowledge and the teaching faculty.&lt;/p&gt;
-&lt;p&gt;There is also the question of how to convert the labs.
-I would imagine that first year would be done first, and then second, third, fourth.
-But this would also be interwoven with updates to the labs as issues are discovered within each year, and modifications made each year.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;supporting-the-students-and-faculty&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Supporting the Students and Faculty&lt;/h3&gt;
-&lt;p&gt;Let’s face it, doing things this way requires more hardware than just having a calculator in lab with you. Python and R will install on &lt;strong&gt;almost&lt;/strong&gt; any OS however, and the types of calculations necessary are not compute intensive.
-However, there will invariably be issues getting software and necessary packages installed, and keeping them up to date.
-There needs to be someone who is able to be present both in and outside lab time that can help diagnose package installation and update issues.
-This same person will also likely be tasked with helping teaching faculty and assistants install and update necessary software and packages.&lt;/p&gt;
-&lt;p&gt;Not discussed above, but ideally the design of the lab reports should also make sure that they depend on a very low number of packages, and that those packages will install on &lt;strong&gt;any&lt;/strong&gt; OS that the students come in with.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;has-anyone-done-this&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Has Anyone Done This?&lt;/h2&gt;
-&lt;p&gt;I’d be really curious if anyone has attempted anything like this.
-Please leave a comment if you know of any!&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;interested&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Interested?&lt;/h2&gt;
-&lt;p&gt;I’ll admit, being the person behind an effort like this is probably the one thing right now that would convince me to leave my current position in trying to solve cancer metabolomics.
-Drop me a line if this sounds interesting to you!&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Comments enabled via utterances</title>
-      <link>/post/comments-enabled-via-utterances/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances</link>
+      <description>How I got utterances working on blogdown.</description>
+      <category>blogdown</category>
+      <category>commenting</category>
+      <category>utterances</category>
+      <guid>https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances</guid>
       <pubDate>Wed, 16 Oct 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/comments-enabled-via-utterances/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://utteranc.es/&#34;&gt;Utterances&lt;/a&gt; is a lightweight commenting platform built
-on GitHub issues. So you have to have a GitHub account, but I expect most people
-who comment on this blog already have one.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-utterances&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why Utterances&lt;/h2&gt;
-&lt;p&gt;When I switched to &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt;, I lost
-my disqus comments. I had considered migrating them over, but never got around
-to it. I also thought that there had to be a way to link GitHub issues to
-blog posts, but didn’t investigate it much.&lt;/p&gt;
-&lt;p&gt;Then, I came across &lt;a href=&#34;https://masalmon.eu/2019/10/02/disqus/&#34;&gt;Maëlle’s blog post&lt;/a&gt; about switching to &lt;a href=&#34;https://uteranc.es&#34;&gt;utterances&lt;/a&gt;
-and I was sold. I had some free time last night, and dived into how to add it
-to my site that uses the hugo academic theme.&lt;/p&gt;
-&lt;p&gt;I’m not expecting a lot of heavy commenting, but at least it’s now available!&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Comparisons using for loops vs split</title>
-      <link>/post/for-loops-vs-split/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2019-02-13-for-loops-vs-split</link>
+      <description>for loops often hide much of the actual logic of your code because of all the necessary boilerplate of running a loop. split-ting your data can oftentimes be clearer, and faster.</description>
+      <category>R</category>
+      <category>for-loop</category>
+      <category>split</category>
+      <category>purrr</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2019-02-13-for-loops-vs-split</guid>
       <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/for-loops-vs-split/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Sometimes &lt;code&gt;for&lt;/code&gt; loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they
-might still be slow(er) than other ways of doing things.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;comparing-groups&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Comparing Groups&lt;/h2&gt;
-&lt;p&gt;I have some code where I am trying to determine duplicates of a &lt;strong&gt;group&lt;/strong&gt; of things. This data looks something like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;create_random_sets = function(n_sets = 1000){
-  set.seed(1234)
-  
-  sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .x), 5))
-  
-  item_sets = sample(seq(1, length(sets)), 10000, replace = TRUE)
-  item_mapping = purrr::map2_df(item_sets, seq(1, length(item_sets)), function(.x, .y){
-    data.frame(v1 = as.character(.y), v2 = sets[[.x]], stringsAsFactors = FALSE)
-  })
-  item_mapping
-}
-library(dplyr)
-mapped_items = create_random_sets()
-
-head(mapped_items, 20)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##    v1  v2
-## 1   1 496
-## 2   1 243
-## 3   1 201
-## 4   1 514
-## 5   1 416
-## 6   2  28
-## 7   2 189
-## 8   2   5
-## 9   2 115
-## 10  2  20
-## 11  3 310
-## 12  3 470
-## 13  3 667
-## 14  3 775
-## 15  3 680
-## 16  4  89
-## 17  4 182
-## 18  4 688
-## 19  4  31
-## 20  4 432&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;looping&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Looping&lt;/h2&gt;
-&lt;p&gt;In this case, every &lt;code&gt;item&lt;/code&gt; in &lt;code&gt;v1&lt;/code&gt; has &lt;strong&gt;5&lt;/strong&gt; things in &lt;code&gt;v2&lt;/code&gt;. I really want to group multiple things of &lt;code&gt;v1&lt;/code&gt; that have the same combination of things in &lt;code&gt;v2&lt;/code&gt;. My initial function
-to do this &lt;code&gt;split&lt;/code&gt;s everything in &lt;code&gt;v2&lt;/code&gt; by &lt;code&gt;v1&lt;/code&gt;, and then compares all the splits to each other, removing things that have been compared and found to be the same, and saving them
-as we go. This required two loops, basically &lt;code&gt;while&lt;/code&gt; there was data to check, check all the other things left in the list against it (the &lt;code&gt;for&lt;/code&gt;).
-Pre-initialize the list of things that are identical to each other so we don’t take a hit on allocation, and delete the things that have been checked or noted as identical. Although the variable names are changed, the code for that function is below.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;loop_function = function(item_mapping){
-  split_items = split(item_mapping$v2, item_mapping$v1)
-  
-  matched_list = vector(&amp;quot;list&amp;quot;, length(split_items))
-  
-  save_item = 1
-  save_index = 1
-  
-  while (length(split_items) &amp;gt; 0) {
-    curr_item = names(split_items)[save_item]
-    curr_set = split_items[[save_item]]
-    
-    for (i_item in seq_along(split_items)) {
-      if (sum(split_items[[i_item]] %in% curr_set) == length(curr_set)) {
-        matching_items = unique(c(curr_item, names(split_items)[i_item]))
-        save_item = unique(c(save_item, i_item))
-      }
-    }
-    matched_list[[save_index]] = curr_set
-    split_items = split_items[-save_item]
-    save_index = save_index + 1
-    save_item = 1
-  }
-  
-  n_in_set = purrr::map_int(matched_list, length)
-  matched_list = matched_list[n_in_set &amp;gt; 0]
-  n_in_set = n_in_set[n_in_set &amp;gt; 0]
-  matched_list
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The code works, but it doesn’t really make me &lt;strong&gt;think&lt;/strong&gt; about what it’s doing, the two loops hide the fact that what is really going on is &lt;strong&gt;comparing&lt;/strong&gt; things to one another.
-Miles McBain &lt;a href=&#34;https://milesmcbain.xyz/for-loops/&#34;&gt;recently posted&lt;/a&gt; on this fact, that loops can be necessary, but one should really think about whether they are really necessary,
-or do they hide something about the data, and can we think about different ways to do the same thing.&lt;/p&gt;
-&lt;p&gt;This made me realize that what I really wanted to do was &lt;code&gt;split&lt;/code&gt; the items in &lt;code&gt;v1&lt;/code&gt; by the unique combinations of things in &lt;code&gt;v2&lt;/code&gt;, because &lt;code&gt;split&lt;/code&gt; will group things together nicely
-for you, without any extra work. But I don’t have those combinations in a way that &lt;code&gt;split&lt;/code&gt; can use them. So my solution is to iterate over the splits using &lt;code&gt;purrr&lt;/code&gt;,
-create a representation of the group as a character value, and then call &lt;code&gt;split&lt;/code&gt; again at the very end based on the &lt;code&gt;character&lt;/code&gt; representation.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;split_function = function(item_mapping){
-  mapped_data = split(item_mapping$v2, item_mapping$v1) %&amp;gt;%
-    purrr::map2_dfr(., names(.), function(.x, .y){
-      set = unique(.x)
-      tmp_frame = data.frame(item = .y, set_chr = paste(set, collapse = &amp;quot;,&amp;quot;), stringsAsFactors = FALSE)
-      tmp_frame$set = list(set)
-      tmp_frame
-    })
-  matched_list = split(mapped_data, mapped_data$set_chr)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Not only is the code cleaner, the grouping is explicit (as long as you know &lt;strong&gt;how&lt;/strong&gt; &lt;code&gt;split&lt;/code&gt; works), and its also 4x faster!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;microbenchmark::microbenchmark(
-  loop_function(mapped_items),
-  split_function(mapped_items),
-  times = 5
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Unit: seconds
-##                          expr      min       lq     mean   median       uq
-##   loop_function(mapped_items) 6.625086 6.755657 6.799823 6.764101 6.784886
-##  split_function(mapped_items) 2.074691 2.077382 2.119430 2.106470 2.146626
-##       max neval
-##  7.069387     5
-##  2.191984     5&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Nicer PNG Graphics</title>
-      <link>/post/nicer-png-graphics/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-12-06-nicer-png-graphics</link>
+      <description>Here are some tips for getting nicer graphics in your rmarkdown outputs.</description>
+      <guid>https://rmflight.github.io/posts/2018-12-06-nicer-png-graphics</guid>
       <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/nicer-png-graphics/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If you are getting crappy looking &lt;em&gt;png&lt;/em&gt; images from &lt;code&gt;rmarkdown&lt;/code&gt; html or word
-documents, try using &lt;code&gt;type=&#39;cairo&#39;&lt;/code&gt; or &lt;code&gt;dev=&#39;CairoPNG&#39;&lt;/code&gt; in your chunk options.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;png-graphics&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PNG Graphics??&lt;/h2&gt;
-&lt;p&gt;So, I write a &lt;strong&gt;lot&lt;/strong&gt; of reports using &lt;code&gt;rmarkdown&lt;/code&gt; and &lt;code&gt;knitr&lt;/code&gt;, and have been
-using &lt;code&gt;knitr&lt;/code&gt; for quite a while. My job involves doing analyses for collaborators
-and communicating results. &lt;em&gt;Most&lt;/em&gt; of the time, I will generate a pdf report,
-and I get beautiful graphics, thanks to the &lt;code&gt;eps&lt;/code&gt; graphics device. However,
-there are times when I want to generate either word or html reports, and
-in those cases, I tend to get very crappy looking graphics. See this example
-image below:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
-p = ggplot(mtcars, aes(mpg, wt)) +
-  geom_point(size = 3) +
-  labs(x=&amp;quot;Fuel efficiency (mpg)&amp;quot;, y=&amp;quot;Weight (tons)&amp;quot;,
-       title=&amp;quot;Seminal ggplot2 scatterplot example&amp;quot;,
-       subtitle=&amp;quot;A plot that is only useful for demonstration purposes&amp;quot;,
-       caption=&amp;quot;Brought to you by the letter &amp;#39;g&amp;#39;&amp;quot;)
-p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/first_image-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Note: This was generated on self-compiled R under Ubuntu 16.04. As we can
-see, &lt;code&gt;knitr&lt;/code&gt; is using the &lt;code&gt;png&lt;/code&gt; device, because we are generating html output.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::opts_chunk$get(&amp;quot;dev&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;png&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;increased-resolution&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Increased Resolution&lt;/h2&gt;
-&lt;p&gt;Of course, we just need to &lt;strong&gt;increase the resolution&lt;/strong&gt;! So let’s do so. Just to
-go whole hog on this, let’s increase it to 300!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, 300 dpi&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_300-1.png&#34; width=&#34;2100&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;If you compare this one to the previous, you can see that the quality is
-&lt;em&gt;marginally&lt;/em&gt; better, but doesn’t seem to be anything like what you should
-be able to get.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;use-svg&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Use SVG??&lt;/h2&gt;
-&lt;p&gt;Alternatively, we could tell &lt;code&gt;knitr&lt;/code&gt; to use the &lt;code&gt;svg&lt;/code&gt; device instead! Vector
-graphics always look nice!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, dev = &amp;#39;svg&amp;#39;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_svg-1.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;It’s so crisp! But, for word documents especially, this could be a problem,
-as the images might not show up. The nice thing about &lt;em&gt;png&lt;/em&gt; is it should be
-usable in just about any format!&lt;/p&gt;
-&lt;p&gt;And, if you have a plot with a &lt;em&gt;lot&lt;/em&gt; of points (&amp;gt; 200), the &lt;em&gt;svg&lt;/em&gt; will start to
-take up some serious disk space, as every single point is encoded in the &lt;em&gt;svg&lt;/em&gt; file.
-This is also a good reason to use &lt;em&gt;png&lt;/em&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;png-via-cairo&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;PNG via Cairo&lt;/h2&gt;
-&lt;p&gt;After pulling out my hair yesterday as I tried to generate nice &lt;em&gt;png&lt;/em&gt; images embedded
-in a word report (and settling on converting every figure from svg to png and saving
-to a folder to pass on, see &lt;a href=&#34;https://gist.github.com/rmflight/bb61ad1fd8ba6e44f734#make-png-of-high-density-svgs&#34;&gt;this&lt;/a&gt;),
-I finally decided to try a different device.&lt;/p&gt;
-&lt;p&gt;Now, your R installation does need to have either &lt;code&gt;cairo&lt;/code&gt; capabilities, or be able
-to use the &lt;code&gt;Cairo&lt;/code&gt; package. Mine has both.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;capabilities()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##        jpeg         png        tiff       tcltk         X11        aqua 
-##       FALSE        TRUE       FALSE        TRUE        TRUE       FALSE 
-##    http/ftp     sockets      libxml        fifo      cledit       iconv 
-##        TRUE        TRUE        TRUE        TRUE       FALSE        TRUE 
-##         NLS     profmem       cairo         ICU long.double     libcurl 
-##        TRUE       FALSE        TRUE        TRUE        TRUE        TRUE&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;packageVersion(&amp;quot;Cairo&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;#39;1.5.9&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Let’s change the device (two different ways) and plot it again. First, we will
-still use the &lt;code&gt;png&lt;/code&gt; device, but add the &lt;code&gt;type = &amp;quot;cairo&amp;quot;&lt;/code&gt; argument (see &lt;code&gt;?png&lt;/code&gt;). Just for information,
-that looks like the below in the chunk options:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;r plot_cairo, dev.args = list(type = &amp;quot;cairo&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, type = &amp;#39;cairo&amp;#39;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_cairo-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Wow! This looks great! So much nicer than the other device. Secondly, let’s use
-the &lt;code&gt;CairoPNG&lt;/code&gt; device (&lt;code&gt;dev = &amp;quot;CairoPNG&amp;quot;&lt;/code&gt;)&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, dev = &amp;#39;CairoPNG&amp;#39;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_cairopng-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Finally, we can also increase the resolution as well.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ggtitle(&amp;quot;Seminal ggplot2 scatterplot example, dev = &amp;#39;CairoPNG&amp;#39;, dpi = 300&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-12-06-nicer-png-graphics_files/figure-html/plot_cairopng_300-1.png&#34; width=&#34;2100&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;So there you have it. Very crisp &lt;em&gt;png&lt;/em&gt; images, with higher resolutions if needed,
-and no jaggedness, without resorting to conversion via &lt;code&gt;inkscape&lt;/code&gt; (my previous go to).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;incorporating-into-reports&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Incorporating Into Reports&lt;/h2&gt;
-&lt;p&gt;As I previously mentioned, I often default to pdf reports, but will then generate
-a word or html report if necessary. How do you avoid changing the options even
-in a setup chunk if you want this to happen every time you specify &lt;code&gt;word_document&lt;/code&gt;
-as the output type? This is what I settled on, the setup chunk checks the output type
-(based on being called from &lt;code&gt;rmarkdown::render&lt;/code&gt;), and sets it appropriately.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if (knitr::opts_knit$get(&amp;quot;rmarkdown.pandoc.to&amp;quot;) != &amp;quot;latex&amp;quot;) {
-  knitr::opts_chunk$set(dpi = 300, dev.args = list(type = &amp;quot;cairo&amp;quot;))
-})&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
+      <media:content url="https://rmflight.github.io/posts/2018-12-06-nicer-png-graphics/nicer-png-graphics_files/figure-html5/first_image-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
-    
     <item>
-      <title>Don&#39;t do PCA After Statistical Testing!</title>
-      <link>/post/don-t-do-pca-after-statistical-testing/</link>
+      <title>Don't do PCA After Statistical Testing!</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-09-14-don-t-do-pca-after-statistical-testing</link>
+      <description>You might be tempted to do PCA after a statistical test. Read more to discover why this is a bad idea.</description>
+      <category>pca</category>
+      <category>bioinformatics</category>
+      <category>R</category>
+      <category>t-test</category>
+      <guid>https://rmflight.github.io/posts/2018-09-14-don-t-do-pca-after-statistical-testing</guid>
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/don-t-do-pca-after-statistical-testing/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If you do a statistical test &lt;strong&gt;before&lt;/strong&gt; a dimensional reduction method like
-PCA, the highest source of variance is likely to be whatever you tested
-statistically.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;wait-why&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Wait, Why??&lt;/h2&gt;
-&lt;p&gt;Let me describe the situation. You’ve done an &lt;code&gt;-omics&lt;/code&gt; level analysis on your
-system of interest. You run a t-test (or ANOVA, etc) on each of the features
-in your data (gene, protein, metabolite, etc). Filter down to those things that
-were statistically significant, and then finally, you decide to look at the data
-using a dimensionality reduction method such as &lt;em&gt;principal components analysis&lt;/em&gt;
-(PCA) so you can &lt;strong&gt;see&lt;/strong&gt; what is going on.&lt;/p&gt;
-&lt;p&gt;I have seen this published at least once (in a Diabetes metabolomics paper,
-if anyone knows it, please send it to me so I can link it), and have seen
-collaborators do this after coaching from others in non-statistical departments.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-problem&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Problem&lt;/h2&gt;
-&lt;p&gt;The problem is that PCA is just looking at either feature-feature covariances
-or sample-sample covariances. If you have trimmed the data to those things that
-have statistically significant differences, then you have completely modified
-the covariances, and PCA is likely to pick up on that.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;an-example&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;An Example&lt;/h2&gt;
-&lt;p&gt;Let’s actually do an example where there are no differences initially, and
-then see if we can introduce an artificial difference.&lt;/p&gt;
-&lt;div id=&#34;random-data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Random Data&lt;/h3&gt;
-&lt;p&gt;We start with completely random data, 10000 features, and 100 samples.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n_feat = 10000
-n_sample = 100
-random_data = matrix(rnorm(n_feat * n_sample), nrow = n_feat, ncol = n_sample)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now we will do a t-test on each row, taking the first 50 samples as class 1
-and the other 50 samples as class 2.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t_test_res = purrr::map_df(seq(1, nrow(random_data)), function(in_row){
-  tidy(t.test(random_data[in_row, 1:50], random_data[in_row, 51:100]))
-})&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How many are significant at a p-value of 0.05?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filter(t_test_res, p.value &amp;lt;= 0.05) %&amp;gt;% dim()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 514  10&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Obviously, these are false positives, but they are enough for us to illustrate
-the problem.&lt;/p&gt;
-&lt;p&gt;First, lets do PCA on the whole data set of 10000 features.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_classes = data.frame(class = c(rep(&amp;quot;A&amp;quot;, 50), rep(&amp;quot;B&amp;quot;, 50)))
-
-all_pca = prcomp(t(random_data), center = TRUE, scale. = FALSE)
-visqc_pca(all_pca, groups = sample_classes$class)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-14-don-t-do-pca-after-statistical-testing_files/figure-html/all_pca-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Obviously, there is no difference in the groups, and the % explained variance
-is very low.&lt;/p&gt;
-&lt;p&gt;Second, lets do it on just those things that were significant:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sig_pca = prcomp(t(random_data[which(t_test_res$p.value &amp;lt;= 0.05), ]), center = TRUE,
-                 scale. = FALSE)
-
-visqc_pca(sig_pca, groups = sample_classes$class)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-14-don-t-do-pca-after-statistical-testing_files/figure-html/sig_pca-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;And look at that! We have separation of the two groups! But …., this is
-completely random data, that didn’t have any separation, &lt;strong&gt;until we did the
-statistical test&lt;/strong&gt;!&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;take-away&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Take Away&lt;/h2&gt;
-&lt;p&gt;Be careful of the order in which you do things. If you want to do dimensionality
-reduction to look for issues with the samples, then do that &lt;strong&gt;before&lt;/strong&gt; any statistical
-testing on the individual features.&lt;/p&gt;
-&lt;/div&gt;
-</description>
+      <media:content url="https://rmflight.github.io/posts/2018-09-14-don-t-do-pca-after-statistical-testing/don-t-do-pca-after-statistical-testing_files/figure-html5/all_pca-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
-    
     <item>
       <title>Finding Modes Using Kernel Density Estimates</title>
-      <link>/post/finding-modes-using-kernel-density-estimates/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-07-19-finding-modes-using-kernel-density-estimates</link>
+      <description>Examples of finding the mode of a univeriate distribution in R and Python.</description>
+      <category>R</category>
+      <category>python</category>
+      <category>kernel-density</category>
+      <category>pdf</category>
+      <category>probability-density</category>
+      <category>programming</category>
+      <guid>https://rmflight.github.io/posts/2018-07-19-finding-modes-using-kernel-density-estimates</guid>
       <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/finding-modes-using-kernel-density-estimates/</guid>
-      <description>
-
-
-&lt;div id=&#34;tl-dr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL; DR&lt;/h2&gt;
-&lt;p&gt;If you have a unimodal distribution of values, you can use R’s &lt;code&gt;density&lt;/code&gt; or
-Scipy’s &lt;code&gt;gaussian_kde&lt;/code&gt; to create density estimates of the data, and then
-take the maxima of the density estimate to get the &lt;code&gt;mode&lt;/code&gt;. See below for
-actual examples in R and Python.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;mode-in-r&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Mode in R&lt;/h2&gt;
-&lt;p&gt;First, lets do this in R. Need some values to work with.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
-set.seed(1234)
-n_point &amp;lt;- 1000
-data_df &amp;lt;- data.frame(values = rnorm(n_point))
-
-ggplot(data_df, aes(x = values)) + geom_histogram()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/density_mode-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data_df, aes(x = values)) + geom_density()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/density_mode-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;We can do a kernel density, which will return an object with a bunch of peices.
-One of these is &lt;code&gt;y&lt;/code&gt;, which is the actual density value for each value of &lt;code&gt;x&lt;/code&gt; that was used! So
-we can find the &lt;code&gt;mode&lt;/code&gt; by querying &lt;code&gt;x&lt;/code&gt; for the maxima in &lt;code&gt;y&lt;/code&gt;!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;density_estimate &amp;lt;- density(data_df$values)
-
-mode_value &amp;lt;- density_estimate$x[which.max(density_estimate$y)]
-mode_value&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.04599328&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Plot the density estimate with the mode location.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;density_df &amp;lt;- data.frame(value = density_estimate$x, density = density_estimate$y)
-
-ggplot(density_df, aes(x = value, y = density)) + geom_line() + geom_vline(xintercept = mode_value, color = &amp;quot;red&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/plot_density-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;python&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Python&lt;/h2&gt;
-&lt;p&gt;Lets do something similar in Python. Start by generating a set of random values.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import numpy as np
-import scipy.stats as stats
-import matplotlib.pyplot as plt
-values = np.random.normal(size = 1000)
-plt.hist(values)
-plt.show()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;And then use &lt;code&gt;gaussian_kde&lt;/code&gt; to get a kernel estimator of the density, and then
-call the &lt;code&gt;pdf&lt;/code&gt; method on the original values.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;kernel = stats.gaussian_kde(values)
-height = kernel.pdf(values)
-mode_value = values[np.argmax(height)]
-print(mode_value)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 0.22162730158854502&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Plot to show indeed we have it right. Note we sort the values first so the PDF
-looks right.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;values2 = np.sort(values.copy())
-height2 = kernel.pdf(values2)
-plt.clf()
-plt.cla()
-plt.close()
-plt.plot(values2, height2)
-plt.axvline(mode_value)
-plt.show()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-07-19-finding-modes-using-kernel-density-estimates_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
+      <media:content url="https://rmflight.github.io/posts/2018-07-19-finding-modes-using-kernel-density-estimates/finding-modes-using-kernel-density-estimates_files/figure-html5/density_mode-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
-    
     <item>
       <title>Split - Unsplit Anti-Pattern</title>
-      <link>/post/split-unsplit-anti-pattern/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern</link>
+      <description>Getting some speed using dplyr::join than my more intuitive split --&gt; unsplit pattern.</description>
+      <category>R</category>
+      <category>development</category>
+      <category>programming</category>
+      <category>purrr</category>
+      <category>dplyr</category>
+      <category>join</category>
+      <guid>https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern</guid>
       <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/split-unsplit-anti-pattern/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If you notice yourself using &lt;code&gt;split&lt;/code&gt; -&amp;gt; &lt;code&gt;unsplit&lt;/code&gt; / &lt;code&gt;rbind&lt;/code&gt; on two object to
-match items up, maybe you should be using &lt;code&gt;dplyr::join_&lt;/code&gt; instead. Read below
-for concrete examples.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;I have had a lot of calculations lately that involve some sort of &lt;code&gt;normalization&lt;/code&gt;
-or scaling a group of related values, each group by a different factor.&lt;/p&gt;
-&lt;p&gt;Lets setup an example where we will have &lt;code&gt;1e5&lt;/code&gt; values in &lt;code&gt;10&lt;/code&gt; groups, each group
-of values being &lt;code&gt;normalized&lt;/code&gt; by their own value.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(microbenchmark)
-library(profvis)
-set.seed(1234)
-n_point &amp;lt;- 1e5
-to_normalize &amp;lt;- data.frame(value = rnorm(n_point), group = sample(seq_len(10), n_point, replace = TRUE))
-
-normalization &amp;lt;- data.frame(group = seq_len(10), normalization = rnorm(10))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For each &lt;code&gt;group&lt;/code&gt; in &lt;code&gt;to_normalize&lt;/code&gt;, we want to apply the normalization factor in
-&lt;code&gt;normalization&lt;/code&gt;. In this case, I’m going to do a simple subtraction.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;match-them&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Match Them!&lt;/h2&gt;
-&lt;p&gt;My initial implementation was to iterate over the groups, and use &lt;code&gt;%in%&lt;/code&gt; to
-&lt;code&gt;match&lt;/code&gt; each &lt;code&gt;group&lt;/code&gt; from the normalization factors and the data to be normalized,
-and modify in place. &lt;strong&gt;Don’t do this!!&lt;/strong&gt; It was
-the slowest method I’ve used in my real package code!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;match_normalization &amp;lt;- function(normalize_data, normalization_factors){
-  use_groups &amp;lt;- normalization_factors$group
-  
-  for (igroup in use_groups) {
-    normalize_data[normalize_data$group %in% igroup, &amp;quot;value&amp;quot;] &amp;lt;- 
-      normalize_data[normalize_data$group %in% igroup, &amp;quot;value&amp;quot;] - normalization_factors[normalization_factors$group %in% igroup, &amp;quot;normalization&amp;quot;]
-  }
-  normalize_data
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization)))
-knitr::kable(micro_results)&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37.38068&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;39.51295&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;41.10837&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;40.21366&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;41.46579&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;71.33775&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Not bad for the test data. But can we do better?&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;split-them&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Split Them!&lt;/h2&gt;
-&lt;p&gt;My next thought was to split them by their &lt;code&gt;group&lt;/code&gt;s, and then iterate again over
-the groups using &lt;code&gt;purrr::map&lt;/code&gt;, and then unlist them.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;split_normalization &amp;lt;- function(normalize_data, normalization_factors){
-  split_norm &amp;lt;- split(normalization_factors$normalization, normalization_factors$group)
-  
-  split_data &amp;lt;- split(normalize_data, normalize_data$group)
-  
-  out_data &amp;lt;- purrr::map2(split_data, split_norm, function(.x, .y){
-    .x$value &amp;lt;- .x$value - .y
-    .x
-  })
-  do.call(rbind, out_data)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results2 &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization),
-               split_normalization(to_normalize, normalization)))
-knitr::kable(micro_results2)&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37.43252&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;45.11638&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;48.32913&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;47.12768&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;50.36758&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;94.19223&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;77.30754&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;83.09115&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;88.22919&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;86.74504&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;90.65582&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;142.00019&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;join-them&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Join Them!&lt;/h2&gt;
-&lt;p&gt;My final thought was to join the two data.frame’s together using &lt;code&gt;dplyr&lt;/code&gt;, and then
-they are automatically matched up.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;join_normalization &amp;lt;- function(normalize_data, normalization_factors){
-  normalize_data &amp;lt;- dplyr::right_join(normalize_data, normalization_factors,
-                                      by = &amp;quot;group&amp;quot;)
-  
-  normalize_data$value &amp;lt;- normalize_data$value - normalize_data$normalization
-  normalize_data[, c(&amp;quot;value&amp;quot;, &amp;quot;group&amp;quot;)]
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;micro_results3 &amp;lt;- summary(microbenchmark(match_normalization(to_normalize, normalization),
-               split_normalization(to_normalize, normalization),
-               join_normalization(to_normalize, normalization)))
-knitr::kable(micro_results3)&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;expr&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;lq&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;median&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;uq&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;neval&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;match_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37.293244&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;45.476034&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;50.465097&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;47.374326&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;52.58932&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;109.4402&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;split_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;70.600139&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;82.395249&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;87.115287&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;86.656357&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;91.43579&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;130.6727&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;join_normalization(to_normalize, normalization)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.168829&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.525986&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;7.020724&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.722218&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;5.17179&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;171.3386&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Conclusions&lt;/h2&gt;
-&lt;p&gt;So on my computer, the &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;match&lt;/code&gt; implementations are mostly comparable,
-although on my motivating real world example, I actually got a 3X speedup by
-using the &lt;code&gt;split&lt;/code&gt; method. That may be because of issues related to &lt;code&gt;DataFrame&lt;/code&gt;
-and matching elements within that structure. The &lt;code&gt;join&lt;/code&gt; method is 10-14X faster
-than the others, which is what I’ve seen in my motivating work. I also think
-it makes the code easier to read and reason over, because you can see what
-is being subtracted from what directly in the code.&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Using IRanges for Non-Integer Overlaps</title>
-      <link>/post/iranges-for-non-integer-overlaps/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-06-23-iranges-for-non-integer-overlaps</link>
+      <description>I wanted to make use of IRanges awesome interval logic, but for non-integer data.</description>
+      <category>R</category>
+      <category>iranges</category>
+      <category>development</category>
+      <category>programming</category>
+      <guid>https://rmflight.github.io/posts/2018-06-23-iranges-for-non-integer-overlaps</guid>
       <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/iranges-for-non-integer-overlaps/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;The &lt;a href=&#34;https://bioconductor.org/packages/IRanges/&#34;&gt;&lt;code&gt;IRanges&lt;/code&gt;&lt;/a&gt; package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a &lt;strong&gt;large&lt;/strong&gt; constant factor and round them. The constant depends on how much accuracy you need.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;iranges&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;IRanges??&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://bioconductor.org/packages/IRanges/&#34;&gt;&lt;code&gt;IRanges&lt;/code&gt;&lt;/a&gt; is a bioconductor package for interval algebra of &lt;strong&gt;i&lt;/strong&gt;nteger &lt;strong&gt;ranges&lt;/strong&gt;. It is used extensively in the &lt;code&gt;GenomicRanges&lt;/code&gt; package for finding overlaps between various genomic features. For genomic features, &lt;strong&gt;integers&lt;/strong&gt; make sense, because one cannot have fractional base locations.&lt;/p&gt;
-&lt;p&gt;However, &lt;code&gt;IRanges&lt;/code&gt; uses &lt;a href=&#34;https://en.wikipedia.org/wiki/Red%E2%80%93black_tree&#34;&gt;red-black trees&lt;/a&gt; as its data structure, which provide very fast searches of overlaps. This makes it very attractive for &lt;strong&gt;any&lt;/strong&gt; problem that involves overlapping ranges.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;My motivation comes from mass-spectrometry data, where I want to count the number of raw data points and / or the number of peaks in a &lt;strong&gt;large&lt;/strong&gt; number of M/Z windows. Large here means on the order of 1,000,000 M/Z windows.&lt;/p&gt;
-&lt;p&gt;Generating the windows is not hard, but searching the list of points / peaks for which ones are within the bounds of a window takes &lt;strong&gt;a really long time&lt;/strong&gt;. Long enough that I needed some other method.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;iranges-to-the-rescue&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;IRanges to the Rescue!&lt;/h2&gt;
-&lt;p&gt;So my idea was to use &lt;code&gt;IRanges&lt;/code&gt;. But there is a problem, &lt;code&gt;IRanges&lt;/code&gt; is for integer ranges. How do we use this for non-integer data? Simple, multiply and round the fractional numbers to generate integers.&lt;/p&gt;
-&lt;p&gt;It turns out that multiplying our mass-spec data by &lt;code&gt;20,000&lt;/code&gt; gives us differences down to the &lt;code&gt;0.00005&lt;/code&gt; place, which is more than enough accuracy for the size of the windows we are interested in. If needed, &lt;code&gt;IRanges&lt;/code&gt; can handle &lt;code&gt;1600 * 1e6&lt;/code&gt;, but currently will crash at &lt;code&gt;1600 * 1e7&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;how-fast-is-it&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;How Fast Is It?&lt;/h2&gt;
-&lt;p&gt;Lets actually test differences in speed by counting how many overlapping points there are.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(IRanges)
-library(ggplot2)
-load(&amp;quot;../../extdata/iranges_example_data.rda&amp;quot;)
-
-head(mz_points)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## IRanges object with 6 ranges and 1 metadata column:
-##           start       end     width |               mz
-##       &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; |        &amp;lt;numeric&amp;gt;
-##   [1]   2970182   2970182         1 | 148.509100524992
-##   [2]   2970183   2970183         1 | 148.509161249802
-##   [3]   2970184   2970184         1 |  148.50922197465
-##   [4]   2970186   2970186         1 | 148.509282699535
-##   [5]   3000526   3000526         1 | 150.026298638453
-##   [6]   3000527   3000527         1 | 150.026360296201&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(mz_windows)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## IRanges object with 6 ranges and 2 metadata columns:
-##           start       end     width |         mz_start           mz_end
-##       &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt; |        &amp;lt;numeric&amp;gt;        &amp;lt;numeric&amp;gt;
-##   [1]   2960000   2960011        12 |              148 148.000554529159
-##   [2]   2960001   2960012        12 | 148.000055452916 148.000609982075
-##   [3]   2960002   2960013        12 | 148.000110905832 148.000665434991
-##   [4]   2960003   2960014        12 | 148.000166358748 148.000720887907
-##   [5]   2960004   2960016        13 | 148.000221811664 148.000776340823
-##   [6]   2960006   2960017        12 |  148.00027726458 148.000831793739&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I have some &lt;a href=&#34;https://github.com/rmflight/researchBlog_blogdown/blob/master/data/iranges_example_data.rda&#34;&gt;example data&lt;/a&gt; with 3447542 windows, and 991816 points. We will count how many point there are in each window using the below functions, with differing number of windows.&lt;/p&gt;
-&lt;div id=&#34;functions&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Functions&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;count_overlaps_naive &amp;lt;- function(mz_start, mz_end, points){
-  sum((points &amp;gt;= mz_start) &amp;amp; (points &amp;lt;= mz_end))
-}
-
-iterate_windows &amp;lt;- function(windows, points){
-  purrr::pmap_int(windows, count_overlaps_naive, points)
-}
-
-run_times_iterating &amp;lt;- function(windows, points){
-  t &amp;lt;- Sys.time()
-  window_counts &amp;lt;- iterate_windows(windows, points)
-  t2 &amp;lt;- Sys.time()
-  run_time &amp;lt;- difftime(t2, t, units = &amp;quot;secs&amp;quot;)
-  run_time
-}
-
-run_times_countoverlaps &amp;lt;- function(windows, points){
-  t &amp;lt;- Sys.time()
-  window_counts &amp;lt;- countOverlaps(points, windows)
-  t2 &amp;lt;- Sys.time()
-  run_time &amp;lt;- difftime(t2, t, units = &amp;quot;secs&amp;quot;)
-  run_time
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;define-samples-of-different-sizes&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Define Samples of Different Sizes&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(1234)
-
-sample_sizes &amp;lt;- c(10, 100, 1000, 10000, 50000, 100000)
-
-window_samples &amp;lt;- purrr::map(sample_sizes, function(x){sample(length(mz_windows), size = x)})&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;run-it&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Run It&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;iranges_times &amp;lt;- purrr::map_dbl(window_samples, function(x){
-  run_times_countoverlaps(mz_windows[x], mz_points)
-})
-
-window_frame &amp;lt;- as.data.frame(mcols(mz_windows))
-
-naive_times &amp;lt;- purrr::map_dbl(window_samples, function(x){
-  run_times_iterating(window_frame[x, ], mz_points)
-})&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plot-them&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Plot Them&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_times &amp;lt;- data.frame(size = rep(sample_sizes, 2),
-                        time = c(iranges_times, naive_times),
-                        method = rep(c(&amp;quot;iranges&amp;quot;, &amp;quot;naive&amp;quot;), each = 6))
-
-p &amp;lt;- ggplot(all_times, aes(x = log10(size), y = time, color = method)) + geom_point() + geom_line() + labs(y = &amp;quot;time (s)&amp;quot;, x = &amp;quot;log10(# of windows)&amp;quot;, title = &amp;quot;Naive &amp;amp; IRanges Timings&amp;quot;) + theme(legend.position = c(0.2, 0.8))
-p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-1.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p + ylim(c(0, 1))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-06-23-iranges-for-non-integer-overlaps_files/figure-html/difference_times-2.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;As the two figures show, the naive solution, while a little faster under 1000 regions, is quickly outperformed by &lt;code&gt;IRanges&lt;/code&gt;, whose time increases much more slowly.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
+      <media:content url="https://rmflight.github.io/posts/2018-06-23-iranges-for-non-integer-overlaps/iranges-for-non-integer-overlaps_files/figure-html5/difference_times-1.svg" medium="image" type="image/svg+xml"/>
     </item>
-    
     <item>
-      <title>Turn Robert&#39;s Beard Purple!</title>
-      <link>/post/turn-roberts-beard-purple/</link>
+      <title>Turn Robert's Beard Purple!</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-06-20-turn-roberts-beard-purple</link>
+      <description>I'm trying to raise money for the Walk for Alzheimer's, will you sponsor me?</description>
+      <category>alzheimers</category>
+      <category>fundraising</category>
+      <guid>https://rmflight.github.io/posts/2018-06-20-turn-roberts-beard-purple</guid>
       <pubDate>Wed, 20 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/turn-roberts-beard-purple/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If I &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;raise $100 by August 25ths The Walk to End Alzheimer’s&lt;/a&gt;, I will have my beard dyed purple in support of Alzheimer’s awareness.&lt;/p&gt;
-&lt;p&gt;If you are in another country, donate to your local Alzheimer’s charity and &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;email me&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; so I count it towards my total.&lt;/p&gt;
-&lt;p&gt;Links:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;My donation page&lt;/a&gt; (&lt;a href=&#34;https://www.charitywatch.org/ratings-and-metrics/alzheimers-association-national-office/461&#34;&gt;Charity report on Alzheimer’s Association&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.facebook.com/donate/2012668322318175/?fundraiser_source=external_url&#34;&gt;Facebook Fundraising Page&lt;/a&gt; (if you want to share it!)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://secure2.convio.net/alz/site/Donation2;jsessionid=00000000.app202b?df_id=1683&amp;amp;mfc_pref=T&amp;amp;1683.donation=form1&amp;amp;s_locale=en_CA&amp;amp;NONCE_TOKEN=D46EF58FAD6FA1276A4C99FBED9E9155&#34;&gt;Alzheimer Society Canada&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://secure.alzheimers.org.uk/?gclid=CjwKCAjw9qfZBRA5EiwAiq0AbScJN_IE7JW3arALIYmd2F2gzMk3ZV32sT9FGyR3yx_spMlgUzqMkhoCgUEQAvD_BwE&#34;&gt;Alzheimer’s Society UK&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;updates&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Updates!&lt;/h2&gt;
-&lt;div id=&#34;july-10&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;July 10&lt;/h3&gt;
-&lt;p&gt;Thanks to everyone on &lt;a href=&#34;https://www.facebook.com/donate/2012668322318175/?fundraiser_source=external_url&#34;&gt;Facebook&lt;/a&gt;, we’ve raised $5 for the American Alzheimer’s Association, and $30 for the Alzheimer Society in Canada!&lt;/p&gt;
-&lt;p&gt;Back on June 25, I went in to &lt;a href=&#34;http://bak4morestudio.com/&#34;&gt;Bak 4 More Studio&lt;/a&gt; and the awesome &lt;a href=&#34;https://www.facebook.com/Brittany-B-at-Bak-4-More-Studio-809676079219735/&#34;&gt;Brittany B&lt;/a&gt; did some testing to see how hard it would be to lighten my beard so it can be colored. She was great, and thinks it will be able to be done all in one session. I am currently booked to go in on Monday, August 20th to get the coloring done. Thanks again to Helue and Brittany for their help in this!&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;video&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Video&lt;/h2&gt;
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/5cmMtfDnqbM?rel=0&#34; frameborder=&#34;0&#34; allow=&#34;autoplay; encrypted-media&#34; allowfullscreen&gt;
-&lt;/iframe&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-a-purple-beard&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why a Purple Beard??&lt;/h2&gt;
-&lt;p&gt;I decided to participate in the Walk To End Alzheimer’s this year, coming up on August 25th here in Lexington. I will be walking the 2 miles in support of my Mom, who was diagnosed with early onset Alzheimer’s some time ago (she will turn 68 this summer).&lt;/p&gt;
-&lt;p&gt;Why am I walking?? Because I’ve seen a little bit of what Alzheimer’s does, and although my Mom won’t benefit from new treatments, we need to find effective treatments for this devastating disease.&lt;/p&gt;
-&lt;p&gt;As an incentive to donate, if I reach my &lt;a href=&#34;http://act.alz.org/site/TR?pg=personal&amp;amp;px=14694554&amp;amp;fr_id=11244&#34;&gt;fundraising goal of $100&lt;/a&gt;, I will have my beard dyed Alzheimer’s Association purple! The wonderful folks at &lt;a href=&#34;http://bak4morestudio.com/&#34;&gt;Bak 4 More studios&lt;/a&gt; have agreed to help me dye my beard purple before the Walk date. I will make sure to take lots of video and pictures of the process, which I am told will probably involve two trips to the studio, one to lighten my beard and a second to actually apply the purple color.&lt;/p&gt;
-&lt;p&gt;Using the magic of computers, I’ve tried to show here what that might look like. I’m sure it will look 100X better than these, this is just to give a possible idea.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/selfie_walk_lores.png&#34;&gt;&lt;/img&gt;&lt;/p&gt;
-&lt;p&gt;I also realize that not everyone may be able to donate to the American Alzheimer’s Association, so if you want to support my fundraising for the Walk (and turn my beard purple) by donating to your local Alzheimer’s charity, just &lt;a href=&#34;http://rmflight.github.io/#contact&#34;&gt;send me an email&lt;/a&gt; with the subject &lt;em&gt;walk&lt;/em&gt; with the amount you donated and to which charity, and I will count your donation towards your local charity towards my goal. I will also respond to your email so that you know I’ve counted it.&lt;/p&gt;
-&lt;p&gt;I will NOT be trimming my beard between now and the Walk date, so there will be even &lt;strong&gt;more purple beard&lt;/strong&gt; to go around, with 9 weeks between now and then.&lt;/p&gt;
-&lt;p&gt;Thank you for helping me raise funds for the Walk to End Alzheimer’s, and feel free to spread this post far and wide.&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>knitrProgressBar Package</title>
-      <link>/post/knitrprogressbar/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-02-19-knitrprogressbar</link>
+      <description>Ever wanted a progress bar output visible in a knitr document? Now you can!</description>
+      <category>packages</category>
+      <category>R</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2018-02-19-knitrprogressbar</guid>
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/knitrprogressbar/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If you like &lt;code&gt;dplyr&lt;/code&gt; progress bars, and wished you could use them everywhere, including from within Rmd documents, non-interactive shells, etc, then you should check out &lt;code&gt;knitrProgressBar&lt;/code&gt; (&lt;a href=&#34;https://cran.r-project.org/package=knitrProgressBar&#34;&gt;cran&lt;/a&gt; &lt;a href=&#34;https://github.com/rmflight/knitrProgressBar&#34;&gt;github&lt;/a&gt;).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-yet-another-progress-bar&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why Yet Another Progress Bar??&lt;/h2&gt;
-&lt;p&gt;I didn’t set out to create &lt;strong&gt;another&lt;/strong&gt; progress bar package. But I really liked &lt;code&gt;dplyr&lt;/code&gt;s style of progress bar, and how they worked under the hood (thanks to the &lt;a href=&#34;https://rud.is/b/2017/03/27/all-in-on-r%E2%81%B4-progress-bars-on-first-post/&#34;&gt;examples&lt;/a&gt; from Bob Rudis).&lt;/p&gt;
-&lt;p&gt;As I used them, I noticed that no progress was displayed if you did &lt;code&gt;rmarkdown::render()&lt;/code&gt; or &lt;code&gt;knitr::knit()&lt;/code&gt;. That just didn’t seem right to me, as that means you get no progress indicator if you want to use caching facilities of &lt;code&gt;knitr&lt;/code&gt;. So this package was born.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;how&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;How??&lt;/h2&gt;
-&lt;p&gt;These are pretty easy to setup and use.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(knitrProgressBar)
-
-# borrowed from example by @hrbrmstr
-arduously_long_nchar &amp;lt;- function(input_var, .pb=NULL) {
-  
-  update_progress(.pb) # function from knitrProgressBar
-  
-  Sys.sleep(0.01)
-  
-  nchar(input_var)
-  
-}
-
-# using stdout() here so progress is part of document
-pb &amp;lt;- progress_estimated(26, progress_location = stdout())
-
-purrr::map(letters, arduously_long_nchar, .pb = pb)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-|===                                              |  8% ~2 s remaining     
-|=============                                    | 27% ~1 s remaining     
-|======================                           | 46% ~0 s remaining     
-|================================                 | 65% ~0 s remaining     
-|=========================================        | 85% ~0 s remaining     
-Completed after 0 s&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] 1
-## 
-## [[3]]
-## [1] 1
-## 
-## [[4]]
-## [1] 1
-## 
-## [[5]]
-## [1] 1
-## 
-## [[6]]
-## [1] 1
-## 
-## [[7]]
-## [1] 1
-## 
-## [[8]]
-## [1] 1
-## 
-## [[9]]
-## [1] 1
-## 
-## [[10]]
-## [1] 1
-## 
-## [[11]]
-## [1] 1
-## 
-## [[12]]
-## [1] 1
-## 
-## [[13]]
-## [1] 1
-## 
-## [[14]]
-## [1] 1
-## 
-## [[15]]
-## [1] 1
-## 
-## [[16]]
-## [1] 1
-## 
-## [[17]]
-## [1] 1
-## 
-## [[18]]
-## [1] 1
-## 
-## [[19]]
-## [1] 1
-## 
-## [[20]]
-## [1] 1
-## 
-## [[21]]
-## [1] 1
-## 
-## [[22]]
-## [1] 1
-## 
-## [[23]]
-## [1] 1
-## 
-## [[24]]
-## [1] 1
-## 
-## [[25]]
-## [1] 1
-## 
-## [[26]]
-## [1] 1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The main difference to &lt;code&gt;dplyr&lt;/code&gt;s progress bars is that here you have the option to set &lt;strong&gt;where&lt;/strong&gt; the progress gets written to, either automatically using the built-in &lt;code&gt;make_kpb_output_decisions()&lt;/code&gt;, or directly. Also, I have provided the &lt;code&gt;update_progress&lt;/code&gt; function to actually do the updating or finalizing properly.&lt;/p&gt;
-&lt;p&gt;There are also package specific options to control &lt;strong&gt;how&lt;/strong&gt; the decisions are made.&lt;/p&gt;
-&lt;p&gt;See the &lt;a href=&#34;https://rmflight.github.io/knitrProgressBar/&#34;&gt;main&lt;/a&gt; documentation, as well as the &lt;a href=&#34;https://rmflight.github.io/knitrProgressBar/articles/example_progress_bars.html&#34;&gt;included vignette&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;multi-processing&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Multi-Processing&lt;/h2&gt;
-&lt;p&gt;As of V1.1.0 (should be on CRAN soon), the package also supports indicating progress on multi-processed jobs. See the included &lt;a href=&#34;https://rmflight.github.io/knitrProgressBar/articles/multiprocessing.html&#34;&gt;vignette&lt;/a&gt; for more information.&lt;/p&gt;
-&lt;p&gt;By the way, I know this method is not ideal, but I could not get the combination of &lt;code&gt;later&lt;/code&gt; and &lt;code&gt;processx&lt;/code&gt; to work in my case. If anyone is willing to help out, that would be great.&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Licensing R Packages that Include Others Code</title>
-      <link>/post/licensing-r-packages-that-include-others-code/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-02-14-licensing-r-packages-that-include-others-code</link>
+      <description>I wanted to include others code in my package, and couldn't find any good resources.</description>
+      <category>R</category>
+      <category>packages</category>
+      <category>open-science</category>
+      <category>licensing</category>
+      <guid>https://rmflight.github.io/posts/2018-02-14-licensing-r-packages-that-include-others-code</guid>
       <pubDate>Wed, 14 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/licensing-r-packages-that-include-others-code/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If you include others code in your own R package, list them as contributors with comments about what they contributed, and add a license statement in the file that includes their code.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;motivation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;I recently created the &lt;a href=&#34;https://CRAN.R-project.org/package=knitrProgressBar&#34;&gt;&lt;code&gt;knitrProgressBar&lt;/code&gt;&lt;/a&gt; package. It is a really simple package, that takes the &lt;code&gt;dplyr&lt;/code&gt; progress bars and makes it possible for them to write progress to a supplied file connection. The &lt;code&gt;dplyr&lt;/code&gt; package itself is licensed under MIT, so I felt fine taking the code directly from &lt;code&gt;dplyr&lt;/code&gt; itself. In addition, I didn’t want my package to depend on &lt;code&gt;dplyr&lt;/code&gt;, so I wanted that code self-contained in my own package, and I wanted to be able to modify underlying mechanics that might have been more complicated if I had just made a new class of progress bar that inherited from &lt;code&gt;dplyr&lt;/code&gt;’s.&lt;/p&gt;
-&lt;p&gt;I also wanted to be able to release my code on CRAN, not just on GitHub. I knew to accomplish that I would have to have all the license stuff correct. However, I had not seen any guide on how to &lt;strong&gt;license&lt;/strong&gt; a package and give proper attribution in the &lt;code&gt;Authors@R&lt;/code&gt; field.&lt;/p&gt;
-&lt;p&gt;Note that I did ask this question on &lt;a href=&#34;https://stackoverflow.com/questions/48525023/properly-license-r-package-that-includes-other-mit-code&#34;&gt;StackOverflow&lt;/a&gt; and &lt;a href=&#34;https://discuss.ropensci.org/t/licensing-a-new-package-that-uses-code-from-another-source/1046&#34;&gt;ROpenSci&lt;/a&gt; forums as well.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;information-from-cran&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Information from CRAN&lt;/h2&gt;
-&lt;p&gt;I should note here, that the CRAN author guidelines do provide a &lt;strong&gt;small&lt;/strong&gt; hint in this regard in the &lt;a href=&#34;https://cran.r-project.org/doc/manuals/r-release/R-exts.html&#34;&gt;Writing R Extensions&lt;/a&gt; guide:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Note that all significant contributors must be included: if you wrote an R wrapper for the work of others included in the src directory, you are not the sole (and maybe not even the main) author.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;However, there is not any guidance provided on &lt;strong&gt;how&lt;/strong&gt; these should ideally be listed.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;full-answer&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Full Answer&lt;/h2&gt;
-&lt;p&gt;I am the main author and maintainer of the new package, that is easy. The original code is MIT licensed, authored by several persons, and has copyright held by RStudio.&lt;/p&gt;
-&lt;p&gt;My solution then was to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/rmflight/knitrProgressBar/blob/master/R/progress.R#L6&#34;&gt;add the MIT license&lt;/a&gt; from &lt;code&gt;dplyr&lt;/code&gt; to the file that has the progress bar code&lt;/li&gt;
-&lt;li&gt;add &lt;a href=&#34;https://github.com/rmflight/knitrProgressBar/blob/master/DESCRIPTION#L5&#34;&gt;all the authors&lt;/a&gt; of &lt;code&gt;dplyr&lt;/code&gt; as &lt;strong&gt;contributors&lt;/strong&gt; to my package, with a comment as to &lt;strong&gt;why&lt;/strong&gt; they are listed&lt;/li&gt;
-&lt;li&gt;add RStudio as a &lt;strong&gt;copyright holder&lt;/strong&gt; to my package, with a comment that this only applies to the one file&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;So the &lt;code&gt;Authors@R&lt;/code&gt; line in my &lt;code&gt;DESCRIPTION&lt;/code&gt; ended up being:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Authors@R: c(person(given = c(&amp;quot;Robert&amp;quot;, &amp;quot;M&amp;quot;), family = &amp;quot;Flight&amp;quot;, email = &amp;quot;rflight79@gmail.com&amp;quot;, role = c(&amp;quot;aut&amp;quot;, &amp;quot;cre&amp;quot;)),
-            person(&amp;quot;Hadley&amp;quot;, &amp;quot;Wickham&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
-            person(&amp;quot;Romain&amp;quot;, &amp;quot;Francois&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
-            person(&amp;quot;Lionel&amp;quot;, &amp;quot;Henry&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
-            person(&amp;quot;Kirill&amp;quot;, &amp;quot;Müller&amp;quot;, role = &amp;quot;ctb&amp;quot;, comment = &amp;quot;Author of included dplyr fragments&amp;quot;),
-            person(&amp;quot;RStudio&amp;quot;, role = &amp;quot;cph&amp;quot;, comment = &amp;quot;Copyright holder of included dplyr fragments&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>docopt &amp; Numeric Options</title>
-      <link>/post/docopt-numeric-options/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2018-01-17-docopt-numeric-optoins</link>
+      <description>Every input is a string in docopt. Every Input!!</description>
+      <category>R</category>
+      <category>development</category>
+      <category>programming</category>
+      <category>docopt</category>
+      <guid>https://rmflight.github.io/posts/2018-01-17-docopt-numeric-optoins</guid>
       <pubDate>Wed, 17 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/docopt-numeric-options/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;If you use the &lt;code&gt;docopt&lt;/code&gt; package to create command line &lt;code&gt;R&lt;/code&gt; executables that take
-options, there is something to know about numeric command line options: they should
-have &lt;code&gt;as.double&lt;/code&gt; before using them in your script.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Setup&lt;/h2&gt;
-&lt;p&gt;Lets set up a new &lt;code&gt;docopt&lt;/code&gt; string, that includes both string and
-numeric arguments.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;quot;
-Usage:
-  test_numeric.R [--string=&amp;lt;string_value&amp;gt;] [--numeric=&amp;lt;numeric_value&amp;gt;]
-  test_numeric.R (-h | --help)
-  test_numeric.R
-
-Description: Testing how values are passed using docopt.
-
-Options:
-  --string=&amp;lt;string_value&amp;gt;  A string value [default: Hi!]
-  --numeric=&amp;lt;numeric_value&amp;gt;   A numeric value [default: 10]
-
-&amp;quot; -&amp;gt; doc&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(methods)
-library(docopt)
-
-script_options &amp;lt;- docopt(doc)
-
-script_options&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## List of 8
-##  $ --string : chr &amp;quot;Hi!&amp;quot;
-##  $ --numeric: chr &amp;quot;10&amp;quot;
-##  $ -h       : logi FALSE
-##  $ --help   : logi FALSE
-##  $ string   : chr &amp;quot;Hi!&amp;quot;
-##  $ numeric  : chr &amp;quot;10&amp;quot;
-##  $ h        : logi FALSE
-##  $ help     : logi FALSE
-## NULL&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It is very easy to see here, that the &lt;code&gt;numeric&lt;/code&gt; argument is indeed a string, and
-if you want to use it as numeric, it should first be converted using &lt;code&gt;as.double&lt;/code&gt;,
-&lt;code&gt;as.integer&lt;/code&gt;, or even &lt;code&gt;as.numeric&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;cant-you-easily-tell-its-character&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Can’t You Easily Tell It’s Character?&lt;/h2&gt;
-&lt;p&gt;I just bring this up because I recently used &lt;code&gt;docopt&lt;/code&gt; to provide interfaces to
-three executables scripts, and I spent a lot of time &lt;code&gt;printing&lt;/code&gt; the &lt;code&gt;doc&lt;/code&gt; strings,
-and I somehow never noticed that the numeric values were actually character and
-needed to be converted to a numeric first. Hopefully this will save someone else
-some time in that regard.&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
     <item>
       <title>Custom Deployment Script</title>
-      <link>/post/custom-deployment-script/</link>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2017-12-27-custom-deployment-script</link>
+      <description>I don't want to use Netlify for hosting, so I came up with this simple script to deploy my blog.</description>
+      <category>R</category>
+      <category>blogdown</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2017-12-27-custom-deployment-script</guid>
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/post/custom-deployment-script/</guid>
-      <description>
-
-
-&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;Use a short bash script to do deployment from your own computer directly to your
-&lt;code&gt;*.github.io&lt;/code&gt; domain.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why?&lt;/h2&gt;
-&lt;p&gt;So Yihui recommends using Netlify, or even Travis-CI in the Blogdown book. I wasn’t
-willing to setup a custom domain yet, and some of my posts involve a lot of personally
-created packages, etc, that I don’t want to debug installation on Travis. So, I wanted
-a simple script I could call on my laptop that would copy the &lt;code&gt;/public&lt;/code&gt; directory
-to the repo for my &lt;code&gt;github.io&lt;/code&gt; site, and then push the changes.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-script&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Script&lt;/h2&gt;
-&lt;p&gt;Here is the simple script I ended up using:&lt;/p&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;#!/bin/bash
-org_dir=`pwd`
-cd path/to/github.io/repo/
-#rm -rf *
-cp -Rfu path/to/blogdown/public/* .
-
-git add *
-commit_time=`date`
-git commit -m &amp;quot;update at $commit_time&amp;quot;
-git push origin master
-
-cd $org_dir&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It changes directories, because to push from a &lt;code&gt;git&lt;/code&gt; repo I’m pretty sure you
-need to be in the directory, so it also makes sure to go back there at the end.
-It then copies the contents of &lt;code&gt;/public&lt;/code&gt; to the repo, &lt;code&gt;add&lt;/code&gt;s all the files, and
-then uses the current time-stamp as the commit message, and finally pushes all
-the updates.&lt;/p&gt;
-&lt;/div&gt;
-</description>
     </item>
-    
+    <item>
+      <title>Differences in Posted Date vs sessionInfo()</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2017-12-27-differences-in-posted-date-vs-sessioninfo</link>
+      <description>If you see differences in the sessionInfo output and the date the post was published, this is why.</description>
+      <category>development</category>
+      <category>blogdown</category>
+      <guid>https://rmflight.github.io/posts/2017-12-27-differences-in-posted-date-vs-sessioninfo</guid>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Linking to Manually Inserted Images in Blogdown / Hugo</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2017-12-27-linking-to-manually-inserted-images-in-hugo</link>
+      <description>This is my method to include something manually in a blogdown post.</description>
+      <category>hugo</category>
+      <category>R</category>
+      <category>blogdown</category>
+      <guid>https://rmflight.github.io/posts/2017-12-27-linking-to-manually-inserted-images-in-hugo</guid>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>I was Part of the Problem</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2017-10-18-i-was-part-of-the-problem</link>
+      <description>Why do so many men think it's OK to lavish unwanted attention on women who don't want it?</description>
+      <category>metoo</category>
+      <category>academia</category>
+      <guid>https://rmflight.github.io/posts/2017-10-18-i-was-part-of-the-problem</guid>
+      <pubDate>Wed, 18 Oct 2017 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Criticizing a Publication, and Lying About It</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it</link>
+      <description>Critics of our last publication claimed we didn't make our data available, which is an outright lie.</description>
+      <category>publications</category>
+      <category>peer-review</category>
+      <category>zinc</category>
+      <category>academia</category>
+      <guid>https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it</guid>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Authentication of Key Resources for Data Analysis</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2016-03-23-authentication-of-key-resources-for-data-analysis</link>
+      <description>NIH is asking for authentication of key resources. How does this apply to data analyses?</description>
+      <category>reproducibility</category>
+      <category>open-science</category>
+      <category>analysis</category>
+      <guid>https://rmflight.github.io/posts/2016-03-23-authentication-of-key-resources-for-data-analysis</guid>
+      <pubDate>Wed, 23 Mar 2016 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2016-03-23-authentication-of-key-resources-for-data-analysis/yeast_48rep_cor_heatmap.jpg" medium="image" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>Random Forest vs PLS on Random Data</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data</link>
+      <description>Comparing random-forest and partial-least-squares discriminant-analysis on random data to show the problems inherent in PLS-DA.</description>
+      <category>random-forest</category>
+      <category>machine-learning</category>
+      <category>partial-least-squares</category>
+      <category>statistics</category>
+      <category>analysis</category>
+      <guid>https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data</guid>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/random-forest-vs-pls-on-random-data_files/figure-html5/plot_initial-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
+      <title>Novel Zinc Coordination Geometries</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2015-06-17-novel-zinc-coordination-geometries</link>
+      <description>A bit of an explainer on our labs recent publication on finding and classifying zinc coordination geometries in protein structures.</description>
+      <category>zinc</category>
+      <category>structural-biochemistry</category>
+      <category>open-science</category>
+      <category>reproducibility</category>
+      <category>visualization</category>
+      <category>publications</category>
+      <guid>https://rmflight.github.io/posts/2015-06-17-novel-zinc-coordination-geometries</guid>
+      <pubDate>Wed, 17 Jun 2015 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2015-06-17-novel-zinc-coordination-geometries/prot24834-fig-0002.png" medium="image" type="image/png" width="500" height="256"/>
+    </item>
+    <item>
+      <title>Mouse / Human Transcriptomics and Batch Effects</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2015-06-01-mouse-human-transcriptomics-and-batch-effects</link>
+      <description>A recent paper dug into some data from another paper, casting doubts on the first, all thanks to the data being available.</description>
+      <category>open-science</category>
+      <category>transcriptomics</category>
+      <category>batch-effects</category>
+      <category>publications</category>
+      <category>peer-review</category>
+      <guid>https://rmflight.github.io/posts/2015-06-01-mouse-human-transcriptomics-and-batch-effects</guid>
+      <pubDate>Mon, 01 Jun 2015 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2015-06-01-mouse-human-transcriptomics-and-batch-effects/slin_table1part2.jpg" medium="image" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>First Open Post-Publication Peer Review, with Credit!</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2015-03-25-first-open-post-publication-peer-review-with-credit</link>
+      <description>A story about my first open peer-review.</description>
+      <category>open-science</category>
+      <category>peer-review</category>
+      <category>publications</category>
+      <guid>https://rmflight.github.io/posts/2015-03-25-first-open-post-publication-peer-review-with-credit</guid>
+      <pubDate>Wed, 25 Mar 2015 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Being a PhD Student and Post-Doc with Migraines</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-12-31-being-a-phd-student-and-post-doc-with-migraines</link>
+      <description>What it's like having migraines as a PhD student and PostDoc.</description>
+      <category>phdisabled</category>
+      <category>migraines</category>
+      <category>academia</category>
+      <guid>https://rmflight.github.io/posts/2014-12-31-being-a-phd-student-and-post-doc-with-migraines</guid>
+      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Travis-CI to GitHub Pages</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-11-05-travis-ci-to-github-pages</link>
+      <description>How I automatically have some stuff get pushed to GitHub pages from a Travis CI job.</description>
+      <category>R</category>
+      <category>reproducibility</category>
+      <category>travis-ci</category>
+      <category>github</category>
+      <category>publishing</category>
+      <guid>https://rmflight.github.io/posts/2014-11-05-travis-ci-to-github-pages</guid>
+      <pubDate>Wed, 05 Nov 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>My Career Goals</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-08-08-my-career-goals</link>
+      <description>I don't want to be a lab PI, but I want to stay in academia.</description>
+      <category>post-doc</category>
+      <category>career</category>
+      <category>academia</category>
+      <guid>https://rmflight.github.io/posts/2014-08-08-my-career-goals</guid>
+      <pubDate>Fri, 08 Aug 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Analyses as Packages</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-07-28-analyses-as-packages</link>
+      <description>Why I think packages make good ways to structure an analysis.</description>
+      <category>R</category>
+      <category>development</category>
+      <category>packages</category>
+      <category>vignettes</category>
+      <category>programming</category>
+      <category>analysis</category>
+      <guid>https://rmflight.github.io/posts/2014-07-28-analyses-as-packages</guid>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Creating an Analysis as a Package and Vignette</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-07-28-creating-an-analysis-as-a-package-and-vignette</link>
+      <description>A walkthrough creating an analysis project as a package.</description>
+      <category>R</category>
+      <category>development</category>
+      <category>packages</category>
+      <category>vignettes</category>
+      <category>analysis</category>
+      <category>programming</category>
+      <guid>https://rmflight.github.io/posts/2014-07-28-creating-an-analysis-as-a-package-and-vignette</guid>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Packages vs ProjectTemplate</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-07-28-packages-vs-projecttemplate</link>
+      <description>Why I think packages are better than the projectTemplate package.</description>
+      <category>R</category>
+      <category>packages</category>
+      <category>analysis</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2014-07-28-packages-vs-projecttemplate</guid>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Researcher Discoverability</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-06-19-researcher-discoverability</link>
+      <description>Why do we need corporate products to enhance "researcher discoverability"?</description>
+      <category>github</category>
+      <category>open-science</category>
+      <category>academia</category>
+      <category>research</category>
+      <guid>https://rmflight.github.io/posts/2014-06-19-researcher-discoverability</guid>
+      <pubDate>Thu, 19 Jun 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Bioinformatics Presentations that Lack Results (or Biological Relevance)</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-06-05-bioinformatics-presentations-that-lack-results-or-biological-relevance</link>
+      <description>Why do people have bionformatics presentations lacking relevance or results?</description>
+      <category>bioinformatics</category>
+      <category>academia</category>
+      <category>research</category>
+      <guid>https://rmflight.github.io/posts/2014-06-05-bioinformatics-presentations-that-lack-results-or-biological-relevance</guid>
+      <pubDate>Thu, 05 Jun 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>categoryCompare Paper Finally Out!</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-04-08-categorycompare-paper-finally-out</link>
+      <description>My first first author publication since starting my PostDoc is finally out, about my meta-annotation-enrichment software package categoyrCompare.</description>
+      <category>R</category>
+      <category>bioconductor</category>
+      <category>meta-analysis</category>
+      <category>publications</category>
+      <category>git</category>
+      <category>github</category>
+      <category>open-science</category>
+      <category>visualization</category>
+      <category>annotation-enrichment</category>
+      <guid>https://rmflight.github.io/posts/2014-04-08-categorycompare-paper-finally-out</guid>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Self-Written Function Help</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-02-20-self-written-function-help</link>
+      <description>Do you want to be able to read function documentation for your own functions? Make your own package.</description>
+      <category>R</category>
+      <category>packages</category>
+      <category>documentation</category>
+      <category>development</category>
+      <category>devtools</category>
+      <category>roxygen2</category>
+      <category>docstrings</category>
+      <guid>https://rmflight.github.io/posts/2014-02-20-self-written-function-help</guid>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Installing MatLab vs Installing R</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-02-10-installing-matlab-vs-installing-r</link>
+      <description>Personal frustrations around installing MatLab led to this particular rant.</description>
+      <category>MatLab</category>
+      <category>R</category>
+      <guid>https://rmflight.github.io/posts/2014-02-10-installing-matlab-vs-installing-r</guid>
+      <pubDate>Mon, 10 Feb 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Package Version Increment Pre- and Post-Commit Hooks</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks</link>
+      <description>Two git commit hooks for incrementing the package version as part of commits.</description>
+      <category>R</category>
+      <category>git</category>
+      <category>packages</category>
+      <category>development</category>
+      <category>programming</category>
+      <guid>https://rmflight.github.io/posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks</guid>
+      <pubDate>Fri, 07 Feb 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Motivated Learning</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2014-01-28-motivated-learning</link>
+      <description>Two personal stories on times I was very motivated to learn, as part of my Software-Carpentry instructor training.</description>
+      <category>learning</category>
+      <category>software-carpentry</category>
+      <category>git</category>
+      <category>calculus</category>
+      <guid>https://rmflight.github.io/posts/2014-01-28-motivated-learning</guid>
+      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>PubmedCommons API</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-10-22-pubmedcommons-api</link>
+      <description>Pubmed commons is a new commenting system for pubmed articles.</description>
+      <category>open-science</category>
+      <category>pubmed</category>
+      <guid>https://rmflight.github.io/posts/2013-10-22-pubmedcommons-api</guid>
+      <pubDate>Tue, 22 Oct 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Open vs Closed Analysis Languages</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-10-21-open-vs-closed-analysis-languages</link>
+      <description>Talking about R &amp; Python vs MatLab as examples of open and closed data analysis languages.</description>
+      <category>open-science</category>
+      <category>R</category>
+      <category>python</category>
+      <category>MatLab</category>
+      <category>programming</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2013-10-21-open-vs-closed-analysis-languages</guid>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Pre-Calculating Large Tables of Values</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-10-17-pre-calculating-large-tables-of-values</link>
+      <description>Demonstrating a way to generate a large amount of numbers that otherwise might take a long time to calculate.</description>
+      <category>R</category>
+      <category>pre-calulations</category>
+      <category>programming</category>
+      <category>development</category>
+      <category>c++</category>
+      <guid>https://rmflight.github.io/posts/2013-10-17-pre-calculating-large-tables-of-values</guid>
+      <pubDate>Thu, 17 Oct 2013 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2013-10-17-pre-calculating-large-tables-of-values/pre-calculating-large-tables-of-numbers_files/figure-html5/genRandomData-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
+      <title>Portable, Personal Packages</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-09-23-portable-peronal-packages</link>
+      <description>My take on creating simple little packages for your own commonly used functions.</description>
+      <category>R</category>
+      <category>packages</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2013-09-23-portable-peronal-packages</guid>
+      <pubDate>Mon, 23 Sep 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>K-12 Wants Scientists!!</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-09-19-k-12-wants-scientists</link>
+      <description>I recently attended a talk about PhD scientists in grade school teaching.</description>
+      <category>post-doc</category>
+      <category>academia</category>
+      <category>science</category>
+      <category>teaching</category>
+      <guid>https://rmflight.github.io/posts/2013-09-19-k-12-wants-scientists</guid>
+      <pubDate>Thu, 19 Sep 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>R, RStudio, and Release and Dev Bioconductor</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-09-17-r-rstudio-and-release-and-dev-bioconductor</link>
+      <description>Working with the development version of Bioconductor on linux can be a pain. This is one way to do it.</description>
+      <category>R</category>
+      <category>bioconductor</category>
+      <category>rstudio</category>
+      <category>programming</category>
+      <category>packages</category>
+      <category>development</category>
+      <guid>https://rmflight.github.io/posts/2013-09-17-r-rstudio-and-release-and-dev-bioconductor</guid>
+      <pubDate>Tue, 17 Sep 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Reproducible Methods</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-08-16-reproducible-methods</link>
+      <description>A short missive on reproducibility, especially within computational work.</description>
+      <category>open-science</category>
+      <category>reproducibility</category>
+      <category>bioinformatics</category>
+      <guid>https://rmflight.github.io/posts/2013-08-16-reproducible-methods</guid>
+      <pubDate>Fri, 16 Aug 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>R Interface for Teaching</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-07-11-r-interface-for-teaching</link>
+      <description>What is the best interface for teaching a language like R?</description>
+      <category>R</category>
+      <category>teaching</category>
+      <category>notebooks</category>
+      <guid>https://rmflight.github.io/posts/2013-07-11-r-interface-for-teaching</guid>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Storing Package Data in Custom Environments</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-05-30-storing-package-data-in-custom-environments</link>
+      <description>How do you keep track of stuff for your own package without cluttering the users global space or setting a bunch of options?</description>
+      <category>R</category>
+      <category>packages</category>
+      <guid>https://rmflight.github.io/posts/2013-05-30-storing-package-data-in-custom-environments</guid>
+      <pubDate>Thu, 30 May 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Writing Up Scientific Results and Literate Programming</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-05-10-writing-up-scientific-results-and-literate-programming</link>
+      <description>My thoughts on using literate programming to investigate and report scientific results</description>
+      <category>literate-programming</category>
+      <category>academia</category>
+      <category>notebooks</category>
+      <category>reproducibility</category>
+      <guid>https://rmflight.github.io/posts/2013-05-10-writing-up-scientific-results-and-literate-programming</guid>
+      <pubDate>Fri, 10 May 2013 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Writing Papers Using R Markdown</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2012-10-09-writing-papers-using-r-markdown</link>
+      <description>How I used RMarkdown to write a manuscript</description>
+      <category>R</category>
+      <category>open-science</category>
+      <category>reproducibility</category>
+      <category>literate-programming</category>
+      <category>rmarkdown</category>
+      <guid>https://rmflight.github.io/posts/2012-10-09-writing-papers-using-r-markdown</guid>
+      <pubDate>Tue, 09 Oct 2012 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2012-10-09-writing-papers-using-r-markdown/writing-papers-using-rmarkdown_files/figure-html5/figureInsert-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
+      <title>Journal Club 2012-08-15</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2012-08-15-journal-club-2012-08-15</link>
+      <description>A summary of the paper Google Goes Cancer as was discussed in our journal club.</description>
+      <category>journal-club</category>
+      <guid>https://rmflight.github.io/posts/2012-08-15-journal-club-2012-08-15</guid>
+      <pubDate>Wed, 15 Aug 2012 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Creating Custom CDFs for Affymetrix Chips in Bioconductor</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor</link>
+      <description>Examples of messing with Affymetrix CDF data in Bioconductor.</description>
+      <category>R</category>
+      <category>bioconductor</category>
+      <category>bioinformatics</category>
+      <category>cdf</category>
+      <category>affymetrix</category>
+      <category>microarray</category>
+      <guid>https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor</guid>
+      <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
+    </item>
   </channel>
 </rss>

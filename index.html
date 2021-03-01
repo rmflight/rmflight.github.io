@@ -1,1636 +1,4114 @@
 <!DOCTYPE html>
-<html lang="en-us">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
 <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+  <link rel="alternate" type="application/rss+xml" href="https://rmflight.github.io/index.xml" />
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.54.0" />
-  <meta name="author" content="Robert M Flight">
-  <meta name="description" content="Senior Research Associate in Bioinformatics">
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
 
-  
-  <link rel="alternate" hreflang="en-us" href="/">
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
 
-  
-  
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
 
-
-  
-
-  
-  
-  
-  
-    
-  
-  
-    
-    
-      
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
-      
-    
-  
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
-  
-  
-  
-  
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
-  
-  <link rel="stylesheet" href="/styles.css">
-  
-
-  
-
-  
-  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
-  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Deciphering Life: One Bit at a Time">
-  
-
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
-
-  <link rel="canonical" href="/">
-
-  <meta property="twitter:card" content="summary_large_image">
-  
-  <meta property="twitter:site" content="@rmflight">
-  <meta property="twitter:creator" content="@rmflight">
-  
-  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:url" content="/">
-  <meta property="og:title" content="Deciphering Life: One Bit at a Time">
-  <meta property="og:description" content="Senior Research Associate in Bioinformatics">
-  <meta property="og:locale" content="en-us">
-  
-  <meta property="og:updated_time" content="2016-04-20T00:00:00&#43;00:00">
-  
-
-  
-
+  <!--radix_placeholder_meta_tags-->
   <title>Deciphering Life: One Bit at a Time</title>
 
+
+  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Deciphering Life: One Bit at a Time"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Deciphering Life: One Bit at a Time"/>
+  <meta property="twitter:site" content="@rmflight"/>
+  <meta property="twitter:creator" content="@rmflight"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Deciphering Life: One Bit at a Time"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #E1E8ED;
+    --header-color:    #fff;
+    --body-color:      #fff;
+    --aside-color:     #F5F8FA;
+    --fig-cap-color:   #657786;
+    --hover-color:     #1DA1F2;
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  body {
+    background-color:   #14171A;
+  }
+
+  d-title p {
+    color: #fff;
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   #F5F8FA;
+    --body-size:       0.8rem;
+    --body-color:      #fff;
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   #F5F8FA;
+    --text-size:       0.8em;
+    --text-color:      #fff;
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       #E1E8ED;
+    --text-size:        15px;
+    --hover-color:      #1DA1F2;
+    --bkgd-color:       #303030;
+  }
+
+  .distill-site-footer {
+    --text-color:       #E1E8ED;
+    --text-size:        15px;
+    --hover-color:      #1DA1F2;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+
+  .dt-tags .dt-tag {
+    color: #F5F8FA;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    color: #F5F8FA;
+  }
+
+  .posts-list .post-preview p {
+    color: #E1E8ED;
+  }
+
+  .posts-with-sidebar .posts-sidebar li {
+    color: #E1E8ED;
+  }
+
+
+  .posts-with-sidebar .posts-sidebar .category-count {
+    color: #E1E8ED;
+  }
+
+  .posts-list .metadata {
+    color: #F5F8FA;
+  }
+
+  d-article div.sourceCode code, d-article pre code {
+    color: #F5F8FA;
+  }
+
+  d-article a {
+    text-decoration: underline;
+  }
+
+  d-article a:hover {
+    color: #1DA1F2;
+  }
+
+  .l-text, .l-body {
+    color: #F5F8FA;
+  }
+
+  d-appendix a {
+    color: #F5F8FA;
+  }
+
+  d-appendix a:hover {
+    color: #1DA1F2;
+  }
+
+
+  .posts-more {
+    color: #F5F8FA;
+  }
+
+  .posts-more a:hover {
+    color: #1DA1F2;
+  }
+
+
+  .article-footer p {
+    color: #AAB8C2;
+  }</style>
+  <style type="text/css">
+  /* base style */
+
+  /* FONT FAMILIES */
+
+  :root {
+    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body,
+  .posts-list .post-preview p,
+  .posts-list .description p {
+    font-family: var(--body-font), var(--body-default);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .posts-list .post-preview h2,
+  .posts-list .description h2 {
+    font-family: var(--heading-font), var(--heading-default);
+  }
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: var(--mono-font), var(--mono-default);
+  }
+
+
+  /*-- TITLE --*/
+  d-title h1,
+  .posts-list > h1 {
+    color: var(--title-color, black);
+  }
+
+  d-title h1 {
+    font-size: var(--title-size, 50px);
+  }
+
+  /*-- HEADERS --*/
+  d-article h1,
+  d-article h2,
+  d-article h3,
+  d-article h4,
+  d-article h5,
+  d-article h6 {
+    color: var(--header-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- BODY --*/
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 1.06rem);
+  }
+
+
+  /*-- CODE --*/
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-size: var(--code-size, 14px);
+  }
+
+  /*-- ASIDE --*/
+  d-article aside {
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- FIGURE CAPTIONS --*/
+  figure .caption,
+  figure figcaption,
+  .figure .caption {
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- METADATA --*/
+  d-byline h3 {
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-byline {
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  d-byline a,
+  d-article d-byline a {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- TABLE OF CONTENTS --*/
+  .d-contents nav h3 {
+    font-size: var(--heading-size, 18px);
+  }
+
+  .d-contents nav a {
+    font-size: var(--contents-size, 13px);
+  }
+
+  /*-- APPENDIX --*/
+  d-appendix h3 {
+    font-size: var(--heading-size, 15px);
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
+  }
+
+  d-appendix {
+    font-size: var(--text-size, 0.8em);
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-appendix d-footnote-list a.footnote-backlink {
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  .distill-site-header .title {
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .distill-site-header a,
+  .nav-dropdown .nav-dropbtn {
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
+  }
+
+  .distill-site-header {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer a:hover {
+    color: var(--hover-color, white);
+  }</style>
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!/posts/.test(location.pathname)) {
+        return;
+      }
+
+      var script = document.createElement("script");
+      script.src = "https://utteranc.es/client.js";
+      script.setAttribute("repo", "rmflight/distill_testblog");
+      script.setAttribute("issue-term", "og:title");
+      script.setAttribute("crossorigin", "anonymous");
+      script.setAttribute("label", "comment_thread");
+
+      /* wait for article to load, append script to article element */
+      var observer = new MutationObserver(function (mutations, observer) {
+        var article = document.querySelector("d-article");
+        if (article) {
+          observer.disconnect();
+          /* HACK: article scroll */
+          article.setAttribute("style", "overflow-y: hidden");
+          article.appendChild(script);
+        }
+      });
+
+      observer.observe(document.body, { childList: true });
+    });
+  </script>
+
+  <!--/radix_placeholder_site_in_header-->
+
+
 </head>
-<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71" class="dark">
 
-<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
-  <div class="container">
+<body class="layout-listing">
 
-    
-    <div class="navbar-header">
-      
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target=".navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      
-      <a class="navbar-brand" href="/">Deciphering Life: One Bit at a Time</a>
-    </div>
+<!--radix_placeholder_front_matter-->
 
-    
-    <div class="collapse navbar-collapse">
+<script id="distill-front-matter" type="text/json">
+{"title":"Deciphering Life: One Bit at a Time","authors":[]}
+</script>
 
-      
-      
-      <ul class="nav navbar-nav navbar-right">
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#posts" data-target="#posts">
-            
-            <span>Home</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#posts" data-target="#posts">
-            
-            <span>Posts</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#about" data-target="#about">
-            
-            <span>About</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#contact" data-target="#contact">
-            
-            <span>Contact</span>
-            
-          </a>
-        </li>
-
-        
-        
-      
-
-      
-      </ul>
-
-    </div>
-  </div>
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="index.html" class="title">Deciphering Life: One Bit at a Time</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="index.xml">
+<i class="fa fa-rss" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
 </nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+<!--radix_placeholder_article_listing-->
+
+
+<script type="application/javascript">
+
+function init_posts_list() {
+
+  function load_image(img) {
+    var src = $(img).attr('data-src');
+    if (src) {
+      $(img).attr('src', src);
+      $(img).load(function() {
+        img.removeAttribute('data-src');
+      });
+    }
+  }
+
+  function set_posts_visible(posts, visible) {
+    if (visible) {
+
+      // show bottom border by default
+      $(posts).removeClass('post-preview-last');
+
+      // apply limits if need be
+      var max_posts = 25;
+      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
+      if (apply_limits && posts.length > max_posts) {
+        posts = $(posts).slice(0, max_posts);
+      } else {
+        $('.posts-more a').addClass('hidden');
+      }
+
+      // apply last style
+      $(posts.slice(-1)[0]).addClass('post-preview-last');
+
+      $(posts).removeClass('hidden');
+      $(posts).find('img[data-src]').each(function(i, img) {
+        load_image(img);
+      });
+    } else {
+      $(posts).addClass('hidden');
+    }
+  }
+
+  function apply_hash_filter() {
+
+    // clear active state
+    $('.categories .active').removeClass('active');
+
+    // mark all posts invisible to start
+    set_posts_visible($('.posts-list').children('a'), false);
+
+    // if we have a hash filter
+    if (window.location.hash && window.location.hash.startsWith("#category:")) {
+
+      // mark posts that match the category visible
+      var page_category = window.location.hash.replace(/^#category:/, "");
+      var posts = $('.post-metadata').map(function(idx, script) {
+        var metadata = $.parseJSON($(script).html());
+        var post = null;
+        $.each(metadata.categories, function(idx, category) {
+          category = category.replace(/ /g,"_");
+          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
+            post = $(script).parent().get();
+            return false;
+          }
+        });
+        return post;
+      });
+      set_posts_visible(posts, true);
+
+      // mark the hash active
+      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
+
+      // update the list_caption
+      var list_caption = $('.posts-list-caption');
+      var caption = (page_category || '').toLowerCase() === "articles"
+        ? list_caption.attr('data-caption')
+        : ('Category: ' + page_category.replace(/_/g," "));
+      list_caption.text(caption);
+
+    } else {
+
+      // no hash filter, make all posts visible (subject to max display)
+      set_posts_visible($('.posts-list').children(), true);
+
+      // reset list caption
+      var list_caption = $('.posts-list-caption');
+      list_caption.text(list_caption.attr('data-caption'));
+
+
+    }
+  }
+
+  // more articles
+  function apply_post_limits(apply) {
+    if (apply) {
+      $('.posts-container').addClass('posts-apply-limit');
+      $('.posts-more a').removeClass('hidden');
+    } else {
+      $('.posts-container').removeClass('posts-apply-limit');
+      $('.posts-more a').addClass('hidden');
+    }
+  }
+
+  // click handling for tags
+  $('.dt-tag').click(function(ev) {
+    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
+    return false;
+  })
+
+  // hash filter handling
+  apply_hash_filter();
+  $(window).on('hashchange',function() {
+    apply_post_limits(true);
+    apply_hash_filter();
+  });
+
+  // more articles link
+  $('.posts-more a').click(function(e) {
+    e.preventDefault();
+    apply_post_limits(false);
+    apply_hash_filter();
+    return false;
+  });
+
+}
+
+</script>
 
 
 
-<span id="homepage" style="display: none"></span>
+<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
+<div class="posts-list">
+<h1 class="posts-list-caption" data-caption="Deciphering Life: One Bit at a Time">Deciphering Life: One Bit at a Time</h1>
+<a href="posts/2021-02-28-things-i-learned-about-distill/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["distill","blogdown","rmarkdown"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 28, 2021</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Things I Learned About distill</h2>
+<div class="dt-tags">
+<div class="dt-tag">distill</div>
+<div class="dt-tag">blogdown</div>
+<div class="dt-tag">rmarkdown</div>
+</div>
+<p>The various things I learned about the distill blog setup while converting posts over from my old blogdown site.</p>
+</div>
+</a>
+<a href="posts/2020-02-25-using-group-by-instead-of-splitting/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","dplyr","split","group-by","programming","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 25, 2020</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Using group_by Instead of Splits</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">dplyr</div>
+<div class="dt-tag">split</div>
+<div class="dt-tag">group-by</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">development</div>
+</div>
+<p>How to use group_by instead of split's to summarize things.</p>
+</div>
+</a>
+<a href="posts/2019-11-06-narrower-kable-tables/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","knitr","kable","learning","rmarkdown"]}</script>
+<div class="metadata">
+<div class="publishedDate">Nov. 6, 2019</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Narrower PDF Kable Tables</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">knitr</div>
+<div class="dt-tag">kable</div>
+<div class="dt-tag">learning</div>
+<div class="dt-tag">rmarkdown</div>
+</div>
+<p>This is how you should make narrower kable tables in rmarkdown PDF documents.</p>
+</div>
+</a>
+<a href="posts/2019-10-23-introducing-scientific-programming/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","reproducibility","programming","academia"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 23, 2019</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Introducing Scientific Programming</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">reproducibility</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">academia</div>
+</div>
+<p>How and when should we get people in academia programming? What if we had a unified front across the science labs?</p>
+</div>
+</a>
+<a href="posts/2019-10-16-comments-enabled-via-utterances/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["blogdown","commenting","utterances"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 16, 2019</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Comments enabled via utterances</h2>
+<div class="dt-tags">
+<div class="dt-tag">blogdown</div>
+<div class="dt-tag">commenting</div>
+<div class="dt-tag">utterances</div>
+</div>
+<p>How I got utterances working on blogdown.</p>
+</div>
+</a>
+<a href="posts/2019-02-13-for-loops-vs-split/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","for-loop","split","purrr","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 13, 2019</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Comparisons using for loops vs split</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">for-loop</div>
+<div class="dt-tag">split</div>
+<div class="dt-tag">purrr</div>
+<div class="dt-tag">development</div>
+</div>
+<p>for loops often hide much of the actual logic of your code because of all the necessary boilerplate of running a loop. split-ting your data can oftentimes be clearer, and faster.</p>
+</div>
+</a>
+<a href="posts/2018-12-06-nicer-png-graphics/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 6, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2018-12-06-nicer-png-graphics/nicer-png-graphics_files/figure-html5/first_image-1.png"/>
+</div>
+<div class="description">
+<h2>Nicer PNG Graphics</h2>
+<div class="dt-tags"></div>
+<p>Here are some tips for getting nicer graphics in your rmarkdown outputs.</p>
+</div>
+</a>
+<a href="posts/2018-09-14-don-t-do-pca-after-statistical-testing/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["pca","bioinformatics","R","t-test"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 14, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2018-09-14-don-t-do-pca-after-statistical-testing/don-t-do-pca-after-statistical-testing_files/figure-html5/all_pca-1.png"/>
+</div>
+<div class="description">
+<h2>Don't do PCA After Statistical Testing!</h2>
+<div class="dt-tags">
+<div class="dt-tag">pca</div>
+<div class="dt-tag">bioinformatics</div>
+<div class="dt-tag">R</div>
+<div class="dt-tag">t-test</div>
+</div>
+<p>You might be tempted to do PCA after a statistical test. Read more to discover why this is a bad idea.</p>
+</div>
+</a>
+<a href="posts/2018-07-19-finding-modes-using-kernel-density-estimates/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","python","kernel-density","pdf","probability-density","programming"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 19, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2018-07-19-finding-modes-using-kernel-density-estimates/finding-modes-using-kernel-density-estimates_files/figure-html5/density_mode-1.png"/>
+</div>
+<div class="description">
+<h2>Finding Modes Using Kernel Density Estimates</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">python</div>
+<div class="dt-tag">kernel-density</div>
+<div class="dt-tag">pdf</div>
+<div class="dt-tag">probability-density</div>
+<div class="dt-tag">programming</div>
+</div>
+<p>Examples of finding the mode of a univeriate distribution in R and Python.</p>
+</div>
+</a>
+<a href="posts/2018-07-17-split-unsplit-anti-pattern/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","development","programming","purrr","dplyr","join"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 17, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Split - Unsplit Anti-Pattern</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">purrr</div>
+<div class="dt-tag">dplyr</div>
+<div class="dt-tag">join</div>
+</div>
+<p>Getting some speed using dplyr::join than my more intuitive split --&gt; unsplit pattern.</p>
+</div>
+</a>
+<a href="posts/2018-06-23-iranges-for-non-integer-overlaps/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","iranges","development","programming"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 23, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2018-06-23-iranges-for-non-integer-overlaps/iranges-for-non-integer-overlaps_files/figure-html5/difference_times-1.svg"/>
+</div>
+<div class="description">
+<h2>Using IRanges for Non-Integer Overlaps</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">iranges</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">programming</div>
+</div>
+<p>I wanted to make use of IRanges awesome interval logic, but for non-integer data.</p>
+</div>
+</a>
+<a href="posts/2018-06-20-turn-roberts-beard-purple/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["alzheimers","fundraising"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 20, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Turn Robert's Beard Purple!</h2>
+<div class="dt-tags">
+<div class="dt-tag">alzheimers</div>
+<div class="dt-tag">fundraising</div>
+</div>
+<p>I'm trying to raise money for the Walk for Alzheimer's, will you sponsor me?</p>
+</div>
+</a>
+<a href="posts/2018-02-19-knitrprogressbar/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["packages","R","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 19, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>knitrProgressBar Package</h2>
+<div class="dt-tags">
+<div class="dt-tag">packages</div>
+<div class="dt-tag">R</div>
+<div class="dt-tag">development</div>
+</div>
+<p>Ever wanted a progress bar output visible in a knitr document? Now you can!</p>
+</div>
+</a>
+<a href="posts/2018-02-14-licensing-r-packages-that-include-others-code/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","packages","open-science","licensing"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 14, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Licensing R Packages that Include Others Code</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">licensing</div>
+</div>
+<p>I wanted to include others code in my package, and couldn't find any good resources.</p>
+</div>
+</a>
+<a href="posts/2018-01-17-docopt-numeric-optoins/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","development","programming","docopt"]}</script>
+<div class="metadata">
+<div class="publishedDate">Jan. 17, 2018</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>docopt &amp; Numeric Options</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">docopt</div>
+</div>
+<p>Every input is a string in docopt. Every Input!!</p>
+</div>
+</a>
+<a href="posts/2017-12-27-custom-deployment-script/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","blogdown","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 27, 2017</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Custom Deployment Script</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">blogdown</div>
+<div class="dt-tag">development</div>
+</div>
+<p>I don't want to use Netlify for hosting, so I came up with this simple script to deploy my blog.</p>
+</div>
+</a>
+<a href="posts/2017-12-27-differences-in-posted-date-vs-sessioninfo/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["development","blogdown"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 27, 2017</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Differences in Posted Date vs sessionInfo()</h2>
+<div class="dt-tags">
+<div class="dt-tag">development</div>
+<div class="dt-tag">blogdown</div>
+</div>
+<p>If you see differences in the sessionInfo output and the date the post was published, this is why.</p>
+</div>
+</a>
+<a href="posts/2017-12-27-linking-to-manually-inserted-images-in-hugo/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["hugo","R","blogdown"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 27, 2017</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Linking to Manually Inserted Images in Blogdown / Hugo</h2>
+<div class="dt-tags">
+<div class="dt-tag">hugo</div>
+<div class="dt-tag">R</div>
+<div class="dt-tag">blogdown</div>
+</div>
+<p>This is my method to include something manually in a blogdown post.</p>
+</div>
+</a>
+<a href="posts/2017-10-18-i-was-part-of-the-problem/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["metoo","academia"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 18, 2017</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>I was Part of the Problem</h2>
+<div class="dt-tags">
+<div class="dt-tag">metoo</div>
+<div class="dt-tag">academia</div>
+</div>
+<p>Why do so many men think it's OK to lavish unwanted attention on women who don't want it?</p>
+</div>
+</a>
+<a href="posts/2017-03-29-criticizing-a-publication-and-lying-about-it/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["publications","peer-review","zinc","academia"]}</script>
+<div class="metadata">
+<div class="publishedDate">March 29, 2017</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Criticizing a Publication, and Lying About It</h2>
+<div class="dt-tags">
+<div class="dt-tag">publications</div>
+<div class="dt-tag">peer-review</div>
+<div class="dt-tag">zinc</div>
+<div class="dt-tag">academia</div>
+</div>
+<p>Critics of our last publication claimed we didn't make our data available, which is an outright lie.</p>
+</div>
+</a>
+<a href="posts/2016-03-23-authentication-of-key-resources-for-data-analysis/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["reproducibility","open-science","analysis"]}</script>
+<div class="metadata">
+<div class="publishedDate">March 23, 2016</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2016-03-23-authentication-of-key-resources-for-data-analysis/yeast_48rep_cor_heatmap.jpg"/>
+</div>
+<div class="description">
+<h2>Authentication of Key Resources for Data Analysis</h2>
+<div class="dt-tags">
+<div class="dt-tag">reproducibility</div>
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">analysis</div>
+</div>
+<p>NIH is asking for authentication of key resources. How does this apply to data analyses?</p>
+</div>
+</a>
+<a href="posts/2015-12-12-random-forest-vs-pls-on-random-data/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["random-forest","machine-learning","partial-least-squares","statistics","analysis"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 12, 2015</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2015-12-12-random-forest-vs-pls-on-random-data/random-forest-vs-pls-on-random-data_files/figure-html5/plot_initial-1.png"/>
+</div>
+<div class="description">
+<h2>Random Forest vs PLS on Random Data</h2>
+<div class="dt-tags">
+<div class="dt-tag">random-forest</div>
+<div class="dt-tag">machine-learning</div>
+<div class="dt-tag">partial-least-squares</div>
+<div class="dt-tag">statistics</div>
+<div class="dt-tag">analysis</div>
+</div>
+<p>Comparing random-forest and partial-least-squares discriminant-analysis on random data to show the problems inherent in PLS-DA.</p>
+</div>
+</a>
+<a href="posts/2015-06-17-novel-zinc-coordination-geometries/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["zinc","structural-biochemistry","open-science","reproducibility","visualization","publications"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 17, 2015</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2015-06-17-novel-zinc-coordination-geometries/prot24834-fig-0002.png"/>
+</div>
+<div class="description">
+<h2>Novel Zinc Coordination Geometries</h2>
+<div class="dt-tags">
+<div class="dt-tag">zinc</div>
+<div class="dt-tag">structural-biochemistry</div>
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">reproducibility</div>
+<div class="dt-tag">visualization</div>
+<div class="dt-tag">publications</div>
+</div>
+<p>A bit of an explainer on our labs recent publication on finding and classifying zinc coordination geometries in protein structures.</p>
+</div>
+</a>
+<a href="posts/2015-06-01-mouse-human-transcriptomics-and-batch-effects/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["open-science","transcriptomics","batch-effects","publications","peer-review"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 1, 2015</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2015-06-01-mouse-human-transcriptomics-and-batch-effects/slin_table1part2.jpg"/>
+</div>
+<div class="description">
+<h2>Mouse / Human Transcriptomics and Batch Effects</h2>
+<div class="dt-tags">
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">transcriptomics</div>
+<div class="dt-tag">batch-effects</div>
+<div class="dt-tag">publications</div>
+<div class="dt-tag">peer-review</div>
+</div>
+<p>A recent paper dug into some data from another paper, casting doubts on the first, all thanks to the data being available.</p>
+</div>
+</a>
+<a href="posts/2015-03-25-first-open-post-publication-peer-review-with-credit/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["open-science","peer-review","publications"]}</script>
+<div class="metadata">
+<div class="publishedDate">March 25, 2015</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>First Open Post-Publication Peer Review, with Credit!</h2>
+<div class="dt-tags">
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">peer-review</div>
+<div class="dt-tag">publications</div>
+</div>
+<p>A story about my first open peer-review.</p>
+</div>
+</a>
+<a href="posts/2014-12-31-being-a-phd-student-and-post-doc-with-migraines/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["phdisabled","migraines","academia"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 31, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Being a PhD Student and Post-Doc with Migraines</h2>
+<div class="dt-tags">
+<div class="dt-tag">phdisabled</div>
+<div class="dt-tag">migraines</div>
+<div class="dt-tag">academia</div>
+</div>
+<p>What it's like having migraines as a PhD student and PostDoc.</p>
+</div>
+</a>
+<a href="posts/2014-11-05-travis-ci-to-github-pages/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","reproducibility","travis-ci","github","publishing"]}</script>
+<div class="metadata">
+<div class="publishedDate">Nov. 5, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Travis-CI to GitHub Pages</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">reproducibility</div>
+<div class="dt-tag">travis-ci</div>
+<div class="dt-tag">github</div>
+<div class="dt-tag">publishing</div>
+</div>
+<p>How I automatically have some stuff get pushed to GitHub pages from a Travis CI job.</p>
+</div>
+</a>
+<a href="posts/2014-08-08-my-career-goals/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["post-doc","career","academia"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 8, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>My Career Goals</h2>
+<div class="dt-tags">
+<div class="dt-tag">post-doc</div>
+<div class="dt-tag">career</div>
+<div class="dt-tag">academia</div>
+</div>
+<p>I don't want to be a lab PI, but I want to stay in academia.</p>
+</div>
+</a>
+<a href="posts/2014-07-28-analyses-as-packages/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","development","packages","vignettes","programming","analysis"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 28, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Analyses as Packages</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">vignettes</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">analysis</div>
+</div>
+<p>Why I think packages make good ways to structure an analysis.</p>
+</div>
+</a>
+<a href="posts/2014-07-28-creating-an-analysis-as-a-package-and-vignette/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","development","packages","vignettes","analysis","programming"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 28, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Creating an Analysis as a Package and Vignette</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">vignettes</div>
+<div class="dt-tag">analysis</div>
+<div class="dt-tag">programming</div>
+</div>
+<p>A walkthrough creating an analysis project as a package.</p>
+</div>
+</a>
+<a href="posts/2014-07-28-packages-vs-projecttemplate/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","packages","analysis","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 28, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Packages vs ProjectTemplate</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">analysis</div>
+<div class="dt-tag">development</div>
+</div>
+<p>Why I think packages are better than the projectTemplate package.</p>
+</div>
+</a>
+<a href="posts/2014-06-19-researcher-discoverability/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["github","open-science","academia","research"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 19, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Researcher Discoverability</h2>
+<div class="dt-tags">
+<div class="dt-tag">github</div>
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">academia</div>
+<div class="dt-tag">research</div>
+</div>
+<p>Why do we need corporate products to enhance "researcher discoverability"?</p>
+</div>
+</a>
+<a href="posts/2014-06-05-bioinformatics-presentations-that-lack-results-or-biological-relevance/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["bioinformatics","academia","research"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 5, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Bioinformatics Presentations that Lack Results (or Biological Relevance)</h2>
+<div class="dt-tags">
+<div class="dt-tag">bioinformatics</div>
+<div class="dt-tag">academia</div>
+<div class="dt-tag">research</div>
+</div>
+<p>Why do people have bionformatics presentations lacking relevance or results?</p>
+</div>
+</a>
+<a href="posts/2014-04-08-categorycompare-paper-finally-out/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","bioconductor","meta-analysis","publications","git","github","open-science","visualization","annotation-enrichment"]}</script>
+<div class="metadata">
+<div class="publishedDate">April 8, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>categoryCompare Paper Finally Out!</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">bioconductor</div>
+<div class="dt-tag">meta-analysis</div>
+<div class="dt-tag">publications</div>
+<div class="dt-tag">git</div>
+<div class="dt-tag">github</div>
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">visualization</div>
+<div class="dt-tag">annotation-enrichment</div>
+</div>
+<p>My first first author publication since starting my PostDoc is finally out, about my meta-annotation-enrichment software package categoyrCompare.</p>
+</div>
+</a>
+<a href="posts/2014-02-20-self-written-function-help/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","packages","documentation","development","devtools","roxygen2","docstrings"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 20, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Self-Written Function Help</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">documentation</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">devtools</div>
+<div class="dt-tag">roxygen2</div>
+<div class="dt-tag">docstrings</div>
+</div>
+<p>Do you want to be able to read function documentation for your own functions? Make your own package.</p>
+</div>
+</a>
+<a href="posts/2014-02-10-installing-matlab-vs-installing-r/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["MatLab","R"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 10, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Installing MatLab vs Installing R</h2>
+<div class="dt-tags">
+<div class="dt-tag">MatLab</div>
+<div class="dt-tag">R</div>
+</div>
+<p>Personal frustrations around installing MatLab led to this particular rant.</p>
+</div>
+</a>
+<a href="posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","git","packages","development","programming"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 7, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Package Version Increment Pre- and Post-Commit Hooks</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">git</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">programming</div>
+</div>
+<p>Two git commit hooks for incrementing the package version as part of commits.</p>
+</div>
+</a>
+<a href="posts/2014-01-28-motivated-learning/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["learning","software-carpentry","git","calculus"]}</script>
+<div class="metadata">
+<div class="publishedDate">Jan. 28, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Motivated Learning</h2>
+<div class="dt-tags">
+<div class="dt-tag">learning</div>
+<div class="dt-tag">software-carpentry</div>
+<div class="dt-tag">git</div>
+<div class="dt-tag">calculus</div>
+</div>
+<p>Two personal stories on times I was very motivated to learn, as part of my Software-Carpentry instructor training.</p>
+</div>
+</a>
+<a href="posts/2013-10-22-pubmedcommons-api/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["open-science","pubmed"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 22, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>PubmedCommons API</h2>
+<div class="dt-tags">
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">pubmed</div>
+</div>
+<p>Pubmed commons is a new commenting system for pubmed articles.</p>
+</div>
+</a>
+<a href="posts/2013-10-21-open-vs-closed-analysis-languages/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["open-science","R","python","MatLab","programming","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 21, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Open vs Closed Analysis Languages</h2>
+<div class="dt-tags">
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">R</div>
+<div class="dt-tag">python</div>
+<div class="dt-tag">MatLab</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">development</div>
+</div>
+<p>Talking about R &amp; Python vs MatLab as examples of open and closed data analysis languages.</p>
+</div>
+</a>
+<a href="posts/2013-10-17-pre-calculating-large-tables-of-values/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","pre-calulations","programming","development","c++"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 17, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2013-10-17-pre-calculating-large-tables-of-values/pre-calculating-large-tables-of-numbers_files/figure-html5/genRandomData-1.png"/>
+</div>
+<div class="description">
+<h2>Pre-Calculating Large Tables of Values</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">pre-calulations</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">c++</div>
+</div>
+<p>Demonstrating a way to generate a large amount of numbers that otherwise might take a long time to calculate.</p>
+</div>
+</a>
+<a href="posts/2013-09-23-portable-peronal-packages/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","packages","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 23, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Portable, Personal Packages</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">development</div>
+</div>
+<p>My take on creating simple little packages for your own commonly used functions.</p>
+</div>
+</a>
+<a href="posts/2013-09-19-k-12-wants-scientists/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["post-doc","academia","science","teaching"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 19, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>K-12 Wants Scientists!!</h2>
+<div class="dt-tags">
+<div class="dt-tag">post-doc</div>
+<div class="dt-tag">academia</div>
+<div class="dt-tag">science</div>
+<div class="dt-tag">teaching</div>
+</div>
+<p>I recently attended a talk about PhD scientists in grade school teaching.</p>
+</div>
+</a>
+<a href="posts/2013-09-17-r-rstudio-and-release-and-dev-bioconductor/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","bioconductor","rstudio","programming","packages","development"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 17, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>R, RStudio, and Release and Dev Bioconductor</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">bioconductor</div>
+<div class="dt-tag">rstudio</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">development</div>
+</div>
+<p>Working with the development version of Bioconductor on linux can be a pain. This is one way to do it.</p>
+</div>
+</a>
+<a href="posts/2013-08-16-reproducible-methods/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["open-science","reproducibility","bioinformatics"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 16, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Reproducible Methods</h2>
+<div class="dt-tags">
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">reproducibility</div>
+<div class="dt-tag">bioinformatics</div>
+</div>
+<p>A short missive on reproducibility, especially within computational work.</p>
+</div>
+</a>
+<a href="posts/2013-07-11-r-interface-for-teaching/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","teaching","notebooks"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 11, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>R Interface for Teaching</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">teaching</div>
+<div class="dt-tag">notebooks</div>
+</div>
+<p>What is the best interface for teaching a language like R?</p>
+</div>
+</a>
+<a href="posts/2013-05-30-storing-package-data-in-custom-environments/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","packages"]}</script>
+<div class="metadata">
+<div class="publishedDate">May 30, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Storing Package Data in Custom Environments</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">packages</div>
+</div>
+<p>How do you keep track of stuff for your own package without cluttering the users global space or setting a bunch of options?</p>
+</div>
+</a>
+<a href="posts/2013-05-10-writing-up-scientific-results-and-literate-programming/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["literate-programming","academia","notebooks","reproducibility"]}</script>
+<div class="metadata">
+<div class="publishedDate">May 10, 2013</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Writing Up Scientific Results and Literate Programming</h2>
+<div class="dt-tags">
+<div class="dt-tag">literate-programming</div>
+<div class="dt-tag">academia</div>
+<div class="dt-tag">notebooks</div>
+<div class="dt-tag">reproducibility</div>
+</div>
+<p>My thoughts on using literate programming to investigate and report scientific results</p>
+</div>
+</a>
+<a href="posts/2012-10-09-writing-papers-using-r-markdown/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","open-science","reproducibility","literate-programming","rmarkdown"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 9, 2012</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2012-10-09-writing-papers-using-r-markdown/writing-papers-using-rmarkdown_files/figure-html5/figureInsert-1.png"/>
+</div>
+<div class="description">
+<h2>Writing Papers Using R Markdown</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">open-science</div>
+<div class="dt-tag">reproducibility</div>
+<div class="dt-tag">literate-programming</div>
+<div class="dt-tag">rmarkdown</div>
+</div>
+<p>How I used RMarkdown to write a manuscript</p>
+</div>
+</a>
+<a href="posts/2012-08-15-journal-club-2012-08-15/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["journal-club"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 15, 2012</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Journal Club 2012-08-15</h2>
+<div class="dt-tags">
+<div class="dt-tag">journal-club</div>
+</div>
+<p>A summary of the paper Google Goes Cancer as was discussed in our journal club.</p>
+</div>
+</a>
+<a href="posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","bioconductor","bioinformatics","cdf","affymetrix","microarray"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 13, 2012</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Creating Custom CDFs for Affymetrix Chips in Bioconductor</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">bioconductor</div>
+<div class="dt-tag">bioinformatics</div>
+<div class="dt-tag">cdf</div>
+<div class="dt-tag">affymetrix</div>
+<div class="dt-tag">microarray</div>
+</div>
+<p>Examples of messing with Affymetrix CDF data in Bioconductor.</p>
+</div>
+</a>
+</div>
+<div class="posts-sidebar">
+<div class="sidebar-section categories">
+<h3>Categories</h3>
+<ul>
+<li>
+<a href="#category:Articles">Articles</a>
+<span class="category-count">(51)</span>
+</li>
+<li>
+<a href="#category:academia">academia</a>
+<span class="category-count">(9)</span>
+</li>
+<li>
+<a href="#category:affymetrix">affymetrix</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:alzheimers">alzheimers</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:analysis">analysis</a>
+<span class="category-count">(5)</span>
+</li>
+<li>
+<a href="#category:annotation-enrichment">annotation-enrichment</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:batch-effects">batch-effects</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:bioconductor">bioconductor</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:bioinformatics">bioinformatics</a>
+<span class="category-count">(4)</span>
+</li>
+<li>
+<a href="#category:blogdown">blogdown</a>
+<span class="category-count">(5)</span>
+</li>
+<li>
+<a href="#category:c++">c++</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:calculus">calculus</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:career">career</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:cdf">cdf</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:commenting">commenting</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:development">development</a>
+<span class="category-count">(17)</span>
+</li>
+<li>
+<a href="#category:devtools">devtools</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:distill">distill</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:docopt">docopt</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:docstrings">docstrings</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:documentation">documentation</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:dplyr">dplyr</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:for-loop">for-loop</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:fundraising">fundraising</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:git">git</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:github">github</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:group-by">group-by</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:hugo">hugo</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:iranges">iranges</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:join">join</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:journal-club">journal-club</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:kable">kable</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:kernel-density">kernel-density</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:knitr">knitr</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:learning">learning</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:licensing">licensing</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:literate-programming">literate-programming</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:machine-learning">machine-learning</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:MatLab">MatLab</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:meta-analysis">meta-analysis</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:metoo">metoo</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:microarray">microarray</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:migraines">migraines</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:notebooks">notebooks</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:open-science">open-science</a>
+<span class="category-count">(11)</span>
+</li>
+<li>
+<a href="#category:packages">packages</a>
+<span class="category-count">(10)</span>
+</li>
+<li>
+<a href="#category:partial-least-squares">partial-least-squares</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:pca">pca</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:pdf">pdf</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:peer-review">peer-review</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:phdisabled">phdisabled</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:post-doc">post-doc</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:pre-calulations">pre-calulations</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:probability-density">probability-density</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:programming">programming</a>
+<span class="category-count">(12)</span>
+</li>
+<li>
+<a href="#category:publications">publications</a>
+<span class="category-count">(5)</span>
+</li>
+<li>
+<a href="#category:publishing">publishing</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:pubmed">pubmed</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:purrr">purrr</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:python">python</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:R">R</a>
+<span class="category-count">(29)</span>
+</li>
+<li>
+<a href="#category:random-forest">random-forest</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:reproducibility">reproducibility</a>
+<span class="category-count">(7)</span>
+</li>
+<li>
+<a href="#category:research">research</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:rmarkdown">rmarkdown</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:roxygen2">roxygen2</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:rstudio">rstudio</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:science">science</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:software-carpentry">software-carpentry</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:split">split</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:statistics">statistics</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:structural-biochemistry">structural-biochemistry</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:t-test">t-test</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:teaching">teaching</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:transcriptomics">transcriptomics</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:travis-ci">travis-ci</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:utterances">utterances</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:vignettes">vignettes</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:visualization">visualization</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:zinc">zinc</a>
+<span class="category-count">(2)</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="posts-more">
+<a href="#">More articles &raquo;</a>
+</div>
+</div>
+<!--/radix_placeholder_article_listing-->
 
-
-  
-
-
-
-
-
-  
-  
-  
-  <section id="posts" class="home-section">
-    <div class="container">
-      
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-
-    <h1>Blog Posts</h1>
-    
-    
-    <p class="view-all">
-      <a href="/post/">
-        More Posts
-        <i class="fa fa-angle-double-right"></i>
-      </a>
-    </p>
-    
-
-  </div>
-  <div class="col-xs-12 col-md-8">
-
-    
-
-    
-      
-
-      
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/using-group-by-instead-of-splitting/" itemprop="url">Using group_by Instead of Splits</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-02-25 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2020-02-25
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
+<div class="d-title">
+<h1>Deciphering Life: One Bit at a Time</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR It is relatively easy to use dplyr::group_by and summarise to find items that you might want to keep or remove based on a part_of the item or group in question. I used to use split and iterate, but group_by is much easier.
- Motivation I have some relatively large sets of data that fall naturally into groups of items. Often, I find that I want to remove a group that contains either any of or all of particular items.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/using-group-by-instead-of-splitting/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
+
+<div class="d-article">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
 </div>
 
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/narrower-kable-tables/" itemprop="url">Narrower PDF Kable Tables</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-11-06 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2019-11-06
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
+<div class="d-appendix">
 </div>
 
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR Don’t bother trying to roll your own function to make narrower kable tables in a PDF document, just use kableExtra.
- Motivation I’ve been creating tables in a report where I really needed the table to fit, and because I am using PDF output, that means the tables can’t be any wider than the page. As I’m sure many readers might be aware, kable tables will gladly overrun the side of the page if they are too wide.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/narrower-kable-tables/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rmflight/blog/issues/new">create an issue</a> on the source repository.</p>
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/blog">https://github.com/rmflight/blog</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 </div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
 
-      
+</body>
 
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/introducing-scientific-programming/" itemprop="url">Introducing Scientific Programming</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-10-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2019-10-23
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    5 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR We should get science undergraduate students programming by introducing R &amp; Python in all first year science labs, and continuing throughout the undergraduate classes.
- Why? I’ve previously encountered ideas around getting graduate students to get programming, because to do the analyses that modern science requires you need to be able to at least do some basic scripting, either in a language like Python or R or on the command line.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/introducing-scientific-programming/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/comments-enabled-via-utterances/" itemprop="url">Comments enabled via utterances</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-10-16 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2019-10-16
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR Utterances is a lightweight commenting platform built on GitHub issues. So you have to have a GitHub account, but I expect most people who comment on this blog already have one.
- Why Utterances When I switched to blogdown, I lost my disqus comments. I had considered migrating them over, but never got around to it. I also thought that there had to be a way to link GitHub issues to blog posts, but didn’t investigate it much.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/comments-enabled-via-utterances/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/for-loops-vs-split/" itemprop="url">Comparisons using for loops vs split</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-02-13 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2019-02-13
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR Sometimes for loops are useful, and sometimes they shouldn’t really be used, because they don’t really help you understand your data, and even if you try, they might still be slow(er) than other ways of doing things.
- Comparing Groups I have some code where I am trying to determine duplicates of a group of things. This data looks something like this:
-create_random_sets = function(n_sets = 1000){ set.seed(1234) sets = purrr::map(seq(5, n_sets), ~ sample(seq(1, .
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/for-loops-vs-split/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/nicer-png-graphics/" itemprop="url">Nicer PNG Graphics</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-12-06 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-12-06
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR If you are getting crappy looking png images from rmarkdown html or word documents, try using type='cairo' or dev='CairoPNG' in your chunk options.
- PNG Graphics?? So, I write a lot of reports using rmarkdown and knitr, and have been using knitr for quite a while. My job involves doing analyses for collaborators and communicating results. Most of the time, I will generate a pdf report, and I get beautiful graphics, thanks to the eps graphics device.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/nicer-png-graphics/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/don-t-do-pca-after-statistical-testing/" itemprop="url">Don&#39;t do PCA After Statistical Testing!</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-09-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-09-14
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR If you do a statistical test before a dimensional reduction method like PCA, the highest source of variance is likely to be whatever you tested statistically.
- Wait, Why?? Let me describe the situation. You’ve done an -omics level analysis on your system of interest. You run a t-test (or ANOVA, etc) on each of the features in your data (gene, protein, metabolite, etc). Filter down to those things that were statistically significant, and then finally, you decide to look at the data using a dimensionality reduction method such as principal components analysis (PCA) so you can see what is going on.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/don-t-do-pca-after-statistical-testing/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-          
-      
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/finding-modes-using-kernel-density-estimates/" itemprop="url">Finding Modes Using Kernel Density Estimates</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-07-19 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-07-19
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL; DR If you have a unimodal distribution of values, you can use R’s density or Scipy’s gaussian_kde to create density estimates of the data, and then take the maxima of the density estimate to get the mode. See below for actual examples in R and Python.
- Mode in R First, lets do this in R. Need some values to work with.
-library(ggplot2) set.seed(1234) n_point &lt;- 1000 data_df &lt;- data.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/finding-modes-using-kernel-density-estimates/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/split-unsplit-anti-pattern/" itemprop="url">Split - Unsplit Anti-Pattern</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-07-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-07-17
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR If you notice yourself using split -&gt; unsplit / rbind on two object to match items up, maybe you should be using dplyr::join_ instead. Read below for concrete examples.
- Motivation I have had a lot of calculations lately that involve some sort of normalization or scaling a group of related values, each group by a different factor.
-Lets setup an example where we will have 1e5 values in 10 groups, each group of values being normalized by their own value.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/split-unsplit-anti-pattern/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="/post/iranges-for-non-integer-overlaps/" itemprop="url">Using IRanges for Non-Integer Overlaps</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-06-23 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      2018-06-23
-    </time>
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    TL;DR The IRanges package implements interval algebra, and is very fast for finding overlaps of two ranges. If you have non-integer data, multiply values by a large constant factor and round them. The constant depends on how much accuracy you need.
- IRanges?? IRanges is a bioconductor package for interval algebra of integer ranges. It is used extensively in the GenomicRanges package for finding overlaps between various genomic features. For genomic features, integers make sense, because one cannot have fractional base locations.
-    
-  </div>
-  <p class="read-more">
-    <a href="/post/iranges-for-non-integer-overlaps/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-    
-
-  </div>
-</div>
-
-    </div>
-  </section>
-  
-
-  
-  
-  
-  <section id="about" class="home-section">
-    <div class="container">
-      
-
-
-
-<div class="row" itemprop="author" itemscope itemtype="http://schema.org/Person" itemref="person-email person-telephone person-address">
-  <div class="col-xs-12 col-md-4">
-    <div id="profile">
-
-      
-
-      <div class="portrait-title">
-        <h2 itemprop="name">Robert M Flight</h2>
-        <h3 itemprop="jobTitle">Senior Research Associate in Bioinformatics</h3>
-
-        
-        
-
-        
-        <h3 itemprop="worksFor" itemscope itemtype="http://schema.org/Organization">
-          <a href="http://bioinformatics.cesb.uky.edu/" target="_blank" itemprop="url" rel="noopener">
-          <span itemprop="name">Moseley Bioinformatics &amp; Systems Biology Lab, Markey Cancer Center</span>
-          </a>
-        </h3>
-        
-      </div>
-
-      <link itemprop="url" href="/">
-
-      <ul class="network-icon" aria-hidden="true">
-        
-        
-        <li>
-          <a itemprop="sameAs" href="mailto:rflight79@gmail.com" target="_blank" rel="noopener">
-            <i class="fa fa-envelope big-icon"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a itemprop="sameAs" href="//twitter.com/rmflight" target="_blank" rel="noopener">
-            <i class="fa fa-twitter big-icon"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a itemprop="sameAs" href="https://scholar.google.com/citations?user=G8bFNwYAAAAJ" target="_blank" rel="noopener">
-            <i class="ai ai-google-scholar big-icon"></i>
-          </a>
-        </li>
-        
-        
-        <li>
-          <a itemprop="sameAs" href="//github.com/rmflight" target="_blank" rel="noopener">
-            <i class="fa fa-github big-icon"></i>
-          </a>
-        </li>
-        
-      </ul>
-
-    </div>
-  </div>
-  <div class="col-xs-12 col-md-8" itemprop="description">
-
-    
-
-<h1 id="about">About</h1>
-
-<p>Robert is a senior research associate in bioinformatics at the Moseley Bioinformatics and Systems Biology Lab, which is part of the Markey Cancer Center at the University of Kentucky. I work with our collaborators to analyse a variety of -omics data, including transcriptomics and metabolomics using both previously established and newly developed methods.</p>
-
-<p>I have 12 years experience analysing -omics level data, and 7 as an R programmer and developer. I authored the
-<a href="https://bioconductor.org/packages/release/bioc/html/categoryCompare.html" target="_blank"><code>categoryCompare</code></a> Bioconductor package
-for comparing -omics data using annotations.</p>
-
-
-    <div class="row">
-
-      
-      <div class="col-sm-5">
-        <h3>Interests</h3>
-        <ul class="ul-interests">
-          
-          <li>Open Science</li>
-          
-          <li>Bioinformatics</li>
-          
-          <li>Metabolomics</li>
-          
-          <li>Structural Biology</li>
-          
-          <li>Systems Biology</li>
-          
-        </ul>
-      </div>
-      
-
-      
-      <div class="col-sm-7">
-        <h3>Education</h3>
-        <ul class="ul-edu fa-ul">
-          
-          <li>
-            <i class="fa-li fa fa-graduation-cap"></i>
-            <div class="description">
-              <p class="course">PhD in Analytical Chemistry, 2009</p>
-              <p class="institution">Dalhousie University</p>
-            </div>
-          </li>
-          
-          <li>
-            <i class="fa-li fa fa-graduation-cap"></i>
-            <div class="description">
-              <p class="course">MSc in Chemistry, 2004</p>
-              <p class="institution">University of New Brunswick</p>
-            </div>
-          </li>
-          
-          <li>
-            <i class="fa-li fa fa-graduation-cap"></i>
-            <div class="description">
-              <p class="course">BSc in Biology-Chemistry, 2002</p>
-              <p class="institution">University of New Brunswick</p>
-            </div>
-          </li>
-          
-        </ul>
-      </div>
-      
-
-    </div>
-  </div>
-</div>
-
-    </div>
-  </section>
-  
-
-  
-  
-  
-  <section id="tags" class="home-section">
-    <div class="container">
-      
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h1>Tags</h1>
-    
-  </div>
-  <div class="col-xs-12 col-md-8">
-    
-
-    
-      
-      
-
-      
-      
-      
-      
-      
-
-      <div id="tag-cloud">
-        
-          
-          
-          
-          
-          
-          <a href="/tags/matlab" style="font-size:0.8rem">MatLab</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/r" style="font-size:2.4850388369497645rem">R</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/academia" style="font-size:0.8rem">academia</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/alzheimers" style="font-size:0.8rem">alzheimers</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/bioconductor" style="font-size:1.3341446737648335rem">bioconductor</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/bioinformatics" style="font-size:1.137007767389953rem">bioinformatics</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/blogdown" style="font-size:1.3341446737648335rem">blogdown</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/career" style="font-size:0.8rem">career</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/cdf" style="font-size:0.8rem">cdf</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/development" style="font-size:1.4740155347799058rem">development</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/documentation" style="font-size:0.8rem">documentation</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/dplyr" style="font-size:0.8rem">dplyr</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/fundraising" style="font-size:0.8rem">fundraising</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/git" style="font-size:0.8rem">git</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/github" style="font-size:0.8rem">github</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/graphics" style="font-size:0.8rem">graphics</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/hugo" style="font-size:0.8rem">hugo</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/iranges" style="font-size:0.8rem">iranges</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/journal-club" style="font-size:0.8rem">journal-club</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/kable" style="font-size:0.8rem">kable</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/kernel-density" style="font-size:0.8rem">kernel density</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/knitr" style="font-size:0.8rem">knitr</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/learning" style="font-size:1.137007767389953rem">learning</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/literate-programming" style="font-size:0.8rem">literate-programming</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/mapping" style="font-size:0.8rem">mapping</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/meta-analysis" style="font-size:0.8rem">meta-analysis</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/metoo" style="font-size:0.8rem">metoo</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/migraines" style="font-size:0.8rem">migraines</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/notebooks" style="font-size:0.8rem">notebooks</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/open-science" style="font-size:1.8682893475296671rem">open-science</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/packages" style="font-size:1.8682893475296671rem">packages</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/pca" style="font-size:0.8rem">pca</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/pdf" style="font-size:1.137007767389953rem">pdf</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/phdisabled" style="font-size:0.8rem">phdisabled</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/post-doc" style="font-size:1.137007767389953rem">post-doc</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/pre-calulations" style="font-size:0.8rem">pre-calulations</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/probability-density" style="font-size:0.8rem">probability density</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/publications" style="font-size:1.137007767389953rem">publications</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/python" style="font-size:1.137007767389953rem">python</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/reproducibility" style="font-size:1.6711524411547862rem">reproducibility</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/rstudio" style="font-size:0.8rem">rstudio</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/science" style="font-size:0.8rem">science</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/software-carpentry" style="font-size:0.8rem">software-carpentry</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/structural-biochemistry" style="font-size:0.8rem">structural-biochemistry</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/teaching" style="font-size:0.8rem">teaching</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/tim-hortons" style="font-size:0.8rem">tim-hortons</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/twitter" style="font-size:0.8rem">twitter</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/vignettes" style="font-size:1.137007767389953rem">vignettes</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/visualization" style="font-size:1.137007767389953rem">visualization</a>
-        
-          
-          
-          
-          
-          
-          <a href="/tags/zinc" style="font-size:0.8rem">zinc</a>
-        
-      </div>
-    
-
-  </div>
-</div>
-
-    </div>
-  </section>
-  
-
-  
-  
-  
-  <section id="contact" class="home-section">
-    <div class="container">
-      
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h1>Contact</h1>
-    
-  </div>
-  <div class="col-xs-12 col-md-8">
-    
-
-    <ul class="fa-ul" itemscope>
-
-      
-      <li>
-        <i class="fa-li fa fa-envelope fa-2x" aria-hidden="true"></i>
-        <span id="person-email" itemprop="email"><a href="mailto:rflight79@gmail.com">rflight79@gmail.com</a></span>
-      </li>
-      
-
-      
-
-      
-
-      
-      <li>
-        <i class="fa-li fa fa-phone fa-2x" aria-hidden="true"></i>
-        <span id="person-telephone" itemprop="telephone"><a href="tel:502-509-1827">502-509-1827</a></span>
-      </li>
-      
-
-      
-
-      
-
-      
-      <li>
-        <i class="fa-li fa fa-map-marker fa-2x" aria-hidden="true"></i>
-        <span id="person-address" itemprop="address">CC434, Roach Building, 800 Rose Street, Lexington, KY 40536-0093</span>
-      </li>
-      
-
-      
-      <li>
-        <i class="fa-li fa fa-clock-o fa-2x" aria-hidden="true"></i>
-        <span>Email for appointment</span>
-      </li>
-      
-
-    </ul>
-
-    
-
-  </div>
-</div>
-
-    </div>
-  </section>
-  
-
-
-
-<footer class="site-footer">
-  <div class="container">
-    <p class="powered-by">
-
-      &copy; 2019 Robert M Flight &middot; 
-
-      Powered by
-      <a href="https://bookdown.org/yihui/blogdown/" target="_blank" rel="noopener">Blogdown</a>, and the
-      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
-
-      <br>
-      The source of this site is available from <a href="https://github.com/rmflight/researchBlog_blogdown">here</a>. The content from my previous site <br>is all <a href="https://github.com/rmflight/researchBlog">here</a>, in case I haven't posted something on the new one.
-
-      <span class="pull-right" aria-hidden="true">
-        <a href="#" id="back_to_top">
-          <span class="button_icon">
-            <i class="fa fa-chevron-up fa-2x"></i>
-          </span>
-        </a>
-      </span>
-
-    </p>
-  </div>
-</footer>
-
-
-<div id="modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Cite</h4>
-      </div>
-      <div>
-        <pre><code class="modal-body tex"></code></pre>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
-          <i class="fa fa-copy"></i> Copy
-        </a>
-        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
-          <i class="fa fa-download"></i> Download
-        </a>
-        <div id="modal-error"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-    
-
-    
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
-    
-    
-    <script src="/js/hugo-academic.js"></script>
-    
-
-    
-    
-      
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
-      
-
-      
-
-      
-
-      <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    
-    
-
-  </body>
 </html>
-
-
