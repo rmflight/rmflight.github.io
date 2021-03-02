@@ -1,5 +1,30 @@
 [
   {
+    "path": "posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/",
+    "title": "Packages Don't Work Well for Analyses in Practice",
+    "description": "I was wrong about using packages to structure statistical analyses.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2021-03-02",
+    "categories": [
+      "R",
+      "development",
+      "packages",
+      "vignettes",
+      "programming",
+      "analysis",
+      "workflow"
+    ],
+    "contents": "\n\nContents\nTL;DR\nUsing R Packages for Analysis\nWhat Happened in Practice?\nA Dim Bulb\nA Little Brighter\nLightbulb Goes Off\n\nTL;DR\nI was wrong about using an R package to bundle an analysis. That happens a lot I suppose. But I needed to own up here.\nUsing R Packages for Analysis\nA couple of years ago, I wrote at least three different blog posts describing how using R packages to bundle up an analysis was the best way to do things. I went into the benefits of this approach in general (Flight 2014a), how to do actually go through one in practice (Flight 2014b), and bashed on an alternative, ProjectTemplate (Flight 2014c). I was wrong. So, so very wrong.\nWhat Happened in Practice?\nAlthough I was espousing this philosophy for doing the analysis as part of an R package, in practice, it was a pain in the butt to actually carry out. Write functions, update installed package, update vignette, hope it all runs. I honestly would end up with a ton of functions written in the report vignette, and hope that {knitr} caching would save me (or have to delete the cache because something went wrong).\nEventually, I started having project directories with a report, and throwing all my functions into the top of the rmarkdown, and if I was lucky I might write objects (tables, figures, etc) out into directories that could then be sent to collaborators.\nA Dim Bulb\nHowever, {drake} was becoming popular as a proper workflow manager for R, with some very nice capabilities, and I started using it to help out with some large caching things I wanted for analyses for a manuscript. I still didn’t use it for anything else.\n\nWill Landau recommends not using {drake} anymore and to switch to {targets}. Given development on drake has stopped, that’s probably a good idea. There still isn’t a {targets} flavor of {dflow} (see below) available yet, however.\nA Little Brighter\nMiles McBain was talking about some of these things intermittently on Twitter, and then posted about a functional approach to analyses using {drake} (McBain 2020a). When I read it, I was really, really impressed with it. Unfortunately, I still wasn’t really clear on how to implement and use his method. This is not the fault of Miles’ post. It is my fault for not reading it slowly, and taking the time to try and stop through it with the {dflow} implementation.\n\nIf you haven’t read it yet, go read it to see if it might help you. Seriously, it’s really, really good, and well thought out.\nLightbulb Goes Off\nMiles’ post was at the end of April, 2020. In August 2020, he was a guest at the New York Open Statistical Programming Meetup virtual event where he presented his {dflow} workflow in That Feeling of Workflowing (Lander 2020) (McBain 2020b). Seeing and hearing Miles explain everything, and then actually work through an example that everything about his approach finally clicked for me. And really, any project based layout that combines a directory for R scripts, and inputs and outputs too (e.g. {ProjectTemplate} and others).\nNow, I know, that still sounds like an R package, with functions in /R, reports in /vignettes, and built in documentation. But it’s lighter weight than a package, and the functions are specific to just this one analysis.\n{dflow} includes some nice boilerplate code for keeping your list of packages in one place, and getting all of your functions into the workspace. I was so impressed that I installed {dflow} the next day and working out how to convert my current analysis project to use it. Shortly after experimenting with that one analysis, I was converted. Every new project I start is being done using {dflow}, and any old projects I’ve gone back to are being converted over to use it.\nI would now recommend using {dflow} or ProjectTemplate (or any other directory based system) for R analysis projects. And if you have the discipline and find it works for you, then using R packages might also work. However, I think the general project based ideas are just fine for many analyses, and packages are overkill and take too much work for the analysis authors to keep it up.\n\n\n\nFlight, Robert M. 2014a. “Deciphering Life: One Bit at a Time: Analyses as Packages.” https://rmflight.github.io/posts/2014-07-28-analyses-as-packages/.\n\n\n———. 2014b. “Deciphering Life: One Bit at a Time: Creating an Analysis as a Package and Vignette.” https://rmflight.github.io/posts/2014-07-28-creating-an-analysis-as-a-package-and-vignette/.\n\n\n———. 2014c. “Deciphering Life: One Bit at a Time: Packages Vs ProjectTemplate.” https://rmflight.github.io/posts/2014-07-28-packages-vs-projecttemplate/.\n\n\nLander, Jared. 2020. “Miles McBain - That Feeling of Workflowing [Remote].” https://www.youtube.com/watch?v=jU1Zv21GvT4.\n\n\nMcBain, Miles. 2020a. “Before i Sleep: Benefits of a Function-Based Diet (the Drake Post).” https://milesmcbain.com/posts/the-drake-post/.\n\n\n———. 2020b. https://github.com/MilesMcBain/nycr_meetup_talk.\n\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-03-02T09:51:08-05:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2021-02-28-things-i-learned-about-distill/",
     "title": "Things I Learned About distill",
     "description": "The various things I learned about the distill blog setup while converting posts over from my old blogdown site.",
