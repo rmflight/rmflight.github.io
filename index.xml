@@ -12,7 +12,8 @@
       <title>Packages Don't Work Well for Analyses in Practice</title>
       <dc:creator>Robert M Flight</dc:creator>
       <link>https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice</link>
-      <description>I was wrong about using packages to structure statistical analyses.</description>
+      <description>I was wrong about using packages to structure statistical analyses.
+Also why I finally switched to {drake}.</description>
       <category>R</category>
       <category>development</category>
       <category>packages</category>

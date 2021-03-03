@@ -90,7 +90,7 @@ code span.wa { color: #da4453; } /* Warning */
   <!--radix_placeholder_meta_tags-->
 <title>Deciphering Life: One Bit at a Time: Packages Don't Work Well for Analyses in Practice</title>
 
-<meta property="description" itemprop="description" content="I was wrong about using packages to structure statistical analyses."/>
+<meta property="description" itemprop="description" content="I was wrong about using packages to structure statistical analyses.&#10;Also why I finally switched to {drake}."/>
 
 <link rel="canonical" href="https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
@@ -103,7 +103,7 @@ code span.wa { color: #da4453; } /* Warning */
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
 <meta property="og:title" content="Deciphering Life: One Bit at a Time: Packages Don&#39;t Work Well for Analyses in Practice"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="I was wrong about using packages to structure statistical analyses."/>
+<meta property="og:description" content="I was wrong about using packages to structure statistical analyses.&#10;Also why I finally switched to {drake}."/>
 <meta property="og:url" content="https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
@@ -111,7 +111,7 @@ code span.wa { color: #da4453; } /* Warning */
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
 <meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Packages Don&#39;t Work Well for Analyses in Practice"/>
-<meta property="twitter:description" content="I was wrong about using packages to structure statistical analyses."/>
+<meta property="twitter:description" content="I was wrong about using packages to structure statistical analyses.&#10;Also why I finally switched to {drake}."/>
 <meta property="twitter:url" content="https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
@@ -131,10 +131,11 @@ code span.wa { color: #da4453; } /* Warning */
   <meta name="citation_reference" content="citation_title=Before i sleep: Benefits of a function-based diet (the drake post);citation_publication_date=2020;citation_author=Miles McBain"/>
   <meta name="citation_reference" content="citation_title=Miles McBain - that feeling of workflowing [remote];citation_publication_date=2020;citation_author=Jared Lander"/>
   <meta name="citation_reference" content="citation_publication_date=2020;citation_author=Miles McBain"/>
+  <meta name="citation_reference" content="citation_title=The drake r package user manual, ch 4;citation_publication_date=2020;citation_author=Alex Axthelm Will Landau"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Packages Don't Work Well for Analyses in Practice"]},{"type":"character","attributes":{},"value":["I was wrong about using packages to structure statistical analyses."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-03-02"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["R","development","packages","vignettes","programming","analysis","workflow"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Packages Don't Work Well for Analyses in Practice"]},{"type":"character","attributes":{},"value":["I was wrong about using packages to structure statistical analyses.\nAlso why I finally switched to {drake}."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-03-02"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["R","development","packages","vignettes","programming","analysis","workflow"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2499,7 +2500,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Packages Don't Work Well for Analyses in Practice","description":"I was wrong about using packages to structure statistical analyses.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-03-02T00:00:00.000-05:00","citationText":"Flight, 2021"}
+{"title":"Packages Don't Work Well for Analyses in Practice","description":"I was wrong about using packages to structure statistical analyses.\nAlso why I finally switched to {drake}.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-03-02T00:00:00.000-05:00","citationText":"Flight, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2515,6 +2516,9 @@ d-appendix d-footnote-list a.footnote-backlink {
 <a href="../../about.html">About</a>
 <a href="../../index.xml">
 <i class="fa fa-rss" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/rmflight/researchBlog_distill" aria-label="Link to source">
+<i class="fab fa-github" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
@@ -2537,7 +2541,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   <a href="../../index.html#category:workflow" class="dt-tag">workflow</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>I was wrong about using packages to structure statistical analyses.</p></p>
+<p><p>I was wrong about using packages to structure statistical analyses. Also why I finally switched to {drake}.</p></p>
 </div>
 
 <div class="d-byline">
@@ -2569,11 +2573,12 @@ d-appendix d-footnote-list a.footnote-backlink {
 <p>Eventually, I started having project directories with a report, and throwing all my functions into the top of the rmarkdown, and if I was lucky I might write objects (tables, figures, etc) out into directories that could then be sent to collaborators.</p>
 <h2 id="a-dim-bulb">A Dim Bulb</h2>
 <p>However, {<a href="https://books.ropensci.org/drake/">drake</a>} was becoming popular as a proper workflow manager for R, with some very nice capabilities, and I started using it to help out with some large caching things I wanted for analyses for a manuscript. I still didn’t use it for anything else.</p>
+<p>The documentation for {drake} very much encourages a <em>functional</em> workflow, where one writes functions that take inputs from other functions and generate outputs for other functions <span class="citation" data-cites="landau2020drakebook">(<a href="#ref-landau2020drakebook" role="doc-biblioref">Will Landau 2020</a>)</span>. And though Will encourages this in the documentation, for some reason I was not grokking how this worked in practice, and how it could work easily for <strong>all</strong> of my projects with some simple conventions around folder structure borrowed from other projects (or even from R packages).</p>
 <aside>
 Will Landau recommends not using {drake} anymore and to switch to {targets}. Given development on drake has stopped, that’s probably a good idea. There still isn’t a {targets} flavor of {dflow} (see below) available yet, however.
 </aside>
 <h2 id="a-little-brighter">A Little Brighter</h2>
-<p>Miles McBain was talking about some of these things intermittently on Twitter, and then posted about a functional approach to analyses using {drake} <span class="citation" data-cites="mcbain2020benefits">(<a href="#ref-mcbain2020benefits" role="doc-biblioref">McBain 2020a</a>)</span>. When I read it, I was really, really impressed with it. Unfortunately, I still wasn’t really clear on how to implement and use his method. This is not the fault of Miles’ post. It is my fault for not reading it slowly, and taking the time to try and stop through it with the {dflow} implementation.</p>
+<p>Miles McBain was talking about some of these things (around data workflows) intermittently on Twitter, and then posted about a functional approach to analyses using {drake} <span class="citation" data-cites="mcbain2020benefits">(<a href="#ref-mcbain2020benefits" role="doc-biblioref">McBain 2020a</a>)</span>. When I read it, I was really, really impressed with it. Unfortunately, I still wasn’t really clear on how to implement and use his method with {drake}. This is not the fault of Miles’ post or {drake}’s documentation (see above). It is my fault for not reading it slowly, and taking the time to try and stop through it with the {dflow} implementation and {drake} documentation together.</p>
 <aside>
 If you haven’t read it yet, go read it to see if it might help you. Seriously, it’s really, really good, and well thought out.
 </aside>
@@ -2581,7 +2586,9 @@ If you haven’t read it yet, go read it to see if it might help you. Seriously,
 <p>Miles’ post was at the end of April, 2020. In August 2020, he was a guest at the <em>New York Open Statistical Programming Meetup</em> virtual event where he presented his {dflow} workflow in <strong>That Feeling of Workflowing</strong> <span class="citation" data-cites="mcbain2020youtube">(<a href="#ref-mcbain2020youtube" role="doc-biblioref">Lander 2020</a>)</span> <span class="citation" data-cites="mcbain2020wflowslides">(<a href="#ref-mcbain2020wflowslides" role="doc-biblioref">McBain 2020b</a>)</span>. Seeing and hearing Miles explain everything, and then actually <em>work</em> through an example that everything about his approach finally clicked for me. And really, any project based layout that combines a directory for R scripts, and inputs and outputs too (e.g. {ProjectTemplate} and others).</p>
 <p>Now, I know, that still sounds like an R package, with functions in <code>/R</code>, reports in <code>/vignettes</code>, and built in documentation. But it’s lighter weight than a package, and the functions are specific to just this one analysis.</p>
 <p>{dflow} includes some nice boilerplate code for keeping your list of packages in one place, and getting all of your functions into the workspace. I was so impressed that I installed {dflow} the next day and working out how to convert my current analysis project to use it. Shortly after experimenting with that one analysis, I was converted. Every new project I start is being done using {dflow}, and any old projects I’ve gone back to are being converted over to use it.</p>
-<p>I would now recommend using {dflow} or ProjectTemplate (or any other directory based system) for R analysis projects. And if you have the discipline and find it works for you, then using R packages might also work. However, I think the general project based ideas are just fine for many analyses, and packages are overkill and take too much work for the analysis authors to keep it up.</p>
+<p>I would now recommend using {drake} / {targets} / {dflow} or {ProjectTemplate} (or any other directory based system with caching) for R analysis projects. And if you have the discipline and find it works for you, then using R packages might still work (there is even a {drake} / {targets} way of working within packages that I hadn’t noticed before). However, I think the general project based ideas are just fine for many analyses, and packages are overkill and take too much work for the analysis authors to keep it up.</p>
+<p>{drake} (and now {targets}) is a modern <strong>make</strong> like engine specifically for R, with an R based caching system (saving things so they don’t have to be repeated again) for your outputs that really, really helps you keep track of things, organize your inputs and outputs, and work in a functional way, which are all good things. {dflow} is a very pretty wrapper for setting up {drake} analysis projects.</p>
+<p>Edited on <em>2021-03-03</em> to give more credence to Will Landau and the {drake} package itself, as Miles McBain felt I gave too much credence to him instead of {drake}.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-flight2014analyses" class="csl-entry" role="doc-biblioentry">
@@ -2601,6 +2608,9 @@ McBain, Miles. 2020a. <span>“Before i Sleep: Benefits of a Function-Based Diet
 </div>
 <div id="ref-mcbain2020wflowslides" class="csl-entry" role="doc-biblioentry">
 ———. 2020b. <a href="https://github.com/MilesMcBain/nycr_meetup_talk">https://github.com/MilesMcBain/nycr_meetup_talk</a>.
+</div>
+<div id="ref-landau2020drakebook" class="csl-entry" role="doc-biblioentry">
+Will Landau, Alex Axthelm, Kirill Müller. 2020. <em>The Drake r Package User Manual, Ch 4</em>. <a href="https://books.ropensci.org/drake/plans.html">https://books.ropensci.org/drake/plans.html</a>.
 </div>
 </div>
 <!--radix_placeholder_article_footer-->
