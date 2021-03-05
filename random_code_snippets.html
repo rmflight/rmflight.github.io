@@ -85,24 +85,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Deciphering Life: One Bit at a Time: About The Blog &amp; Robert M Flight</title>
+  <title>Deciphering Life: One Bit at a Time: Random Code Snippets</title>
 
-  <meta property="description" itemprop="description" content="Some additional details about the blog and myself"/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Deciphering Life: One Bit at a Time: About The Blog &amp; Robert M Flight"/>
+  <meta property="og:title" content="Deciphering Life: One Bit at a Time: Random Code Snippets"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Some additional details about the blog and myself"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Deciphering Life: One Bit at a Time: About The Blog &amp; Robert M Flight"/>
-  <meta property="twitter:description" content="Some additional details about the blog and myself"/>
+  <meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Random Code Snippets"/>
   <meta property="twitter:site" content="@rmflight"/>
   <meta property="twitter:creator" content="@rmflight"/>
 
@@ -110,7 +107,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["About The Blog & Robert M Flight"]},{"type":"character","attributes":{},"value":["Some additional details about the blog and myself"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Random Code Snippets"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["posts"]}},"value":[{"type":"character","attributes":{},"value":["2021-03-05-randomcodesnippets","2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor","2014-02-07-package-version-increment-pre-and-post-commit-hooks","2017-12-27-custom-deployment-script"]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2465,12 +2462,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 </head>
 
-<body>
+<body class="layout-listing">
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About The Blog & Robert M Flight","description":"Some additional details about the blog and myself","authors":[]}
+{"title":"Random Code Snippets","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2498,49 +2495,306 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
+<!--radix_placeholder_article_listing-->
+
+
+<script type="application/javascript">
+
+function init_posts_list() {
+
+  function load_image(img) {
+    var src = $(img).attr('data-src');
+    if (src) {
+      $(img).attr('src', src);
+      $(img).load(function() {
+        img.removeAttribute('data-src');
+      });
+    }
+  }
+
+  function set_posts_visible(posts, visible) {
+    if (visible) {
+
+      // show bottom border by default
+      $(posts).removeClass('post-preview-last');
+
+      // apply limits if need be
+      var max_posts = 25;
+      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
+      if (apply_limits && posts.length > max_posts) {
+        posts = $(posts).slice(0, max_posts);
+      } else {
+        $('.posts-more a').addClass('hidden');
+      }
+
+      // apply last style
+      $(posts.slice(-1)[0]).addClass('post-preview-last');
+
+      $(posts).removeClass('hidden');
+      $(posts).find('img[data-src]').each(function(i, img) {
+        load_image(img);
+      });
+    } else {
+      $(posts).addClass('hidden');
+    }
+  }
+
+  function apply_hash_filter() {
+
+    // clear active state
+    $('.categories .active').removeClass('active');
+
+    // mark all posts invisible to start
+    set_posts_visible($('.posts-list').children('a'), false);
+
+    // if we have a hash filter
+    if (window.location.hash && window.location.hash.startsWith("#category:")) {
+
+      // mark posts that match the category visible
+      var page_category = window.location.hash.replace(/^#category:/, "");
+      var posts = $('.post-metadata').map(function(idx, script) {
+        var metadata = $.parseJSON($(script).html());
+        var post = null;
+        $.each(metadata.categories, function(idx, category) {
+          category = category.replace(/ /g,"_");
+          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
+            post = $(script).parent().get();
+            return false;
+          }
+        });
+        return post;
+      });
+      set_posts_visible(posts, true);
+
+      // mark the hash active
+      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
+
+      // update the list_caption
+      var list_caption = $('.posts-list-caption');
+      var caption = (page_category || '').toLowerCase() === "articles"
+        ? list_caption.attr('data-caption')
+        : ('Category: ' + page_category.replace(/_/g," "));
+      list_caption.text(caption);
+
+    } else {
+
+      // no hash filter, make all posts visible (subject to max display)
+      set_posts_visible($('.posts-list').children(), true);
+
+      // reset list caption
+      var list_caption = $('.posts-list-caption');
+      list_caption.text(list_caption.attr('data-caption'));
+
+
+    }
+  }
+
+  // more articles
+  function apply_post_limits(apply) {
+    if (apply) {
+      $('.posts-container').addClass('posts-apply-limit');
+      $('.posts-more a').removeClass('hidden');
+    } else {
+      $('.posts-container').removeClass('posts-apply-limit');
+      $('.posts-more a').addClass('hidden');
+    }
+  }
+
+  // click handling for tags
+  $('.dt-tag').click(function(ev) {
+    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
+    return false;
+  })
+
+  // hash filter handling
+  apply_hash_filter();
+  $(window).on('hashchange',function() {
+    apply_post_limits(true);
+    apply_hash_filter();
+  });
+
+  // more articles link
+  $('.posts-more a').click(function(e) {
+    e.preventDefault();
+    apply_post_limits(false);
+    apply_hash_filter();
+    return false;
+  });
+
+}
+
+</script>
+
+
+
+<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
+<div class="posts-list">
+<h1 class="posts-list-caption" data-caption="Random Code Snippets">Random Code Snippets</h1>
+<a href="posts/2021-03-05-randomcodesnippets/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["random-code-snippets"]}</script>
+<div class="metadata">
+<div class="publishedDate">March 5, 2021</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Random Code Snippets</h2>
+<div class="dt-tags">
+<div class="dt-tag">random-code-snippets</div>
+</div>
+<p>Introducing random-code-snippets.</p>
+</div>
+</a>
+<a href="posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","bioconductor","bioinformatics","cdf","affymetrix","microarray","random-code-snippets"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 13, 2012</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Creating Custom CDFs for Affymetrix Chips in Bioconductor</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">bioconductor</div>
+<div class="dt-tag">bioinformatics</div>
+<div class="dt-tag">cdf</div>
+<div class="dt-tag">affymetrix</div>
+<div class="dt-tag">microarray</div>
+<div class="dt-tag">random-code-snippets</div>
+</div>
+<p>Examples of messing with Affymetrix CDF data in Bioconductor.</p>
+</div>
+</a>
+<a href="posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","git","packages","development","programming","random-code-snippets"]}</script>
+<div class="metadata">
+<div class="publishedDate">Feb. 7, 2014</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Package Version Increment Pre- and Post-Commit Hooks</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">git</div>
+<div class="dt-tag">packages</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">programming</div>
+<div class="dt-tag">random-code-snippets</div>
+</div>
+<p>Two git commit hooks for incrementing the package version as part of commits.</p>
+</div>
+</a>
+<a href="posts/2017-12-27-custom-deployment-script/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","blogdown","development","random-code-snippets"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 27, 2017</div>
+<div class="dt-authors">
+<div class="dt-author">Robert M Flight</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Custom Deployment Script</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">blogdown</div>
+<div class="dt-tag">development</div>
+<div class="dt-tag">random-code-snippets</div>
+</div>
+<p>I don't want to use Netlify for hosting, so I came up with this simple script to deploy my blog.</p>
+</div>
+</a>
+</div>
+<div class="posts-sidebar">
+<div class="sidebar-section categories">
+<h3>Categories</h3>
+<ul>
+<li>
+<a href="#category:Articles">Articles</a>
+<span class="category-count">(4)</span>
+</li>
+<li>
+<a href="#category:affymetrix">affymetrix</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:bioconductor">bioconductor</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:bioinformatics">bioinformatics</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:blogdown">blogdown</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:cdf">cdf</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:development">development</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:git">git</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:microarray">microarray</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:packages">packages</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:programming">programming</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:R">R</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:random-code-snippets">random-code-snippets</a>
+<span class="category-count">(4)</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="posts-more">
+<a href="#">More articles &raquo;</a>
+</div>
+</div>
+<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>About The Blog &amp; Robert M Flight</h1>
+<h1>Random Code Snippets</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Some additional details about the blog and myself</p></p>
+
 </div>
 
 
 <div class="d-article">
-<h2 id="the-blog">The Blog</h2>
-<p>This is a place for me to share tips and tricks, as well recent publications, and whatever is on my mind. You are likely to find personal analysis projects, as well as my musings on R code and different types of algorithms.</p>
-<p>All opinions are my own and do not reflect those of my employer or the university where I work.</p>
-<h2 id="me">Me</h2>
-<p>I’m a senior research associate in bioinformatics at the <a href="https://bioinformatics.cesb.uky.edu/">Moseley Bioinformatics and Systems Biology Lab</a>, which is part of the <a href="https://ukhealthcare.uky.edu/markey-cancer-center">Markey Cancer Center</a> at the <a href="http://www.uky.edu/">University of Kentucky</a>. I work with our collaborators to analyse a variety of -omics data, including transcriptomics and metabolomics using both previously established and newly developed methods.</p>
-<p>I have been analyzing -omics type data since 2004, and programming in R since 2010. I authored the <a href="https://bioconductor.org/packages/release/bioc/html/categoryCompare.html">categoryCompare</a> Bioconductor package for comparing -omics data using annotations.</p>
-<p>You can find my publications (and other research outputs) on my <a href="https://orcid.org/0000-0001-8141-7788">ORCID profile</a>.</p>
-<h3 id="links">Links</h3>
-<ul>
-<li><a href="https://orcid.org/0000-0001-8141-7788">ORCID</a></li>
-<li><a href="https://github.com/rmflight">GitHub</a></li>
-<li><a href="https://twitter.com/rmflight">Twitter</a></li>
-<li><a href="https://scholar.google.com/citations?user=G8bFNwYAAAAJ">Google Scholar</a></li>
-<li><a href="https://rxivist.org/authors/230885">Rxivist</a></li>
-<li><a href="https://figshare.com/authors/Robert_M_Flight/99873">figshare</a></li>
-</ul>
-<h3 id="interests">Interests</h3>
-<ul>
-<li>Open Science</li>
-<li>Bioinformatics</li>
-<li>Metabolomics</li>
-<li>Structural Biology</li>
-<li>Systems Biology</li>
-</ul>
-<h3 id="education">Education</h3>
-<ul>
-<li>PhD in Analytical Chemistry, 2009, Dalhousie University
-<ul>
-<li><a href="https://figshare.com/articles/thesis/A_Workflow_for_the_Analysis_of_DNA_Microarray_Time-Course_Data/96859/1">A Workflow for the Analysis of DNA Microarray Time-Course Data</a></li>
-</ul></li>
-<li>MSc in Chemistry, 2004, University of New Brunswick</li>
-<li>BSc in Biology-Chemistry, 2002, University of New Brunswick</li>
-</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

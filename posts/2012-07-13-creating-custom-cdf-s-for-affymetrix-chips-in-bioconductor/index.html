@@ -127,7 +127,7 @@ code span.wa { color: #da4453; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","author","date","description","output","categories","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Creating Custom CDFs for Affymetrix Chips in Bioconductor"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]}]}]},{"type":"character","attributes":{},"value":["2012-07-13"]},{"type":"character","attributes":{},"value":["Examples of messing with Affymetrix CDF data in Bioconductor."]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["R","bioconductor","bioinformatics","cdf","affymetrix","microarray"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","author","date","description","output","categories","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Creating Custom CDFs for Affymetrix Chips in Bioconductor"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]}]}]},{"type":"character","attributes":{},"value":["2012-07-13"]},{"type":"character","attributes":{},"value":["Examples of messing with Affymetrix CDF data in Bioconductor."]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["R","bioconductor","bioinformatics","cdf","affymetrix","microarray","random-code-snippets"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2442,7 +2442,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2506,6 +2506,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <div class="nav-right">
 <a href="../../index.html">Home</a>
 <a href="../../about.html">About</a>
+<a href="../../random_code_snippets.html">RCS</a>
 <a href="../../index.xml">
 <i class="fa fa-rss" aria-hidden="true"></i>
 </a>
@@ -2530,6 +2531,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   <a href="../../index.html#category:cdf" class="dt-tag">cdf</a>
   <a href="../../index.html#category:affymetrix" class="dt-tag">affymetrix</a>
   <a href="../../index.html#category:microarray" class="dt-tag">microarray</a>
+  <a href="../../index.html#category:random-code-snippets" class="dt-tag">random-code-snippets</a>
 </div>
 <!--/radix_placeholder_categories-->
 <p><p>Examples of messing with Affymetrix CDF data in Bioconductor.</p></p>
@@ -2867,19 +2869,19 @@ Calculating Expression</code></pre>
 </code></pre>
 </div>
 <pre><code>    low10-1.cel low10-2.cel high10-1.cel high10-2.cel low48-1.cel
-1      7.526692    7.530284     7.490537     7.499301    7.603895
-10     7.180238    7.176462     7.113912     7.228719    7.211931
-100    6.505725    6.450974     6.493887     6.443179    6.396848
-11     8.476353    8.596656     8.373484     8.330499    8.523191
-12     7.492908    7.299014     7.487884     7.331685    7.381038
-13     6.602573    6.544746     6.514459     6.658407    6.763739
+1      6.557239    6.522249     6.639682     6.683450    6.862754
+10     7.145256    7.166927     7.124289     7.227240    7.055032
+100    6.494146    6.388879     6.349202     6.605702    6.499393
+11     6.355700    6.431657     6.108054     6.213595    6.119581
+12     5.602336    5.523976     5.370915     5.692428    5.512562
+13     6.320948    6.211828     6.338067     6.178676    6.478441
     low48-2.cel high48-1.cel high48-2.cel
-1      7.571100     7.592857     7.631396
-10     7.104931     7.143320     7.437195
-100    6.459212     6.191203     6.264641
-11     8.731415     8.493199     8.521815
-12     7.007449     7.324637     7.043753
-13     6.736479     6.269570     6.531958</code></pre>
+1      7.084571     6.742868     7.289879
+10     6.908141     7.164122     7.279369
+100    6.455822     6.475354     6.514070
+11     6.455912     6.136583     6.310523
+12     5.590132     5.515823     5.544244
+13     6.280520     6.116337     6.348493</code></pre>
 </div>
 <p>I hope this information is useful to someone else. I know it made my life a lot easier.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2912,18 +2914,19 @@ other attached packages:
 [4] Biobase_2.48.0      BiocGenerics_0.34.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6            compiler_4.0.0        BiocManager_1.30.10  
- [4] tools_4.0.0           zlibbioc_1.34.0       digest_0.6.27        
- [7] downlit_0.2.1         bit_4.0.4             RSQLite_2.2.3        
-[10] evaluate_0.14         memoise_2.0.0         preprocessCore_1.50.0
-[13] rlang_0.4.10          DBI_1.1.1             distill_1.2          
-[16] yaml_2.2.1            xfun_0.21             fastmap_1.1.0        
-[19] stringr_1.4.0         knitr_1.31            IRanges_2.22.2       
-[22] vctrs_0.3.6           S4Vectors_0.26.1      stats4_4.0.0         
-[25] bit64_4.0.5           fansi_0.4.2           AnnotationDbi_1.50.3 
-[28] rmarkdown_2.6         blob_1.2.1            magrittr_2.0.1       
-[31] htmltools_0.5.1.1     stringi_1.5.3         cachem_1.0.4         
-[34] affyio_1.58.0        </code></pre>
+ [1] Rcpp_1.0.6            bslib_0.2.4           compiler_4.0.0       
+ [4] BiocManager_1.30.10   jquerylib_0.1.3       tools_4.0.0          
+ [7] zlibbioc_1.34.0       bit_4.0.4             digest_0.6.27        
+[10] downlit_0.2.1         memoise_2.0.0         jsonlite_1.7.2       
+[13] evaluate_0.14         RSQLite_2.2.3         preprocessCore_1.50.0
+[16] rlang_0.4.10          DBI_1.1.1             distill_1.2          
+[19] yaml_2.2.1            xfun_0.21             fastmap_1.1.0        
+[22] stringr_1.4.0         knitr_1.31            IRanges_2.22.2       
+[25] S4Vectors_0.26.1      vctrs_0.3.6           sass_0.3.1           
+[28] stats4_4.0.0          bit64_4.0.5           R6_2.5.0             
+[31] fansi_0.4.2           AnnotationDbi_1.50.3  rmarkdown_2.7        
+[34] blob_1.2.1            magrittr_2.0.1        htmltools_0.5.1.1    
+[37] stringi_1.5.3         cachem_1.0.4          affyio_1.58.0        </code></pre>
 </div>
 <p>Originally published 2013/07/13, moved to <a href="http://rmflight.github.io" class="uri">http://rmflight.github.io</a> on 2013/12/04.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>

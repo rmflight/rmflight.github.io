@@ -7,7 +7,16 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 02 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Random Code Snippets</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-03-05-randomcodesnippets</link>
+      <description>Introducing random-code-snippets.</description>
+      <category>random-code-snippets</category>
+      <guid>https://rmflight.github.io/posts/2021-03-05-randomcodesnippets</guid>
+      <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Packages Don't Work Well for Analyses in Practice</title>
       <dc:creator>Robert M Flight</dc:creator>
@@ -215,6 +224,7 @@ Also why I finally switched to {drake}.</description>
       <category>R</category>
       <category>blogdown</category>
       <category>development</category>
+      <category>random-code-snippets</category>
       <guid>https://rmflight.github.io/posts/2017-12-27-custom-deployment-script</guid>
       <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
     </item>
@@ -477,6 +487,7 @@ Also why I finally switched to {drake}.</description>
       <category>packages</category>
       <category>development</category>
       <category>programming</category>
+      <category>random-code-snippets</category>
       <guid>https://rmflight.github.io/posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks</guid>
       <pubDate>Fri, 07 Feb 2014 00:00:00 +0000</pubDate>
     </item>
@@ -645,6 +656,7 @@ Also why I finally switched to {drake}.</description>
       <category>cdf</category>
       <category>affymetrix</category>
       <category>microarray</category>
+      <category>random-code-snippets</category>
       <guid>https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor</guid>
       <pubDate>Fri, 13 Jul 2012 00:00:00 +0000</pubDate>
     </item>
