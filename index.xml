@@ -601,6 +601,18 @@ Also why I finally switched to {drake}.</description>
       <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate>
     </item>
     <item>
+      <title>Tim Hortons Density</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2013-06-05-tim-hortons-density</link>
+      <description>How far away are most Canadians from a Tim Hortons?</description>
+      <category>R</category>
+      <category>mapping</category>
+      <category>tim-hortons</category>
+      <guid>https://rmflight.github.io/posts/2013-06-05-tim-hortons-density</guid>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2013-06-05-tim-hortons-density/mapIt-1.png" medium="image" type="image/png" width="1344" height="960"/>
+    </item>
+    <item>
       <title>Storing Package Data in Custom Environments</title>
       <dc:creator>Robert M Flight</dc:creator>
       <link>https://rmflight.github.io/posts/2013-05-30-storing-package-data-in-custom-environments</link>
