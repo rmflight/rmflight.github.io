@@ -141,7 +141,7 @@ code span.wa { color: #da4453; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["IMG_20210321_215455.jpg","refs.bib","sarah_lexington.png"]}
+  {"type":"character","attributes":{},"value":["creating-a-map-of-routes-weighted-by-travel_files/anchor-4.2.2/anchor.min.js","creating-a-map-of-routes-weighted-by-travel_files/bowser-1.9.3/bowser.min.js","creating-a-map-of-routes-weighted-by-travel_files/distill-2.2.21/template.v2.js","creating-a-map-of-routes-weighted-by-travel_files/header-attrs-2.7/header-attrs.js","creating-a-map-of-routes-weighted-by-travel_files/jquery-1.11.3/jquery.min.js","creating-a-map-of-routes-weighted-by-travel_files/popper-2.6.0/popper.min.js","creating-a-map-of-routes-weighted-by-travel_files/tippy-6.2.7/tippy-bundle.umd.min.js","creating-a-map-of-routes-weighted-by-travel_files/tippy-6.2.7/tippy-light-border.css","creating-a-map-of-routes-weighted-by-travel_files/tippy-6.2.7/tippy.css","creating-a-map-of-routes-weighted-by-travel_files/tippy-6.2.7/tippy.umd.min.js","creating-a-map-of-routes-weighted-by-travel_files/webcomponents-2.0.0/webcomponents.js","IMG_20210321_215455.jpg","refs.bib","sarah_lexington.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2569,7 +2569,15 @@ d-appendix d-footnote-list a.footnote-backlink {
 <p>If you want to create one of these, you should definitely check out Esteban’s post <span class="citation" data-cites="estebanmap2020">(<a href="#ref-estebanmap2020" role="doc-biblioref">Moro 2020</a>)</span> for how they did it. Esteban also has figures for how things look as they go together. I’m not that organized, unfortunately.</p>
 <p>I’m detailing my process here, because I tried to organize it in a bit of a different way, putting as much stuff into functions as I could so I can reuse code where possible.</p>
 <p>You can check out the code on GitHub <span class="citation" data-cites="rmflightmap2020">(<a href="#ref-rmflightmap2020" role="doc-biblioref">Flight 2020</a>)</span> and see how it’s organized.</p>
-<p>A short list of what you need for this project: * A region of interest with mapped roads in OpenStreetMap * A list of starting locations and ending locations that the shortest route is easily findable. * Esteban and I used Google Maps takeout data. * My spouse and I have location data from when we started using Google phones back in August of 2016.</p>
+<p>A short list of what you need for this project:</p>
+<ul>
+<li>A region of interest with mapped roads in OpenStreetMap</li>
+<li>A list of starting locations and ending locations that the shortest route is easily findable.
+<ul>
+<li>Esteban and I used Google Maps takeout data.</li>
+<li>My spouse and I have location data from when we started using Google phones back in August of 2016.</li>
+</ul></li>
+</ul>
 <h2 id="decide-on-a-size">Decide on a Size</h2>
 <p>Ideally before embarking on this project, decide what size of a print you want. If you are in the USA, WalMart’s prices are actually pretty decent, and I’ve found their quality to be good. I was very happy with the canvas I got from them back in November. The size of the print defines the ratio of the bounding box you are going to want to use and how you want it to look. I ultimately decided on a 16 in high by 20 in wide.</p>
 <h2 id="find-your-bounding-box">Find Your Bounding Box</h2>
