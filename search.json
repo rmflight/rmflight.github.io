@@ -6,21 +6,21 @@
       "description": "Some additional details about the blog and myself",
       "author": [],
       "contents": "\nThe Blog\nThis is a place for me to share tips and tricks, as well recent publications, and whatever is on my mind. You are likely to find personal analysis projects, as well as my musings on R code and different types of algorithms.\nAll opinions are my own and do not reflect those of my employer or the university where I work.\nMe\nI’m a senior research associate in bioinformatics at the Moseley Bioinformatics and Systems Biology Lab, which is part of the Markey Cancer Center at the University of Kentucky. I work with our collaborators to analyse a variety of -omics data, including transcriptomics and metabolomics using both previously established and newly developed methods.\nI have been analyzing -omics type data since 2004, and programming in R since 2010. I authored the categoryCompare Bioconductor package for comparing -omics data using annotations.\nYou can find my publications (and other research outputs) on my ORCID profile.\nLinks\nORCID\nGitHub\nTwitter\nGoogle Scholar\nRxivist\nfigshare\nInterests\nOpen Science\nBioinformatics\nMetabolomics\nStructural Biology\nSystems Biology\nEducation\nPhD in Analytical Chemistry, 2009, Dalhousie University\nA Workflow for the Analysis of DNA Microarray Time-Course Data\n\nMSc in Chemistry, 2004, University of New Brunswick\nBSc in Biology-Chemistry, 2002, University of New Brunswick\n\n\n\n",
-      "last_modified": "2021-03-13T21:04:28-05:00"
+      "last_modified": "2021-03-21T21:59:53-04:00"
     },
     {
       "path": "index.html",
       "title": "Deciphering Life: One Bit at a Time",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-03-13T21:04:29-05:00"
+      "last_modified": "2021-03-21T21:59:54-04:00"
     },
     {
       "path": "random_code_snippets.html",
       "title": "Random Code Snippets",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-03-13T21:04:30-05:00"
+      "last_modified": "2021-03-21T21:59:54-04:00"
     }
   ],
   "collections": ["posts/posts.json"]

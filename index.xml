@@ -7,7 +7,19 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Creating a Map of Routes Weighted by Travel</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-03-21-creating-a-map-of-routes-weighted-by-travel</link>
+      <description>I made a map of my spouse's travel since we got Google phones for her birthday last fall. Here's how I did it.</description>
+      <category>graphing</category>
+      <category>maps</category>
+      <category>visualization</category>
+      <guid>https://rmflight.github.io/posts/2021-03-21-creating-a-map-of-routes-weighted-by-travel</guid>
+      <pubDate>Sun, 21 Mar 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2021-03-21-creating-a-map-of-routes-weighted-by-travel/sarah_lexington.png" medium="image" type="image/png" width="10000" height="8000"/>
+    </item>
     <item>
       <title>Random Code Snippets</title>
       <dc:creator>Robert M Flight</dc:creator>
