@@ -105,7 +105,7 @@ code span.wa { color: #da4453; } /* Warning */
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="A simple way to highlight or bring attention to a row or column in a ComplexHeatmap."/>
 <meta property="og:url" content="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/"/>
-<meta property="og:image" content="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/highlighting-a-row-of-a-complexheatmap_files/figure-html5/create_heatmap-1.png"/>
+<meta property="og:image" content="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/highlighting-a-row-of-a-complexheatmap_files/figure-html5/highlight_row2-1.png"/>
 <meta property="og:image:width" content="1248"/>
 <meta property="og:image:height" content="768"/>
 <meta property="og:locale" content="en_US"/>
@@ -116,7 +116,7 @@ code span.wa { color: #da4453; } /* Warning */
 <meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Highlighting a Row of A ComplexHeatmap"/>
 <meta property="twitter:description" content="A simple way to highlight or bring attention to a row or column in a ComplexHeatmap."/>
 <meta property="twitter:url" content="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/"/>
-<meta property="twitter:image" content="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/highlighting-a-row-of-a-complexheatmap_files/figure-html5/create_heatmap-1.png"/>
+<meta property="twitter:image" content="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/highlighting-a-row-of-a-complexheatmap_files/figure-html5/highlight_row2-1.png"/>
 <meta property="twitter:image:width" content="1248"/>
 <meta property="twitter:image:height" content="768"/>
 <meta property="twitter:site" content="@rmflight"/>
@@ -2587,7 +2587,7 @@ d-appendix d-footnote-list a.footnote-backlink {
         row_title <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="highlighting-a-row-of-a-complexheatmap_files/figure-html5/highlight_row2-1.png" width="624" /></p>
+<p><img src="highlighting-a-row-of-a-complexheatmap_files/figure-html5/highlight_row2-1.png" width="624" data-distill-preview=1 /></p>
 </div>
 <p>Voila! <strong>row2</strong> is separated from the others to draw attention to it. It’s not perfect, but hopefully it’s useful to others. Note, that you can’t use clustering with this method. If you have actual dendrograms to display, this will fail, because ComplexHeatmap expects you to use a numeric argument to tell the cut height for dendrograms for splitting <span class="citation" data-cites="complexheatmapSplit">(<a href="#ref-complexheatmapSplit" role="doc-biblioref">Gu 2021c</a>)</span>. Therefore, if you have dendrograms, reorder your columns and rows according to the dendrogram <strong>first</strong> and then add the splitting information and keep the clustering off.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
