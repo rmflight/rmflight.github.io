@@ -1,5 +1,28 @@
 [
   {
+    "path": "posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/",
+    "title": "Highlighting a Row of A ComplexHeatmap",
+    "description": "A simple way to highlight or bring attention to a row or column in a ComplexHeatmap.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2021-03-26",
+    "categories": [
+      "random-code-snippets",
+      "heatmap",
+      "visualization"
+    ],
+    "contents": "\nThe ComplexHeatmap Bioconductor package (Gu, Eils, and Schlesner 2016; Gu 2021a, 2021b) has become my goto for visualizing sample-sample correlation heatmaps, which I use a lot. Recently, I had a report where I wanted to highlight a particular row of the heatmap. There is not an easy way that I could find to add something that wraps around a particular column. However, you can indicate that there is a grouping in the heatmap, and use that grouping to separate a sample or samples from the others.\nLets do an example:\n\n\nlibrary(ComplexHeatmap)\nset.seed(123)\nnr1 = 4; nr2 = 8; nr3 = 6; nr = nr1 + nr2 + nr3\nnc1 = 6; nc2 = 8; nc3 = 10; nc = nc1 + nc2 + nc3\nmat = cbind(rbind(matrix(rnorm(nr1*nc1, mean = 1,   sd = 0.5), nr = nr1),\n          matrix(rnorm(nr2*nc1, mean = 0,   sd = 0.5), nr = nr2),\n          matrix(rnorm(nr3*nc1, mean = 0,   sd = 0.5), nr = nr3)),\n    rbind(matrix(rnorm(nr1*nc2, mean = 0,   sd = 0.5), nr = nr1),\n          matrix(rnorm(nr2*nc2, mean = 1,   sd = 0.5), nr = nr2),\n          matrix(rnorm(nr3*nc2, mean = 0,   sd = 0.5), nr = nr3)),\n    rbind(matrix(rnorm(nr1*nc3, mean = 0.5, sd = 0.5), nr = nr1),\n          matrix(rnorm(nr2*nc3, mean = 0.5, sd = 0.5), nr = nr2),\n          matrix(rnorm(nr3*nc3, mean = 1,   sd = 0.5), nr = nr3))\n   )\nmat = mat[sample(nr, nr), sample(nc, nc)] # random shuffle rows and columns\nrownames(mat) = paste0(\"row\", seq_len(nr))\ncolnames(mat) = paste0(\"column\", seq_len(nc))\n\nHeatmap(mat, cluster_rows = FALSE, cluster_columns = FALSE)\n\n\n\n\nNow, lets suppose we just want to highlight row2.\nWe create a data.frame with a factor to represent the grouping:\n\n\nwhich_row2 = which(grepl(\"row2\", rownames(mat)))\nsplit = data.frame(x = c(rep(\"A\", which_row2 - 1), \"B\",\n                   rep(\"C\", nrow(mat) - which_row2)))\nHeatmap(mat, cluster_rows = FALSE, cluster_columns = FALSE,\n        row_split = split,\n        row_title = NULL)\n\n\n\n\nVoila! row2 is separated from the others to draw attention to it. It’s not perfect, but hopefully it’s useful to others. Note, that you can’t use clustering with this method. If you have actual dendrograms to display, this will fail, because ComplexHeatmap expects you to use a numeric argument to tell the cut height for dendrograms for splitting (Gu 2021c). Therefore, if you have dendrograms, reorder your columns and rows according to the dendrogram first and then add the splitting information and keep the clustering off.\n\n\n\nGu, Zuguang. 2021a. “ComplexHeatmap.” https://doi.org/10.18129/B9.bioc.ComplexHeatmap.\n\n\n———. 2021b. “ComplexHeatmap Complete Reference.” https://jokergoo.github.io/ComplexHeatmap-reference/book/.\n\n\n———. 2021c. “ComplexHeatmap Complete Reference.” https://jokergoo.github.io/ComplexHeatmap-reference/book/a-single-heatmap.html#heatmap-split.\n\n\nGu, Zuguang, Roland Eils, and Matthias Schlesner. 2016. “Complex Heatmaps Reveal Patterns and Correlations in Multidimensional Genomic Data.” Bioinformatics.\n\n\n\n\n",
+    "preview": "posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/highlighting-a-row-of-a-complexheatmap_files/figure-html5/create_heatmap-1.png",
+    "last_modified": "2021-03-26T10:10:56-04:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
     "path": "posts/2021-03-21-creating-a-map-of-routes-weighted-by-travel/",
     "title": "Creating a Map of Routes Weighted by Travel",
     "description": "I made a map of my spouse's travel since we got Google phones for her birthday last fall. Here's how I did it.",
