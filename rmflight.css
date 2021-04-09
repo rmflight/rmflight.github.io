@@ -152,3 +152,7 @@ d-article .sourceCode {
   color: #cfcfc2;
   background-color: #232629;
  }
+
+d-article blockquote {
+  color: #F5F8FA;
+}

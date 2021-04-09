@@ -7,7 +7,20 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 26 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Proportional Error in Mass Spectrometry</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry</link>
+      <description>Demonstrating the existence of proportional error in mass spectrometry measurements.</description>
+      <category>mass-spectrometry</category>
+      <category>proportional-error</category>
+      <category>omics</category>
+      <category>metabolomics</category>
+      <guid>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry</guid>
+      <pubDate>Fri, 09 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/proportional-error-in-mass-spectrometry_files/figure-html5/load_data-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Highlighting a Row of A ComplexHeatmap</title>
       <dc:creator>Robert M Flight</dc:creator>

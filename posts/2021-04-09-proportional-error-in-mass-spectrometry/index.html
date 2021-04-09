@@ -88,51 +88,60 @@ code span.wa { color: #da4453; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Split - Unsplit Anti-Pattern</title>
+<title>Deciphering Life: One Bit at a Time: Proportional Error in Mass Spectrometry</title>
 
-<meta property="description" itemprop="description" content="Getting some speed using dplyr::join than my more intuitive split --&gt; unsplit pattern."/>
+<meta property="description" itemprop="description" content="Demonstrating the existence of proportional error in mass spectrometry measurements."/>
 
-<link rel="canonical" href="https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/"/>
+<link rel="canonical" href="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2018-07-17"/>
-<meta property="article:created" itemprop="dateCreated" content="2018-07-17"/>
+<meta property="article:published" itemprop="datePublished" content="2021-04-09"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-04-09"/>
 <meta name="article:author" content="Robert M Flight"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Split - Unsplit Anti-Pattern"/>
+<meta property="og:title" content="Deciphering Life: One Bit at a Time: Proportional Error in Mass Spectrometry"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Getting some speed using dplyr::join than my more intuitive split --&gt; unsplit pattern."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/"/>
+<meta property="og:description" content="Demonstrating the existence of proportional error in mass spectrometry measurements."/>
+<meta property="og:url" content="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/"/>
+<meta property="og:image" content="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/proportional-error-in-mass-spectrometry_files/figure-html5/load_data-1.png"/>
+<meta property="og:image:width" content="1248"/>
+<meta property="og:image:height" content="768"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Split - Unsplit Anti-Pattern"/>
-<meta property="twitter:description" content="Getting some speed using dplyr::join than my more intuitive split --&gt; unsplit pattern."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/"/>
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Proportional Error in Mass Spectrometry"/>
+<meta property="twitter:description" content="Demonstrating the existence of proportional error in mass spectrometry measurements."/>
+<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/"/>
+<meta property="twitter:image" content="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/proportional-error-in-mass-spectrometry_files/figure-html5/load_data-1.png"/>
+<meta property="twitter:image:width" content="1248"/>
+<meta property="twitter:image:height" content="768"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Split - Unsplit Anti-Pattern"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/"/>
+<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Proportional Error in Mass Spectrometry"/>
+<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2018/07/17"/>
-<meta name="citation_publication_date" content="2018/07/17"/>
+<meta name="citation_online_date" content="2021/04/09"/>
+<meta name="citation_publication_date" content="2021/04/09"/>
 <meta name="citation_author" content="Robert M Flight"/>
 <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_author=Kareem Carr"/>
+  <meta name="citation_reference" content="citation_author=Robert M Flight"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","author","date","categories","description","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Split - Unsplit Anti-Pattern"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]}]}]},{"type":"character","attributes":{},"value":["2018-07-17"]},{"type":"character","attributes":{},"value":["R","development","programming","purrr","dplyr","join"]},{"type":"character","attributes":{},"value":["Getting some speed using dplyr::join than my more intuitive split --> unsplit pattern."]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","bibliography","categories","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Proportional Error in Mass Spectrometry"]},{"type":"character","attributes":{},"value":["Demonstrating the existence of proportional error in mass spectrometry measurements."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["04-09-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","highlight"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["breezedark"]}]}]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["mass-spectrometry","proportional-error","omics","metabolomics"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["refs.bib"]}
+  {"type":"character","attributes":{},"value":["proportional-error-in-mass-spectrometry_files/anchor-4.2.2/anchor.min.js","proportional-error-in-mass-spectrometry_files/bowser-1.9.3/bowser.min.js","proportional-error-in-mass-spectrometry_files/distill-2.2.21/template.v2.js","proportional-error-in-mass-spectrometry_files/figure-html5/calculate_mean_sd-1.png","proportional-error-in-mass-spectrometry_files/figure-html5/load_data-1.png","proportional-error-in-mass-spectrometry_files/figure-html5/plot_log-1.png","proportional-error-in-mass-spectrometry_files/header-attrs-2.7/header-attrs.js","proportional-error-in-mass-spectrometry_files/jquery-1.11.3/jquery.min.js","proportional-error-in-mass-spectrometry_files/popper-2.6.0/popper.min.js","proportional-error-in-mass-spectrometry_files/tippy-6.2.7/tippy-bundle.umd.min.js","proportional-error-in-mass-spectrometry_files/tippy-6.2.7/tippy-light-border.css","proportional-error-in-mass-spectrometry_files/tippy-6.2.7/tippy.css","proportional-error-in-mass-spectrometry_files/tippy-6.2.7/tippy.umd.min.js","proportional-error-in-mass-spectrometry_files/webcomponents-2.0.0/webcomponents.js","refs.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2446,7 +2455,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2496,7 +2505,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Split - Unsplit Anti-Pattern","description":"Getting some speed using dplyr::join than my more intuitive split --> unsplit pattern.","authors":[{"author":"Robert M Flight","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2018-07-17T00:00:00.000-04:00","citationText":"Flight, 2018"}
+{"title":"Proportional Error in Mass Spectrometry","description":"Demonstrating the existence of proportional error in mass spectrometry measurements.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-04-09T00:00:00.000-04:00","citationText":"Flight, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2526,25 +2535,22 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Split - Unsplit Anti-Pattern</h1>
+<h1>Proportional Error in Mass Spectrometry</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../index.html#category:R" class="dt-tag">R</a>
-  <a href="../../index.html#category:development" class="dt-tag">development</a>
-  <a href="../../index.html#category:programming" class="dt-tag">programming</a>
-  <a href="../../index.html#category:purrr" class="dt-tag">purrr</a>
-  <a href="../../index.html#category:dplyr" class="dt-tag">dplyr</a>
-  <a href="../../index.html#category:join" class="dt-tag">join</a>
+  <a href="../../index.html#category:mass-spectrometry" class="dt-tag">mass-spectrometry</a>
+  <a href="../../index.html#category:proportional-error" class="dt-tag">proportional-error</a>
+  <a href="../../index.html#category:omics" class="dt-tag">omics</a>
+  <a href="../../index.html#category:metabolomics" class="dt-tag">metabolomics</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Getting some speed using dplyr::join than my more intuitive split –&gt; unsplit pattern.</p></p>
+<p><p>Demonstrating the existence of proportional error in mass spectrometry measurements.</p></p>
 </div>
 
 <div class="d-byline">
+  Robert M Flight true 
   
-  Robert M Flight
-  
-<br/>2018-07-17
+<br/>04-09-2021
 </div>
 
 <div class="d-article">
@@ -2552,262 +2558,117 @@ d-appendix d-footnote-list a.footnote-backlink {
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#tldr">TL;DR</a></li>
-<li><a href="#motivation">Motivation</a></li>
-<li><a href="#match-them">Match Them!</a></li>
-<li><a href="#split-them">Split Them!</a></li>
-<li><a href="#join-them">Join Them!</a></li>
-<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#example-data">Example Data</a></li>
+<li><a href="#why">Why??</a></li>
+<li><a href="#solution">Solution</a></li>
 </ul>
 </nav>
 </div>
-<h2 id="tldr">TL;DR</h2>
-<p>If you notice yourself using <code>split</code> -&gt; <code>unsplit</code> / <code>rbind</code> on two object to match items up, maybe you should be using <code>dplyr::join_</code> instead. Read below for concrete examples.</p>
-<h2 id="motivation">Motivation</h2>
-<p>I have had a lot of calculations lately that involve some sort of <code>normalization</code> or scaling a group of related values, each group by a different factor.</p>
-<p>Lets setup an example where we will have <code>1e5</code> values in <code>10</code> groups, each group of values being <code>normalized</code> by their own value.</p>
+<h2 id="introduction">Introduction</h2>
+<p>The other day, Kareem Carr asked for a statistics / data science opinion that results in the daggers being drawn on you <span class="citation" data-cites="kareem2021">(<a href="#ref-kareem2021" role="doc-biblioref">Carr, n.d.</a>)</span>, and I replied <span class="citation" data-cites="flight2021">(<a href="#ref-flight2021" role="doc-biblioref">Flight, n.d.</a>)</span>:</p>
+<blockquote>
+<p>Every physical analytical measurement in -omics suffers from some proportional error. Either model it (neg binomial in RNA-seq for example), or transform your data appropriately (log-transform).</p>
+<p>This includes DNA microarrays, RNA-seq, Mass Spec, and NMR (I need data to confirm)</p>
+</blockquote>
+<p>I wanted to give some proof of what I’m talking about, because I don’t think enough people understand or care. For example, if you get mass-spec data from Metabolon, their Surveyor tool defaults to using non-log-transformed data. Trust me, you should log-transform the values.</p>
+<h2 id="example-data">Example Data</h2>
+<p>I have some direct-injection mass spec data on a polar fraction examining ECF derivatized amino-acids, with multiple “scans” from a Thermo Fisher Fusion Tribrid Mass Spectrometer. Each scan is the product of a small number of micro-scans. However, based on the spectrometer, and the lack of chromatography, it would not be unreasonable to expect that each scan is essentially a “replicate” of the other scans, so comparing one to any other is reasonable.</p>
+<p>I’m going to load up the data, and plot two scans in “raw” space. The data are already log10 transformed, so we will “untransform” it back to “raw” first before plotting it.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/joshuaulrich/microbenchmark/'>microbenchmark</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rstudio.github.io/profvis/'>profvis</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
-<span class='va'>n_point</span> <span class='op'>&lt;-</span> <span class='fl'>1e5</span>
-<span class='va'>to_normalize</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n_point</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, <span class='va'>n_point</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>scan_data</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span><span class='op'>(</span><span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"mass_spec_example_data.rds"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>raw_data</span> <span class='op'>=</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_dfc</a></span><span class='op'>(</span><span class='va'>scan_data</span>, <span class='op'>~</span> <span class='fl'>10</span><span class='op'>^</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='va'>normalization</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, normalization <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>raw_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>scan174</span> <span class='op'>&lt;=</span> <span class='fl'>1e7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>scan174</span>, y <span class='op'>=</span> <span class='va'>scan175</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_fixed.html'>coord_equal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='st'>"Scan-Scan Intensities, Raw Values"</span><span class='op'>)</span>
 </code></pre>
 </div>
+<p><img src="proportional-error-in-mass-spectrometry_files/figure-html5/load_data-1.png" width="624" /></p>
 </div>
-<p>For each <code>group</code> in <code>to_normalize</code>, we want to apply the normalization factor in <code>normalization</code>. In this case, I’m going to do a simple subtraction.</p>
-<h2 id="match-them">Match Them!</h2>
-<p>My initial implementation was to iterate over the groups, and use <code>%in%</code> to <code>match</code> each <code>group</code> from the normalization factors and the data to be normalized, and modify in place. <strong>Don’t do this!!</strong> It was the slowest method I’ve used in my real package code!</p>
+<p>As you can see here, the points <em>really</em> start to diverge as they cross the line at 2.5 x 10^6.</p>
+<p>Now lets plot the log10 transformed values.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>match_normalization</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>normalize_data</span>, <span class='va'>normalization_factors</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='va'>use_groups</span> <span class='op'>&lt;-</span> <span class='va'>normalization_factors</span><span class='op'>$</span><span class='va'>group</span>
-  
-  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>igroup</span> <span class='kw'>in</span> <span class='va'>use_groups</span><span class='op'>)</span> <span class='op'>{</span>
-    <span class='va'>normalize_data</span><span class='op'>[</span><span class='va'>normalize_data</span><span class='op'>$</span><span class='va'>group</span> <span class='op'>%in%</span> <span class='va'>igroup</span>, <span class='st'>"value"</span><span class='op'>]</span> <span class='op'>&lt;-</span> 
-      <span class='va'>normalize_data</span><span class='op'>[</span><span class='va'>normalize_data</span><span class='op'>$</span><span class='va'>group</span> <span class='op'>%in%</span> <span class='va'>igroup</span>, <span class='st'>"value"</span><span class='op'>]</span> <span class='op'>-</span> <span class='va'>normalization_factors</span><span class='op'>[</span><span class='va'>normalization_factors</span><span class='op'>$</span><span class='va'>group</span> <span class='op'>%in%</span> <span class='va'>igroup</span>, <span class='st'>"normalization"</span><span class='op'>]</span>
-  <span class='op'>}</span>
-  <span class='va'>normalize_data</span>
-<span class='op'>}</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>scan_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>scan174</span> <span class='op'>&lt;=</span> <span class='fl'>1e7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>scan174</span>, y <span class='op'>=</span> <span class='va'>scan175</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_fixed.html'>coord_equal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='st'>"Scan-Scan Intensities, Log10 Values"</span><span class='op'>)</span>
 </code></pre>
 </div>
+<p><img src="proportional-error-in-mass-spectrometry_files/figure-html5/plot_log-1.png" width="624" /></p>
 </div>
+<p>And now everything is coming to a point as the intensity increases.</p>
+<p>If you’ve worked with microarray or RNASeq data, this is also commonly seen in those data.</p>
+<p>To show the presence of the proportional error more generally, we can calculate the mean and variance of each point across the scans, and plot those. To make sure we are getting “good” representations of the data, we will only use points that were present in at least 20 scans.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>micro_results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html'>microbenchmark</a></span><span class='op'>(</span><span class='fu'>match_normalization</span><span class='op'>(</span><span class='va'>to_normalize</span>, <span class='va'>normalization</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>micro_results</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>point_mean</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowMeans</a></span><span class='op'>(</span><span class='va'>raw_data</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>point_sd</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>raw_data</span>, <span class='fl'>1</span>, <span class='va'>sd</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>n_present</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>raw_data</span>, <span class='fl'>1</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>}</span><span class='op'>)</span>
+
+<span class='va'>mean_sd</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>mean <span class='op'>=</span> <span class='va'>point_mean</span>,
+                     sd <span class='op'>=</span> <span class='va'>point_sd</span>,
+                     n <span class='op'>=</span> <span class='va'>n_present</span><span class='op'>)</span>
+<span class='va'>mean_sd</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;=</span> <span class='fl'>20</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mean</span>, y <span class='op'>=</span> <span class='va'>sd</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='st'>"Standard Deviation vs Mean"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 44%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">expr</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">lq</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">uq</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">neval</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">match_normalization(to_normalize, normalization)</td>
-<td style="text-align: right;">33.52854</td>
-<td style="text-align: right;">35.79094</td>
-<td style="text-align: right;">36.64787</td>
-<td style="text-align: right;">36.27017</td>
-<td style="text-align: right;">36.78996</td>
-<td style="text-align: right;">65.96424</td>
-<td style="text-align: right;">100</td>
-</tr>
-</tbody>
-</table>
+<p><img src="proportional-error-in-mass-spectrometry_files/figure-html5/calculate_mean_sd-1.png" width="624" /></p>
 </div>
-<p>Not bad for the test data. But can we do better?</p>
-<h2 id="split-them">Split Them!</h2>
-<p>My next thought was to split them by their <code>group</code>s, and then iterate again over the groups using <code>purrr::map</code>, and then unlist them.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>split_normalization</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>normalize_data</span>, <span class='va'>normalization_factors</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='va'>split_norm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>normalization_factors</span><span class='op'>$</span><span class='va'>normalization</span>, <span class='va'>normalization_factors</span><span class='op'>$</span><span class='va'>group</span><span class='op'>)</span>
-  
-  <span class='va'>split_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>normalize_data</span>, <span class='va'>normalize_data</span><span class='op'>$</span><span class='va'>group</span><span class='op'>)</span>
-  
-  <span class='va'>out_data</span> <span class='op'>&lt;-</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>map2</a></span><span class='op'>(</span><span class='va'>split_data</span>, <span class='va'>split_norm</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span><span class='op'>)</span><span class='op'>{</span>
-    <span class='va'>.x</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>&lt;-</span> <span class='va'>.x</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>-</span> <span class='va'>.y</span>
-    <span class='va'>.x</span>
-  <span class='op'>}</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>, <span class='va'>out_data</span><span class='op'>)</span>
-<span class='op'>}</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>micro_results2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html'>microbenchmark</a></span><span class='op'>(</span><span class='fu'>match_normalization</span><span class='op'>(</span><span class='va'>to_normalize</span>, <span class='va'>normalization</span><span class='op'>)</span>,
-               <span class='fu'>split_normalization</span><span class='op'>(</span><span class='va'>to_normalize</span>, <span class='va'>normalization</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>micro_results2</span><span class='op'>)</span>
-</code></pre>
-</div>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 44%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 9%" />
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">expr</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">lq</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">uq</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">neval</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">match_normalization(to_normalize, normalization)</td>
-<td style="text-align: right;">33.71692</td>
-<td style="text-align: right;">41.09938</td>
-<td style="text-align: right;">43.17703</td>
-<td style="text-align: right;">42.23761</td>
-<td style="text-align: right;">43.82695</td>
-<td style="text-align: right;">91.57123</td>
-<td style="text-align: right;">100</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">split_normalization(to_normalize, normalization)</td>
-<td style="text-align: right;">77.33925</td>
-<td style="text-align: right;">85.10808</td>
-<td style="text-align: right;">91.23737</td>
-<td style="text-align: right;">91.13441</td>
-<td style="text-align: right;">94.35732</td>
-<td style="text-align: right;">161.79138</td>
-<td style="text-align: right;">100</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="join-them">Join Them!</h2>
-<p>My final thought was to join the two data.frame’s together using <code>dplyr</code>, and then they are automatically matched up.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>join_normalization</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>normalize_data</span>, <span class='va'>normalization_factors</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='va'>normalize_data</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join</a></span><span class='op'>(</span><span class='va'>normalize_data</span>, <span class='va'>normalization_factors</span>,
-                                      by <span class='op'>=</span> <span class='st'>"group"</span><span class='op'>)</span>
-  
-  <span class='va'>normalize_data</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>&lt;-</span> <span class='va'>normalize_data</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>-</span> <span class='va'>normalize_data</span><span class='op'>$</span><span class='va'>normalization</span>
-  <span class='va'>normalize_data</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"value"</span>, <span class='st'>"group"</span><span class='op'>)</span><span class='op'>]</span>
-<span class='op'>}</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>micro_results3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html'>microbenchmark</a></span><span class='op'>(</span><span class='fu'>match_normalization</span><span class='op'>(</span><span class='va'>to_normalize</span>, <span class='va'>normalization</span><span class='op'>)</span>,
-               <span class='fu'>split_normalization</span><span class='op'>(</span><span class='va'>to_normalize</span>, <span class='va'>normalization</span><span class='op'>)</span>,
-               <span class='fu'>join_normalization</span><span class='op'>(</span><span class='va'>to_normalize</span>, <span class='va'>normalization</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>micro_results3</span><span class='op'>)</span>
-</code></pre>
-</div>
-<table>
-<colgroup>
-<col style="width: 43%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">expr</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">lq</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">uq</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">neval</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">match_normalization(to_normalize, normalization)</td>
-<td style="text-align: right;">33.974007</td>
-<td style="text-align: right;">41.813316</td>
-<td style="text-align: right;">45.47936</td>
-<td style="text-align: right;">43.089628</td>
-<td style="text-align: right;">46.33666</td>
-<td style="text-align: right;">104.7553</td>
-<td style="text-align: right;">100</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">split_normalization(to_normalize, normalization)</td>
-<td style="text-align: right;">76.452060</td>
-<td style="text-align: right;">85.275248</td>
-<td style="text-align: right;">90.35035</td>
-<td style="text-align: right;">88.315268</td>
-<td style="text-align: right;">92.88813</td>
-<td style="text-align: right;">152.2833</td>
-<td style="text-align: right;">100</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">join_normalization(to_normalize, normalization)</td>
-<td style="text-align: right;">7.743028</td>
-<td style="text-align: right;">8.386193</td>
-<td style="text-align: right;">13.59934</td>
-<td style="text-align: right;">8.650142</td>
-<td style="text-align: right;">14.31905</td>
-<td style="text-align: right;">292.2638</td>
-<td style="text-align: right;">100</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="conclusions">Conclusions</h2>
-<p>So on my computer, the <code>split</code> and <code>match</code> implementations are mostly comparable, although on my motivating real world example, I actually got a 3X speedup by using the <code>split</code> method. That may be because of issues related to <code>DataFrame</code> and matching elements within that structure. The <code>join</code> method is 10-14X faster than the others, which is what I’ve seen in my motivating work. I also think it makes the code easier to read and reason over, because you can see what is being subtracted from what directly in the code.</p>
+<p>There you have it, the standard deviation is increasing with the mean, and doing so in two different ways, one increasing slowly, and one increasing quickly. Either of these are not good. Whether increasing slowly or quickly, the point is that the error / variance / standard deviation is somehow dependent on the mean, which most standard statistical methods <em>do not</em> handle well. This actually drove the whole development of using the negative-binomial distribution in RNASeq!</p>
+<h2 id="why">Why??</h2>
+<p>Why does this happen? Try this thought experiment:</p>
+<ul>
+<li>I take 5 people in a room, and ask you to count how many people are in the room in 60 seconds and give me an answer.</li>
+<li>I ask you to do this 20 times.</li>
+<li>Your answer should be 5 each time, right?</li>
+<li>Now I put 10 people in the room, and ask again how many are there. And ask multiple times.</li>
+<li>Now 20 people in the same size room.</li>
+<li>And then 30 people …</li>
+<li>And then 40 people …</li>
+<li>And so on.</li>
+</ul>
+<p>If you think about it, given an constantly sized room, it will get harder and harder to count the people in it as their number increases, and with repeated counting, your estimates are likely to have more and more variance or a higher standard deviation as the number of people goes up. Thus the “error” is proportional or depends on the actual number of things you are estimating, much like the mass spec data above.</p>
+<p>In DNA microarrays and RNA-seq, the technology was measuring photons. The higher the number of photons, the more difficult it is to be sure how many there are. And that gets translated to any downstream quantity based on the number of photons.</p>
+<p>In Fourier-transform mass spectrometry, the instrument is still trying to quantify “how many” of each ion there is, and the more ions, the more difficult it is to quantify them. And we end up with proportional error.</p>
+<p>I think in any technology that is trying to “count” how many of something there is within a finite space, these properties will manifest themselves. You just have to know how to look.</p>
+<h2 id="solution">Solution</h2>
+<p>In the short term, transform your data using log’s. In the long term, I think we need more biostatisticians working with more mass-spectrometry and NMR data to determine what the error structure is for more instruments and analytical measurement types.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-kareem2021" class="csl-entry" role="doc-biblioentry">
+Carr, Kareem. n.d. <a href="https://twitter.com/kareem_carr/status/1380159451345346569?s=20">https://twitter.com/kareem_carr/status/1380159451345346569?s=20</a>.
+</div>
+<div id="ref-flight2021" class="csl-entry" role="doc-biblioentry">
+Flight, Robert M. n.d. <a href="https://twitter.com/rmflight/status/1380161512837410835?s=20">https://twitter.com/rmflight/status/1380161512837410835?s=20</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Split%20-%20Unsplit%20Anti-Pattern&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2018-07-17-split-unsplit-anti-pattern%2F">
+      <a href="https://twitter.com/share?text=Proportional%20Error%20in%20Mass%20Spectrometry&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-04-09-proportional-error-in-mass-spectrometry%2F">
         <i class="fab fa-twitter"></i>
       </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2018-07-17-split-unsplit-anti-pattern%2F&amp;title=Split%20-%20Unsplit%20Anti-Pattern">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-04-09-proportional-error-in-mass-spectrometry%2F&amp;title=Proportional%20Error%20in%20Mass%20Spectrometry">
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2018-07-17-split-unsplit-anti-pattern%2F&amp;description=Split%20-%20Unsplit%20Anti-Pattern">
+      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-04-09-proportional-error-in-mass-spectrometry%2F&amp;description=Proportional%20Error%20in%20Mass%20Spectrometry">
         <i class="fab fa-pinterest"></i>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2018-07-17-split-unsplit-anti-pattern%2F">
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-04-09-proportional-error-in-mass-spectrometry%2F">
         <i class="fab fa-facebook"></i>
       </a>
     </span>
@@ -2824,19 +2685,21 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+  <h3 id="references">References</h3>
+  <div id="references-listing"></div>
   <h3 id="updates-and-corrections">Corrections</h3>
   <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rmflight/researchBlog_distill/issues/new">create an issue</a> on the source repository.</p>
   <h3 id="reuse">Reuse</h3>
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2018, July 17). Deciphering Life: One Bit at a Time: Split - Unsplit Anti-Pattern. Retrieved from https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/</pre>
+  <pre class="citation-appendix short">Flight (2021, April 9). Deciphering Life: One Bit at a Time: Proportional Error in Mass Spectrometry. Retrieved from https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/</pre>
   <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2018split,
+  <pre class="citation-appendix long">@misc{flight2021proportional,
   author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Split - Unsplit Anti-Pattern},
-  url = {https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/},
-  year = {2018}
+  title = {Deciphering Life: One Bit at a Time: Proportional Error in Mass Spectrometry},
+  url = {https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/},
+  year = {2021}
 }</pre>
 </div>
 <!--/radix_placeholder_appendices-->
