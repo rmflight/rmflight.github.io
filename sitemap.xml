@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://rmflight.github.io/about.html</loc>
-    <lastmod>2021-02-16T21:58:34-05:00</lastmod>
+    <lastmod>2021-04-09T15:31:06-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/</loc>
@@ -11,6 +11,10 @@
   <url>
     <loc>https://rmflight.github.io/random_code_snippets.html</loc>
     <lastmod>2021-03-26T09:54:02-04:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/</loc>
+    <lastmod>2021-05-02T21:10:33-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/</loc>

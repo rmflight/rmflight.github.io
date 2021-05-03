@@ -7,7 +7,20 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 09 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 May 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>My Geographic Introduction</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction</link>
+      <description>Adapting Piping Hot Data's Geographic Introduction animation for myself.</description>
+      <category>maps</category>
+      <category>graphing</category>
+      <category>visualization</category>
+      <category>animation</category>
+      <guid>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction</guid>
+      <pubDate>Sun, 02 May 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/animating-a-geographic-introduction_files/figure-html5/get_world_data_trim-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Proportional Error in Mass Spectrometry</title>
       <dc:creator>Robert M Flight</dc:creator>
