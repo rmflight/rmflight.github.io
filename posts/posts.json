@@ -1,5 +1,26 @@
 [
   {
+    "path": "posts/2021-07-22-keep-figures-in-a-word-document/",
+    "title": "Keeping Figures in an Rmd -- Word Document",
+    "description": "How to make your rmarkdown to word conversion also generate a directory of figures.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2021-07-22",
+    "categories": [
+      "random-code-snippets",
+      "reproducibility",
+      "rmarkdown"
+    ],
+    "contents": "\nI’ve been working with a lot of collaborators who expect Word documents lately. I don’t really like it, but it makes it a lot easier for them to edit and work with things back and forth. So I’ve really been working on generating nice output in the Word document.\nRecently, someone brought up collecting the figures for a manuscript for submission. For those in the know, when you submit a manuscript, you often submit the text with or without figures embedded, and then you also submit “high” resolution figure files separately (yes it’s annoying, but that’s the way it is for many submission systems). Now, you could plot twice in each chunk, but thats freaking annoying. Ideally, Rmarkdown or knitr should do all the work for us. And thanks to the R Markdown Cookbook (Xie 2021), there is a simple way to do this.\nIn the yaml preamble, simply set the parameter: keep_md: true, like this:\noutput:\n  word_document:\n    keep_md: true\nThis means the markdown intermediate is kept, as well as the directory of figures. The figures will be named with the name of the chunk, so you will want to name your chunks well to make it easy to find the figures.\nYou can also control where your figures get written to, as well as the default figure size, output type, and resolution.\nThis chunk sets the directory (path) the dpi to 300, to use cairo PNG output, the figure width to 8 in, height to 5 in. And then creates the directory (which I’m sure knitr does, but this is for my own sanity).\n# the trailing slash is important!\nfig_dir = here::here(\"doc\", \"figure_directory/\") \nknitr::opts_chunk$set(echo = FALSE, warning = FALSE, dpi = 300,\n                      dev.args = list(png = list(type = \"cairo\")),\n                      fig.width = 8, fig.height = 5,\n                      fig.path = fig_dir)\nif (!dir.exists(fig_dir)) {\n  dir.create(fig_dir)\n}\n\n\n\nXie, C; Riederer, Y; Dervieux. 2021. “R Markdown Cookbook.” https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html.\n\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-07-22T21:58:12-04:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2021-05-02-animating-a-geographic-introduction/",
     "title": "My Geographic Introduction",
     "description": "Adapting Piping Hot Data's Geographic Introduction animation for myself.",

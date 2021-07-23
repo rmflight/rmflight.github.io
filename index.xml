@@ -7,7 +7,18 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 02 May 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jul 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Keeping Figures in an Rmd -- Word Document</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document</link>
+      <description>How to make your rmarkdown to word conversion also generate a directory of figures.</description>
+      <category>random-code-snippets</category>
+      <category>reproducibility</category>
+      <category>rmarkdown</category>
+      <guid>https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document</guid>
+      <pubDate>Thu, 22 Jul 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>My Geographic Introduction</title>
       <dc:creator>Robert M Flight</dc:creator>
