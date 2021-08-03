@@ -89,53 +89,59 @@ code span.wa { color: #da4453; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Keeping Figures in an Rmd -- Word Document</title>
+<title>Deciphering Life: One Bit at a Time: Coloring Dendrogram Edges with ggraph</title>
 
-<meta property="description" itemprop="description" content="How to make your rmarkdown to word conversion also generate a directory of figures."/>
+<meta property="description" itemprop="description" content="Here is how I got edges colored in a dendrogram with ggraph. Use &quot;node.&quot; in front of the node data column you want."/>
 
-<link rel="canonical" href="https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/"/>
+<link rel="canonical" href="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2021-07-22"/>
-<meta property="article:created" itemprop="dateCreated" content="2021-07-22"/>
+<meta property="article:published" itemprop="datePublished" content="2021-08-03"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-08-03"/>
 <meta name="article:author" content="Robert M Flight"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Keeping Figures in an Rmd -- Word Document"/>
+<meta property="og:title" content="Deciphering Life: One Bit at a Time: Coloring Dendrogram Edges with ggraph"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="How to make your rmarkdown to word conversion also generate a directory of figures."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/"/>
+<meta property="og:description" content="Here is how I got edges colored in a dendrogram with ggraph. Use &quot;node.&quot; in front of the node data column you want."/>
+<meta property="og:url" content="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/"/>
+<meta property="og:image" content="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_dendrogram-1.png"/>
+<meta property="og:image:width" content="1248"/>
+<meta property="og:image:height" content="768"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Keeping Figures in an Rmd -- Word Document"/>
-<meta property="twitter:description" content="How to make your rmarkdown to word conversion also generate a directory of figures."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/"/>
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Coloring Dendrogram Edges with ggraph"/>
+<meta property="twitter:description" content="Here is how I got edges colored in a dendrogram with ggraph. Use &quot;node.&quot; in front of the node data column you want."/>
+<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/"/>
+<meta property="twitter:image" content="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_dendrogram-1.png"/>
+<meta property="twitter:image:width" content="1248"/>
+<meta property="twitter:image:height" content="768"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Keeping Figures in an Rmd -- Word Document"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/"/>
+<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Coloring Dendrogram Edges with ggraph"/>
+<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2021/07/22"/>
-<meta name="citation_publication_date" content="2021/07/22"/>
+<meta name="citation_online_date" content="2021/08/03"/>
+<meta name="citation_publication_date" content="2021/08/03"/>
 <meta name="citation_author" content="Robert M Flight"/>
 <!--/radix_placeholder_meta_tags-->
   
-  <meta name="citation_reference" content="citation_title=R markdown cookbook;citation_publication_date=2021;citation_author=C; Riederer Xie"/>
+  <meta name="citation_reference" content="citation_title=Edges;citation_publication_date=2021;citation_author=Thomas Lin Pederson"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Keeping Figures in an Rmd -- Word Document"]},{"type":"character","attributes":{},"value":["How to make your rmarkdown to word conversion also generate a directory of figures."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["07-22-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["random-code-snippets","reproducibility","rmarkdown"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Coloring Dendrogram Edges with ggraph"]},{"type":"character","attributes":{},"value":["Here is how I got edges colored in a dendrogram with ggraph. Use \"node.\" in front of the node data column you want."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["08-03-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["random-code-snippets","visualization","graphing","dendrogram"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["keep-figures-in-a-word-document_files/anchor-4.2.2/anchor.min.js","keep-figures-in-a-word-document_files/bowser-1.9.3/bowser.min.js","keep-figures-in-a-word-document_files/distill-2.2.21/template.v2.js","keep-figures-in-a-word-document_files/header-attrs-2.9/header-attrs.js","keep-figures-in-a-word-document_files/jquery-1.11.3/jquery.min.js","keep-figures-in-a-word-document_files/popper-2.6.0/popper.min.js","keep-figures-in-a-word-document_files/tippy-6.2.7/tippy-bundle.umd.min.js","keep-figures-in-a-word-document_files/tippy-6.2.7/tippy-light-border.css","keep-figures-in-a-word-document_files/tippy-6.2.7/tippy.css","keep-figures-in-a-word-document_files/tippy-6.2.7/tippy.umd.min.js","keep-figures-in-a-word-document_files/webcomponents-2.0.0/webcomponents.js","refs.bib"]}
+  {"type":"character","attributes":{},"value":["coloring-dendrogram-edges-with-ggraph_files/anchor-4.2.2/anchor.min.js","coloring-dendrogram-edges-with-ggraph_files/bowser-1.9.3/bowser.min.js","coloring-dendrogram-edges-with-ggraph_files/distill-2.2.21/template.v2.js","coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_class-1.png","coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_dendrogram-1.png","coloring-dendrogram-edges-with-ggraph_files/figure-html5/show_error-1.png","coloring-dendrogram-edges-with-ggraph_files/header-attrs-2.9/header-attrs.js","coloring-dendrogram-edges-with-ggraph_files/jquery-1.11.3/jquery.min.js","coloring-dendrogram-edges-with-ggraph_files/popper-2.6.0/popper.min.js","coloring-dendrogram-edges-with-ggraph_files/tippy-6.2.7/tippy-bundle.umd.min.js","coloring-dendrogram-edges-with-ggraph_files/tippy-6.2.7/tippy-light-border.css","coloring-dendrogram-edges-with-ggraph_files/tippy-6.2.7/tippy.css","coloring-dendrogram-edges-with-ggraph_files/tippy-6.2.7/tippy.umd.min.js","coloring-dendrogram-edges-with-ggraph_files/webcomponents-2.0.0/webcomponents.js","refs.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2499,7 +2505,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Keeping Figures in an Rmd -- Word Document","description":"How to make your rmarkdown to word conversion also generate a directory of figures.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-07-22T00:00:00.000-04:00","citationText":"Flight, 2021"}
+{"title":"Coloring Dendrogram Edges with ggraph","description":"Here is how I got edges colored in a dendrogram with ggraph. Use \"node.\" in front of the node data column you want.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-08-03T00:00:00.000-04:00","citationText":"Flight, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2529,47 +2535,113 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Keeping Figures in an Rmd – Word Document</h1>
+<h1>Coloring Dendrogram Edges with ggraph</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
   <a href="../../index.html#category:random-code-snippets" class="dt-tag">random-code-snippets</a>
-  <a href="../../index.html#category:reproducibility" class="dt-tag">reproducibility</a>
-  <a href="../../index.html#category:rmarkdown" class="dt-tag">rmarkdown</a>
+  <a href="../../index.html#category:visualization" class="dt-tag">visualization</a>
+  <a href="../../index.html#category:graphing" class="dt-tag">graphing</a>
+  <a href="../../index.html#category:dendrogram" class="dt-tag">dendrogram</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>How to make your rmarkdown to word conversion also generate a directory of figures.</p></p>
+<p><p>Here is how I got edges colored in a dendrogram with ggraph. Use “node.” in front of the node data column you want.</p></p>
 </div>
 
 <div class="d-byline">
   Robert M Flight true 
   
-<br/>07-22-2021
+<br/>08-03-2021
 </div>
 
 <div class="d-article">
-<p>I’ve been working with a lot of collaborators who expect Word documents lately. I don’t really like it, but it makes it a lot easier for them to edit and work with things back and forth. So I’ve really been working on generating nice output in the Word document.</p>
-<p>Recently, someone brought up collecting the figures for a manuscript for submission. For those in the know, when you submit a manuscript, you often submit the text with or without figures embedded, and then you also submit “high” resolution figure files separately (yes it’s annoying, but that’s the way it is for many submission systems). Now, you could plot twice in each chunk, but thats freaking annoying. Ideally, Rmarkdown or knitr should do all the work for us. And thanks to the R Markdown Cookbook <span class="citation" data-cites="rmarkdowncookbook">(<a href="#ref-rmarkdowncookbook" role="doc-biblioref">Xie 2021</a>)</span>, there is a simple way to do this.</p>
-<p>In the yaml preamble, simply set the parameter: <code>keep_md: true</code>, like this:</p>
-<pre><code>output:
-  word_document:
-    keep_md: true</code></pre>
-<p>This means the markdown intermediate is kept, as well as the directory of figures. The figures will be named with the name of the chunk, so you will want to name your chunks well to make it easy to find the figures.</p>
-<p>You can also control <strong>where</strong> your figures get written to, as well as the default figure size, output type, and resolution.</p>
-<p>This chunk sets the directory (path) the dpi to 300, to use cairo PNG output, the figure width to 8 in, height to 5 in. And then creates the directory (which I’m sure knitr does, but this is for my own sanity).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the trailing slash is important!</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fig_dir <span class="ot">=</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;doc&quot;</span>, <span class="st">&quot;figure_directory/&quot;</span>) </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">FALSE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">dpi =</span> <span class="dv">300</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dev.args =</span> <span class="fu">list</span>(<span class="at">png =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;cairo&quot;</span>)),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.width =</span> <span class="dv">8</span>, <span class="at">fig.height =</span> <span class="dv">5</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.path =</span> fig_dir)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(fig_dir)) {</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(fig_dir)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Edit: I rolled all of this functionality into a little package <a href="https://github.com/rmflight/documentNumbering"><code>documentNumbering</code></a>.</p>
+<p>I wanted to color the dendrogram edges according to their class in ggraph, and I was getting stuck because of something that isn’t explicitly mentioned in the documentation, but is implied. <strong>You must use “node.” to access the data from the Node Data in the call to <code>aes(...)</code></strong>.</p>
+<p>Lets set it up. We will borrow from the “Edges” vignette in the ggraph package <span class="citation" data-cites="ggraphEdgesVignette">(<a href="#ref-ggraphEdgesVignette" role="doc-biblioref">Pederson 2021</a>)</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggraph.data-imaginist.com'>ggraph</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidygraph.data-imaginist.com'>tidygraph</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://purrr.tidyverse.org'>purrr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rlang.r-lib.org'>rlang</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://ggraph.data-imaginist.com/reference/theme_graph.html'>set_graph_style</a></span><span class='op'>(</span>plot_margin <span class='op'>=</span> <span class='fu'>margin</span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>hierarchy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidygraph.data-imaginist.com/reference/tbl_graph.html'>as_tbl_graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/hclust.html'>hclust</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/dist.html'>dist</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Class <span class='op'>=</span> <span class='fu'><a href='https://tidygraph.data-imaginist.com/reference/map_bfs_back.html'>map_bfs_back_chr</a></span><span class='op'>(</span><span class='fu'><a href='https://tidygraph.data-imaginist.com/reference/node_types.html'>node_is_root</a></span><span class='op'>(</span><span class='op'>)</span>, .f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>node</span>, <span class='va'>path</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='kw'>if</span> <span class='op'>(</span><span class='va'>leaf</span><span class='op'>[</span><span class='va'>node</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>{</span>
+      <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>label</span><span class='op'>[</span><span class='va'>node</span><span class='op'>]</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+    <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span>
+      <span class='va'>species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>$</span><span class='va'>result</span><span class='op'>)</span><span class='op'>)</span>
+      <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>species</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+        <span class='va'>species</span>
+      <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span>
+        <span class='cn'>NA_character_</span>
+      <span class='op'>}</span>
+    <span class='op'>}</span>
+  <span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>hierarchy</span>
+</code></pre>
+</div>
+<pre><code># A tbl_graph: 299 nodes and 298 edges
+#
+# A rooted tree
+#
+# Node Data: 299 × 5 (active)
+  height leaf  label members Class    
+   &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    
+1  0     TRUE  &quot;108&quot;       1 virginica
+2  0     TRUE  &quot;131&quot;       1 virginica
+3  0.265 FALSE &quot;&quot;          2 virginica
+4  0     TRUE  &quot;103&quot;       1 virginica
+5  0     TRUE  &quot;126&quot;       1 virginica
+6  0     TRUE  &quot;130&quot;       1 virginica
+# … with 293 more rows
+#
+# Edge Data: 298 × 2
+   from    to
+  &lt;int&gt; &lt;int&gt;
+1     3     1
+2     3     2
+3     7     5
+# … with 295 more rows</code></pre>
+</div>
+<p>And with this, we can create a dendrogram.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>hierarchy</span>, <span class='st'>"dendrogram"</span>, height <span class='op'>=</span> <span class='va'>height</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_elbow.html'>geom_edge_elbow</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_dendrogram-1.png" width="624" /></p>
+</div>
+<p>Nice! But what if we want the leaves colored by which “Class” they belong to?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>hierarchy</span>, <span class='st'>"dendrogram"</span>, height <span class='op'>=</span> <span class='va'>height</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_elbow.html'>geom_edge_elbow2</a></span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>node.Class</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_class-1.png" width="624" /></p>
+</div>
+<p>Note the differences in this function call compared to the previous:</p>
+<ol type="1">
+<li>Using <code>geom_edge_elbow2</code> instead of <code>geom_edge_elbow</code></li>
+<li>Using <code>node.Class</code>, not just <code>Class</code>.</li>
+</ol>
+<p>The second point is really important! When you look at the <code>hierarchy</code> object printed above, the <code>Class</code> bit is part of the <code>Node Data</code>, which gets identified by <code>ggraph</code> by the prefix “node.”</p>
+<p>If we don’t use <code>node.Class</code>, here is the error:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>hierarchy</span>, <span class='st'>"dendrogram"</span>, height <span class='op'>=</span> <span class='va'>height</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_elbow.html'>geom_edge_elbow2</a></span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>Class</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Error in FUN(X[[i]], ...): object &#39;Class&#39; not found</code></pre>
+<p><img src="coloring-dendrogram-edges-with-ggraph_files/figure-html5/show_error-1.png" width="624" /></p>
+</div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-rmarkdowncookbook" class="csl-entry" role="doc-biblioentry">
-Xie, C; Riederer, Y; Dervieux. 2021. <span>“R Markdown Cookbook.”</span> <a href="https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html">https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html</a>.
+<div id="ref-ggraphEdgesVignette" class="csl-entry" role="doc-biblioentry">
+Pederson, Thomas Lin. 2021. <span>“Edges.”</span> <a href="https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html">https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html</a>.
 </div>
 </div>
 <!--radix_placeholder_article_footer-->
@@ -2577,16 +2649,16 @@ Xie, C; Riederer, Y; Dervieux. 2021. <span>“R Markdown Cookbook.”</span> <a 
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Keeping%20Figures%20in%20an%20Rmd%20--%20Word%20Document&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-07-22-keep-figures-in-a-word-document%2F">
+      <a href="https://twitter.com/share?text=Coloring%20Dendrogram%20Edges%20with%20ggraph&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-03-coloring-dendrogram-edges-with-ggraph%2F">
         <i class="fab fa-twitter"></i>
       </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-07-22-keep-figures-in-a-word-document%2F&amp;title=Keeping%20Figures%20in%20an%20Rmd%20--%20Word%20Document">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-03-coloring-dendrogram-edges-with-ggraph%2F&amp;title=Coloring%20Dendrogram%20Edges%20with%20ggraph">
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-07-22-keep-figures-in-a-word-document%2F&amp;description=Keeping%20Figures%20in%20an%20Rmd%20--%20Word%20Document">
+      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-03-coloring-dendrogram-edges-with-ggraph%2F&amp;description=Coloring%20Dendrogram%20Edges%20with%20ggraph">
         <i class="fab fa-pinterest"></i>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-07-22-keep-figures-in-a-word-document%2F">
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-03-coloring-dendrogram-edges-with-ggraph%2F">
         <i class="fab fa-facebook"></i>
       </a>
     </span>
@@ -2611,12 +2683,12 @@ Xie, C; Riederer, Y; Dervieux. 2021. <span>“R Markdown Cookbook.”</span> <a 
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2021, July 22). Deciphering Life: One Bit at a Time: Keeping Figures in an Rmd -- Word Document. Retrieved from https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/</pre>
+  <pre class="citation-appendix short">Flight (2021, Aug. 3). Deciphering Life: One Bit at a Time: Coloring Dendrogram Edges with ggraph. Retrieved from https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/</pre>
   <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2021keeping,
+  <pre class="citation-appendix long">@misc{flight2021coloring,
   author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Keeping Figures in an Rmd -- Word Document},
-  url = {https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/},
+  title = {Deciphering Life: One Bit at a Time: Coloring Dendrogram Edges with ggraph},
+  url = {https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/},
   year = {2021}
 }</pre>
 </div>

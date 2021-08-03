@@ -1,5 +1,29 @@
 [
   {
+    "path": "posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/",
+    "title": "Coloring Dendrogram Edges with ggraph",
+    "description": "Here is how I got edges colored in a dendrogram with ggraph. Use \"node.\" in front of the node data column you want.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2021-08-03",
+    "categories": [
+      "random-code-snippets",
+      "visualization",
+      "graphing",
+      "dendrogram"
+    ],
+    "contents": "\nI wanted to color the dendrogram edges according to their class in ggraph, and I was getting stuck because of something that isn’t explicitly mentioned in the documentation, but is implied. You must use “node.” to access the data from the Node Data in the call to aes(...).\nLets set it up. We will borrow from the “Edges” vignette in the ggraph package (Pederson 2021).\n\n\nlibrary(ggraph)\nlibrary(tidygraph)\nlibrary(purrr)\nlibrary(rlang)\n\nset_graph_style(plot_margin = margin(1,1,1,1))\nhierarchy <- as_tbl_graph(hclust(dist(iris[, 1:4]))) %>% \n  mutate(Class = map_bfs_back_chr(node_is_root(), .f = function(node, path, ...) {\n    if (leaf[node]) {\n      as.character(iris$Species[as.integer(label[node])])\n    } else {\n      species <- unique(unlist(path$result))\n      if (length(species) == 1) {\n        species\n      } else {\n        NA_character_\n      }\n    }\n  }))\n\nhierarchy\n\n\n# A tbl_graph: 299 nodes and 298 edges\n#\n# A rooted tree\n#\n# Node Data: 299 × 5 (active)\n  height leaf  label members Class    \n   <dbl> <lgl> <chr>   <int> <chr>    \n1  0     TRUE  \"108\"       1 virginica\n2  0     TRUE  \"131\"       1 virginica\n3  0.265 FALSE \"\"          2 virginica\n4  0     TRUE  \"103\"       1 virginica\n5  0     TRUE  \"126\"       1 virginica\n6  0     TRUE  \"130\"       1 virginica\n# … with 293 more rows\n#\n# Edge Data: 298 × 2\n   from    to\n  <int> <int>\n1     3     1\n2     3     2\n3     7     5\n# … with 295 more rows\n\nAnd with this, we can create a dendrogram.\n\n\nggraph(hierarchy, \"dendrogram\", height = height) +\n  geom_edge_elbow()\n\n\n\n\nNice! But what if we want the leaves colored by which “Class” they belong to?\n\n\nggraph(hierarchy, \"dendrogram\", height = height) +\n  geom_edge_elbow2(aes(color = node.Class))\n\n\n\n\nNote the differences in this function call compared to the previous:\nUsing geom_edge_elbow2 instead of geom_edge_elbow\nUsing node.Class, not just Class.\nThe second point is really important! When you look at the hierarchy object printed above, the Class bit is part of the Node Data, which gets identified by ggraph by the prefix “node.”\nIf we don’t use node.Class, here is the error:\n\n\nggraph(hierarchy, \"dendrogram\", height = height) +\n  geom_edge_elbow2(aes(color = Class))\n\n\nError in FUN(X[[i]], ...): object 'Class' not found\n\n\n\n\n\nPederson, Thomas Lin. 2021. “Edges.” https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html.\n\n\n\n\n",
+    "preview": "posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/coloring-dendrogram-edges-with-ggraph_files/figure-html5/plot_dendrogram-1.png",
+    "last_modified": "2021-08-03T11:04:22-04:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
     "path": "posts/2021-07-22-keep-figures-in-a-word-document/",
     "title": "Keeping Figures in an Rmd -- Word Document",
     "description": "How to make your rmarkdown to word conversion also generate a directory of figures.",
@@ -15,9 +39,9 @@
       "reproducibility",
       "rmarkdown"
     ],
-    "contents": "\nI’ve been working with a lot of collaborators who expect Word documents lately. I don’t really like it, but it makes it a lot easier for them to edit and work with things back and forth. So I’ve really been working on generating nice output in the Word document.\nRecently, someone brought up collecting the figures for a manuscript for submission. For those in the know, when you submit a manuscript, you often submit the text with or without figures embedded, and then you also submit “high” resolution figure files separately (yes it’s annoying, but that’s the way it is for many submission systems). Now, you could plot twice in each chunk, but thats freaking annoying. Ideally, Rmarkdown or knitr should do all the work for us. And thanks to the R Markdown Cookbook (Xie 2021), there is a simple way to do this.\nIn the yaml preamble, simply set the parameter: keep_md: true, like this:\noutput:\n  word_document:\n    keep_md: true\nThis means the markdown intermediate is kept, as well as the directory of figures. The figures will be named with the name of the chunk, so you will want to name your chunks well to make it easy to find the figures.\nYou can also control where your figures get written to, as well as the default figure size, output type, and resolution.\nThis chunk sets the directory (path) the dpi to 300, to use cairo PNG output, the figure width to 8 in, height to 5 in. And then creates the directory (which I’m sure knitr does, but this is for my own sanity).\n# the trailing slash is important!\nfig_dir = here::here(\"doc\", \"figure_directory/\") \nknitr::opts_chunk$set(echo = FALSE, warning = FALSE, dpi = 300,\n                      dev.args = list(png = list(type = \"cairo\")),\n                      fig.width = 8, fig.height = 5,\n                      fig.path = fig_dir)\nif (!dir.exists(fig_dir)) {\n  dir.create(fig_dir)\n}\n\n\n\nXie, C; Riederer, Y; Dervieux. 2021. “R Markdown Cookbook.” https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html.\n\n\n\n\n",
+    "contents": "\nI’ve been working with a lot of collaborators who expect Word documents lately. I don’t really like it, but it makes it a lot easier for them to edit and work with things back and forth. So I’ve really been working on generating nice output in the Word document.\nRecently, someone brought up collecting the figures for a manuscript for submission. For those in the know, when you submit a manuscript, you often submit the text with or without figures embedded, and then you also submit “high” resolution figure files separately (yes it’s annoying, but that’s the way it is for many submission systems). Now, you could plot twice in each chunk, but thats freaking annoying. Ideally, Rmarkdown or knitr should do all the work for us. And thanks to the R Markdown Cookbook (Xie 2021), there is a simple way to do this.\nIn the yaml preamble, simply set the parameter: keep_md: true, like this:\noutput:\n  word_document:\n    keep_md: true\nThis means the markdown intermediate is kept, as well as the directory of figures. The figures will be named with the name of the chunk, so you will want to name your chunks well to make it easy to find the figures.\nYou can also control where your figures get written to, as well as the default figure size, output type, and resolution.\nThis chunk sets the directory (path) the dpi to 300, to use cairo PNG output, the figure width to 8 in, height to 5 in. And then creates the directory (which I’m sure knitr does, but this is for my own sanity).\n# the trailing slash is important!\nfig_dir = here::here(\"doc\", \"figure_directory/\") \nknitr::opts_chunk$set(echo = FALSE, warning = FALSE, dpi = 300,\n                      dev.args = list(png = list(type = \"cairo\")),\n                      fig.width = 8, fig.height = 5,\n                      fig.path = fig_dir)\nif (!dir.exists(fig_dir)) {\n  dir.create(fig_dir)\n}\nEdit: I rolled all of this functionality into a little package documentNumbering.\n\n\n\nXie, C; Riederer, Y; Dervieux. 2021. “R Markdown Cookbook.” https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html.\n\n\n\n\n",
     "preview": {},
-    "last_modified": "2021-07-22T21:58:12-04:00",
+    "last_modified": "2021-08-03T10:38:36-04:00",
     "input_file": {}
   },
   {
