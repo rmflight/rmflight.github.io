@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -45,94 +46,96 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    background-color: #232629;
-    color: #7a7c7d;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #cfcfc2; background-color: #232629; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span { color: #cfcfc2; } /* Normal */
-code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-code span.an { color: #3f8058; } /* Annotation */
-code span.at { color: #2980b9; } /* Attribute */
-code span.bn { color: #f67400; } /* BaseN */
-code span.bu { color: #7f8c8d; } /* BuiltIn */
-code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #3daee9; } /* Char */
-code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-code span.co { color: #7a7c7d; } /* Comment */
-code span.cv { color: #7f8c8d; } /* CommentVar */
-code span.do { color: #a43340; } /* Documentation */
-code span.dt { color: #2980b9; } /* DataType */
-code span.dv { color: #f67400; } /* DecVal */
-code span.er { color: #da4453; text-decoration: underline; } /* Error */
-code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-code span.fl { color: #f67400; } /* Float */
-code span.fu { color: #8e44ad; } /* Function */
-code span.im { color: #27ae60; } /* Import */
-code span.in { color: #c45b00; } /* Information */
-code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-code span.op { color: #cfcfc2; } /* Operator */
-code span.ot { color: #27ae60; } /* Other */
-code span.pp { color: #27ae60; } /* Preprocessor */
-code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-code span.sc { color: #3daee9; } /* SpecialChar */
-code span.ss { color: #da4453; } /* SpecialString */
-code span.st { color: #f44f4f; } /* String */
-code span.va { color: #27aeae; } /* Variable */
-code span.vs { color: #da4453; } /* VerbatimString */
-code span.wa { color: #da4453; } /* Warning */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Criticizing a Publication, and Lying About It</title>
+<title>Deciphering Life: One Bit at a Time: Random Forest Classification Using Parsnip</title>
 
-<meta property="description" itemprop="description" content="Critics of our last publication claimed we didn&#39;t make our data available, which is an outright lie."/>
+<meta property="description" itemprop="description" content="How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework."/>
 
-<link rel="canonical" href="https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/"/>
+<link rel="canonical" href="https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2017-03-29"/>
-<meta property="article:created" itemprop="dateCreated" content="2017-03-29"/>
+<meta property="article:published" itemprop="datePublished" content="2021-08-30"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-08-30"/>
 <meta name="article:author" content="Robert M Flight"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Criticizing a Publication, and Lying About It"/>
+<meta property="og:title" content="Deciphering Life: One Bit at a Time: Random Forest Classification Using Parsnip"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Critics of our last publication claimed we didn&#39;t make our data available, which is an outright lie."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/"/>
+<meta property="og:description" content="How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework."/>
+<meta property="og:url" content="https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Criticizing a Publication, and Lying About It"/>
-<meta property="twitter:description" content="Critics of our last publication claimed we didn&#39;t make our data available, which is an outright lie."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/"/>
+<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Random Forest Classification Using Parsnip"/>
+<meta property="twitter:description" content="How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework."/>
+<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Criticizing a Publication, and Lying About It"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/"/>
+<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Random Forest Classification Using Parsnip"/>
+<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2017/03/29"/>
-<meta name="citation_publication_date" content="2017/03/29"/>
+<meta name="citation_online_date" content="2021/08/30"/>
+<meta name="citation_publication_date" content="2021/08/30"/>
 <meta name="citation_author" content="Robert M Flight"/>
 <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Tidymodels;citation_publication_date=2021"/>
+  <meta name="citation_reference" content="citation_title=Ranger &quot;classification&quot; mode still looks like &quot;probability&quot;;citation_publication_date=2021"/>
+  <meta name="citation_reference" content="citation_title=Random forest wiki page;citation_publication_date=2021"/>
+  <meta name="citation_reference" content="citation_title=Deciphering life: One bit at a time: Random forest vs PLS on random data;citation_publication_date=2015;citation_author=Robert M Flight"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","author","date","categories","description","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Criticizing a Publication, and Lying About It"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]}]}]},{"type":"character","attributes":{},"value":["2017-03-29"]},{"type":"character","attributes":{},"value":["publications","peer-review","zinc","academia"]},{"type":"character","attributes":{},"value":["Critics of our last publication claimed we didn't make our data available, which is an outright lie."]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","editor_options","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Random Forest Classification Using Parsnip"]},{"type":"character","attributes":{},"value":["How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["08-30-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["parsnip","tidymodels","machine-learning","random-forest","random-code-snippets"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["refs.bib"]}
+  {"type":"character","attributes":{},"value":["random-forest-classification-using-parsnip_files/anchor-4.2.2/anchor.min.js","random-forest-classification-using-parsnip_files/bowser-1.9.3/bowser.min.js","random-forest-classification-using-parsnip_files/distill-2.2.21/template.v2.js","random-forest-classification-using-parsnip_files/header-attrs-2.9/header-attrs.js","random-forest-classification-using-parsnip_files/jquery-1.11.3/jquery.min.js","random-forest-classification-using-parsnip_files/popper-2.6.0/popper.min.js","random-forest-classification-using-parsnip_files/tippy-6.2.7/tippy-bundle.umd.min.js","random-forest-classification-using-parsnip_files/tippy-6.2.7/tippy-light-border.css","random-forest-classification-using-parsnip_files/tippy-6.2.7/tippy.css","random-forest-classification-using-parsnip_files/tippy-6.2.7/tippy.umd.min.js","random-forest-classification-using-parsnip_files/webcomponents-2.0.0/webcomponents.js","refs.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2446,7 +2449,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.9/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2496,7 +2499,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Criticizing a Publication, and Lying About It","description":"Critics of our last publication claimed we didn't make our data available, which is an outright lie.","authors":[{"author":"Robert M Flight","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2017-03-29T00:00:00.000-03:00","citationText":"Flight, 2017"}
+{"title":"Random Forest Classification Using Parsnip","description":"How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-08-30T00:00:00.000-03:00","citationText":"Flight, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2526,92 +2529,197 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Criticizing a Publication, and Lying About It</h1>
+<h1>Random Forest Classification Using Parsnip</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../index.html#category:publications" class="dt-tag">publications</a>
-  <a href="../../index.html#category:peer-review" class="dt-tag">peer-review</a>
-  <a href="../../index.html#category:zinc" class="dt-tag">zinc</a>
-  <a href="../../index.html#category:academia" class="dt-tag">academia</a>
+  <a href="../../index.html#category:parsnip" class="dt-tag">parsnip</a>
+  <a href="../../index.html#category:tidymodels" class="dt-tag">tidymodels</a>
+  <a href="../../index.html#category:machine-learning" class="dt-tag">machine-learning</a>
+  <a href="../../index.html#category:random-forest" class="dt-tag">random-forest</a>
+  <a href="../../index.html#category:random-code-snippets" class="dt-tag">random-code-snippets</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Critics of our last publication claimed we didn’t make our data available, which is an outright lie.</p></p>
+<p><p>How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework.</p></p>
 </div>
 
 <div class="d-byline">
+  Robert M Flight true 
   
-  Robert M Flight
-  
-<br/>2017-03-29
+<br/>08-30-2021
 </div>
 
 <div class="d-article">
-<div class="d-contents d-contents-float">
-<nav class="l-text toc figcaption" id="TOC">
-<h3>Contents</h3>
-<ul>
-<li><a href="#tldr">TL;DR</a></li>
-<li><a href="#original-publication">Original Publication</a></li>
-<li><a href="#critique">Critique</a></li>
-<li><a href="#response">Response</a>
-<ul>
-<li><a href="#follow-up-paper-on-5-metals">Follow-Up Paper on 5 Metals</a></li>
-<li><a href="#critique-direct-response">Critique Direct Response</a></li>
-<li><a href="#open-results-and-code">Open Results and Code</a></li>
-</ul></li>
-<li><a href="#peer-review">Peer Review</a>
-<ul>
-<li><a href="#papers-discussed">Papers Discussed</a></li>
-</ul></li>
-</ul>
-</nav>
+<p>I’ve been working on a “machine learning” project, and in the process I’ve been learning to use the tidymodels framework <span class="citation" data-cites="tidymodelsSite">(<a href="#ref-tidymodelsSite" role="doc-biblioref"><span>“Tidymodels”</span> 2021</a>)</span>, which helps save you from leaking information from testing to training data, as well as creating workflows in a consistent way across methods.</p>
+<p>However, I got tripped up recently by one issue. When I’ve previously used Random Forests <span class="citation" data-cites="rfWiki">(<a href="#ref-rfWiki" role="doc-biblioref"><span>“Random Forest Wiki Page”</span> 2021</a>)</span>, I’ve found that for <strong>classification</strong> problems, the out-of-bag (OOB) error reported is a good proxy for the area-under-the-curve (AUC), or estimate of how good any other machine learning technique will do (see <span class="citation" data-cites="flight2015random">(<a href="#ref-flight2015random" role="doc-biblioref">Flight 2015</a>)</span> for an example using actual random data). Therefore, I like to put my data through a Random Forest algorithm and check the OOB error, and then maybe reach for a tuned boosted tree to squeeze every last bit of performance out.</p>
+<p>tidymodels default is to use a <code>probability</code> tree, even for classification problems. This isn’t normally a problem for most people, because you will have a train and test set, and estimate performance on the test set using AUC. However, it is a problem if you just want to see the OOB error from the random forest, because it is reported differently for probability vs classification.</p>
+<p>Lets run an example using the tidymodels <em>cell</em> data set.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cells</span>, package <span class='op'>=</span> <span class='st'>"modeldata"</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/imbs-hl/ranger'>ranger</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://tidymodels.tidymodels.org/reference/tidymodels_prefer.html'>tidymodels_prefer</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>cells</span><span class='op'>$</span><span class='va'>case</span> <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>cells</span>, min.node.size <span class='op'>=</span> <span class='fl'>10</span>, classification <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
 </div>
-<h2 id="tldr">TL;DR</h2>
-<p>Other researchers <a href="https://dx.doi/org/10.1002/prot.25024">directly criticized</a> a <a href="https://dx.doi.org/10.1002/prot.24834">recent publication of ours</a> in a “research article”. Although they raised valid points, they <strong>outright lied</strong> about the availability of our results. In addition, they did not provide access to their own results. We have published <a href="https://dx.doi.org/10.1002/prot.25257">new work</a> supporting our original results, and a direct rebuttal of their critique in a <a href="https://dx.doi.org/10.1002/prot.25263">perspective article</a>. The peer reviewers of their “research article” must have been asleep at the wheel to allow the major point, lack of access to our results, to stand.</p>
-<h2 id="original-publication">Original Publication</h2>
-<p>Back in the summer of 2015, I was second author on a publication (<a href="http://onlinelibrary.wiley.com/doi/10.1002/prot.24834/full">Yao et al., 2015</a>, hereafter YS2015) describing an automated method to characterize zinc ion coordination geometries (CGs). Applying our automated method to all zinc sites in the worldwide Protein Data Bank (wwPDB), we found <em>abberrant</em> zinc CGs that don’t fit the canonical CGs. We were pretty sure that these aberrant CGs are real, and they have always existed, but had not been previously characterized because methods assumed that only the <em>canonical</em> geometries should be observed in biological systems, and were excluding the <em>abberrant</em> ones because they didn’t have good methods to detect and characterize them.</p>
-<p>Also of note, the proteins with aberrant zinc geometries showed enrichment for different types of enzyme classifications than those with canonical zinc geometries.</p>
-<p>For this publication, we made <strong>all</strong> of our code and results available in a tarball that could be downloaded from our <a href="http://bioinformatics.cesb.uky.edu/bin/view/Main/SoftwareDevelopment#Metal_ion_coordination_analysis_software">website</a>. This data went up while the paper was in review, on Dec 7, 2015 (with a correction on Dec 15). Recently, we’ve also put a copy of the tarball on <a href="https://figshare.com/articles/Zn_metalloprotein_paper/4229333">FigShare</a>. Every draft of the publication, from initial submission through to accepted publication, included the link to the tarball on the website.</p>
-<h2 id="critique">Critique</h2>
-<p>Less than a year later, <a href="http://sci-hub.cc/doi/10.1002/prot.25024">Raczynska, Wlodawer, and Jaskolski</a> (RJW2016) published a <em>critique</em> of YS2015 as a “research article”. In their publication, they questioned the existence of the <em>abberrant</em> sites completely, based on the examination and remodeling of four aberrant structures highlighted in YS2015. To be fair, they did have some valid criticisms of the methods, and Sen Yao did a lot of work in our latest paper to address them.</p>
-<p>As part of the critique, however, they claimed that they could only evaluate the four structures listed in two figures <strong>because we didn’t provide all of our results</strong>. However, we had previously made our full results available as a tarball from our website. As you can see in the below figure, <strong>all</strong> of the results were really available in that tarball.</p>
-<p>&lt;img src = “/img/ys2017_figure1.png”, width = “600”&gt;</p>
-<p>In addition, although RWJ2016 went to all the trouble to actually remodel those four structures by going back to the original X-ray density, they <strong>didn’t make any of their models available</strong>.</p>
-<p>Finally, no one from RWJ2016 ever contacted our research group to see if the results might be available.</p>
-<h2 id="response">Response</h2>
-<h3 id="follow-up-paper-on-5-metals">Follow-Up Paper on 5 Metals</h3>
-<p>By the time the critiques appeared in RJW2016, Sen was already hard at work showing that the previously developed methods could be modified and then applied to other metal ion CGs, and that they also contained aberrant CGs (see <a href="https://dx.doi.org/10.1002/prot.25257">YS2017-1</a>).</p>
-<h3 id="critique-direct-response">Critique Direct Response</h3>
-<p>In addition to YS2017-1, we felt that the critique deserved separate response (<a href="https://doi.org/10.6084/m9.figshare.4754263.v1">YS2017-2</a>). To that end, we began drafting a response, wherein we pointed out some of the problems with RJW2016, the first being that we did indeed provide the <strong>full</strong> set of results from YS2015, and therefore it was possible to evaluate our full work. We also addressed each of their other criticisms of YS2015, in many cases going beyond the original criticism, and explaining how it was being addressed in YS2017-1.</p>
-<h3 id="open-results-and-code">Open Results and Code</h3>
-<p>A major part of the conclusions in YS2017-2 was also devoted to the idea that code and results in science need to be shared, highlighting the fact that RJW2016 <strong>did not share their models</strong> they used to try and discredit our work, lied about the fact that we did not share our own results, and pointing out some other projects in this research area that have shared well and others that have shared badly, and that the previous attitude of competition among research groups does not move science forward.</p>
-<h2 id="peer-review">Peer Review</h2>
-<p>Let’s just say that the <em>peer-review</em> of both of the papers was <strong>interesting</strong>. Both manuscripts had the same set of reviewers. YS2017-1, the five metal paper, had some rather rigorous peer review, and was definitely improved by the reviewer’s comments. YS2017-2, our perspective, in contrast, was attacked by one peer reviewer right from submission, and was questioned almost continually as to whether it should even be published. I am thankful that one reviewer saw the need for it to be published, and that the Editor ultimately decided that it should be published, and that we were able to rebut each of the reviewer’s criticisms.</p>
-<p>Finally, I really don’t know what happened in the peer review of RWJ2016. The first major claim was that our data wasn’t available, it should have taken a reviewer 10 minutes to verify and debunk that claim. I would have expected a much different critique from the authors had they actually examined our full data set. But, because of traditional closed peer review, that record is closed to us.</p>
-<p>Overall though, I’m very happy both of our publications are now out, and we can move on to new stages of our analyses. Looking forward to continuing to work with my co-authors to move the work forward.</p>
-<h3 id="papers-discussed">Papers Discussed</h3>
-<ul>
-<li>Original Zinc CGs: <a href="https://dx.doi.org/10.1002/prot.24834">Yao et al 2015</a></li>
-<li>Critique of Zinc CGs: Raczynska, Wlodawer &amp; Jaskolski 2016, <a href="https://dx.doi.org/10.1002/prot.25024">publisher</a>, <a href="https://sci-hub.cc/10.1002/prot.25024">sci-hub</a></li>
-<li>5 Metal CGs: <a href="https://dx.doi.org/10.1002/prot.25257">Yao et al 2017</a></li>
-<li>Response to critique: Yao et al 2017, <a href="https://dx.doi.org/10.1002/prot.25263">publisher</a>, <a href="https://doi.org/10.6084/m9.figshare.4754263.v1">copy on figshare</a></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>Ranger result
+
+Call:
+ ranger(class ~ ., data = cells, min.node.size = 10, classification = TRUE) 
+
+Type:                             Classification 
+Number of trees:                  500 
+Sample size:                      2019 
+Number of independent variables:  56 
+Mtry:                             7 
+Target node size:                 10 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error:             17.29 % </code></pre>
+</div>
+<p>Here we can see that we get an OOB error of 17%, which isn’t too shabby. Now, let’s setup a workflow to do the same thing via tidymodels parsnip.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rf_spec</span> <span class='op'>=</span> <span class='fu'>rand_forest</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span>
+
+<span class='va'>rf_recipe</span> <span class='op'>=</span> <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>cells</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_dummy</span><span class='op'>(</span><span class='va'>class</span>, <span class='op'>-</span><span class='va'>class</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>rf_recipe</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>cells</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>══ Workflow [trained] ════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: rand_forest()
+
+── Preprocessor ──────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ─────────────────────────────────────────────────────────────
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1), probability = TRUE) 
+
+Type:                             Probability estimation 
+Number of trees:                  500 
+Sample size:                      2019 
+Number of independent variables:  56 
+Mtry:                             7 
+Target node size:                 10 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.1198456 </code></pre>
+</div>
+<p>Here we see the OOB error is 12% (0.119), which is not significantly different than the 17% above, but still different. Also, the “Type” shows “Probability estimation” instead of “Classification estimation.”</p>
+<p>If we run ranger again with a “probability” instead of “classification,” do we match up with the result above?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>class</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>cells</span>, min.node.size <span class='op'>=</span> <span class='fl'>10</span>, probability <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Ranger result
+
+Call:
+ ranger(class ~ ., data = cells, min.node.size = 10, probability = TRUE) 
+
+Type:                             Probability estimation 
+Number of trees:                  500 
+Sample size:                      2019 
+Number of independent variables:  56 
+Mtry:                             7 
+Target node size:                 10 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.119976 </code></pre>
+</div>
+<p>That is much closer to the tidymodels result! Great! Except, it’s a misestimation of the true OOB error for classification. How do we get what we want while using the tidymodels framework?</p>
+<p>I couldn’t find the answer, and the above <strong>looked</strong> like a bug, so I filed one on the parsnip github <span class="citation" data-cites="parsnipIssue">(<a href="#ref-parsnipIssue" role="doc-biblioref"><span>“Ranger "Classification" Mode Still Looks Like "Probability"”</span> 2021</a>)</span>. Julia Silge helpfully provided the solution to my problem.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rf_spec_class</span> <span class='op'>=</span> <span class='fu'>rand_forest</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span>, probability <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>rf_recipe</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_spec_class</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>cells</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>══ Workflow [trained] ════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: rand_forest()
+
+── Preprocessor ──────────────────────────────────────────────────────
+1 Recipe Step
+
+• step_dummy()
+
+── Model ─────────────────────────────────────────────────────────────
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, probability = ~FALSE,      num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1)) 
+
+Type:                             Classification 
+Number of trees:                  500 
+Sample size:                      2019 
+Number of independent variables:  56 
+Mtry:                             7 
+Target node size:                 1 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error:             16.54 % </code></pre>
+</div>
+<p>Aha! Now we are much closer to the original value of 17%, and the “Type” is “Classification.”</p>
+<p>I know in this case, the differences in OOB error are honestly not that much different, but my recent project, they differed by 20%, where I had a 45% using classification, and 25% using probability. Therefore, I was being fooled by the tidymodels framework investigation, and then wondering why my final AUC on a tuned model was only hitting just &gt; 55%.</p>
+<p>So remember, this isn’t how I would run the model for final classification and estimation of AUC on a test set, but if you want the OOB errors for a quick “feel” of your data, it’s very useful.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-flight2015random" class="csl-entry" role="doc-biblioentry">
+Flight, Robert M. 2015. <span>“Deciphering Life: One Bit at a Time: Random Forest Vs PLS on Random Data.”</span> <a href="https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/">https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/</a>.
+</div>
+<div id="ref-rfWiki" class="csl-entry" role="doc-biblioentry">
+<span>“Random Forest Wiki Page.”</span> 2021. <a href="https://en.wikipedia.org/wiki/Random_forest">https://en.wikipedia.org/wiki/Random_forest</a>.
+</div>
+<div id="ref-parsnipIssue" class="csl-entry" role="doc-biblioentry">
+<span>“Ranger "Classification" Mode Still Looks Like "Probability".”</span> 2021. <a href="https://github.com/tidymodels/parsnip/issues/546">https://github.com/tidymodels/parsnip/issues/546</a>.
+</div>
+<div id="ref-tidymodelsSite" class="csl-entry" role="doc-biblioentry">
+<span>“Tidymodels.”</span> 2021. <a href="https://www.tidymodels.org/">https://www.tidymodels.org/</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Criticizing%20a%20Publication%2C%20and%20Lying%20About%20It&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2017-03-29-criticizing-a-publication-and-lying-about-it%2F">
+      <a href="https://twitter.com/share?text=Random%20Forest%20Classification%20Using%20Parsnip&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-30-random-forest-classification-using-parsnip%2F">
         <i class="fab fa-twitter"></i>
       </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2017-03-29-criticizing-a-publication-and-lying-about-it%2F&amp;title=Criticizing%20a%20Publication%2C%20and%20Lying%20About%20It">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-30-random-forest-classification-using-parsnip%2F&amp;title=Random%20Forest%20Classification%20Using%20Parsnip">
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2017-03-29-criticizing-a-publication-and-lying-about-it%2F&amp;description=Criticizing%20a%20Publication%2C%20and%20Lying%20About%20It">
+      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-30-random-forest-classification-using-parsnip%2F&amp;description=Random%20Forest%20Classification%20Using%20Parsnip">
         <i class="fab fa-pinterest"></i>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2017-03-29-criticizing-a-publication-and-lying-about-it%2F">
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-08-30-random-forest-classification-using-parsnip%2F">
         <i class="fab fa-facebook"></i>
       </a>
     </span>
@@ -2628,19 +2736,21 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+  <h3 id="references">References</h3>
+  <div id="references-listing"></div>
   <h3 id="updates-and-corrections">Corrections</h3>
   <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rmflight/researchBlog_distill/issues/new">create an issue</a> on the source repository.</p>
   <h3 id="reuse">Reuse</h3>
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2017, March 29). Deciphering Life: One Bit at a Time: Criticizing a Publication, and Lying About It. Retrieved from https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/</pre>
+  <pre class="citation-appendix short">Flight (2021, Aug. 30). Deciphering Life: One Bit at a Time: Random Forest Classification Using Parsnip. Retrieved from https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/</pre>
   <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2017criticizing,
+  <pre class="citation-appendix long">@misc{flight2021random,
   author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Criticizing a Publication, and Lying About It},
-  url = {https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/},
-  year = {2017}
+  title = {Deciphering Life: One Bit at a Time: Random Forest Classification Using Parsnip},
+  url = {https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/},
+  year = {2021}
 }</pre>
 </div>
 <!--/radix_placeholder_appendices-->

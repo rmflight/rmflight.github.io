@@ -7,7 +7,20 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 03 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Random Forest Classification Using Parsnip</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip</link>
+      <description>How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework.</description>
+      <category>parsnip</category>
+      <category>tidymodels</category>
+      <category>machine-learning</category>
+      <category>random-forest</category>
+      <category>random-code-snippets</category>
+      <guid>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip</guid>
+      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Coloring Dendrogram Edges with ggraph</title>
       <dc:creator>Robert M Flight</dc:creator>

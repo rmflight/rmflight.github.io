@@ -2,254 +2,258 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://rmflight.github.io/about.html</loc>
-    <lastmod>2021-06-02T15:43:13-04:00</lastmod>
+    <lastmod>2021-06-02T16:43:13-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/</loc>
-    <lastmod>2021-02-16T21:23:27-05:00</lastmod>
+    <lastmod>2021-02-16T22:23:27-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/random_code_snippets.html</loc>
-    <lastmod>2021-08-03T11:08:27-04:00</lastmod>
+    <lastmod>2021-08-30T15:10:39-03:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/</loc>
+    <lastmod>2021-08-30T15:56:20-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/</loc>
-    <lastmod>2021-08-03T11:04:22-04:00</lastmod>
+    <lastmod>2021-08-03T12:04:22-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/</loc>
-    <lastmod>2021-08-03T10:38:36-04:00</lastmod>
+    <lastmod>2021-08-03T11:38:36-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/</loc>
-    <lastmod>2021-05-02T21:10:33-04:00</lastmod>
+    <lastmod>2021-05-02T22:10:33-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/</loc>
-    <lastmod>2021-04-09T13:33:46-04:00</lastmod>
+    <lastmod>2021-04-09T14:33:46-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/</loc>
-    <lastmod>2021-03-26T10:17:14-04:00</lastmod>
+    <lastmod>2021-03-26T11:17:14-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-03-21-creating-a-map-of-routes-weighted-by-travel/</loc>
-    <lastmod>2021-03-21T22:05:28-04:00</lastmod>
+    <lastmod>2021-03-21T23:05:28-03:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-03-05-randomcodesnippets/</loc>
-    <lastmod>2021-03-05T10:27:25-05:00</lastmod>
+    <lastmod>2021-03-05T11:27:25-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/</loc>
-    <lastmod>2021-03-05T09:50:51-05:00</lastmod>
+    <lastmod>2021-03-05T10:50:51-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-02-28-things-i-learned-about-distill/</loc>
-    <lastmod>2021-02-28T22:48:40-05:00</lastmod>
+    <lastmod>2021-02-28T23:48:40-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2020-02-25-using-group-by-instead-of-splitting/</loc>
-    <lastmod>2021-02-28T13:09:51-05:00</lastmod>
+    <lastmod>2021-02-28T14:09:51-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2019-11-06-narrower-kable-tables/</loc>
-    <lastmod>2021-02-28T13:08:20-05:00</lastmod>
+    <lastmod>2021-02-28T14:08:20-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2019-10-23-introducing-scientific-programming/</loc>
-    <lastmod>2021-02-28T13:06:29-05:00</lastmod>
+    <lastmod>2021-02-28T14:06:29-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/</loc>
-    <lastmod>2021-02-28T13:04:45-05:00</lastmod>
+    <lastmod>2021-02-28T14:04:45-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2019-02-13-for-loops-vs-split/</loc>
-    <lastmod>2021-02-28T11:56:50-05:00</lastmod>
+    <lastmod>2021-02-28T12:56:50-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-12-06-nicer-png-graphics/</loc>
-    <lastmod>2021-02-28T11:53:31-05:00</lastmod>
+    <lastmod>2021-02-28T12:53:31-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-09-14-don-t-do-pca-after-statistical-testing/</loc>
-    <lastmod>2021-02-28T11:51:23-05:00</lastmod>
+    <lastmod>2021-02-28T12:51:23-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-07-19-finding-modes-using-kernel-density-estimates/</loc>
-    <lastmod>2021-02-28T11:45:49-05:00</lastmod>
+    <lastmod>2021-02-28T12:45:49-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-07-17-split-unsplit-anti-pattern/</loc>
-    <lastmod>2021-02-27T18:29:06-05:00</lastmod>
+    <lastmod>2021-02-27T19:29:06-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-06-23-iranges-for-non-integer-overlaps/</loc>
-    <lastmod>2021-02-27T18:24:11-05:00</lastmod>
+    <lastmod>2021-02-27T19:24:11-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-06-20-turn-roberts-beard-purple/</loc>
-    <lastmod>2021-02-27T18:13:05-05:00</lastmod>
+    <lastmod>2021-02-27T19:13:05-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-02-19-knitrprogressbar/</loc>
-    <lastmod>2021-02-27T18:11:53-05:00</lastmod>
+    <lastmod>2021-02-27T19:11:53-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-02-14-licensing-r-packages-that-include-others-code/</loc>
-    <lastmod>2021-02-27T18:10:40-05:00</lastmod>
+    <lastmod>2021-02-27T19:10:40-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2018-01-17-docopt-numeric-optoins/</loc>
-    <lastmod>2021-02-27T18:09:40-05:00</lastmod>
+    <lastmod>2021-02-27T19:09:40-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2017-12-27-custom-deployment-script/</loc>
-    <lastmod>2021-03-05T10:24:17-05:00</lastmod>
+    <lastmod>2021-03-05T11:24:17-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2017-12-27-differences-in-posted-date-vs-sessioninfo/</loc>
-    <lastmod>2021-02-27T18:06:02-05:00</lastmod>
+    <lastmod>2021-02-27T19:06:02-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2017-12-27-linking-to-manually-inserted-images-in-hugo/</loc>
-    <lastmod>2021-02-27T18:07:18-05:00</lastmod>
+    <lastmod>2021-02-27T19:07:18-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2017-10-18-i-was-part-of-the-problem/</loc>
-    <lastmod>2021-02-27T18:02:23-05:00</lastmod>
+    <lastmod>2021-02-27T19:02:23-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it/</loc>
-    <lastmod>2021-02-27T17:59:29-05:00</lastmod>
+    <lastmod>2021-02-27T18:59:29-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2016-03-23-authentication-of-key-resources-for-data-analysis/</loc>
-    <lastmod>2021-02-27T17:58:13-05:00</lastmod>
+    <lastmod>2021-02-27T18:58:13-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/</loc>
-    <lastmod>2021-02-27T17:57:04-05:00</lastmod>
+    <lastmod>2021-02-27T18:57:04-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2015-06-17-novel-zinc-coordination-geometries/</loc>
-    <lastmod>2021-02-27T17:56:08-05:00</lastmod>
+    <lastmod>2021-02-27T18:56:08-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2015-06-01-mouse-human-transcriptomics-and-batch-effects/</loc>
-    <lastmod>2021-02-27T17:55:27-05:00</lastmod>
+    <lastmod>2021-02-27T18:55:27-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2015-03-25-first-open-post-publication-peer-review-with-credit/</loc>
-    <lastmod>2021-02-27T17:55:01-05:00</lastmod>
+    <lastmod>2021-02-27T18:55:01-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-12-31-being-a-phd-student-and-post-doc-with-migraines/</loc>
-    <lastmod>2021-02-27T17:52:49-05:00</lastmod>
+    <lastmod>2021-02-27T18:52:49-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-11-05-travis-ci-to-github-pages/</loc>
-    <lastmod>2021-02-27T17:52:13-05:00</lastmod>
+    <lastmod>2021-02-27T18:52:13-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-08-08-my-career-goals/</loc>
-    <lastmod>2021-02-27T17:51:45-05:00</lastmod>
+    <lastmod>2021-02-27T18:51:45-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-07-28-analyses-as-packages/</loc>
-    <lastmod>2021-02-27T17:48:05-05:00</lastmod>
+    <lastmod>2021-02-27T18:48:05-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-07-28-creating-an-analysis-as-a-package-and-vignette/</loc>
-    <lastmod>2021-02-27T17:46:19-05:00</lastmod>
+    <lastmod>2021-02-27T18:46:19-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-07-28-packages-vs-projecttemplate/</loc>
-    <lastmod>2021-02-27T17:51:09-05:00</lastmod>
+    <lastmod>2021-02-27T18:51:09-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-06-19-researcher-discoverability/</loc>
-    <lastmod>2021-02-27T17:40:18-05:00</lastmod>
+    <lastmod>2021-02-27T18:40:18-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-06-05-bioinformatics-presentations-that-lack-results-or-biological-relevance/</loc>
-    <lastmod>2021-02-27T17:39:54-05:00</lastmod>
+    <lastmod>2021-02-27T18:39:54-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-04-08-categorycompare-paper-finally-out/</loc>
-    <lastmod>2021-02-27T17:39:08-05:00</lastmod>
+    <lastmod>2021-02-27T18:39:08-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-02-20-self-written-function-help/</loc>
-    <lastmod>2021-02-27T14:56:47-05:00</lastmod>
+    <lastmod>2021-02-27T15:56:47-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-02-10-installing-matlab-vs-installing-r/</loc>
-    <lastmod>2021-02-21T16:47:30-05:00</lastmod>
+    <lastmod>2021-02-21T17:47:30-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/</loc>
-    <lastmod>2021-03-05T10:22:53-05:00</lastmod>
+    <lastmod>2021-03-05T11:22:53-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2014-01-28-motivated-learning/</loc>
-    <lastmod>2021-02-27T14:55:15-05:00</lastmod>
+    <lastmod>2021-02-27T15:55:15-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-10-22-pubmedcommons-api/</loc>
-    <lastmod>2021-02-27T14:53:46-05:00</lastmod>
+    <lastmod>2021-02-27T15:53:46-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-10-21-open-vs-closed-analysis-languages/</loc>
-    <lastmod>2021-02-27T14:53:20-05:00</lastmod>
+    <lastmod>2021-02-27T15:53:20-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-10-17-pre-calculating-large-tables-of-values/</loc>
-    <lastmod>2021-02-27T14:52:23-05:00</lastmod>
+    <lastmod>2021-02-27T15:52:23-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-09-23-portable-peronal-packages/</loc>
-    <lastmod>2021-02-27T14:49:41-05:00</lastmod>
+    <lastmod>2021-02-27T15:49:41-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-09-19-k-12-wants-scientists/</loc>
-    <lastmod>2021-02-27T14:49:21-05:00</lastmod>
+    <lastmod>2021-02-27T15:49:21-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-09-17-r-rstudio-and-release-and-dev-bioconductor/</loc>
-    <lastmod>2021-02-27T14:48:40-05:00</lastmod>
+    <lastmod>2021-02-27T15:48:40-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-08-16-reproducible-methods/</loc>
-    <lastmod>2021-02-22T21:47:27-05:00</lastmod>
+    <lastmod>2021-02-22T22:47:27-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-07-11-r-interface-for-teaching/</loc>
-    <lastmod>2021-02-21T16:30:42-05:00</lastmod>
+    <lastmod>2021-02-21T17:30:42-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-06-05-tim-hortons-density/</loc>
-    <lastmod>2021-03-13T21:03:30-05:00</lastmod>
+    <lastmod>2021-03-13T22:03:30-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-05-30-storing-package-data-in-custom-environments/</loc>
-    <lastmod>2021-02-21T16:30:51-05:00</lastmod>
+    <lastmod>2021-02-21T17:30:51-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2013-05-10-writing-up-scientific-results-and-literate-programming/</loc>
-    <lastmod>2021-02-22T21:16:50-05:00</lastmod>
+    <lastmod>2021-02-22T22:16:50-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2012-10-09-writing-papers-using-r-markdown/</loc>
-    <lastmod>2021-02-22T21:19:57-05:00</lastmod>
+    <lastmod>2021-02-22T22:19:57-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2012-08-15-journal-club-2012-08-15/</loc>
-    <lastmod>2021-02-22T20:51:28-05:00</lastmod>
+    <lastmod>2021-02-22T21:51:28-04:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/</loc>
-    <lastmod>2021-03-05T10:22:11-05:00</lastmod>
+    <lastmod>2021-03-05T11:22:11-04:00</lastmod>
   </url>
 </urlset>
