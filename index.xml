@@ -7,7 +7,19 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>My Vacation in Barometric Pressure</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure</link>
+      <description>What can we see from my phone's barometric pressure readings?</description>
+      <category>graphing</category>
+      <category>maps</category>
+      <category>visualization</category>
+      <guid>https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure</guid>
+      <pubDate>Mon, 20 Sep 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/my-vacation-in-barometric-pressure_files/figure-html5/plot_them-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Random Forest Classification Using Parsnip</title>
       <dc:creator>Robert M Flight</dc:creator>
