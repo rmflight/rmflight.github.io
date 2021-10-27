@@ -1,5 +1,25 @@
 [
   {
+    "path": "posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/",
+    "title": "R CMD Check and Non-PDF Vignettes",
+    "description": "R CMD Check complaining about missing files? Here was my solution.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2021-10-27",
+    "categories": [
+      "packages",
+      "random-code-snippets"
+    ],
+    "contents": "\n\nContents\nR CMD Check\nMissing Files\n\nR CMD Check\nIf you’ve written an R package that you want hosted by CRAN (or even if not hosted), then you generally want to run the infamous R CMD check on your package.\nAlthough it can be a pain in the butt, it has a wide array of checks that make sense (and some that don’t, just look at posts on the R-devel list).\nMissing Files\nIf you are using rmarkdown to generate non-standard vignettes, or even using rmarkdown because of features that aren’t present directly in knitr, then the check process may fail after it re-builds the package. You may see this message:\nWarning: Files in the 'vignettes' directory but no files in 'inst/doc':\n  ‘vignette_file.Rmd’\nThe solution, as far as I can tell, is to:\nadd both knitr and rmarkdown to the Suggests field of DESCRIPTION.\nadd VignetteBuilder: knitr to the DESCRIPTION.\nadd %\\VignetteEngine{knitr::rmarkdown} to the vignette meta-data.\nuse output: … whatever actual output document type you wanted in the vignette itself.\nI think that the build command only recognizes the knitr engine properly, and that is the only one that builds the vignettes and shoves them in the right location.\nOtherwise, you should build them manually and double check the options to build and check so that vignettes don’t get rebuilt during either build or check.\nDepending on your needs, you might want to use something like Drew Schmidt’s approach (“Vignette-Less Articles with Pkgdown” 2020).\n\n\n\n“Vignette-Less Articles with Pkgdown.” 2020. https://fml-fam.github.io/blog/2020/06/23/vignette-less-articles-with-pkgdown/.\n\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-10-27T10:58:30-04:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2021-09-20-my-vacation-in-barometric-pressure/",
     "title": "My Vacation in Barometric Pressure",
     "description": "What can we see from my phone's barometric pressure readings?",

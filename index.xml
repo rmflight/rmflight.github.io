@@ -7,7 +7,17 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 20 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>R CMD Check and Non-PDF Vignettes</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes</link>
+      <description>R CMD Check complaining about missing files? Here was my solution.</description>
+      <category>packages</category>
+      <category>random-code-snippets</category>
+      <guid>https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes</guid>
+      <pubDate>Wed, 27 Oct 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>My Vacation in Barometric Pressure</title>
       <dc:creator>Robert M Flight</dc:creator>
