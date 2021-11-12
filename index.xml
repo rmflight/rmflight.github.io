@@ -7,7 +7,20 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 27 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Zooming GGraph Plots</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots</link>
+      <description>Some code demonstrating how to zoom into portions of a ggraph.</description>
+      <category>graphing</category>
+      <category>ggraph</category>
+      <category>visualization</category>
+      <category>random-code-snippets</category>
+      <guid>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots</guid>
+      <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/zooming-ggraph-plots_files/figure-html5/plot_full-1.png" medium="image" type="image/png" width="1920" height="1536"/>
+    </item>
     <item>
       <title>R CMD Check and Non-PDF Vignettes</title>
       <dc:creator>Robert M Flight</dc:creator>
