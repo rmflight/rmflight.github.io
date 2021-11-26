@@ -7,7 +7,18 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 11 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Migrating Self-Hosted GitLab Projects to GitHub</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github</link>
+      <description>We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that.</description>
+      <category>version-control</category>
+      <category>GitHub</category>
+      <category>GitLab</category>
+      <guid>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github</guid>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Zooming GGraph Plots</title>
       <dc:creator>Robert M Flight</dc:creator>
