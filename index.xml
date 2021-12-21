@@ -7,7 +7,18 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Reusing ggplot2 Colors</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors</link>
+      <description>When you want to reuse ggplot2 default colors across plots.</description>
+      <category>random-code-snippets</category>
+      <category>ggplot2</category>
+      <category>visualization</category>
+      <guid>https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors</guid>
+      <pubDate>Tue, 21 Dec 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Migrating Self-Hosted GitLab Projects to GitHub</title>
       <dc:creator>Robert M Flight</dc:creator>
