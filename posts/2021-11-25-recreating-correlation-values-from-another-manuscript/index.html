@@ -88,13 +88,34 @@ code span.vs { color: #da4453; } /* VerbatimString */
 code span.wa { color: #da4453; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub</title>
+<title>Deciphering Life: One Bit at a Time: Recreating Correlation Values from Another Manuscript</title>
 
-<meta property="description" itemprop="description" content="We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."/>
+<meta property="description" itemprop="description" content="Documenting my journey trying to recreate some correlations calculated in another manuscript."/>
 
-<link rel="canonical" href="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<link rel="canonical" href="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 <!--  https://schema.org/Article -->
@@ -103,38 +124,49 @@ code span.wa { color: #da4453; } /* Warning */
 <meta name="article:author" content="Robert M Flight"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub"/>
+<meta property="og:title" content="Deciphering Life: One Bit at a Time: Recreating Correlation Values from Another Manuscript"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<meta property="og:description" content="Documenting my journey trying to recreate some correlations calculated in another manuscript."/>
+<meta property="og:url" content="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/"/>
+<meta property="og:image" content="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig2_cropped.png"/>
+<meta property="og:image:width" content="1900"/>
+<meta property="og:image:height" content="453"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub"/>
-<meta property="twitter:description" content="We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Recreating Correlation Values from Another Manuscript"/>
+<meta property="twitter:description" content="Documenting my journey trying to recreate some correlations calculated in another manuscript."/>
+<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/"/>
+<meta property="twitter:image" content="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig2_cropped.png"/>
+<meta property="twitter:image:width" content="1900"/>
+<meta property="twitter:image:height" content="453"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Recreating Correlation Values from Another Manuscript"/>
+<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
 <meta name="citation_online_date" content="2021/11/25"/>
 <meta name="citation_publication_date" content="2021/11/25"/>
 <meta name="citation_author" content="Robert M Flight"/>
 <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Metadata for a highly replicated two-condition yeast RNAseq experiment.;citation_publication_date=2015;citation_doi=10.6084/m9.figshare.1416210.v3;citation_author=Geoffrey Barton;citation_author=Mark Blaxter;citation_author=Christian Cole;citation_author=Karim Gharbi;citation_author=Marek Gierliński;citation_author=Tom Owen-Hughes;citation_author=Pieta Schofield;citation_author=Alexander Sherstnev;citation_author=Nick Schurch;citation_author=Vijender Singh;citation_author=Nicola Wrobel"/>
+  <meta name="citation_reference" content="citation_title=Statistical models for RNA-seq data derived from a two-condition 48-replicate experiment;citation_publication_date=2015;citation_volume=31;citation_doi=10.1093/bioinformatics/btv425;citation_issn=1367-4803;citation_author=Marek Gierliński;citation_author=Christian Cole;citation_author=Pietà Schofield;citation_author=Nicholas J. Schurch;citation_author=Alexander Sherstnev;citation_author=Vijender Singh;citation_author=Nicola Wrobel;citation_author=Karim Gharbi;citation_author=Gordon Simpson;citation_author=Tom Owen-Hughes;citation_author=Mark Blaxter;citation_author=Geoffrey J. Barton"/>
+  <meta name="citation_reference" content="citation_title=SNF2 knock-out yeast gene read counts from a 48 replicate experiment;citation_publication_date=2015;citation_doi=10.6084/m9.figshare.1425502.v1;citation_author=Geoffrey Barton;citation_author=Mark Blaxter;citation_author=Christian Cole;citation_author=Karim Gharbi;citation_author=Marek Gierliński;citation_author=Pieta Schofield;citation_author=Nick Schurch;citation_author=Vijender Singh;citation_author=Nicola Wrobel"/>
+  <meta name="citation_reference" content="citation_title=Wild-type yeast gene read counts from 48 replicate experiment;citation_publication_date=2015;citation_doi=10.6084/m9.figshare.1425503.v1;citation_author=Geoffrey Barton;citation_author=Mark Blaxter;citation_author=Christian Cole;citation_author=Karim Gharbi;citation_author=Marek Gierliński;citation_author=Pieta Schofield;citation_author=Nick Schurch;citation_author=Vijender Singh;citation_author=Nicola Wrobel"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Migrating Self-Hosted GitLab Projects to GitHub"]},{"type":"character","attributes":{},"value":["We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-11-25"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["version-control","github","gitlab"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Recreating Correlation Values from Another Manuscript"]},{"type":"character","attributes":{},"value":["Documenting my journey trying to recreate some correlations calculated in another manuscript."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-11-25"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["reproducibility"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["migrating-self-hosted-gitlab-to-github_files/anchor-4.2.2/anchor.min.js","migrating-self-hosted-gitlab-to-github_files/bowser-1.9.3/bowser.min.js","migrating-self-hosted-gitlab-to-github_files/distill-2.2.21/template.v2.js","migrating-self-hosted-gitlab-to-github_files/header-attrs-2.11/header-attrs.js","migrating-self-hosted-gitlab-to-github_files/jquery-3.6.0/jquery-3.6.0.js","migrating-self-hosted-gitlab-to-github_files/jquery-3.6.0/jquery-3.6.0.min.js","migrating-self-hosted-gitlab-to-github_files/jquery-3.6.0/jquery-3.6.0.min.map","migrating-self-hosted-gitlab-to-github_files/popper-2.6.0/popper.min.js","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy-bundle.umd.min.js","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy-light-border.css","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy.css","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy.umd.min.js","migrating-self-hosted-gitlab-to-github_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["1416210.bib","1425502.bib","1425503.bib","citations-20211126T020120.bibtex","gierlinski_2015_fig2_cropped.png","gierlinski_2015_fig2.jpeg","gierlinski_2015_fig5.jpeg","recreating-correlation-values-from-another-manuscript_files/anchor-4.2.2/anchor.min.js","recreating-correlation-values-from-another-manuscript_files/bowser-1.9.3/bowser.min.js","recreating-correlation-values-from-another-manuscript_files/distill-2.2.21/template.v2.js","recreating-correlation-values-from-another-manuscript_files/header-attrs-2.11/header-attrs.js","recreating-correlation-values-from-another-manuscript_files/jquery-3.6.0/jquery-3.6.0.js","recreating-correlation-values-from-another-manuscript_files/jquery-3.6.0/jquery-3.6.0.min.js","recreating-correlation-values-from-another-manuscript_files/jquery-3.6.0/jquery-3.6.0.min.map","recreating-correlation-values-from-another-manuscript_files/popper-2.6.0/popper.min.js","recreating-correlation-values-from-another-manuscript_files/tippy-6.2.7/tippy-bundle.umd.min.js","recreating-correlation-values-from-another-manuscript_files/tippy-6.2.7/tippy-light-border.css","recreating-correlation-values-from-another-manuscript_files/tippy-6.2.7/tippy.css","recreating-correlation-values-from-another-manuscript_files/tippy-6.2.7/tippy.umd.min.js","recreating-correlation-values-from-another-manuscript_files/webcomponents-2.0.0/webcomponents.js","refs.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2501,7 +2533,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Migrating Self-Hosted GitLab Projects to GitHub","description":"We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-25T00:00:00.000-05:00","citationText":"Flight, 2021"}
+{"title":"Recreating Correlation Values from Another Manuscript","description":"Documenting my journey trying to recreate some correlations calculated in another manuscript.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-25T00:00:00.000-05:00","citationText":"Flight, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2531,15 +2563,13 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Migrating Self-Hosted GitLab Projects to GitHub</h1>
+<h1>Recreating Correlation Values from Another Manuscript</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../index.html#category:version-control" class="dt-tag">version-control</a>
-  <a href="../../index.html#category:github" class="dt-tag">github</a>
-  <a href="../../index.html#category:gitlab" class="dt-tag">gitlab</a>
+  <a href="../../index.html#category:reproducibility" class="dt-tag">reproducibility</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that.</p></p>
+<p><p>Documenting my journey trying to recreate some correlations calculated in another manuscript.</p></p>
 </div>
 
 <div class="d-byline">
@@ -2553,63 +2583,90 @@ d-appendix d-footnote-list a.footnote-backlink {
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#moving-to-github">Moving to GitHub</a></li>
-<li><a href="#getting-the-list-of-projects">Getting the List of Projects</a></li>
-<li><a href="#users-to-ids">Users to IDs</a></li>
-<li><a href="#local-clones">Local Clones</a></li>
-<li><a href="#duplicate-projects">Duplicate Projects</a></li>
-<li><a href="#empty-projects">Empty Projects</a></li>
-<li><a href="#creating-github-repos">Creating GitHub Repos</a></li>
-<li><a href="#repos-later">190 Repos Later</a></li>
+<li><a href="#background">Background</a></li>
+<li><a href="#so-what">So What</a></li>
+<li><a href="#my-correlations">My Correlations</a></li>
+<li><a href="#finding-the-data">Finding the Data</a></li>
+<li><a href="#new-correlation">New Correlation</a></li>
+<li><a href="#why-not-logs">Why Not Logs?</a></li>
+<li><a href="#how-did-i-miss-the-original-data">How Did I Miss the Original Data?</a></li>
 </ul>
 </nav>
 </div>
-<h2 id="moving-to-github">Moving to GitHub</h2>
-<p>Six years ago, we didn’t really look into what the free academic version of GitHub teams provided for private repositories, and instead decided that we should have a self-hosted GitLab instance. Outside of some weird issues around SSL certificates and reverse proxies (i.e. how our web-hosting worked), this actually worked pretty well. However, instead of making our internal projects public, we would frequently move them over to GitHub. I think this is partly because GitHub has become the de-facto location for open-source tool development. However, it seemed to cause some friction to push things between the two platforms. This may be due to our lab not using git as much as we should be, especially the collaborative aspects in issues and pull requests.</p>
-<p>After six years, our PI decided to look into the costs for GitHub teams, and discovered that academic teams get free private repos with rather generous amounts of storage and actions minutes. Therefore, we decided it was time to migrate our projects over to GitHub. The PI delegated this task to yours truly.</p>
-<h2 id="getting-the-list-of-projects">Getting the List of Projects</h2>
-<p>To get the list of projects to migrate, I actually copied the project lists from the web interface. If I was doing this again, I would have just asked for the backup locations of our GitLab projects and used those to get the paths for each project. Some projects had changed their names over time and not updated the corresponding path in the database.</p>
-<h2 id="users-to-ids">Users to IDs</h2>
-<p>Because I used lists from the web interface, I also had to convert the users to actual IDs that define the paths to each project. These weren’t too hard to look up.</p>
-<h2 id="local-clones">Local Clones</h2>
-<p>With a full list of projects as “User Name / Project”, and users to IDs, I could easily script converting users to IDs and the full project path, and then system calls to <code>GIT_SSL_NO_VERIFY=TRUE git clone --mirror gitlab_url</code> to make mirror clones of each project. <code>GIT_SSL_NO_VERIFY=TRUE</code> deals with our labs weird SSL certificate issues, while using <code>--mirror</code> means all the branches are pulled, not just the default branch. This is useful to maintain a history of branches over the course of the project development.</p>
-<p>Note that this means you get a directory with “projectName.git”, not just “projectName”. If you look inside the “projectName.git” folder, it’s actually all of the git contents, not the usual files you would see for a normal clone operation.</p>
-<h2 id="duplicate-projects">Duplicate Projects</h2>
-<p>One thing I didn’t think about when doing this is that users on GitLab can fork each others projects, resulting in duplicate projects. If I had been smart, I would have cloned the projects into user specific directories. Thankfully, we only had a few duplicate projects where I had to do a second clone to a user specific directory.</p>
-<h2 id="empty-projects">Empty Projects</h2>
-<p>Some of the projects are actually empty, either because we thought we were going to do something and didn’t, or someone just wanted issue tracking (that would be me). These we don’t want to push back up to GitHub. However, empty projects with no commits appear to have less than <strong>two</strong> files in the <code>objects</code> directory, and <strong>zero</strong> files in the <code>objects/pack</code> directory.</p>
-<h2 id="creating-github-repos">Creating GitHub Repos</h2>
-<p>I used the GitHub command-line-interface tools (<code>gh</code>) to interface with our GitHub organization. After authorizing the <code>gh</code> tools, for each GitLab project I created a corresponding GitHub project, and then moved to the local clone, and did</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>github_locs <span class="ot">=</span> <span class="st">&quot;/path/to/github/repos&quot;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">walk</span>(gitlab_project_dirs, <span class="cf">function</span>(in_dir){</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  proj_name <span class="ot">=</span> <span class="fu">basename</span>(in_dir)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(github_locs)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  gh_command <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;gh repo create --confirm --private orgName/&quot;</span>, proj_name)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(gh_command)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(in_dir)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  gh_loc <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;git@github.com/orgName/&quot;</span>, proj_name)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  git_push <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;git push --mirror &quot;</span>, gh_loc)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(git_push)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<p>You can see here I move back and forth between directories a lot, and used system to run <code>gh</code> and <code>git push</code>. It feels a little hacky, but it worked just fine.</p>
-<h2 id="repos-later">190 Repos Later</h2>
-<p>I moved over 180 GitLab projects to GitHub repos. With the projects that already had GitHub repos, that means we have over 190 lab repos. That doesn’t count the stuff we left related to testing CI/CD, people learning how to work with GitLab, and 20 copies of the code we use for sys-admin. There were a subset I had to do by hand because of replication issues and not using user directories. I also discovered some missing repos due to a missed letter when copying one lab members user ID.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="background">Background</h2>
+<p>I’ve been working on a manuscript for our newish correlation method, information-content-informed Kendall-tau (ICI-Kendalltau). As part of that manuscript, we wanted to highlight how well the correlation measure detects outlier samples. Two datasets we are using for that aspect are public, one from The Cancer Genome Atlas and the other from the Barton group. The Barton group and collaborators produced a highly replicated RNAseq yeast dataset, 48 replicates in two conditions, and have used it in various analyses <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span>.</p>
+<h2 id="so-what">So What</h2>
+<p>For my manuscript, ideally I want to be able to comment on the outliers found in one of the original Barton group manuscripts <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span>. To do that, I need access to one of:</p>
+<ul>
+<li>the sample-sample correlations themselves,</li>
+<li>the counts from each sample</li>
+<li>or be able to recreate counts from each sample.</li>
+</ul>
+<p>Several years ago I was asking about this dataset on twitter when I was using it for another project, because the project ID in the SRA didn’t have a mapping to condition. Dr. Geoff Barton pointed me to a metadata file available on figshare <span class="citation" data-cites="Barton2015">(<a href="#ref-Barton2015" role="doc-biblioref">Barton, Blaxter, Cole, Gharbi, Gierliński, Owen-Hughes, et al. 2015</a>)</span>. This allowed me to generate read counts across biological replicates. However, if I had poked around figshare a bit more, I would have likely seen both of the files with read counts for each replicate already submitted <span class="citation" data-cites="SNF2Barton2015 WTBarton2015">(<a href="#ref-SNF2Barton2015" role="doc-biblioref">Barton, Blaxter, Cole, Gharbi, Gierliński, Schofield, et al. 2015a</a>, <a href="#ref-WTBarton2015" role="doc-biblioref">2015b</a>)</span>. It really sucks that I hadn’t noticed these other files years ago, it would have saved me the effort in remapping and generating gene counts myself, as well as getting really weird correlation values compared to <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span>.</p>
+<h2 id="my-correlations">My Correlations</h2>
+<p>From the demultiplexed read data and the metadata file I found several years ago, I had run software to generate read counts for each sample in each lane, and summed them across lanes. I know how to do these kinds of things, even though I will be the first to admit it is <strong>not</strong> my personal bread and butter analysis. (I normally get involved after count generation). Even with hints from the manuscript about how <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span> did the correlation calculation, I don’t get anything close to the range of median correlation values within each class of samples. Which I thought was very, very weird. I implemented a variety of transformation methods and inclusion of missing values for my correlation calculations:</p>
+<ul>
+<li>logged values (log and log1p)</li>
+<li>raw values</li>
+<li>removal and inclusion of missing (0) values</li>
+</ul>
+<p>Even with all of these variations, I could not come close to the same values I found presented in their manuscript. Here, in panel (a) of Figure 2 from <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span>, the median correlations range from 0.7 to 1.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="gierlinski_2015_fig2_cropped.png" alt="Figure 2(a) from [@Gierlinski2015]. Identifying bad RNA-seq replicates in the WT (left) and Δsnf2 (right) data. The top three panels (a–c) show individual criteria for identifying ‘bad’ replicates which are combined into a quality score (d) in order to identify ‘bad’ replicates in each condition. The identified ‘bad’ replicates are shown as numbered points in each panel. The individual criteria are (a) median correlation coefficient, ri∼⁠, for each replicate i against all other replicates, (b) outlier fraction, fi⁠, calculated as a fraction of genes where the given replicate is more than five-trimmed standard deviations from the trimmed mean and (c) median reduced χ2 of pileup depth, χ∼2i⁠, as a measure of the non-uniformity of read distribution within genes (see also Fig. 3)" width="950" class=external />
+<p class="caption">
+Figure 1: Figure 2(a) from <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span>. Identifying bad RNA-seq replicates in the WT (left) and Δsnf2 (right) data. The top three panels (a–c) show individual criteria for identifying ‘bad’ replicates which are combined into a quality score (d) in order to identify ‘bad’ replicates in each condition. The identified ‘bad’ replicates are shown as numbered points in each panel. The individual criteria are (a) median correlation coefficient, ri∼⁠, for each replicate i against all other replicates, (b) outlier fraction, fi⁠, calculated as a fraction of genes where the given replicate is more than five-trimmed standard deviations from the trimmed mean and (c) median reduced χ2 of pileup depth, χ∼2i⁠, as a measure of the non-uniformity of read distribution within genes (see also Fig. 3)
+</p>
+</div>
+</div>
+<p><strong>Figure with their graph, and my values using my data</strong>.</p>
+<h2 id="finding-the-data">Finding the Data</h2>
+<p>Finally, during the week of 2021-11-25, I happened across another manuscript on this dataset from 2016, that mentions a GitHub repo that lo and behold had copies of the preprocessed data to the level of gene counts per biological replicate. Awesome!</p>
+<h2 id="new-correlation">New Correlation</h2>
+<p>Using the preprocessed data, I was finally able to get what amounted to identical values of correlation, based on comparing the lowest correlation values with the figure. Great.</p>
+<h2 id="why-not-logs">Why Not Logs?</h2>
+<p>One interesting thing about having the correct correlations is discovering that Gierlinski et al didn’t use log-transformed data in their Pearson correlation calculations. This seems unusual to me. All my career in -omics, the one thing I’ve had drilled into me is that doing a linear correlation on data that has proportional error, i.e. the variance increases with increasing values, which is definitely true of these count data.</p>
+<p>If I had to guess <strong>why</strong> log-transformed values weren’t used, is because of the analysis in the replicate paper about how well the un-transformed values fit a normal distribution vs a log-normal distribution. That figure and caption are provided here for reference.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="gierlinski_2015_fig5.jpeg" alt="Figure 5 from [@Gierlinski2015]. Goodness-of-fit test results for normal (top panels), log-normal (middle panels) and negative binomial (bottom panels) distributions. Each panel shows the test P-value versus the mean count across replicates. Each dot represents equal-count normalized data from one gene. Panels on the left (a, b, e, f, i, j) show clean data with bad replicates rejected (42 and 44 replicates remaining in WT and Δsnf2, respectively). Panels on the right (c, d, g, h, k, l) show all available data (48 replicates in each condition). Due to the number of bootstraps performed, P-values for the negative-binomial test are limited to ∼10−2. Due to numerical precision of the software library used, P-values from the normal and log-normal tests are limited to ∼10−16. Below these limits data points are marked in orange (light gray in black and white) at the bottom of each panel. Horizontal lines show the Benjamini–Hochberg limit corresponding to the significance of 0.05 for the given dataset. The numbers in the right bottom corner of each panel indicate the number of genes with P-values below the significance limit and the total number of genes" width="950" class=external />
+<p class="caption">
+Figure 2: Figure 5 from <span class="citation" data-cites="Gierlinski2015">(<a href="#ref-Gierlinski2015" role="doc-biblioref">Gierliński et al. 2015</a>)</span>. Goodness-of-fit test results for normal (top panels), log-normal (middle panels) and negative binomial (bottom panels) distributions. Each panel shows the test P-value versus the mean count across replicates. Each dot represents equal-count normalized data from one gene. Panels on the left (a, b, e, f, i, j) show clean data with bad replicates rejected (42 and 44 replicates remaining in WT and Δsnf2, respectively). Panels on the right (c, d, g, h, k, l) show all available data (48 replicates in each condition). Due to the number of bootstraps performed, P-values for the negative-binomial test are limited to ∼10−2. Due to numerical precision of the software library used, P-values from the normal and log-normal tests are limited to ∼10−16. Below these limits data points are marked in orange (light gray in black and white) at the bottom of each panel. Horizontal lines show the Benjamini–Hochberg limit corresponding to the significance of 0.05 for the given dataset. The numbers in the right bottom corner of each panel indicate the number of genes with P-values below the significance limit and the total number of genes
+</p>
+</div>
+</div>
+<h2 id="how-did-i-miss-the-original-data">How Did I Miss the Original Data?</h2>
+<p>It turns out, I didn’t look hard enough at the first place that Geoff Barton sent me to. When I started poking around the figshare repo’s from Geoff and others in the group and following links, it was easy to find a copy of the preprocessed data from each condition.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Barton2015" class="csl-entry" role="doc-biblioentry">
+Barton, Geoffrey, Mark Blaxter, Christian Cole, Karim Gharbi, Marek Gierliński, Tom Owen-Hughes, Pieta Schofield, et al. 2015. <span>“<span class="nocase">Metadata for a highly replicated two-condition yeast RNAseq experiment.</span>”</span> July. <a href="https://doi.org/10.6084/m9.figshare.1416210.v3">https://doi.org/10.6084/m9.figshare.1416210.v3</a>.
+</div>
+<div id="ref-SNF2Barton2015" class="csl-entry" role="doc-biblioentry">
+Barton, Geoffrey, Mark Blaxter, Christian Cole, Karim Gharbi, Marek Gierliński, Pieta Schofield, Nick Schurch, Vijender Singh, and Nicola Wrobel. 2015a. <span>“<span class="nocase">SNF2 knock-out yeast gene read counts from a 48 replicate experiment</span>,”</span> May. <a href="https://doi.org/10.6084/m9.figshare.1425502.v1">https://doi.org/10.6084/m9.figshare.1425502.v1</a>.
+</div>
+<div id="ref-WTBarton2015" class="csl-entry" role="doc-biblioentry">
+———. 2015b. <span>“<span class="nocase">Wild-type yeast gene read counts from 48 replicate experiment</span>,”</span> May. <a href="https://doi.org/10.6084/m9.figshare.1425503.v1">https://doi.org/10.6084/m9.figshare.1425503.v1</a>.
+</div>
+<div id="ref-Gierlinski2015" class="csl-entry" role="doc-biblioentry">
+Gierliński, Marek, Christian Cole, Pietà Schofield, Nicholas J. Schurch, Alexander Sherstnev, Vijender Singh, Nicola Wrobel, et al. 2015. <span>“<span class="nocase">Statistical models for RNA-seq data derived from a two-condition 48-replicate experiment</span>.”</span> <em>Bioinformatics</em> 31 (22): 3625–30. <a href="https://doi.org/10.1093/bioinformatics/btv425">https://doi.org/10.1093/bioinformatics/btv425</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Migrating%20Self-Hosted%20GitLab%20Projects%20to%20GitHub&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F">
+      <a href="https://twitter.com/share?text=Recreating%20Correlation%20Values%20from%20Another%20Manuscript&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-recreating-correlation-values-from-another-manuscript%2F">
         <i class="fab fa-twitter"></i>
       </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F&amp;title=Migrating%20Self-Hosted%20GitLab%20Projects%20to%20GitHub">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-recreating-correlation-values-from-another-manuscript%2F&amp;title=Recreating%20Correlation%20Values%20from%20Another%20Manuscript">
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F&amp;description=Migrating%20Self-Hosted%20GitLab%20Projects%20to%20GitHub">
+      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-recreating-correlation-values-from-another-manuscript%2F&amp;description=Recreating%20Correlation%20Values%20from%20Another%20Manuscript">
         <i class="fab fa-pinterest"></i>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F">
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-recreating-correlation-values-from-another-manuscript%2F">
         <i class="fab fa-facebook"></i>
       </a>
     </span>
@@ -2626,18 +2683,20 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+  <h3 id="references">References</h3>
+  <div id="references-listing"></div>
   <h3 id="updates-and-corrections">Corrections</h3>
   <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rmflight/researchBlog_distill/issues/new">create an issue</a> on the source repository.</p>
   <h3 id="reuse">Reuse</h3>
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2021, Nov. 25). Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub. Retrieved from https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/</pre>
+  <pre class="citation-appendix short">Flight (2021, Nov. 25). Deciphering Life: One Bit at a Time: Recreating Correlation Values from Another Manuscript. Retrieved from https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/</pre>
   <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2021migrating,
+  <pre class="citation-appendix long">@misc{flight2021recreating,
   author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub},
-  url = {https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/},
+  title = {Deciphering Life: One Bit at a Time: Recreating Correlation Values from Another Manuscript},
+  url = {https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/},
   year = {2021}
 }</pre>
 </div>

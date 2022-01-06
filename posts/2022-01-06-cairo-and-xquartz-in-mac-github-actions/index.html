@@ -88,53 +88,78 @@ code span.vs { color: #da4453; } /* VerbatimString */
 code span.wa { color: #da4453; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub</title>
+<title>Deciphering Life: One Bit at a Time: Cairo and XQuartz in Mac GitHub Actions</title>
 
-<meta property="description" itemprop="description" content="We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."/>
+<meta property="description" itemprop="description" content="Including cairo and xquartz in MacOS github actions"/>
 
-<link rel="canonical" href="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<link rel="canonical" href="https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2021-11-25"/>
-<meta property="article:created" itemprop="dateCreated" content="2021-11-25"/>
+<meta property="article:published" itemprop="datePublished" content="2022-01-06"/>
+<meta property="article:created" itemprop="dateCreated" content="2022-01-06"/>
 <meta name="article:author" content="Robert M Flight"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub"/>
+<meta property="og:title" content="Deciphering Life: One Bit at a Time: Cairo and XQuartz in Mac GitHub Actions"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<meta property="og:description" content="Including cairo and xquartz in MacOS github actions"/>
+<meta property="og:url" content="https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub"/>
-<meta property="twitter:description" content="We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Cairo and XQuartz in Mac GitHub Actions"/>
+<meta property="twitter:description" content="Including cairo and xquartz in MacOS github actions"/>
+<meta property="twitter:url" content="https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"/>
+<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Cairo and XQuartz in Mac GitHub Actions"/>
+<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2021/11/25"/>
-<meta name="citation_publication_date" content="2021/11/25"/>
+<meta name="citation_online_date" content="2022/01/06"/>
+<meta name="citation_publication_date" content="2022/01/06"/>
 <meta name="citation_author" content="Robert M Flight"/>
 <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Homebrew;citation_publication_date=2022"/>
+  <meta name="citation_reference" content="citation_title=Xquartz homebrew formulae;citation_publication_date=2022"/>
+  <meta name="citation_reference" content="citation_title=Cairo: R graphics device using cairo graphics library for creating high-quality bitmap (PNG, JPEG, TIFF), vector (PDF, SVG, PostScript) and display (X11 and Win32) output;citation_publication_date=2020;citation_author=Simon Urbanek;citation_author=Jeffrey Horner"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Migrating Self-Hosted GitLab Projects to GitHub"]},{"type":"character","attributes":{},"value":["We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-11-25"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["version-control","github","gitlab"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Cairo and XQuartz in Mac GitHub Actions"]},{"type":"character","attributes":{},"value":["Including cairo and xquartz in MacOS github actions"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2022-01-06"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["random-code-snippets","cairo","xquartz","development","github","R"]},{"type":"character","attributes":{},"value":["refs.bib"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["migrating-self-hosted-gitlab-to-github_files/anchor-4.2.2/anchor.min.js","migrating-self-hosted-gitlab-to-github_files/bowser-1.9.3/bowser.min.js","migrating-self-hosted-gitlab-to-github_files/distill-2.2.21/template.v2.js","migrating-self-hosted-gitlab-to-github_files/header-attrs-2.11/header-attrs.js","migrating-self-hosted-gitlab-to-github_files/jquery-3.6.0/jquery-3.6.0.js","migrating-self-hosted-gitlab-to-github_files/jquery-3.6.0/jquery-3.6.0.min.js","migrating-self-hosted-gitlab-to-github_files/jquery-3.6.0/jquery-3.6.0.min.map","migrating-self-hosted-gitlab-to-github_files/popper-2.6.0/popper.min.js","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy-bundle.umd.min.js","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy-light-border.css","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy.css","migrating-self-hosted-gitlab-to-github_files/tippy-6.2.7/tippy.umd.min.js","migrating-self-hosted-gitlab-to-github_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["cairo-and-xquartz-in-mac-github-actions_files/anchor-4.2.2/anchor.min.js","cairo-and-xquartz-in-mac-github-actions_files/bowser-1.9.3/bowser.min.js","cairo-and-xquartz-in-mac-github-actions_files/distill-2.2.21/template.v2.js","cairo-and-xquartz-in-mac-github-actions_files/header-attrs-2.11/header-attrs.js","cairo-and-xquartz-in-mac-github-actions_files/jquery-3.6.0/jquery-3.6.0.js","cairo-and-xquartz-in-mac-github-actions_files/jquery-3.6.0/jquery-3.6.0.min.js","cairo-and-xquartz-in-mac-github-actions_files/jquery-3.6.0/jquery-3.6.0.min.map","cairo-and-xquartz-in-mac-github-actions_files/popper-2.6.0/popper.min.js","cairo-and-xquartz-in-mac-github-actions_files/tippy-6.2.7/tippy-bundle.umd.min.js","cairo-and-xquartz-in-mac-github-actions_files/tippy-6.2.7/tippy-light-border.css","cairo-and-xquartz-in-mac-github-actions_files/tippy-6.2.7/tippy.css","cairo-and-xquartz-in-mac-github-actions_files/tippy-6.2.7/tippy.umd.min.js","cairo-and-xquartz-in-mac-github-actions_files/webcomponents-2.0.0/webcomponents.js","refs.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2501,7 +2526,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Migrating Self-Hosted GitLab Projects to GitHub","description":"We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-25T00:00:00.000-05:00","citationText":"Flight, 2021"}
+{"title":"Cairo and XQuartz in Mac GitHub Actions","description":"Including cairo and xquartz in MacOS github actions","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-01-06T00:00:00.000-05:00","citationText":"Flight, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2531,85 +2556,64 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Migrating Self-Hosted GitLab Projects to GitHub</h1>
+<h1>Cairo and XQuartz in Mac GitHub Actions</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../index.html#category:version-control" class="dt-tag">version-control</a>
+  <a href="../../index.html#category:random-code-snippets" class="dt-tag">random-code-snippets</a>
+  <a href="../../index.html#category:cairo" class="dt-tag">cairo</a>
+  <a href="../../index.html#category:xquartz" class="dt-tag">xquartz</a>
+  <a href="../../index.html#category:development" class="dt-tag">development</a>
   <a href="../../index.html#category:github" class="dt-tag">github</a>
-  <a href="../../index.html#category:gitlab" class="dt-tag">gitlab</a>
+  <a href="../../index.html#category:R" class="dt-tag">R</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that.</p></p>
+<p><p>Including cairo and xquartz in MacOS github actions</p></p>
 </div>
 
 <div class="d-byline">
   Robert M Flight true 
   
-<br/>2021-11-25
+<br/>2022-01-06
 </div>
 
 <div class="d-article">
-<div class="d-contents d-contents-float">
-<nav class="l-text toc figcaption" id="TOC">
-<h3>Contents</h3>
-<ul>
-<li><a href="#moving-to-github">Moving to GitHub</a></li>
-<li><a href="#getting-the-list-of-projects">Getting the List of Projects</a></li>
-<li><a href="#users-to-ids">Users to IDs</a></li>
-<li><a href="#local-clones">Local Clones</a></li>
-<li><a href="#duplicate-projects">Duplicate Projects</a></li>
-<li><a href="#empty-projects">Empty Projects</a></li>
-<li><a href="#creating-github-repos">Creating GitHub Repos</a></li>
-<li><a href="#repos-later">190 Repos Later</a></li>
-</ul>
-</nav>
-</div>
-<h2 id="moving-to-github">Moving to GitHub</h2>
-<p>Six years ago, we didn’t really look into what the free academic version of GitHub teams provided for private repositories, and instead decided that we should have a self-hosted GitLab instance. Outside of some weird issues around SSL certificates and reverse proxies (i.e. how our web-hosting worked), this actually worked pretty well. However, instead of making our internal projects public, we would frequently move them over to GitHub. I think this is partly because GitHub has become the de-facto location for open-source tool development. However, it seemed to cause some friction to push things between the two platforms. This may be due to our lab not using git as much as we should be, especially the collaborative aspects in issues and pull requests.</p>
-<p>After six years, our PI decided to look into the costs for GitHub teams, and discovered that academic teams get free private repos with rather generous amounts of storage and actions minutes. Therefore, we decided it was time to migrate our projects over to GitHub. The PI delegated this task to yours truly.</p>
-<h2 id="getting-the-list-of-projects">Getting the List of Projects</h2>
-<p>To get the list of projects to migrate, I actually copied the project lists from the web interface. If I was doing this again, I would have just asked for the backup locations of our GitLab projects and used those to get the paths for each project. Some projects had changed their names over time and not updated the corresponding path in the database.</p>
-<h2 id="users-to-ids">Users to IDs</h2>
-<p>Because I used lists from the web interface, I also had to convert the users to actual IDs that define the paths to each project. These weren’t too hard to look up.</p>
-<h2 id="local-clones">Local Clones</h2>
-<p>With a full list of projects as “User Name / Project”, and users to IDs, I could easily script converting users to IDs and the full project path, and then system calls to <code>GIT_SSL_NO_VERIFY=TRUE git clone --mirror gitlab_url</code> to make mirror clones of each project. <code>GIT_SSL_NO_VERIFY=TRUE</code> deals with our labs weird SSL certificate issues, while using <code>--mirror</code> means all the branches are pulled, not just the default branch. This is useful to maintain a history of branches over the course of the project development.</p>
-<p>Note that this means you get a directory with “projectName.git”, not just “projectName”. If you look inside the “projectName.git” folder, it’s actually all of the git contents, not the usual files you would see for a normal clone operation.</p>
-<h2 id="duplicate-projects">Duplicate Projects</h2>
-<p>One thing I didn’t think about when doing this is that users on GitLab can fork each others projects, resulting in duplicate projects. If I had been smart, I would have cloned the projects into user specific directories. Thankfully, we only had a few duplicate projects where I had to do a second clone to a user specific directory.</p>
-<h2 id="empty-projects">Empty Projects</h2>
-<p>Some of the projects are actually empty, either because we thought we were going to do something and didn’t, or someone just wanted issue tracking (that would be me). These we don’t want to push back up to GitHub. However, empty projects with no commits appear to have less than <strong>two</strong> files in the <code>objects</code> directory, and <strong>zero</strong> files in the <code>objects/pack</code> directory.</p>
-<h2 id="creating-github-repos">Creating GitHub Repos</h2>
-<p>I used the GitHub command-line-interface tools (<code>gh</code>) to interface with our GitHub organization. After authorizing the <code>gh</code> tools, for each GitLab project I created a corresponding GitHub project, and then moved to the local clone, and did</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>github_locs <span class="ot">=</span> <span class="st">&quot;/path/to/github/repos&quot;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">walk</span>(gitlab_project_dirs, <span class="cf">function</span>(in_dir){</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  proj_name <span class="ot">=</span> <span class="fu">basename</span>(in_dir)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(github_locs)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  gh_command <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;gh repo create --confirm --private orgName/&quot;</span>, proj_name)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(gh_command)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(in_dir)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  gh_loc <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;git@github.com/orgName/&quot;</span>, proj_name)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  git_push <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;git push --mirror &quot;</span>, gh_loc)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">system</span>(git_push)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<p>You can see here I move back and forth between directories a lot, and used system to run <code>gh</code> and <code>git push</code>. It feels a little hacky, but it worked just fine.</p>
-<h2 id="repos-later">190 Repos Later</h2>
-<p>I moved over 180 GitLab projects to GitHub repos. With the projects that already had GitHub repos, that means we have over 190 lab repos. That doesn’t count the stuff we left related to testing CI/CD, people learning how to work with GitLab, and 20 copies of the code we use for sys-admin. There were a subset I had to do by hand because of replication issues and not using user directories. I also discovered some missing repos due to a missed letter when copying one lab members user ID.</p>
+<p>I’ve been using GitHub actions to check and test some of my R packages on multiple architectures, which is nice because I work primarily on Linux.</p>
+<p>One recent package uses the {Cairo} package to generate images that are subsequently used for visualization <span class="citation" data-cites="cairopackage">(<a href="#ref-cairopackage" role="doc-biblioref">Urbanek and Horner 2020</a>)</span>.</p>
+<p>Interestingly, {Cairo} will install fine on MacOS, and then fail as soon as you do <code>library(Cairo)</code>, complaining about not being able to load the {cairo.so} file.</p>
+<p>Thankfully, it seems that the GitHub actions MacOS VMs have homebrew <span class="citation" data-cites="homebrew">(<a href="#ref-homebrew" role="doc-biblioref"><span>“Homebrew”</span> 2022</a>)</span> installed, which means we can use the xquartz brew <span class="citation" data-cites="xquartzbrew">(<a href="#ref-xquartzbrew" role="doc-biblioref"><span>“Xquartz Homebrew Formulae”</span> 2022</a>)</span> to install it, and have {cairo.so} available.</p>
+<p>To add this to your GitHub actions yml, you should add these lines, and double check the brew syntax with the official docs.</p>
+<pre><code>    steps:
+      - name: Install X11 dependencies on MacOS
+        if: runner.os == &#39;macOS&#39;
+        run: |
+          brew install --cask xquartz</code></pre>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-homebrew" class="csl-entry" role="doc-biblioentry">
+<span>“Homebrew.”</span> 2022. <a href="https://brew.sh/">https://brew.sh/</a>.
+</div>
+<div id="ref-cairopackage" class="csl-entry" role="doc-biblioentry">
+Urbanek, Simon, and Jeffrey Horner. 2020. <em>Cairo: R Graphics Device Using Cairo Graphics Library for Creating High-Quality Bitmap (PNG, JPEG, TIFF), Vector (PDF, SVG, PostScript) and Display (X11 and Win32) Output</em>. <a href="https://CRAN.R-project.org/package=Cairo">https://CRAN.R-project.org/package=Cairo</a>.
+</div>
+<div id="ref-xquartzbrew" class="csl-entry" role="doc-biblioentry">
+<span>“Xquartz Homebrew Formulae.”</span> 2022. <a href="https://formulae.brew.sh/cask/xquartz#default">https://formulae.brew.sh/cask/xquartz#default</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Migrating%20Self-Hosted%20GitLab%20Projects%20to%20GitHub&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F">
+      <a href="https://twitter.com/share?text=Cairo%20and%20XQuartz%20in%20Mac%20GitHub%20Actions&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-01-06-cairo-and-xquartz-in-mac-github-actions%2F">
         <i class="fab fa-twitter"></i>
       </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F&amp;title=Migrating%20Self-Hosted%20GitLab%20Projects%20to%20GitHub">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-01-06-cairo-and-xquartz-in-mac-github-actions%2F&amp;title=Cairo%20and%20XQuartz%20in%20Mac%20GitHub%20Actions">
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F&amp;description=Migrating%20Self-Hosted%20GitLab%20Projects%20to%20GitHub">
+      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-01-06-cairo-and-xquartz-in-mac-github-actions%2F&amp;description=Cairo%20and%20XQuartz%20in%20Mac%20GitHub%20Actions">
         <i class="fab fa-pinterest"></i>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-25-migrating-self-hosted-gitlab-to-github%2F">
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-01-06-cairo-and-xquartz-in-mac-github-actions%2F">
         <i class="fab fa-facebook"></i>
       </a>
     </span>
@@ -2626,19 +2630,21 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+  <h3 id="references">References</h3>
+  <div id="references-listing"></div>
   <h3 id="updates-and-corrections">Corrections</h3>
   <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rmflight/researchBlog_distill/issues/new">create an issue</a> on the source repository.</p>
   <h3 id="reuse">Reuse</h3>
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2021, Nov. 25). Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub. Retrieved from https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/</pre>
+  <pre class="citation-appendix short">Flight (2022, Jan. 6). Deciphering Life: One Bit at a Time: Cairo and XQuartz in Mac GitHub Actions. Retrieved from https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/</pre>
   <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2021migrating,
+  <pre class="citation-appendix long">@misc{flight2022cairo,
   author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Migrating Self-Hosted GitLab Projects to GitHub},
-  url = {https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/},
-  year = {2021}
+  title = {Deciphering Life: One Bit at a Time: Cairo and XQuartz in Mac GitHub Actions},
+  url = {https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/},
+  year = {2022}
 }</pre>
 </div>
 <!--/radix_placeholder_appendices-->

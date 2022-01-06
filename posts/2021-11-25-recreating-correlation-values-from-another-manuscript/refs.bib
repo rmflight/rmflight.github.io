@@ -1,0 +1,62 @@
+@article{Barton2015,
+author = "Geoffrey Barton and Mark Blaxter and Christian Cole and Karim Gharbi and Marek Gierliński and Tom Owen-Hughes and Pieta Schofield and Alexander Sherstnev and Nick Schurch and Vijender Singh and Nicola Wrobel",
+title = "{Metadata for a highly replicated two-condition yeast RNAseq experiment.}",
+year = "2015",
+month = "7",
+url = "https://figshare.com/articles/dataset/Metadata_for_a_highly_replicated_two_condition_yeast_RNAseq_experiment_/1416210",
+doi = "10.6084/m9.figshare.1416210.v3"
+}
+
+@article{Gierlinski2015,
+    author = {Gierliński, Marek and Cole, Christian and Schofield, Pietà and Schurch, Nicholas J. and Sherstnev, Alexander and Singh, Vijender and Wrobel, Nicola and Gharbi, Karim and Simpson, Gordon and Owen-Hughes, Tom and Blaxter, Mark and Barton, Geoffrey J.},
+    title = "{Statistical models for RNA-seq data derived from a two-condition 48-replicate experiment}",
+    journal = {Bioinformatics},
+    volume = {31},
+    number = {22},
+    pages = {3625-3630},
+    year = {2015},
+    month = {07},
+    abstract = "{Motivation: High-throughput RNA sequencing (RNA-seq) is now the standard method to determine differential gene expression. Identifying differentially expressed genes crucially depends on estimates of read-count variability. These estimates are typically based on statistical models such as the negative binomial distribution, which is employed by the tools edgeR, DESeq and cuffdiff. Until now, the validity of these models has usually been tested on either low-replicate RNA-seq data or simulations.Results: A 48-replicate RNA-seq experiment in yeast was performed and data tested against theoretical models. The observed gene read counts were consistent with both log-normal and negative binomial distributions, while the mean-variance relation followed the line of constant dispersion parameter of ∼0.01. The high-replicate data also allowed for strict quality control and screening of ‘bad’ replicates, which can drastically affect the gene read-count distribution.Availability and implementation: RNA-seq data have been submitted to ENA archive with project ID PRJEB5348.Contact:g.j.barton@dundee.ac.uk}",
+    issn = {1367-4803},
+    doi = {10.1093/bioinformatics/btv425},
+    url = {https://doi.org/10.1093/bioinformatics/btv425},
+    eprint = {https://academic.oup.com/bioinformatics/article-pdf/31/22/3625/5029181/btv425.pdf},
+}
+
+@article{Schurch2016,
+author = {Schurch, Nicholas J. and Schofield, Pietá and Gierliński, Marek and Cole, Christian and Sherstnev, Alexander and Singh, Vijender and Wrobel, Nicola and Gharbi, Karim and Simpson, Gordon G. and Owen-Hughes, Tom and Blaxter, Mark and Barton, Geoffrey J.},
+title = {How many biological replicates are needed in an RNA-seq experiment and which differential expression tool should you use?},
+volume = {22},
+number = {6},
+pages = {839-851},
+year = {2016},
+doi = {10.1261/rna.053959.115},
+abstract ={RNA-seq is now the technology of choice for genome-wide differential gene expression experiments, but it is not clear how many biological replicates are needed to ensure valid biological interpretation of the results or which statistical tools are best for analyzing the data. An RNA-seq experiment with 48 biological replicates in each of two conditions was performed to answer these questions and provide guidelines for experimental design. With three biological replicates, nine of the 11 tools evaluated found only 20%–40% of the significantly differentially expressed (SDE) genes identified with the full set of 42 clean replicates. This rises to >85% for the subset of SDE genes changing in expression by more than fourfold. To achieve >85% for all SDE genes regardless of fold change requires more than 20 biological replicates. The same nine tools successfully control their false discovery rate at ≲5% for all numbers of replicates, while the remaining two tools fail to control their FDR adequately, particularly for low numbers of replicates. For future RNA-seq experiments, these results suggest that at least six biological replicates should be used, rising to at least 12 when it is important to identify SDE genes for all fold changes. If fewer than 12 replicates are used, a superior combination of true positive and false positive performances makes edgeR and DESeq2 the leading tools. For higher replicate numbers, minimizing false positives is more important and DESeq marginally outperforms the other tools.},
+URL = {http://rnajournal.cshlp.org/content/22/6/839.abstract},
+eprint = {http://rnajournal.cshlp.org/content/22/6/839.full.pdf+html},
+journal = {RNA}
+}
+
+@misc{PRJEB5348,
+author = {Schurch, Nicholas J. and Schofield, Pietá and Gierliński, Marek and Cole, Christian and Sherstnev, Alexander and Singh, Vijender and Wrobel, Nicola and Gharbi, Karim and Simpson, Gordon G. and Owen-Hughes, Tom and Blaxter, Mark and Barton, Geoffrey J.},
+title = {S. cerevisiae WT vs snf2 KO mutant RNA-seq data with 7 technical and 48 biological replicates (336 total) of each condition},
+url = {https://www.ebi.ac.uk/ena/browser/view/PRJEB5348?show=reads}
+}
+
+@article{SNF2Barton2015,
+author = "Geoffrey Barton and Mark Blaxter and Christian Cole and Karim Gharbi and Marek Gierliński and Pieta Schofield and Nick Schurch and Vijender Singh and Nicola Wrobel",
+title = "{SNF2 knock-out yeast gene read counts from a 48 replicate experiment}",
+year = "2015",
+month = "5",
+url = "https://figshare.com/articles/dataset/SNF2_knock_out_yeast_gene_read_counts_from_a_48_replicate_experiment/1425502",
+doi = "10.6084/m9.figshare.1425502.v1"
+}
+
+@article{WTBarton2015,
+author = "Geoffrey Barton and Mark Blaxter and Christian Cole and Karim Gharbi and Marek Gierliński and Pieta Schofield and Nick Schurch and Vijender Singh and Nicola Wrobel",
+title = "{Wild-type yeast gene read counts from 48 replicate experiment}",
+year = "2015",
+month = "5",
+url = "https://figshare.com/articles/dataset/Wild_type_yeast_gene_read_counts_from_48_replicate_experiment/1425503",
+doi = "10.6084/m9.figshare.1425503.v1"
+}

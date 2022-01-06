@@ -10,7 +10,19 @@
   </url>
   <url>
     <loc>https://rmflight.github.io/random_code_snippets.html</loc>
-    <lastmod>2021-12-21T08:57:04-05:00</lastmod>
+    <lastmod>2022-01-06T09:20:58-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/</loc>
+    <lastmod>2022-01-06T09:33:48-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2022-01-06-dplyr-in-packages-and-global-variables/</loc>
+    <lastmod>2022-01-06T09:37:05-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2022-01-06-pie-charts-in-rcy3/</loc>
+    <lastmod>2022-01-06T09:34:03-05:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors/</loc>
@@ -18,7 +30,11 @@
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/</loc>
-    <lastmod>2021-11-25T20:15:38-05:00</lastmod>
+    <lastmod>2022-01-06T09:30:40-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/</loc>
+    <lastmod>2021-12-31T22:15:46-05:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/</loc>
