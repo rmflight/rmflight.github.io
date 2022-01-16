@@ -13,6 +13,14 @@
     <lastmod>2022-01-06T09:20:58-05:00</lastmod>
   </url>
   <url>
+    <loc>https://rmflight.github.io/tmp.html</loc>
+    <lastmod>2022-01-15T21:41:32-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/</loc>
+    <lastmod>2022-01-15T21:41:02-05:00</lastmod>
+  </url>
+  <url>
     <loc>https://rmflight.github.io/posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/</loc>
     <lastmod>2022-01-06T09:33:48-05:00</lastmod>
   </url>
@@ -29,12 +37,8 @@
     <lastmod>2021-12-21T08:58:52-05:00</lastmod>
   </url>
   <url>
-    <loc>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github/</loc>
+    <loc>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-projects-to-github/</loc>
     <lastmod>2022-01-06T09:30:40-05:00</lastmod>
-  </url>
-  <url>
-    <loc>https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/</loc>
-    <lastmod>2021-12-31T22:15:46-05:00</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/</loc>

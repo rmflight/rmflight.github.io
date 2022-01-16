@@ -7,7 +7,17 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 06 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Recreating Correlation Values from Another Manuscript</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript</link>
+      <description>Documenting my journey trying to recreate some correlations calculated in another manuscript.</description>
+      <category>reproducibility</category>
+      <guid>https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript</guid>
+      <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig2_cropped.png" medium="image" type="image/png" width="1900" height="453"/>
+    </item>
     <item>
       <title>Cairo and XQuartz in Mac GitHub Actions</title>
       <dc:creator>Robert M Flight</dc:creator>
@@ -61,23 +71,13 @@
     <item>
       <title>Migrating Self-Hosted GitLab Projects to GitHub</title>
       <dc:creator>Robert M Flight</dc:creator>
-      <link>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github</link>
+      <link>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-projects-to-github</link>
       <description>We wanted to migrate from self-hosted GitLab projects to GitHub repos. Here is some background on how we accomplished that.</description>
       <category>version-control</category>
       <category>github</category>
       <category>gitlab</category>
-      <guid>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-to-github</guid>
+      <guid>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-projects-to-github</guid>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Recreating Correlation Values from Another Manuscript</title>
-      <dc:creator>Robert M Flight</dc:creator>
-      <link>https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript</link>
-      <description>Documenting my journey trying to recreate some correlations calculated in another manuscript.</description>
-      <category>reproducibility</category>
-      <guid>https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript</guid>
-      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <media:content url="https://rmflight.github.io/posts/2021-11-25-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig2_cropped.png" medium="image" type="image/png" width="1900" height="453"/>
     </item>
     <item>
       <title>Zooming GGraph Plots</title>
