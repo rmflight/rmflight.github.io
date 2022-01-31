@@ -1,5 +1,27 @@
 [
   {
+    "path": "posts/2022-01-31-heatmap-colormaps/",
+    "title": "Heatmap Colormaps!",
+    "description": "Examples of good colormaps to use for heatmaps, both divergent and incremental.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2022-01-31",
+    "categories": [
+      "colormaps",
+      "visualization",
+      "heatmap",
+      "random-code-snippets"
+    ],
+    "contents": "\n\nContents\nNormal Incrementing Data\nDivergent Data\nOther Colormaps?\n\nNormal Incrementing Data\nNine times out of ten, you probably need just one of the {viridis} colormaps for values that are increasing in one direction. For example, correlation values that are all positive, or abundances from RNA-Seq, etc. If you want to use them with {ComplexHeatmap}, you do so like this:\n\n\n# correlation example for 0 - 1\n# imagine cor_vals is a set of correlation values\nlibrary(ComplexHeatmap)\ncor_start = 0\ncor_end = 1\nn_break = 20\nviridis_map = circlize::colorRamp2(seq(cor_start, \n                                       cor_end, \n                                       length.out = n_break),\n                                   viridis::viridis(n_break))\n\nHeatmap(cor_vals, \n        col = viridis_map, \n        ...)\n\n\n\nDivergent Data\nIn this case, you have values where a central value is a natural point that you want to highlight things above and below that value. Examples include correlations that include negative and positive correlations, log-fold-changes above and below zero. In this case, I prefer the {scico} package with the vik colormap.\n\ncor_start = -1\ncor_end = 1\nn_break = 20\n\nscico_map = circlize::colorRamp2(seq(cor_start\n                                     cor_end,\n                                     length.out = n_break),\n                                 scico::scico(n_break, \n                                              palette = \"vik\"))\n\nHeatmap(cor_vals, \n        col = scico_map,\n        ...)\n\nOther Colormaps?\nDo you have other suggestions for colormaps, both incremental and divergent? Please let me know in the comments!\n\n\n\n",
+    "preview": {},
+    "last_modified": "2022-01-31T16:47:52-05:00",
+    "input_file": "heatmap-colormaps.knit.md"
+  },
+  {
     "path": "posts/2022-01-15-recreating-correlation-values-from-another-manuscript/",
     "title": "Recreating Correlation Values from Another Manuscript",
     "description": "Documenting my journey trying to recreate some correlations calculated in another manuscript.",

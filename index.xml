@@ -7,7 +7,19 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Sat, 15 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Heatmap Colormaps!</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2022-01-31-heatmap-colormaps</link>
+      <description>Examples of good colormaps to use for heatmaps, both divergent and incremental.</description>
+      <category>colormaps</category>
+      <category>visualization</category>
+      <category>heatmap</category>
+      <category>random-code-snippets</category>
+      <guid>https://rmflight.github.io/posts/2022-01-31-heatmap-colormaps</guid>
+      <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Recreating Correlation Values from Another Manuscript</title>
       <dc:creator>Robert M Flight</dc:creator>
