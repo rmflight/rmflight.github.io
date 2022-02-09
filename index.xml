@@ -7,7 +7,17 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 31 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 08 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Project Consultation Template</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2022-02-08-project-consultation-template</link>
+      <description>What our labs project consult template looks like.</description>
+      <category>research</category>
+      <guid>https://rmflight.github.io/posts/2022-02-08-project-consultation-template</guid>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://rmflight.github.io/posts/2022-02-08-project-consultation-template/tweet_about_projects.png" medium="image" type="image/png" width="602" height="269"/>
+    </item>
     <item>
       <title>Heatmap Colormaps!</title>
       <dc:creator>Robert M Flight</dc:creator>
