@@ -1,5 +1,26 @@
 [
   {
+    "path": "posts/2022-06-22-compiling-against-pythonh/",
+    "title": "Compiling Against Python.h",
+    "description": "How to make sure that cython can find python.h when using a self compiled python.",
+    "author": [
+      {
+        "name": "Robert M Flight",
+        "url": {}
+      }
+    ],
+    "date": "2022-06-22",
+    "categories": [
+      "python",
+      "cython",
+      "random-code-snippets"
+    ],
+    "contents": "\n\nContents\nDownload and\nMake\nSetup New Virtualenv With\nIt\nAdd\nIt to Environment\nInstall Something Cython\n\nSometimes, the installed version of Python on your linux system isn’t\nwhat you need, and you can’t easily install a newer version system-wide.\nOf course, you can download, extract, and configure and then make Python\nthat lives in it’s own directory. But then you don’t have all the\npointers to the Include directories that are useful for\nlinking stuff against. And you don’t want to change symlinks at the\nsystem level, that might break things, a lot of things.\nIf you are using cython to speed up your code, then it\nneeds to know where exactly to find those extra header files.\nUnfortunately, it needs both the C++ and the C versions, it seems.\nLets go through the steps of setting up a new python, and then\nlinking it for compiling cythonized programs.\nDownload and Make\nDownload python, and\nnavigate to where you saved it. I’ll assume we downloaded version 10 to\n~/software\ncd ~/software\ntar -xzf Python-3.10.5.tgz\ncd Python-3.10.5\n./configure --enable-optimizations\nmake\nSetup New Virtualenv With It\nMake sure you have virtualenv installed, its necessary\nif you want to specify a specific version of python. Yes, you could\nprobably get around this with conda or docker,\nbut we are doing things the painful way.\nvirtualenv -p ~/software/Python-3.10.5/python ~/py10_venv\nsource ~/py10_venv/activate\nAdd It to Environment\nexport C_INCLUDE_PATH=/home/rmflight/software/Python-3.10.5:$C_INCLUDE_PATH\nInstall Something Cython\nWe are going to install a package that needs only a few\npython deps, our labs icikt package.\n# check that you are using the right version in the venv\npython3 --version\npython3 -m pip install docopt\npython3 -m pip install scipy\npython3 -m pip install cython\ncd ~/software\ngit clone git@github.com:MoseleyBioinformaticsLab/icikt.git\npython3 -m pip install --global-option=build_ext --global-option=\"-I/home/rmflight/software/Python-3.10.5/Include\" ~/software/icikt\nNotice we’ve done two very important things overall:\nAdded a path, C_INCLUDE_PATH\nAdded two --global-option in the call to build our\nlocal package\nFor some reason we need both the environment\nvariable path, and the global option to get this to work.\nIf you forget one or the other, you will see error messages\nconcerning python.h\n\n\n\n",
+    "preview": {},
+    "last_modified": "2022-06-23T15:23:38-04:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2022-02-08-project-consultation-template/",
     "title": "Project Consultation Template",
     "description": "What our labs project consult template looks like.",
@@ -15,8 +36,8 @@
     ],
     "contents": "\n\nContents\nMotivating Tweet\nConsultations?\nTemplate\n\nMotivating Tweet\nA little while ago, I was tweeting about the joy of collaborating with people who haven’t included you in their experimental design. One of the tweets was this:\n\n\n\nI decided that I should follow up with our actual project consultation template.\nConsultations?\nA large part of my work is collaborative projects where I do various -omics analyses for members of the cancer center I’m part of. As I’m sure many of you know, it’s very important for us to capture the details of the experiments so we can figure out what actually needs to be done, and the most appropriate method.\nInternally, we use a self-hosted foswiki instance to keep lists of what needs to be done, document SOPs, and capture experimental details from collaborators.\nWith every project we get asked to work on, we have a meeting, and who is at that meeting is usually determined by what kind of analysis the potential collaborator has asked for.\nTemplate\nDuring that meeting, we fill in all the details of this template (which I translated to markdown from foswiki). Obviously, not all of the fields necessarily get filled out for each project, and sometimes other custom fields will get added. This template helps us capture the minimum information needed.\n## Meeting Description\n  * Date/Time: \n  * Length: 1 hour\n\n### Attendance\n  * \n  * \n\n### Meeting Purpose\n\n## Project Description\n\n### Overall Purpose\n\n### Implementation Timeline\n  * Design/Conceptualization:\n  * Experiment: \n    * Start:  ; End:\n  * Sample Collection and Preparation:\n  * Data Collection:\n  * Data Analysis:\n\n### Experimental Design\n\n### Specific Data Analysis Questions\n\n## Conclusions\n\n### TODO\n\n\n\n\n",
     "preview": "posts/2022-02-08-project-consultation-template/tweet_about_projects.png",
-    "last_modified": "2022-02-08T21:02:30-05:00",
-    "input_file": "project-consultation-template.knit.md",
+    "last_modified": "2022-02-08T21:02:31-05:00",
+    "input_file": {},
     "preview_width": 602,
     "preview_height": 269
   },
