@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -87,52 +88,53 @@ code span.vs { color: #da4453; } /* VerbatimString */
 code span.wa { color: #da4453; } /* Warning */
 </style>
 
+
   <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Comments enabled via utterances</title>
+<title>Deciphering Life: One Bit at a Time: Creating an Analysis With a targets Workflow</title>
 
-<meta property="description" itemprop="description" content="How I got utterances working on blogdown."/>
+<meta property="description" itemprop="description" content="How I work through an -omics analysis using the targets package."/>
 
-<link rel="canonical" href="https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/"/>
+<link rel="canonical" href="https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2019-10-16"/>
-<meta property="article:created" itemprop="dateCreated" content="2019-10-16"/>
+<meta property="article:published" itemprop="datePublished" content="2022-09-27"/>
+<meta property="article:created" itemprop="dateCreated" content="2022-09-27"/>
 <meta name="article:author" content="Robert M Flight"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Comments enabled via utterances"/>
+<meta property="og:title" content="Deciphering Life: One Bit at a Time: Creating an Analysis With a targets Workflow"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="How I got utterances working on blogdown."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/"/>
+<meta property="og:description" content="How I work through an -omics analysis using the targets package."/>
+<meta property="og:url" content="https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Comments enabled via utterances"/>
-<meta property="twitter:description" content="How I got utterances working on blogdown."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/"/>
+<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Creating an Analysis With a targets Workflow"/>
+<meta property="twitter:description" content="How I work through an -omics analysis using the targets package."/>
+<meta property="twitter:url" content="https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/"/>
 <meta property="twitter:site" content="@rmflight"/>
 <meta property="twitter:creator" content="@rmflight"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Comments enabled via utterances"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/"/>
+<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Creating an Analysis With a targets Workflow"/>
+<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2019/10/16"/>
-<meta name="citation_publication_date" content="2019/10/16"/>
+<meta name="citation_online_date" content="2022/09/27"/>
+<meta name="citation_publication_date" content="2022/09/27"/>
 <meta name="citation_author" content="Robert M Flight"/>
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","author","date","categories","description","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Comments enabled via utterances"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]}]}]},{"type":"character","attributes":{},"value":["2019-10-16"]},{"type":"character","attributes":{},"value":["blogdown","commenting","utterances"]},{"type":"character","attributes":{},"value":["How I got utterances working on blogdown."]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Creating an Analysis With a targets Workflow"]},{"type":"character","attributes":{},"value":["How I work through an -omics analysis using the targets package."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2022-09-27"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["analysis","development","mass-spectrometry","targets"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["refs.bib"]}
+  {"type":"character","attributes":{},"value":["exampletargetsworkflow_files/anchor-4.2.2/anchor.min.js","exampletargetsworkflow_files/bowser-1.9.3/bowser.min.js","exampletargetsworkflow_files/distill-2.2.21/template.v2.js","exampletargetsworkflow_files/header-attrs-2.16/header-attrs.js","exampletargetsworkflow_files/jquery-3.6.0/jquery-3.6.0.js","exampletargetsworkflow_files/jquery-3.6.0/jquery-3.6.0.min.js","exampletargetsworkflow_files/jquery-3.6.0/jquery-3.6.0.min.map","exampletargetsworkflow_files/popper-2.6.0/popper.min.js","exampletargetsworkflow_files/tippy-6.2.7/tippy-bundle.umd.min.js","exampletargetsworkflow_files/tippy-6.2.7/tippy-light-border.css","exampletargetsworkflow_files/tippy-6.2.7/tippy.css","exampletargetsworkflow_files/tippy-6.2.7/tippy.umd.min.js","exampletargetsworkflow_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2489,8 +2491,8 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.6/header-attrs.js"></script>
-  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/header-attrs-2.16/header-attrs.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2539,7 +2541,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Comments enabled via utterances","description":"How I got utterances working on blogdown.","authors":[{"author":"Robert M Flight","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2019-10-16T00:00:00.000-04:00","citationText":"Flight, 2019"}
+{"title":"Creating an Analysis With a targets Workflow","description":"How I work through an -omics analysis using the targets package.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-09-27T00:00:00.000-04:00","citationText":"Flight, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2569,22 +2571,22 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Comments enabled via utterances</h1>
+<h1>Creating an Analysis With a targets Workflow</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../index.html#category:blogdown" class="dt-tag">blogdown</a>
-  <a href="../../index.html#category:commenting" class="dt-tag">commenting</a>
-  <a href="../../index.html#category:utterances" class="dt-tag">utterances</a>
+  <a href="../../index.html#category:analysis" class="dt-tag">analysis</a>
+  <a href="../../index.html#category:development" class="dt-tag">development</a>
+  <a href="../../index.html#category:mass-spectrometry" class="dt-tag">mass-spectrometry</a>
+  <a href="../../index.html#category:targets" class="dt-tag">targets</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>How I got utterances working on blogdown.</p></p>
+<p><p>How I work through an -omics analysis using the targets package.</p></p>
 </div>
 
 <div class="d-byline">
+  Robert M Flight true 
   
-  Robert M Flight
-  
-<br/>2019-10-16
+<br/>2022-09-27
 </div>
 
 <div class="d-article">
@@ -2592,36 +2594,318 @@ d-appendix d-footnote-list a.footnote-backlink {
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#tldr">TL;DR</a></li>
-<li><a href="#why-utterances">Why Utterances</a></li>
-<li><a href="#how">How</a></li>
+<li><a href="#tldr" id="toc-tldr">TL;DR</a></li>
+<li><a href="#example-repo" id="toc-example-repo">Example Repo</a></li>
+<li><a href="#packages" id="toc-packages">Packages</a></li>
+<li><a href="#example-analysis" id="toc-example-analysis">Example Analysis</a>
+<ul>
+<li><a href="#create-new-project" id="toc-create-new-project">Create New Project</a></li>
+<li><a href="#initialize-tflow" id="toc-initialize-tflow">Initialize tflow</a></li>
+<li><a href="#setup-packages" id="toc-setup-packages">Setup Packages</a></li>
+<li><a href="#initial-_targets.r" id="toc-initial-_targets.r">Initial _targets.R</a></li>
+<li><a href="#load-data" id="toc-load-data">Load Data</a></li>
+<li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis">Exploratory Data Analysis</a></li>
+<li><a href="#differential-analysis" id="toc-differential-analysis">Differential Analysis</a></li>
+<li><a href="#final-report" id="toc-final-report">Final Report</a></li>
+</ul></li>
+<li><a href="#notes-about-rmarkdown-and-quarto" id="toc-notes-about-rmarkdown-and-quarto">Notes About Rmarkdown and Quarto</a></li>
 </ul>
 </nav>
 </div>
 <h2 id="tldr">TL;DR</h2>
-<p><a href="https://utteranc.es/">Utterances</a> is a lightweight commenting platform built on GitHub issues. So you have to have a GitHub account, but I expect most people who comment on this blog already have one.</p>
-<h2 id="why-utterances">Why Utterances</h2>
-<p>When I switched to <a href="https://bookdown.org/yihui/blogdown/">blogdown</a>, I lost my disqus comments. I had considered migrating them over, but never got around to it. I also thought that there had to be a way to link GitHub issues to blog posts, but didn’t investigate it much.</p>
-<p>Then, I came across <a href="https://masalmon.eu/2019/10/02/disqus/">Maëlle’s blog post</a> about switching to <a href="https://uteranc.es">utterances</a> and I was sold. I had some free time last night, and dived into how to add it to my site that uses the hugo academic theme.</p>
-<p>I’m not expecting a lot of heavy commenting, but at least it’s now available!</p>
-<h2 id="how">How</h2>
-<p>For blogdown, just replace everything in <em>layouts/partials/comments.html</em> with the code snippet from utterances.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Setting up an analysis workflow using <code>{targets}</code> can be a little confusing without worked examples.
+This is my attempt to provide such an example.</p>
+<h2 id="example-repo">Example Repo</h2>
+<p>I’ve set up a <a href="https://github.com/rmflight/example_targets_workflow">GitHub repo</a> that contains the data and scripts used for this analysis.</p>
+<h2 id="packages">Packages</h2>
+<p>For this example, if you want to follow along yourself, you will need Miles McBain’s <code>{tflow}</code> package, which sets up an opinionated but loose directory / file structure.
+You will also need the <code>{targets}</code> package, and <code>{tarchetypes}</code>, and <code>{rmarkdown}</code>, as well as a few others.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">c</span>(<span class="st">&quot;conflicted&quot;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;dotenv&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;targets&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;tarchetypes&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;BiocManager&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;viridis&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;limma&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;milesmcbain/tflow&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;moseleyBioinformaticsLab/ICIKendallTau&quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;moseleyBioinformaticsLab/visualizationQualityControl&quot;</span>))</span></code></pre></div>
+<h2 id="example-analysis">Example Analysis</h2>
+<p>The example we will work through is a lipidomics data analysis.
+This data is based on real data, but sample IDs have been completely anonymized.
+I’m going to walk through all the steps I do to set up the analysis, mostly by commenting the example <code>_targets.R</code> file, and leaving the objects in the order they were created.</p>
+<h3 id="create-new-project">Create New Project</h3>
+<p>We start by creating a brand new RStudio project to work in, or any new directory.</p>
+<h3 id="initialize-tflow">Initialize tflow</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tflow<span class="sc">::</span><span class="fu">use_tflow</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>✔ Setting active project to <span class="st">&#39;/home/rmflight/Projects/personal/example_targets_workflow&#39;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>✔ Creating <span class="st">&#39;R/&#39;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>✔ Writing <span class="st">&#39;packages.R&#39;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>✔ Writing <span class="st">&#39;_targets.R&#39;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>✔ Writing <span class="st">&#39;.env&#39;</span></span></code></pre></div>
+<p>In addition to this, I’ve created a <code>data</code> directory, and added the measurements CSV and metadata CSV to that directory.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">&quot;data&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;sample_measurements.csv&quot;</span> <span class="st">&quot;sample_metadata.csv&quot;</span></span></code></pre></div>
+<h3 id="setup-packages">Setup Packages</h3>
+<p>We modify the <code>packages.R</code> file to add anything else we need.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## library() calls go here</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dotenv)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(targets)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tarchetypes)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># our extra packages for this analysis</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visualizationQualityControl)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ICIKendallTau)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(limma)</span></code></pre></div>
+<h3 id="initial-_targets.r">Initial _targets.R</h3>
+<p>This is what <code>{tflow}</code> sets up to run when you start.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load your packages, e.g. library(targets).</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;./packages.R&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Load your R files</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">list.files</span>(<span class="st">&quot;./R&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>), source)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## tar_plan supports drake-style targets and also tar_target()</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_plan</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># target = function_to_make(arg), ## drake style</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># tar_target(target2, function_to_make2(arg)) ## targets style</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Notice that the first thing that happens is that the <code>packages.R</code> file gets sourced, so that all your packages are loaded.
+Second, it runs through all of the files in <code>R</code>, and sources them to load all the functions.
+<code>{tflow}</code> and <code>{targets}</code> expound a functional workflow, where we put things in functions.
+Finally, it uses <code>tar_plan()</code> to run each of the targets.</p>
+<p>We will specify each of the targets in turn to fill out the analysis we want to do.</p>
+<h3 id="load-data">Load Data</h3>
+<p>Lets first <strong>declare</strong> the measurement file and metadata file as actual targets, so if they change, then any dependent targets will be re-run as well.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_plan</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(measurement_file,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;data/sample_measurements.csv&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(metadata_file,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;data/sample_metadata.csv&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Running it with <code>tar_make()</code> results in:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_make</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>• start target measurement_file</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>• built target measurement_file [<span class="fl">0.001</span> seconds]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>• start target metadata_file</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>• built target metadata_file [<span class="fl">0.001</span> seconds]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">0.078</span> seconds]</span></code></pre></div>
+<p>Then we add in actually reading in the data.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_plan</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(measurement_file,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;data/sample_measurements.csv&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(metadata_file,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;data/sample_metadata.csv&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">lipid_measurements =</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(measurement_file),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">lipid_metadata =</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(metadata_file),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_make</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>✔ skip target measurement_file</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>✔ skip target metadata_file</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>• start target lipid_measurements</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>Rows<span class="sc">:</span> <span class="dv">1012</span> Columns<span class="sc">:</span> <span class="dv">16</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>── Column specification ────────────────────────────────────────────────────────</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">chr</span>  (<span class="dv">4</span>)<span class="sc">:</span> class, name, group_units, feature_id</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dbl</span> (<span class="dv">12</span>)<span class="sc">:</span> WT_1, WT_2, WT_3, WT_4, WT_5, WT_6, KO_1, KO_2, KO_3, KO_4, KO_5, ...</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ℹ Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>ℹ Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>• built target lipid_measurements [<span class="fl">0.305</span> seconds]</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>• start target lipid_metadata</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>Rows<span class="sc">:</span> <span class="dv">12</span> Columns<span class="sc">:</span> <span class="dv">18</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>── Column specification ────────────────────────────────────────────────────────</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">chr</span> (<span class="dv">10</span>)<span class="sc">:</span> parent_sample_name, assay, cell_line, client_matrix, client_sample...</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">dbl</span>  (<span class="dv">8</span>)<span class="sc">:</span> client_identifier, client_sample_number, group_number, sample_amou...</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>ℹ Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>ℹ Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>• built target lipid_metadata [<span class="fl">0.07</span> seconds]</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">0.47</span> seconds]</span></code></pre></div>
+<h3 id="exploratory-data-analysis">Exploratory Data Analysis</h3>
+<p>For the exploratory data analysis (EDA), I like to put that into a report.
+You set those up using <code>tflow::use_rmd("document_name")</code> or <code>tflow::use_qmd("document_name)</code>.
+An example <a href="https://github.com/rmflight/example_targets_workflow/blob/main/doc/exploration.Rmd">EDA report</a> is available at the actual repo.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tflow<span class="sc">::</span><span class="fu">use_rmd</span>(<span class="st">&quot;exploration&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>✔ Setting active project to <span class="st">&#39;/home/rmflight/Projects/personal/example_targets_workflow&#39;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>✔ Writing <span class="st">&#39;doc/exploration.Rmd&#39;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Add this target to your <span class="fu">tar_plan</span>()<span class="sc">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_render</span>(exploration, <span class="st">&quot;doc/exploration.Rmd&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_plan</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(measurement_file,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;data/sample_measurements.csv&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(metadata_file,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;data/sample_metadata.csv&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">lipid_measurements =</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(measurement_file),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">lipid_metadata =</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(metadata_file),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_render</span>(exploration, <span class="st">&quot;doc/exploration.Rmd&quot;</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> targets<span class="sc">::</span><span class="fu">tar_make</span>()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>✔ skip target measurement_file</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>✔ skip target metadata_file</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_measurements</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_metadata</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>• start target exploration</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>• built target exploration [<span class="fl">2.829</span> seconds]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">2.922</span> seconds]</span></code></pre></div>
+<p>Note we could have put these bits in their own functions instead of keeping them in the document proper:</p>
+<ul>
+<li>ICI-Kt correlations;</li>
+<li>Heatmap figure;</li>
+<li>PCA decomposition;</li>
+<li>PCA visualization</li>
+</ul>
+<p>These are left as an exercise for the reader.</p>
+<h3 id="differential-analysis">Differential Analysis</h3>
+<p>Following EDA, we need to do the differential analysis.
+But for that, we need to do normalization and imputation of missing values first.
+Each one of those should be their own functions.
+<a href="https://github.com/rmflight/example_targets_workflow/blob/main/R/differential.R#L1">Here</a> is the normalization function, <a href="https://github.com/rmflight/example_targets_workflow/blob/main/R/differential.R#L26">here</a> is the imputation, and <a href="https://github.com/rmflight/example_targets_workflow/blob/main/R/differential.R#L41">here</a> is the differential analysis function.</p>
+<p>And here is the output of running each step.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalization</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tar_make</span>()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>✔ skip target measurement_file</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>✔ skip target metadata_file</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_measurements</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_metadata</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>• start target lipid_normalized</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>New names<span class="sc">:</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...1</span><span class="st">`</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...2</span><span class="st">`</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...3</span><span class="st">`</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...4</span><span class="st">`</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...5</span><span class="st">`</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...6</span><span class="st">`</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...7</span><span class="st">`</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...8</span><span class="st">`</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...9</span><span class="st">`</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...10</span><span class="st">`</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...11</span><span class="st">`</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>• <span class="st">``</span> <span class="ot">-&gt;</span> <span class="st">`</span><span class="at">...12</span><span class="st">`</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>• built target lipid_normalized [<span class="fl">0.449</span> seconds]</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>✔ skip target exploration</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">0.562</span> seconds]</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># imputing missing values</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tar_make</span>()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>✔ skip target measurement_file</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>✔ skip target metadata_file</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_measurements</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_metadata</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_normalized</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>✔ skip target exploration</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>• start target lipid_imputed</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>• built target lipid_imputed [<span class="fl">0.05</span> seconds]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">0.169</span> seconds]</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># differential analysis</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tar_make</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>✔ skip target measurement_file</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>✔ skip target metadata_file</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_measurements</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_metadata</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_normalized</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>✔ skip target exploration</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_imputed</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>• start target lipids_differential</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>• built target lipids_differential [<span class="fl">0.198</span> seconds]</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">0.312</span> seconds]</span></code></pre></div>
+<p>I <strong>try</strong> to build it up piecewise like this because it lets me easily load the previous target into the next function.
+Most of my functions will have <code>tar_load(previous_target)</code> at the top as a comment, or <code>varname = tar_read(previous_target)</code>, if I’ve got a more generic variable name I want to use that doesn’t match the name of the target coming into the function.
+For example, here is the top of the normalization function.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>normalize_samples <span class="ot">=</span> <span class="cf">function</span>(lipid_measurements){</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do normalization in here and return the df</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tar_load(lipid_measurements)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>This strategy lets me easily load the variables I need in that function space and develop the actual code of the function.
+I will very often couple this with restarting the R session, <code>source("./packages.R")</code>, and if needed <code>lapply(...)</code> sourcing the R function files, and then load the necessary variables and start writing the code for the function.</p>
+<h3 id="final-report">Final Report</h3>
+<p>Finally, we can put the differential results in our final report.
+So that they are together, we can make the EDA report a <strong>child document</strong> of the differential report, and include it as well.
+Let’s actually make a copy, and include it as a child document.</p>
+<p>We add it to the plan as another target using the <code>tar_target</code> syntax, because as far as I know that is the only way to include something as a file dependency.
+If we want the <strong>differential_report</strong> target to get rerun when the <em>exploration</em> one is changed, this is the way to do it, have a target in the <code>tar_plan</code>, and then make sure to load the target in the <em>differential_report</em> itself.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on the command line / terminal / console</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>tflow<span class="sc">::</span><span class="fu">use_rmd</span>(<span class="st">&quot;differential_report&quot;</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>✔ Writing <span class="st">&#39;doc/differential_report.Rmd&#39;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Add this target to your <span class="fu">tar_plan</span>()<span class="sc">:</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_render</span>(differential_report2, <span class="st">&quot;doc/differential_report.Rmd&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in the _targets.R file</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add the child target</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_target</span>(exploration_child,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;doc/exploration_child.Rmd&quot;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">&quot;file&quot;</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>             </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and then generate final report</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_render</span>(differential_report, <span class="st">&quot;doc/differential_report.Rmd&quot;</span>)</span></code></pre></div>
+<p>In the rmarkdown:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eda child=&#39;doc/exploration_child.Rmd&#39;}</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="in">plot(cars)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run the differential report</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tar_make</span>()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>✔ skip target measurement_file</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>✔ skip target metadata_file</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>✔ skip target exploration_child</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_measurements</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_metadata</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_normalized</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>✔ skip target exploration</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>✔ skip target lipid_imputed</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>✔ skip target lipids_differential</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>• start target differential_report</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>• built target differential_report [<span class="fl">3.018</span> seconds]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">3.14</span> seconds]</span></code></pre></div>
+<h2 id="notes-about-rmarkdown-and-quarto">Notes About Rmarkdown and Quarto</h2>
+<p>If you want to be able to interactively mess with your Rmarkdown / Quarto docs while under <code>{targets}</code>, then you need to change the setting <strong>Chunk Output Inline</strong> to <strong>Chunk Output in Console</strong>.</p>
+<p>If you want to run a full render of the document <strong>outside</strong> of the <code>{targets}</code> workflow, then you have to add an option to the <strong>interactive</strong> (shell, console) calls to <code>{rmarkdown}</code> and <code>{quarto}</code> to either use the <code>knit_root_dir</code> or <code>execute_dir</code> arguments, respectively.
+Both of those should be in the top level directory of the <code>{targets}</code> project, which most often at the console can be gotten by using <code>getwd()</code>, as shown in the examples below.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for rmarkdown</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;doc/document.Rmd&quot;</span>, <span class="at">knit_root_dir =</span> <span class="fu">getwd</span>())</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for quarto</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>(<span class="st">&quot;doc/document.qmd&quot;</span>, <span class="at">execute_dir =</span> <span class="fu">getwd</span>())</span></code></pre></div>
+<p>There is also currently an issue with using <code>{gt}</code> tables in Quarto -&gt; Word documents within <code>{targets}</code> workflows that as of 2022-09-27, is not quite resolved.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Comments%20enabled%20via%20utterances&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2019-10-16-comments-enabled-via-utterances%2F" aria-label="share on twitter">
+      <a href="https://twitter.com/share?text=Creating%20an%20Analysis%20With%20a%20targets%20Workflow&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-09-27-creating-an-analysis-using-targets%2F" aria-label="share on twitter">
         <i class="fab fa-twitter" aria-hidden="true"></i>
       </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2019-10-16-comments-enabled-via-utterances%2F&amp;title=Comments%20enabled%20via%20utterances" aria-label="share on linkedin">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-09-27-creating-an-analysis-using-targets%2F&amp;title=Creating%20an%20Analysis%20With%20a%20targets%20Workflow" aria-label="share on linkedin">
         <i class="fab fa-linkedin" aria-hidden="true"></i>
       </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2019-10-16-comments-enabled-via-utterances%2F&amp;description=Comments%20enabled%20via%20utterances" aria-label="share on pinterest">
+      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-09-27-creating-an-analysis-using-targets%2F&amp;description=Creating%20an%20Analysis%20With%20a%20targets%20Workflow" aria-label="share on pinterest">
         <i class="fab fa-pinterest" aria-hidden="true"></i>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2019-10-16-comments-enabled-via-utterances%2F" aria-label="share on facebook">
+      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2022-09-27-creating-an-analysis-using-targets%2F" aria-label="share on facebook">
         <i class="fab fa-facebook" aria-hidden="true"></i>
       </a>
     </span>
@@ -2644,13 +2928,13 @@ d-appendix d-footnote-list a.footnote-backlink {
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2019, Oct. 16). Deciphering Life: One Bit at a Time: Comments enabled via utterances. Retrieved from https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/</pre>
+  <pre class="citation-appendix short">Flight (2022, Sept. 27). Deciphering Life: One Bit at a Time: Creating an Analysis With a targets Workflow. Retrieved from https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/</pre>
   <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2019comments,
+  <pre class="citation-appendix long">@misc{flight2022creating,
   author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Comments enabled via utterances},
-  url = {https://rmflight.github.io/posts/2019-10-16-comments-enabled-via-utterances/},
-  year = {2019}
+  title = {Deciphering Life: One Bit at a Time: Creating an Analysis With a targets Workflow},
+  url = {https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets/},
+  year = {2022}
 }</pre>
 </div>
 <!--/radix_placeholder_appendices-->

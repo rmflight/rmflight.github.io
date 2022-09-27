@@ -7,7 +7,19 @@
     <description>Musings on R, programming, -omics, open science, and whatever.
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 22 Jun 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Sep 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Creating an Analysis With a targets Workflow</title>
+      <dc:creator>Robert M Flight</dc:creator>
+      <link>https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets</link>
+      <description>How I work through an -omics analysis using the targets package.</description>
+      <category>analysis</category>
+      <category>development</category>
+      <category>mass-spectrometry</category>
+      <category>targets</category>
+      <guid>https://rmflight.github.io/posts/2022-09-27-creating-an-analysis-using-targets</guid>
+      <pubDate>Tue, 27 Sep 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Compiling Against Python.h</title>
       <dc:creator>Robert M Flight</dc:creator>
