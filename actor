@@ -12,6 +12,6 @@
 	"publicKey": {
 		"id": "https://rmflight.github.io/actor#main-key",
 		"owner": "https://rmflight.github.io/actor",
-		"publicKeyPem": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAysyuQyV79to2rhXtdLfwd5tpMyQTCK/fpXL+820jMNxYM+zUy1b9LJBVwdO0pkEfZGgfCgX7+8UFWwPhKX/NiJeq/yNMzvPnJmAQ8a6UqRlkdoWxK8VQZLsAW0oYHob8h8tHoXK1ZK/eA6X1kKtGEvLAdoTV4NCTSyjNB4ugRpAPUus+521lZ6cA6vS67s67Iuv8enwIA8YfEPJntPqxpWSVSrmuitp5SVOo/H7abEzkXytmrzfUgo8bRWPUC99EVIglyFYM7gAW/LGG0X4eIE62tEAIYYbabIJkWxlAEfglBjJkdV6WRpFQRAtxitkedBs7zdHqzFC8p58XSHDuWwIDAQAB-----END PUBLIC KEY-----"
+		"publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAysyuQyV79to2rhXtdLfw\nd5tpMyQTCK/fpXL+820jMNxYM+zUy1b9LJBVwdO0pkEfZGgfCgX7+8UFWwPhKX/N\niJeq/yNMzvPnJmAQ8a6UqRlkdoWxK8VQZLsAW0oYHob8h8tHoXK1ZK/eA6X1kKtG\nEvLAdoTV4NCTSyjNB4ugRpAPUus+521lZ6cA6vS67s67Iuv8enwIA8YfEPJntPqx\npWSVSrmuitp5SVOo/H7abEzkXytmrzfUgo8bRWPUC99EVIglyFYM7gAW/LGG0X4e\nIE62tEAIYYbabIJkWxlAEfglBjJkdV6WRpFQRAtxitkedBs7zdHqzFC8p58XSHDu\nWwIDAQAB\n-----END PUBLIC KEY-----"
 	}
 }
