@@ -1,25 +1,27 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
 
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-  <meta name="generator" content="distill" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-  <style type="text/css">
-  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
-  body {
-    visibility: hidden;
-  }
-  </style>
+<meta name="author" content="Robert M Flight">
+<meta name="dcterms.date" content="2021-11-11">
 
- <!--radix_placeholder_import_source-->
- <!--/radix_placeholder_import_source-->
-
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
+<title>Deciphering Life: One Bit at a Time - Zooming GGraph Plots</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,2785 +48,657 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    background-color: #232629;
-    color: #7a7c7d;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #cfcfc2; background-color: #232629; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span { color: #cfcfc2; } /* Normal */
-code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-code span.an { color: #3f8058; } /* Annotation */
-code span.at { color: #2980b9; } /* Attribute */
-code span.bn { color: #f67400; } /* BaseN */
-code span.bu { color: #7f8c8d; } /* BuiltIn */
-code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #3daee9; } /* Char */
-code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
-code span.co { color: #7a7c7d; } /* Comment */
-code span.cv { color: #7f8c8d; } /* CommentVar */
-code span.do { color: #a43340; } /* Documentation */
-code span.dt { color: #2980b9; } /* DataType */
-code span.dv { color: #f67400; } /* DecVal */
-code span.er { color: #da4453; text-decoration: underline; } /* Error */
-code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
-code span.fl { color: #f67400; } /* Float */
-code span.fu { color: #8e44ad; } /* Function */
-code span.im { color: #27ae60; } /* Import */
-code span.in { color: #c45b00; } /* Information */
-code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
-code span.op { color: #cfcfc2; } /* Operator */
-code span.ot { color: #27ae60; } /* Other */
-code span.pp { color: #27ae60; } /* Preprocessor */
-code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-code span.sc { color: #3daee9; } /* SpecialChar */
-code span.ss { color: #da4453; } /* SpecialString */
-code span.st { color: #f44f4f; } /* String */
-code span.va { color: #27aeae; } /* Variable */
-code span.vs { color: #da4453; } /* VerbatimString */
-code span.wa { color: #da4453; } /* Warning */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-  <!--radix_placeholder_meta_tags-->
-<title>Deciphering Life: One Bit at a Time: Zooming GGraph Plots</title>
-
-<meta property="description" itemprop="description" content="Some code demonstrating how to zoom into portions of a ggraph."/>
-
-<link rel="canonical" href="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/"/>
-<link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
-
-<!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2021-11-11"/>
-<meta property="article:created" itemprop="dateCreated" content="2021-11-11"/>
-<meta name="article:author" content="Robert M Flight"/>
-
-<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Deciphering Life: One Bit at a Time: Zooming GGraph Plots"/>
-<meta property="og:type" content="article"/>
-<meta property="og:description" content="Some code demonstrating how to zoom into portions of a ggraph."/>
-<meta property="og:url" content="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/"/>
-<meta property="og:image" content="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/zooming-ggraph-plots_files/figure-html5/plot_full-1.png"/>
-<meta property="og:image:width" content="1920"/>
-<meta property="og:image:height" content="1536"/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:site_name" content="Deciphering Life: One Bit at a Time"/>
-
-<!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary_large_image"/>
-<meta property="twitter:title" content="Deciphering Life: One Bit at a Time: Zooming GGraph Plots"/>
-<meta property="twitter:description" content="Some code demonstrating how to zoom into portions of a ggraph."/>
-<meta property="twitter:url" content="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/"/>
-<meta property="twitter:image" content="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/zooming-ggraph-plots_files/figure-html5/plot_full-1.png"/>
-<meta property="twitter:image:width" content="1920"/>
-<meta property="twitter:image:height" content="1536"/>
-<meta property="twitter:site" content="@rmflight"/>
-<meta property="twitter:creator" content="@rmflight"/>
-
-<!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="Deciphering Life: One Bit at a Time: Zooming GGraph Plots"/>
-<meta name="citation_fulltext_html_url" content="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/"/>
-<meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2021/11/11"/>
-<meta name="citation_publication_date" content="2021/11/11"/>
-<meta name="citation_author" content="Robert M Flight"/>
-<!--/radix_placeholder_meta_tags-->
-  <!--radix_placeholder_rmarkdown_metadata-->
-
-<script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","author","date","output","categories","editor_options","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Zooming GGraph Plots"]},{"type":"character","attributes":{},"value":["Some code demonstrating how to zoom into portions of a ggraph."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Robert M Flight"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-11-11"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","highlight","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["breezedark"]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["graphing","ggraph","visualization","random-code-snippets"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/"]},{"type":"character","attributes":{},"value":["https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/"]}]}
-</script>
-<!--/radix_placeholder_rmarkdown_metadata-->
-  
-  <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["zooming-ggraph-plots_files/anchor-4.2.2/anchor.min.js","zooming-ggraph-plots_files/bowser-1.9.3/bowser.min.js","zooming-ggraph-plots_files/distill-2.2.21/template.v2.js","zooming-ggraph-plots_files/figure-html5/initial_layout-1.png","zooming-ggraph-plots_files/figure-html5/plot_full-1.png","zooming-ggraph-plots_files/figure-html5/plot_ranges-1.png","zooming-ggraph-plots_files/figure-html5/plot_subset-1.png","zooming-ggraph-plots_files/header-attrs-2.11/header-attrs.js","zooming-ggraph-plots_files/jquery-3.6.0/jquery-3.6.0.js","zooming-ggraph-plots_files/jquery-3.6.0/jquery-3.6.0.min.js","zooming-ggraph-plots_files/jquery-3.6.0/jquery-3.6.0.min.map","zooming-ggraph-plots_files/popper-2.6.0/popper.min.js","zooming-ggraph-plots_files/tippy-6.2.7/tippy-bundle.umd.min.js","zooming-ggraph-plots_files/tippy-6.2.7/tippy-light-border.css","zooming-ggraph-plots_files/tippy-6.2.7/tippy.css","zooming-ggraph-plots_files/tippy-6.2.7/tippy.umd.min.js","zooming-ggraph-plots_files/webcomponents-2.0.0/webcomponents.js"]}
-  </script>
-  <!--radix_placeholder_navigation_in_header-->
-<meta name="distill:offset" content="../.."/>
-
-<script type="application/javascript">
-
-  window.headroom_prevent_pin = false;
-
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-
-    // initialize headroom for banner
-    var header = $('header').get(0);
-    var headerHeight = header.offsetHeight;
-    var headroom = new Headroom(header, {
-      tolerance: 5,
-      onPin : function() {
-        if (window.headroom_prevent_pin) {
-          window.headroom_prevent_pin = false;
-          headroom.unpin();
-        }
-      }
-    });
-    headroom.init();
-    if(window.location.hash)
-      headroom.unpin();
-    $(header).addClass('headroom--transition');
-
-    // offset scroll location for banner on hash change
-    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-    window.addEventListener("hashchange", function(event) {
-      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-    });
-
-    // responsive menu
-    $('.distill-site-header').each(function(i, val) {
-      var topnav = $(this);
-      var toggle = topnav.find('.nav-toggle');
-      toggle.on('click', function() {
-        topnav.toggleClass('responsive');
-      });
-    });
-
-    // nav dropdowns
-    $('.nav-dropbtn').click(function(e) {
-      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-      $(this).parent().siblings('.nav-dropdown')
-         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-    });
-    $("body").click(function(e){
-      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-    });
-    $(".nav-dropdown").click(function(e){
-      e.stopPropagation();
-    });
-  });
-</script>
-
-<style type="text/css">
-
-/* Theme (user-documented overrideables for nav appearance) */
-
-.distill-site-nav {
-  color: rgba(255, 255, 255, 0.8);
-  background-color: #0F2E3D;
-  font-size: 15px;
-  font-weight: 300;
-}
-
-.distill-site-nav a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.distill-site-nav a:hover {
-  color: white;
-}
-
-@media print {
-  .distill-site-nav {
-    display: none;
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
   }
-}
+}</script>
 
-.distill-site-header {
 
-}
-
-.distill-site-footer {
-
-}
-
-
-/* Site Header */
-
-.distill-site-header {
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 3;
-}
-
-.distill-site-header .nav-left {
-  display: inline-block;
-  margin-left: 8px;
-}
-
-@media screen and (max-width: 768px) {
-  .distill-site-header .nav-left {
-    margin-left: 0;
-  }
-}
-
-
-.distill-site-header .nav-right {
-  float: right;
-  margin-right: 8px;
-}
-
-.distill-site-header a,
-.distill-site-header .title {
-  display: inline-block;
-  text-align: center;
-  padding: 14px 10px 14px 10px;
-}
-
-.distill-site-header .title {
-  font-size: 18px;
-  min-width: 150px;
-}
-
-.distill-site-header .logo {
-  padding: 0;
-}
-
-.distill-site-header .logo img {
-  display: none;
-  max-height: 20px;
-  width: auto;
-  margin-bottom: -4px;
-}
-
-.distill-site-header .nav-image img {
-  max-height: 18px;
-  width: auto;
-  display: inline-block;
-  margin-bottom: -3px;
-}
-
-
-
-@media screen and (min-width: 1000px) {
-  .distill-site-header .logo img {
-    display: inline-block;
-  }
-  .distill-site-header .nav-left {
-    margin-left: 20px;
-  }
-  .distill-site-header .nav-right {
-    margin-right: 20px;
-  }
-  .distill-site-header .title {
-    padding-left: 12px;
-  }
-}
-
-
-.distill-site-header .nav-toggle {
-  display: none;
-}
-
-.nav-dropdown {
-  display: inline-block;
-  position: relative;
-}
-
-.nav-dropdown .nav-dropbtn {
-  border: none;
-  outline: none;
-  color: rgba(255, 255, 255, 0.8);
-  padding: 16px 10px;
-  background-color: transparent;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  margin: 0;
-  margin-top: 1px;
-  z-index: 2;
-}
-
-.nav-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 200px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 4px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-  z-index: 1;
-  margin-top: 2px;
-  white-space: nowrap;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.nav-dropdown-content hr {
-  margin-top: 4px;
-  margin-bottom: 4px;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.nav-dropdown-active {
-  display: block;
-}
-
-.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-  color: black;
-  padding: 6px 24px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.nav-dropdown-content .nav-dropdown-header {
-  display: block;
-  padding: 5px 24px;
-  padding-bottom: 0;
-  text-transform: uppercase;
-  font-size: 14px;
-  color: #999999;
-  white-space: nowrap;
-}
-
-.nav-dropdown:hover .nav-dropbtn {
-  color: white;
-}
-
-.nav-dropdown-content a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.nav-right .nav-dropdown-content {
-  margin-left: -45%;
-  right: 0;
-}
-
-@media screen and (max-width: 768px) {
-  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-  .distill-site-header a.nav-toggle {
-    float: right;
-    display: block;
-  }
-  .distill-site-header .title {
-    margin-left: 0;
-  }
-  .distill-site-header .nav-right {
-    margin-right: 0;
-  }
-  .distill-site-header {
-    overflow: hidden;
-  }
-  .nav-right .nav-dropdown-content {
-    margin-left: 0;
-  }
-}
-
-
-@media screen and (max-width: 768px) {
-  .distill-site-header.responsive {position: relative; min-height: 500px; }
-  .distill-site-header.responsive a.nav-toggle {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .distill-site-header.responsive a,
-  .distill-site-header.responsive .nav-dropdown {
-    display: block;
-    text-align: left;
-  }
-  .distill-site-header.responsive .nav-left,
-  .distill-site-header.responsive .nav-right {
-    width: 100%;
-  }
-  .distill-site-header.responsive .nav-dropdown {float: none;}
-  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-    display: block;
-    width: 100%;
-    text-align: left;
-  }
-}
-
-/* Site Footer */
-
-.distill-site-footer {
-  width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  z-index: 3;
-  margin-top: 30px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  text-align: center;
-}
-
-/* Headroom */
-
-d-title {
-  padding-top: 6rem;
-}
-
-@media print {
-  d-title {
-    padding-top: 4rem;
-  }
-}
-
-.headroom {
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.headroom--transition {
-  transition: all .4s ease-in-out;
-}
-
-.headroom--unpinned {
-  top: -100px;
-}
-
-.headroom--pinned {
-  top: 0;
-}
-
-/* adjust viewport for navbar height */
-/* helps vertically center bootstrap (non-distill) content */
-.min-vh-100 {
-  min-height: calc(100vh - 100px) !important;
-}
-
-</style>
-
-<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
-<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-<script type="application/javascript">
-
-function getMeta(metaName) {
-  var metas = document.getElementsByTagName('meta');
-  for (let i = 0; i < metas.length; i++) {
-    if (metas[i].getAttribute('name') === metaName) {
-      return metas[i].getAttribute('content');
-    }
-  }
-  return '';
-}
-
-function offsetURL(url) {
-  var offset = getMeta('distill:offset');
-  return offset ? offset + '/' + url : url;
-}
-
-function createFuseIndex() {
-
-  // create fuse index
-  var options = {
-    keys: [
-      { name: 'title', weight: 20 },
-      { name: 'categories', weight: 15 },
-      { name: 'description', weight: 10 },
-      { name: 'contents', weight: 5 },
-    ],
-    ignoreLocation: true,
-    threshold: 0
-  };
-  var fuse = new window.Fuse([], options);
-
-  // fetch the main search.json
-  return fetch(offsetURL('search.json'))
-    .then(function(response) {
-      if (response.status == 200) {
-        return response.json().then(function(json) {
-          // index main articles
-          json.articles.forEach(function(article) {
-            fuse.add(article);
-          });
-          // download collections and index their articles
-          return Promise.all(json.collections.map(function(collection) {
-            return fetch(offsetURL(collection)).then(function(response) {
-              if (response.status === 200) {
-                return response.json().then(function(articles) {
-                  articles.forEach(function(article) {
-                    fuse.add(article);
-                  });
-                })
-              } else {
-                return Promise.reject(
-                  new Error('Unexpected status from search index request: ' +
-                            response.status)
-                );
-              }
-            });
-          })).then(function() {
-            return fuse;
-          });
-        });
-
-      } else {
-        return Promise.reject(
-          new Error('Unexpected status from search index request: ' +
-                      response.status)
-        );
-      }
-    });
-}
-
-window.document.addEventListener("DOMContentLoaded", function (event) {
-
-  // get search element (bail if we don't have one)
-  var searchEl = window.document.getElementById('distill-search');
-  if (!searchEl)
-    return;
-
-  createFuseIndex()
-    .then(function(fuse) {
-
-      // make search box visible
-      searchEl.classList.remove('hidden');
-
-      // initialize autocomplete
-      var options = {
-        autoselect: true,
-        hint: false,
-        minLength: 2,
-      };
-      window.autocomplete(searchEl, options, [{
-        source: function(query, callback) {
-          const searchOptions = {
-            isCaseSensitive: false,
-            shouldSort: true,
-            minMatchCharLength: 2,
-            limit: 10,
-          };
-          var results = fuse.search(query, searchOptions);
-          callback(results
-            .map(function(result) { return result.item; })
-          );
-        },
-        templates: {
-          suggestion: function(suggestion) {
-            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-              : '';
-            var html = `
-              <div class="search-item">
-                <h3>${suggestion.title}</h3>
-                <div class="search-item-description">
-                  ${suggestion.description || ''}
-                </div>
-                <div class="search-item-preview">
-                  ${img}
-                </div>
-              </div>
-            `;
-            return html;
-          }
-        }
-      }]).on('autocomplete:selected', function(event, suggestion) {
-        window.location.href = offsetURL(suggestion.path);
-      });
-      // remove inline display style on autocompleter (we want to
-      // manage responsive display via css)
-      $('.algolia-autocomplete').css("display", "");
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-
-});
-
-</script>
-
-<style type="text/css">
-
-.nav-search {
-  font-size: x-small;
-}
-
-/* Algolioa Autocomplete */
-
-.algolia-autocomplete {
-  display: inline-block;
-  margin-left: 10px;
-  vertical-align: sub;
-  background-color: white;
-  color: black;
-  padding: 6px;
-  padding-top: 8px;
-  padding-bottom: 0;
-  border-radius: 6px;
-  border: 1px #0F2E3D solid;
-  width: 180px;
-}
-
-
-@media screen and (max-width: 768px) {
-  .distill-site-nav .algolia-autocomplete {
-    display: none;
-    visibility: hidden;
-  }
-  .distill-site-nav.responsive .algolia-autocomplete {
-    display: inline-block;
-    visibility: visible;
-  }
-  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-    margin-left: 0;
-    width: 400px;
-    max-height: 400px;
-  }
-}
-
-.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-  width: 90%;
-  outline: none;
-  border: none;
-}
-
-.algolia-autocomplete .aa-hint {
-  color: #999;
-}
-.algolia-autocomplete .aa-dropdown-menu {
-  width: 550px;
-  max-height: 70vh;
-  overflow-x: visible;
-  overflow-y: scroll;
-  padding: 5px;
-  margin-top: 3px;
-  margin-left: -150px;
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #999;
-  border-top: none;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-  cursor: pointer;
-  padding: 5px 4px;
-  border-bottom: 1px solid #eee;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-  border-bottom: none;
-  margin-bottom: 2px;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-  overflow: hidden;
-  font-size: 0.8em;
-  line-height: 1.4em;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-  font-size: 1rem;
-  margin-block-start: 0;
-  margin-block-end: 5px;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-  display: inline-block;
-  overflow: hidden;
-  height: 2.8em;
-  width: 80%;
-  margin-right: 4%;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-  display: inline-block;
-  width: 15%;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-  height: 3em;
-  width: auto;
-  display: none;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-  display: initial;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-  background-color: #eee;
-}
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-  font-weight: bold;
-  font-style: normal;
-}
-
-</style>
-
-
-<!--/radix_placeholder_navigation_in_header-->
-  <!--radix_placeholder_distill-->
-
-<style type="text/css">
-
-body {
-  background-color: white;
-}
-
-.pandoc-table {
-  width: 100%;
-}
-
-.pandoc-table>caption {
-  margin-bottom: 10px;
-}
-
-.pandoc-table th:not([align]) {
-  text-align: left;
-}
-
-.pagedtable-footer {
-  font-size: 15px;
-}
-
-d-byline .byline {
-  grid-template-columns: 2fr 2fr;
-}
-
-d-byline .byline h3 {
-  margin-block-start: 1.5em;
-}
-
-d-byline .byline .authors-affiliations h3 {
-  margin-block-start: 0.5em;
-}
-
-.authors-affiliations .orcid-id {
-  width: 16px;
-  height:16px;
-  margin-left: 4px;
-  margin-right: 4px;
-  vertical-align: middle;
-  padding-bottom: 2px;
-}
-
-d-title .dt-tags {
-  margin-top: 1em;
-  grid-column: text;
-}
-
-.dt-tags .dt-tag {
-  text-decoration: none;
-  display: inline-block;
-  color: rgba(0,0,0,0.6);
-  padding: 0em 0.4em;
-  margin-right: 0.5em;
-  margin-bottom: 0.4em;
-  font-size: 70%;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-d-article table.gt_table td,
-d-article table.gt_table th {
-  border-bottom: none;
-  font-size: 100%;
-}
-
-.html-widget {
-  margin-bottom: 2.0em;
-}
-
-.l-screen-inset {
-  padding-right: 16px;
-}
-
-.l-screen .caption {
-  margin-left: 10px;
-}
-
-.shaded {
-  background: rgb(247, 247, 247);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.shaded .html-widget {
-  margin-bottom: 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.shaded .shaded-content {
-  background: white;
-}
-
-.text-output {
-  margin-top: 0;
-  line-height: 1.5em;
-}
-
-.hidden {
-  display: none !important;
-}
-
-d-article {
-  padding-top: 2.5rem;
-  padding-bottom: 30px;
-}
-
-d-appendix {
-  padding-top: 30px;
-}
-
-d-article>p>img {
-  width: 100%;
-}
-
-d-article h2 {
-  margin: 1rem 0 1.5rem 0;
-}
-
-d-article h3 {
-  margin-top: 1.5rem;
-}
-
-d-article iframe {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 2.0em;
-  width: 100%;
-}
-
-/* Tweak code blocks */
-
-d-article div.sourceCode code,
-d-article pre code {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-}
-
-d-article pre,
-d-article div.sourceCode,
-d-article div.sourceCode pre {
-  overflow: auto;
-}
-
-d-article div.sourceCode {
-  background-color: white;
-}
-
-d-article div.sourceCode pre {
-  padding-left: 10px;
-  font-size: 12px;
-  border-left: 2px solid rgba(0,0,0,0.1);
-}
-
-d-article pre {
-  font-size: 12px;
-  color: black;
-  background: none;
-  margin-top: 0;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-d-article pre a {
-  border-bottom: none;
-}
-
-d-article pre a:hover {
-  border-bottom: none;
-  text-decoration: underline;
-}
-
-d-article details {
-  grid-column: text;
-  margin-bottom: 0.8em;
-}
-
-@media(min-width: 768px) {
-
-d-article pre,
-d-article div.sourceCode,
-d-article div.sourceCode pre {
-  overflow: visible !important;
-}
-
-d-article div.sourceCode pre {
-  padding-left: 18px;
-  font-size: 14px;
-}
-
-d-article pre {
-  font-size: 14px;
-}
-
-}
-
-figure img.external {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  box-sizing: border-box;
-}
-
-/* CSS for d-contents */
-
-.d-contents {
-  grid-column: text;
-  color: rgba(0,0,0,0.8);
-  font-size: 0.9em;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-  padding-bottom: 0.5em;
-  margin-bottom: 1em;
-  padding-left: 0.25em;
-  justify-self: start;
-}
-
-@media(min-width: 1000px) {
-  .d-contents.d-contents-float {
-    height: 0;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    justify-self: center;
-    padding-right: 3em;
-    padding-left: 2em;
-  }
-}
-
-.d-contents nav h3 {
-  font-size: 18px;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-
-.d-contents li {
-  list-style-type: none
-}
-
-.d-contents nav > ul {
-  padding-left: 0;
-}
-
-.d-contents ul {
-  padding-left: 1em
-}
-
-.d-contents nav ul li {
-  margin-top: 0.6em;
-  margin-bottom: 0.2em;
-}
-
-.d-contents nav a {
-  font-size: 13px;
-  border-bottom: none;
-  text-decoration: none
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.d-contents nav a:hover {
-  text-decoration: underline solid rgba(0, 0, 0, 0.6)
-}
-
-.d-contents nav > ul > li > a {
-  font-weight: 600;
-}
-
-.d-contents nav > ul > li > ul {
-  font-weight: inherit;
-}
-
-.d-contents nav > ul > li > ul > li {
-  margin-top: 0.2em;
-}
-
-
-.d-contents nav ul {
-  margin-top: 0;
-  margin-bottom: 0.25em;
-}
-
-.d-article-with-toc h2:nth-child(2) {
-  margin-top: 0;
-}
-
-
-/* Figure */
-
-.figure {
-  position: relative;
-  margin-bottom: 2.5em;
-  margin-top: 1.5em;
-}
-
-.figure .caption {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 12px;
-  line-height: 1.5em;
-}
-
-.figure img.external {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  box-sizing: border-box;
-}
-
-.figure .caption a {
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.figure .caption b,
-.figure .caption strong, {
-  font-weight: 600;
-  color: rgba(0, 0, 0, 1.0);
-}
-
-/* Citations */
-
-d-article .citation {
-  color: inherit;
-  cursor: inherit;
-}
-
-div.hanging-indent{
-  margin-left: 1em; text-indent: -1em;
-}
-
-/* Citation hover box */
-
-.tippy-box[data-theme~=light-border] {
-  background-color: rgba(250, 250, 250, 0.95);
-}
-
-.tippy-content > p {
-  margin-bottom: 0;
-  padding: 2px;
-}
-
-
-/* Tweak 1000px media break to show more text */
-
-@media(min-width: 1000px) {
-  .base-grid,
-  distill-header,
-  d-title,
-  d-abstract,
-  d-article,
-  d-appendix,
-  distill-appendix,
-  d-byline,
-  d-footnote-list,
-  d-citation-list,
-  distill-footer {
-    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
-    grid-column-gap: 16px;
-  }
-
-  .grid {
-    grid-column-gap: 16px;
-  }
-
-  d-article {
-    font-size: 1.06rem;
-    line-height: 1.7em;
-  }
-  figure .caption, .figure .caption, figure figcaption {
-    font-size: 13px;
-  }
-}
-
-@media(min-width: 1180px) {
-  .base-grid,
-  distill-header,
-  d-title,
-  d-abstract,
-  d-article,
-  d-appendix,
-  distill-appendix,
-  d-byline,
-  d-footnote-list,
-  d-citation-list,
-  distill-footer {
-    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
-    grid-column-gap: 32px;
-  }
-
-  .grid {
-    grid-column-gap: 32px;
-  }
-}
-
-
-/* Get the citation styles for the appendix (not auto-injected on render since
-   we do our own rendering of the citation appendix) */
-
-d-appendix .citation-appendix,
-.d-appendix .citation-appendix {
-  font-size: 11px;
-  line-height: 15px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding-left: 18px;
-  border: 1px solid rgba(0,0,0,0.1);
-  background: rgba(0, 0, 0, 0.02);
-  padding: 10px 18px;
-  border-radius: 3px;
-  color: rgba(150, 150, 150, 1);
-  overflow: hidden;
-  margin-top: -12px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-/* Include appendix styles here so they can be overridden */
-
-d-appendix {
-  contain: layout style;
-  font-size: 0.8em;
-  line-height: 1.7em;
-  margin-top: 60px;
-  margin-bottom: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  color: rgba(0,0,0,0.5);
-  padding-top: 60px;
-  padding-bottom: 48px;
-}
-
-d-appendix h3 {
-  grid-column: page-start / text-start;
-  font-size: 15px;
-  font-weight: 500;
-  margin-top: 1em;
-  margin-bottom: 0;
-  color: rgba(0,0,0,0.65);
-}
-
-d-appendix h3 + * {
-  margin-top: 1em;
-}
-
-d-appendix ol {
-  padding: 0 0 0 15px;
-}
-
-@media (min-width: 768px) {
-  d-appendix ol {
-    padding: 0 0 0 30px;
-    margin-left: -30px;
-  }
-}
-
-d-appendix li {
-  margin-bottom: 1em;
-}
-
-d-appendix a {
-  color: rgba(0, 0, 0, 0.6);
-}
-
-d-appendix > * {
-  grid-column: text;
-}
-
-d-appendix > d-footnote-list,
-d-appendix > d-citation-list,
-d-appendix > distill-appendix {
-  grid-column: screen;
-}
-
-/* Include footnote styles here so they can be overridden */
-
-d-footnote-list {
-  contain: layout style;
-}
-
-d-footnote-list > * {
-  grid-column: text;
-}
-
-d-footnote-list a.footnote-backlink {
-  color: rgba(0,0,0,0.3);
-  padding-left: 0.5em;
-}
-
-
-
-/* Anchor.js */
-
-.anchorjs-link {
-  /*transition: all .25s linear; */
-  text-decoration: none;
-  border-bottom: none;
-}
-*:hover > .anchorjs-link {
-  margin-left: -1.125em !important;
-  text-decoration: none;
-  border-bottom: none;
-}
-
-/* Social footer */
-
-.social_footer {
-  margin-top: 30px;
-  margin-bottom: 0;
-  color: rgba(0,0,0,0.67);
-}
-
-.disqus-comments {
-  margin-right: 30px;
-}
-
-.disqus-comment-count {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-}
-
-#disqus_thread {
-  margin-top: 30px;
-}
-
-.article-sharing a {
-  border-bottom: none;
-  margin-right: 8px;
-}
-
-.article-sharing a:hover {
-  border-bottom: none;
-}
-
-.sidebar-section.subscribe {
-  font-size: 12px;
-  line-height: 1.6em;
-}
-
-.subscribe p {
-  margin-bottom: 0.5em;
-}
-
-
-.article-footer .subscribe {
-  font-size: 15px;
-  margin-top: 45px;
-}
-
-
-.sidebar-section.custom {
-  font-size: 12px;
-  line-height: 1.6em;
-}
-
-.custom p {
-  margin-bottom: 0.5em;
-}
-
-/* Styles for listing layout (hide title) */
-.layout-listing d-title, .layout-listing .d-title {
-  display: none;
-}
-
-/* Styles for posts lists (not auto-injected) */
-
-
-.posts-with-sidebar {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.posts-list .description h2,
-.posts-list .description p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-}
-
-.posts-list .description h2 {
-  font-weight: 700;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.posts-list h2.post-tag {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 12px;
-}
-.posts-list {
-  margin-top: 60px;
-  margin-bottom: 24px;
-}
-
-.posts-list .post-preview {
-  text-decoration: none;
-  overflow: hidden;
-  display: block;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 24px 0;
-}
-
-.post-preview-last {
-  border-bottom: none !important;
-}
-
-.posts-list .posts-list-caption {
-  grid-column: screen;
-  font-weight: 400;
-}
-
-.posts-list .post-preview h2 {
-  margin: 0 0 6px 0;
-  line-height: 1.2em;
-  font-style: normal;
-  font-size: 24px;
-}
-
-.posts-list .post-preview p {
-  margin: 0 0 12px 0;
-  line-height: 1.4em;
-  font-size: 16px;
-}
-
-.posts-list .post-preview .thumbnail {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  position: relative;
-  max-width: 500px;
-}
-.posts-list .post-preview img {
-  width: 100%;
-  display: block;
-}
-
-.posts-list .metadata {
-  font-size: 12px;
-  line-height: 1.4em;
-  margin-bottom: 18px;
-}
-
-.posts-list .metadata > * {
-  display: inline-block;
-}
-
-.posts-list .metadata .publishedDate {
-  margin-right: 2em;
-}
-
-.posts-list .metadata .dt-authors {
-  display: block;
-  margin-top: 0.3em;
-  margin-right: 2em;
-}
-
-.posts-list .dt-tags {
-  display: block;
-  line-height: 1em;
-}
-
-.posts-list .dt-tags .dt-tag {
-  display: inline-block;
-  color: rgba(0,0,0,0.6);
-  padding: 0.3em 0.4em;
-  margin-right: 0.2em;
-  margin-bottom: 0.4em;
-  font-size: 60%;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.posts-list img {
-  opacity: 1;
-}
-
-.posts-list img[data-src] {
-  opacity: 0;
-}
-
-.posts-more {
-  clear: both;
-}
-
-
-.posts-sidebar {
-  font-size: 16px;
-}
-
-.posts-sidebar h3 {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.sidebar-section {
-  margin-bottom: 30px;
-}
-
-.categories ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.categories li {
-  color: rgba(0, 0, 0, 0.8);
-  margin-bottom: 0;
-}
-
-.categories li>a {
-  border-bottom: none;
-}
-
-.categories li>a:hover {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-.categories .active {
-  font-weight: 600;
-}
-
-.categories .category-count {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-
-@media(min-width: 768px) {
-  .posts-list .post-preview h2 {
-    font-size: 26px;
-  }
-  .posts-list .post-preview .thumbnail {
-    float: right;
-    width: 30%;
-    margin-bottom: 0;
-  }
-  .posts-list .post-preview .description {
-    float: left;
-    width: 45%;
-  }
-  .posts-list .post-preview .metadata {
-    float: left;
-    width: 20%;
-    margin-top: 8px;
-  }
-  .posts-list .post-preview p {
-    margin: 0 0 12px 0;
-    line-height: 1.5em;
-    font-size: 16px;
-  }
-  .posts-with-sidebar .posts-list {
-    float: left;
-    width: 75%;
-  }
-  .posts-with-sidebar .posts-sidebar {
-    float: right;
-    width: 20%;
-    margin-top: 60px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
-}
-
-
-/* Improve display for browsers without grid (IE/Edge <= 15) */
-
-.downlevel {
-  line-height: 1.6em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  margin: 0;
-}
-
-.downlevel .d-title {
-  padding-top: 6rem;
-  padding-bottom: 1.5rem;
-}
-
-.downlevel .d-title h1 {
-  font-size: 50px;
-  font-weight: 700;
-  line-height: 1.1em;
-  margin: 0 0 0.5rem;
-}
-
-.downlevel .d-title p {
-  font-weight: 300;
-  font-size: 1.2rem;
-  line-height: 1.55em;
-  margin-top: 0;
-}
-
-.downlevel .d-byline {
-  padding-top: 0.8em;
-  padding-bottom: 0.8em;
-  font-size: 0.8rem;
-  line-height: 1.8em;
-}
-
-.downlevel .section-separator {
-  border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.downlevel .d-article {
-  font-size: 1.06rem;
-  line-height: 1.7em;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-}
-
-
-.downlevel .d-appendix {
-  padding-left: 0;
-  padding-right: 0;
-  max-width: none;
-  font-size: 0.8em;
-  line-height: 1.7em;
-  margin-bottom: 0;
-  color: rgba(0,0,0,0.5);
-  padding-top: 40px;
-  padding-bottom: 48px;
-}
-
-.downlevel .footnotes ol {
-  padding-left: 13px;
-}
-
-.downlevel .base-grid,
-.downlevel .distill-header,
-.downlevel .d-title,
-.downlevel .d-abstract,
-.downlevel .d-article,
-.downlevel .d-appendix,
-.downlevel .distill-appendix,
-.downlevel .d-byline,
-.downlevel .d-footnote-list,
-.downlevel .d-citation-list,
-.downlevel .distill-footer,
-.downlevel .appendix-bottom,
-.downlevel .posts-container {
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-@media(min-width: 768px) {
-  .downlevel .base-grid,
-  .downlevel .distill-header,
-  .downlevel .d-title,
-  .downlevel .d-abstract,
-  .downlevel .d-article,
-  .downlevel .d-appendix,
-  .downlevel .distill-appendix,
-  .downlevel .d-byline,
-  .downlevel .d-footnote-list,
-  .downlevel .d-citation-list,
-  .downlevel .distill-footer,
-  .downlevel .appendix-bottom,
-  .downlevel .posts-container {
-  padding-left: 150px;
-  padding-right: 150px;
-  max-width: 900px;
-}
-}
-
-.downlevel pre code {
-  display: block;
-  border-left: 2px solid rgba(0, 0, 0, .1);
-  padding: 0 0 0 20px;
-  font-size: 14px;
-}
-
-.downlevel code, .downlevel pre {
-  color: black;
-  background: none;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-.downlevel .posts-list .post-preview {
-  color: inherit;
-}
-
-
-
-</style>
-
-<script type="application/javascript">
-
-function is_downlevel_browser() {
-  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
-                                 window.navigator.userAgent)) {
-    return true;
-  } else {
-    return window.load_distill_framework === undefined;
-  }
-}
-
-// show body when load is complete
-function on_load_complete() {
-
-  // add anchors
-  if (window.anchors) {
-    window.anchors.options.placement = 'left';
-    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
-  }
-
-
-  // set body to visible
-  document.body.style.visibility = 'visible';
-
-  // force redraw for leaflet widgets
-  if (window.HTMLWidgets) {
-    var maps = window.HTMLWidgets.findAll(".leaflet");
-    $.each(maps, function(i, el) {
-      var map = this.getMap();
-      map.invalidateSize();
-      map.eachLayer(function(layer) {
-        if (layer instanceof L.TileLayer)
-          layer.redraw();
-      });
-    });
-  }
-
-  // trigger 'shown' so htmlwidgets resize
-  $('d-article').trigger('shown');
-}
-
-function init_distill() {
-
-  init_common();
-
-  // create front matter
-  var front_matter = $('<d-front-matter></d-front-matter>');
-  $('#distill-front-matter').wrap(front_matter);
-
-  // create d-title
-  $('.d-title').changeElementType('d-title');
-
-  // create d-byline
-  var byline = $('<d-byline></d-byline>');
-  $('.d-byline').replaceWith(byline);
-
-  // create d-article
-  var article = $('<d-article></d-article>');
-  $('.d-article').wrap(article).children().unwrap();
-
-  // move posts container into article
-  $('.posts-container').appendTo($('d-article'));
-
-  // create d-appendix
-  $('.d-appendix').changeElementType('d-appendix');
-
-  // flag indicating that we have appendix items
-  var appendix = $('.appendix-bottom').children('h3').length > 0;
-
-  // replace footnotes with <d-footnote>
-  $('.footnote-ref').each(function(i, val) {
-    appendix = true;
-    var href = $(this).attr('href');
-    var id = href.replace('#', '');
-    var fn = $('#' + id);
-    var fn_p = $('#' + id + '>p');
-    fn_p.find('.footnote-back').remove();
-    var text = fn_p.html();
-    var dtfn = $('<d-footnote></d-footnote>');
-    dtfn.html(text);
-    $(this).replaceWith(dtfn);
-  });
-  // remove footnotes
-  $('.footnotes').remove();
-
-  // move refs into #references-listing
-  $('#references-listing').replaceWith($('#refs'));
-
-  $('h1.appendix, h2.appendix').each(function(i, val) {
-    $(this).changeElementType('h3');
-  });
-  $('h3.appendix').each(function(i, val) {
-    var id = $(this).attr('id');
-    $('.d-contents a[href="#' + id + '"]').parent().remove();
-    appendix = true;
-    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
-  });
-
-  // show d-appendix if we have appendix content
-  $("d-appendix").css('display', appendix ? 'grid' : 'none');
-
-  // localize layout chunks to just output
-  $('.layout-chunk').each(function(i, val) {
-
-    // capture layout
-    var layout = $(this).attr('data-layout');
-
-    // apply layout to markdown level block elements
-    var elements = $(this).children().not('details, div.sourceCode, pre, script');
-    elements.each(function(i, el) {
-      var layout_div = $('<div class="' + layout + '"></div>');
-      if (layout_div.hasClass('shaded')) {
-        var shaded_content = $('<div class="shaded-content"></div>');
-        $(this).wrap(shaded_content);
-        $(this).parent().wrap(layout_div);
-      } else {
-        $(this).wrap(layout_div);
-      }
-    });
-
-
-    // unwrap the layout-chunk div
-    $(this).children().unwrap();
-  });
-
-  // remove code block used to force  highlighting css
-  $('.distill-force-highlighting-css').parent().remove();
-
-  // remove empty line numbers inserted by pandoc when using a
-  // custom syntax highlighting theme
-  $('code.sourceCode a:empty').remove();
-
-  // load distill framework
-  load_distill_framework();
-
-  // wait for window.distillRunlevel == 4 to do post processing
-  function distill_post_process() {
-
-    if (!window.distillRunlevel || window.distillRunlevel < 4)
-      return;
-
-    // hide author/affiliations entirely if we have no authors
-    var front_matter = JSON.parse($("#distill-front-matter").html());
-    var have_authors = front_matter.authors && front_matter.authors.length > 0;
-    if (!have_authors)
-      $('d-byline').addClass('hidden');
-
-    // article with toc class
-    $('.d-contents').parent().addClass('d-article-with-toc');
-
-    // strip links that point to #
-    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
-
-    // add orcid ids
-    $('.authors-affiliations').find('.author').each(function(i, el) {
-      var orcid_id = front_matter.authors[i].orcidID;
-      if (orcid_id) {
-        var a = $('<a></a>');
-        a.attr('href', 'https://orcid.org/' + orcid_id);
-        var img = $('<img></img>');
-        img.addClass('orcid-id');
-        img.attr('alt', 'ORCID ID');
-        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
-        a.append(img);
-        $(this).append(a);
-      }
-    });
-
-    // hide elements of author/affiliations grid that have no value
-    function hide_byline_column(caption) {
-      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
-    }
-
-    // affiliations
-    var have_affiliations = false;
-    for (var i = 0; i<front_matter.authors.length; ++i) {
-      var author = front_matter.authors[i];
-      if (author.affiliation !== "&nbsp;") {
-        have_affiliations = true;
-        break;
-      }
-    }
-    if (!have_affiliations)
-      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
-
-    // published date
-    if (!front_matter.publishedDate)
-      hide_byline_column("Published");
-
-    // document object identifier
-    var doi = $('d-byline').find('h3:contains("DOI")');
-    var doi_p = doi.next().empty();
-    if (!front_matter.doi) {
-      // if we have a citation and valid citationText then link to that
-      if ($('#citation').length > 0 && front_matter.citationText) {
-        doi.html('Citation');
-        $('<a href="#citation"></a>')
-          .text(front_matter.citationText)
-          .appendTo(doi_p);
-      } else {
-        hide_byline_column("DOI");
-      }
-    } else {
-      $('<a></a>')
-         .attr('href', "https://doi.org/" + front_matter.doi)
-         .html(front_matter.doi)
-         .appendTo(doi_p);
-    }
-
-     // change plural form of authors/affiliations
-    if (front_matter.authors.length === 1) {
-      var grid = $('.authors-affiliations');
-      grid.children('h3:contains("Authors")').text('Author');
-      grid.children('h3:contains("Affiliations")').text('Affiliation');
-    }
-
-    // remove d-appendix and d-footnote-list local styles
-    $('d-appendix > style:first-child').remove();
-    $('d-footnote-list > style:first-child').remove();
-
-    // move appendix-bottom entries to the bottom
-    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
-    $('.appendix-bottom').remove();
-
-    // hoverable references
-    $('span.citation[data-cites]').each(function() {
-      const citeChild = $(this).children()[0]
-      // Do not process if @xyz has been used without escaping and without bibliography activated
-      // https://github.com/rstudio/distill/issues/466
-      if (citeChild === undefined) return true
-
-      if (citeChild.nodeName == "D-FOOTNOTE") {
-        var fn = citeChild
-        $(this).html(fn.shadowRoot.querySelector("sup"))
-        $(this).id = fn.id
-        fn.remove()
-      }
-      var refs = $(this).attr('data-cites').split(" ");
-      var refHtml = refs.map(function(ref) {
-        // Could use CSS.escape too here, we insure backward compatibility in navigator
-        return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
-      }).join("\n");
-      window.tippy(this, {
-        allowHTML: true,
-        content: refHtml,
-        maxWidth: 500,
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'light-border',
-        placement: 'bottom-start'
-      });
-    });
-
-    // fix footnotes in tables (#411)
-    // replacing broken distill.pub feature
-    $('table d-footnote').each(function() {
-      // we replace internal showAtNode methode which is triggered when hovering a footnote
-      this.hoverBox.showAtNode = function(node) {
-        // ported from https://github.com/distillpub/template/pull/105/files
-        calcOffset = function(elem) {
-            let x = elem.offsetLeft;
-            let y = elem.offsetTop;
-            // Traverse upwards until an `absolute` element is found or `elem`
-            // becomes null.
-            while (elem = elem.offsetParent && elem.style.position != 'absolute') {
-                x += elem.offsetLeft;
-                y += elem.offsetTop;
-            }
-
-            return { left: x, top: y };
-        }
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
-        const bbox = node.getBoundingClientRect();
-        const offset = calcOffset(node);
-        this.show([offset.left + bbox.width, offset.top + bbox.height]);
-      }
-    })
-
-    // clear polling timer
-    clearInterval(tid);
-
-    // show body now that everything is ready
-    on_load_complete();
-  }
-
-  var tid = setInterval(distill_post_process, 50);
-  distill_post_process();
-
-}
-
-function init_downlevel() {
-
-  init_common();
-
-   // insert hr after d-title
-  $('.d-title').after($('<hr class="section-separator"/>'));
-
-  // check if we have authors
-  var front_matter = JSON.parse($("#distill-front-matter").html());
-  var have_authors = front_matter.authors && front_matter.authors.length > 0;
-
-  // manage byline/border
-  if (!have_authors)
-    $('.d-byline').remove();
-  $('.d-byline').after($('<hr class="section-separator"/>'));
-  $('.d-byline a').remove();
-
-  // remove toc
-  $('.d-contents').remove();
-
-  // move appendix elements
-  $('h1.appendix, h2.appendix').each(function(i, val) {
-    $(this).changeElementType('h3');
-  });
-  $('h3.appendix').each(function(i, val) {
-    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
-  });
-
-
-  // inject headers into references and footnotes
-  var refs_header = $('<h3></h3>');
-  refs_header.text('References');
-  $('#refs').prepend(refs_header);
-
-  var footnotes_header = $('<h3></h3');
-  footnotes_header.text('Footnotes');
-  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
-
-  // move appendix-bottom entries to the bottom
-  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
-  $('.appendix-bottom').remove();
-
-  // remove appendix if it's empty
-  if ($('.d-appendix').children().length === 0)
-    $('.d-appendix').remove();
-
-  // prepend separator above appendix
-  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
-
-  // trim code
-  $('pre>code').each(function(i, val) {
-    $(this).html($.trim($(this).html()));
-  });
-
-  // move posts-container right before article
-  $('.posts-container').insertBefore($('.d-article'));
-
-  $('body').addClass('downlevel');
-
-  on_load_complete();
-}
-
-
-function init_common() {
-
-  // jquery plugin to change element types
-  (function($) {
-    $.fn.changeElementType = function(newType) {
-      var attrs = {};
-
-      $.each(this[0].attributes, function(idx, attr) {
-        attrs[attr.nodeName] = attr.nodeValue;
-      });
-
-      this.replaceWith(function() {
-        return $("<" + newType + "/>", attrs).append($(this).contents());
-      });
-    };
-  })(jQuery);
-
-  // prevent underline for linked images
-  $('a > img').parent().css({'border-bottom' : 'none'});
-
-  // mark non-body figures created by knitr chunks as 100% width
-  $('.layout-chunk').each(function(i, val) {
-    var figures = $(this).find('img, .html-widget');
-    // ignore leaflet img layers (#106)
-    figures = figures.filter(':not(img[class*="leaflet"])')
-    if ($(this).attr('data-layout') !== "l-body") {
-      figures.css('width', '100%');
-    } else {
-      figures.css('max-width', '100%');
-      figures.filter("[width]").each(function(i, val) {
-        var fig = $(this);
-        fig.css('width', fig.attr('width') + 'px');
-      });
-
-    }
-  });
-
-  // auto-append index.html to post-preview links in file: protocol
-  // and in rstudio ide preview
-  $('.post-preview').each(function(i, val) {
-    if (window.location.protocol === "file:")
-      $(this).attr('href', $(this).attr('href') + "index.html");
-  });
-
-  // get rid of index.html references in header
-  if (window.location.protocol !== "file:") {
-    $('.distill-site-header a[href]').each(function(i,val) {
-      $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
-    });
-  }
-
-  // add class to pandoc style tables
-  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
-  $('.kable-table').children('table').addClass('pandoc-table');
-
-  // add figcaption style to table captions
-  $('caption').parent('table').addClass("figcaption");
-
-  // initialize posts list
-  if (window.init_posts_list)
-    window.init_posts_list();
-
-  // implmement disqus comment link
-  $('.disqus-comment-count').click(function() {
-    window.headroom_prevent_pin = true;
-    $('#disqus_thread').toggleClass('hidden');
-    if (!$('#disqus_thread').hasClass('hidden')) {
-      var offset = $(this).offset();
-      $(window).resize();
-      $('html, body').animate({
-        scrollTop: offset.top - 35
-      });
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  if (is_downlevel_browser())
-    init_downlevel();
-  else
-    window.addEventListener('WebComponentsReady', init_distill);
-});
-
-</script>
-
-<style type="text/css">
-/* base variables */
-
-/* Edit the CSS properties in this file to create a custom
-   Distill theme. Only edit values in the right column
-   for each row; values shown are the CSS defaults.
-   To return any property to the default,
-   you may set its value to: unset
-   All rows must end with a semi-colon.                      */
-
-/* Optional: embed custom fonts here with `@import`          */
-/* This must remain at the top of this file.                 */
-
-
-
-html {
-  /*-- Main font sizes --*/
-  --title-size:      50px;
-  --body-size:       1.06rem;
-  --code-size:       14px;
-  --aside-size:      12px;
-  --fig-cap-size:    13px;
-  /*-- Main font colors --*/
-  --title-color:     #000000;
-  --header-color:    rgba(0, 0, 0, 0.8);
-  --body-color:      rgba(0, 0, 0, 0.8);
-  --aside-color:     rgba(0, 0, 0, 0.6);
-  --fig-cap-color:   rgba(0, 0, 0, 0.6);
-  /*-- Specify custom fonts ~~~ must be imported above   --*/
-  --heading-font:    sans-serif;
-  --mono-font:       monospace;
-  --body-font:       sans-serif;
-  --navbar-font:     sans-serif;  /* websites + blogs only */
-}
-
-/*-- ARTICLE METADATA --*/
-d-byline {
-  --heading-size:    0.6rem;
-  --heading-color:   rgba(0, 0, 0, 0.5);
-  --body-size:       0.8rem;
-  --body-color:      rgba(0, 0, 0, 0.8);
-}
-
-/*-- ARTICLE TABLE OF CONTENTS --*/
-.d-contents {
-  --heading-size:    18px;
-  --contents-size:   13px;
-}
-
-/*-- ARTICLE APPENDIX --*/
-d-appendix {
-  --heading-size:    15px;
-  --heading-color:   rgba(0, 0, 0, 0.65);
-  --text-size:       0.8em;
-  --text-color:      rgba(0, 0, 0, 0.5);
-}
-
-/*-- WEBSITE HEADER + FOOTER --*/
-/* These properties only apply to Distill sites and blogs  */
-
-.distill-site-header {
-  --title-size:       18px;
-  --text-color:       rgba(255, 255, 255, 0.8);
-  --text-size:        15px;
-  --hover-color:      white;
-  --bkgd-color:       #0F2E3D;
-}
-
-.distill-site-footer {
-  --text-color:       rgba(255, 255, 255, 0.8);
-  --text-size:        15px;
-  --hover-color:      white;
-  --bkgd-color:       #0F2E3D;
-}
-
-/*-- Additional custom styles --*/
-/* Add any additional CSS rules below                      */
-</style>
-<style type="text/css">
-/* base variables */
-
-/* Edit the CSS properties in this file to create a custom
-   Distill theme. Only edit values in the right column
-   for each row; values shown are the CSS defaults.
-   To return any property to the default,
-   you may set its value to: unset
-   All rows must end with a semi-colon.                      */
-
-/* Optional: embed custom fonts here with `@import`          */
-/* This must remain at the top of this file.                 */
-
-
-
-html {
-  /*-- Main font sizes --*/
-  --title-size:      50px;
-  --body-size:       1.06rem;
-  --code-size:       14px;
-  --aside-size:      12px;
-  --fig-cap-size:    13px;
-  /*-- Main font colors --*/
-  --title-color:     #E1E8ED;
-  --header-color:    #fff;
-  --body-color:      #fff;
-  --aside-color:     #F5F8FA;
-  --fig-cap-color:   #657786;
-  --hover-color:     #1DA1F2;
-  /*-- Specify custom fonts ~~~ must be imported above   --*/
-  --heading-font:    sans-serif;
-  --mono-font:       monospace;
-  --body-font:       sans-serif;
-  --navbar-font:     sans-serif;  /* websites + blogs only */
-}
-
-body {
-  background-color:   #14171A;
-}
-
-d-title p {
-  color: #fff;
-}
-
-/*-- ARTICLE METADATA --*/
-d-byline {
-  --heading-size:    0.6rem;
-  --heading-color:   #F5F8FA;
-  --body-size:       0.8rem;
-  --body-color:      #fff;
-}
-
-/*-- ARTICLE TABLE OF CONTENTS --*/
-.d-contents {
-  --heading-size:    18px;
-  --contents-size:   13px;
-}
-
-/*-- ARTICLE APPENDIX --*/
-d-appendix {
-  --heading-size:    15px;
-  --heading-color:   #F5F8FA;
-  --text-size:       0.8em;
-  --text-color:      #fff;
-}
-
-/*-- WEBSITE HEADER + FOOTER --*/
-/* These properties only apply to Distill sites and blogs  */
-
-.distill-site-header {
-  --title-size:       18px;
-  --text-color:       #E1E8ED;
-  --text-size:        15px;
-  --hover-color:      #1DA1F2;
-  --bkgd-color:       #303030;
-}
-
-.distill-site-footer {
-  --text-color:       #E1E8ED;
-  --text-size:        15px;
-  --hover-color:      #1DA1F2;
-  --bkgd-color:       #0F2E3D;
-}
-
-/*-- Additional custom styles --*/
-/* Add any additional CSS rules below                      */
-
-.dt-tags .dt-tag {
-  color: #F5F8FA;
-}
-
-.posts-list .dt-tags .dt-tag {
-  color: #F5F8FA;
-}
-
-.posts-list .post-preview p {
-  color: #E1E8ED;
-}
-
-.posts-with-sidebar .posts-sidebar li {
-  color: #E1E8ED;
-}
-
-
-.posts-with-sidebar .posts-sidebar .category-count {
-  color: #E1E8ED;
-}
-
-.posts-list .metadata {
-  color: #F5F8FA;
-}
-
-d-article div.sourceCode code, d-article pre code {
-  color: #F5F8FA;
-}
-
-d-article a {
-  text-decoration: underline;
-}
-
-d-article a:hover {
-  color: #1DA1F2;
-}
-
-.l-text, .l-body {
-  color: #F5F8FA;
-}
-
-d-appendix a {
-  color: #F5F8FA;
-}
-
-d-appendix a:hover {
-  color: #1DA1F2;
-}
-
-
-.posts-more {
-  color: #F5F8FA;
-}
-
-.posts-more a:hover {
-  color: #1DA1F2;
-}
-
-
-.article-footer p {
-  color: #AAB8C2;
-}
-
-d-article .sourceCode {
-  color: #cfcfc2;
-  background-color: #232629;
- }
-
-d-article blockquote {
-  color: #F5F8FA;
-}
-
-.pandoc-table {
-  color: #F5F8FA;
-}</style>
-<style type="text/css">
-/* base style */
-
-/* FONT FAMILIES */
-
-:root {
-  --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-}
-
-body,
-.posts-list .post-preview p,
-.posts-list .description p {
-  font-family: var(--body-font), var(--body-default);
-}
-
-h1, h2, h3, h4, h5, h6,
-.posts-list .post-preview h2,
-.posts-list .description h2 {
-  font-family: var(--heading-font), var(--heading-default);
-}
-
-d-article div.sourceCode code,
-d-article pre code {
-  font-family: var(--mono-font), var(--mono-default);
-}
-
-
-/*-- TITLE --*/
-d-title h1,
-.posts-list > h1 {
-  color: var(--title-color, black);
-}
-
-d-title h1 {
-  font-size: var(--title-size, 50px);
-}
-
-/*-- HEADERS --*/
-d-article h1,
-d-article h2,
-d-article h3,
-d-article h4,
-d-article h5,
-d-article h6 {
-  color: var(--header-color, rgba(0, 0, 0, 0.8));
-}
-
-/*-- BODY --*/
-d-article > p,  /* only text inside of <p> tags */
-d-article > ul, /* lists */
-d-article > ol {
-  color: var(--body-color, rgba(0, 0, 0, 0.8));
-  font-size: var(--body-size, 1.06rem);
-}
-
-
-/*-- CODE --*/
-d-article div.sourceCode code,
-d-article pre code {
-  font-size: var(--code-size, 14px);
-}
-
-/*-- ASIDE --*/
-d-article aside {
-  font-size: var(--aside-size, 12px);
-  color: var(--aside-color, rgba(0, 0, 0, 0.6));
-}
-
-/*-- FIGURE CAPTIONS --*/
-figure .caption,
-figure figcaption,
-.figure .caption {
-  font-size: var(--fig-cap-size, 13px);
-  color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
-}
-
-/*-- METADATA --*/
-d-byline h3 {
-  font-size: var(--heading-size, 0.6rem);
-  color: var(--heading-color, rgba(0, 0, 0, 0.5));
-}
-
-d-byline {
-  font-size: var(--body-size, 0.8rem);
-  color: var(--body-color, rgba(0, 0, 0, 0.8));
-}
-
-d-byline a,
-d-article d-byline a {
-  color: var(--body-color, rgba(0, 0, 0, 0.8));
-}
-
-/*-- TABLE OF CONTENTS --*/
-.d-contents nav h3 {
-  font-size: var(--heading-size, 18px);
-}
-
-.d-contents nav a {
-  font-size: var(--contents-size, 13px);
-}
-
-/*-- APPENDIX --*/
-d-appendix h3 {
-  font-size: var(--heading-size, 15px);
-  color: var(--heading-color, rgba(0, 0, 0, 0.65));
-}
-
-d-appendix {
-  font-size: var(--text-size, 0.8em);
-  color: var(--text-color, rgba(0, 0, 0, 0.5));
-}
-
-d-appendix d-footnote-list a.footnote-backlink {
-  color: var(--text-color, rgba(0, 0, 0, 0.5));
-}
-
-/*-- WEBSITE HEADER + FOOTER --*/
-.distill-site-header .title {
-  font-size: var(--title-size, 18px);
-  font-family: var(--navbar-font), var(--heading-default);
-}
-
-.distill-site-header a,
-.nav-dropdown .nav-dropbtn {
-  font-family: var(--navbar-font), var(--heading-default);
-}
-
-.nav-dropdown .nav-dropbtn {
-  color: var(--text-color, rgba(255, 255, 255, 0.8));
-  font-size: var(--text-size, 15px);
-}
-
-.distill-site-header a:hover,
-.nav-dropdown:hover .nav-dropbtn {
-  color: var(--hover-color, white);
-}
-
-.distill-site-header {
-  font-size: var(--text-size, 15px);
-  color: var(--text-color, rgba(255, 255, 255, 0.8));
-  background-color: var(--bkgd-color, #0F2E3D);
-}
-
-.distill-site-footer {
-  font-size: var(--text-size, 15px);
-  color: var(--text-color, rgba(255, 255, 255, 0.8));
-  background-color: var(--bkgd-color, #0F2E3D);
-}
-
-.distill-site-footer a:hover {
-  color: var(--hover-color, white);
-}</style>
-<!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.11/header-attrs.js"></script>
-  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
-  <!--radix_placeholder_site_in_header-->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (!/posts/.test(location.pathname)) {
-      return;
-    }
-
-    var script = document.createElement("script");
-    script.src = "https://utteranc.es/client.js";
-    script.setAttribute("repo", "rmflight/researchBlog_distill");
-    script.setAttribute("issue-term", "og:title");
-    script.setAttribute("crossorigin", "anonymous");
-    script.setAttribute("label", "comment_thread");
-    script.setAttribute("theme", "github-dark");
-
-    /* wait for article to load, append script to article element */
-    var observer = new MutationObserver(function (mutations, observer) {
-      var article = document.querySelector("d-article");
-      if (article) {
-        observer.disconnect();
-        /* HACK: article scroll */
-        article.setAttribute("style", "overflow-y: hidden");
-        article.appendChild(script);
-      }
-    });
-
-    observer.observe(document.body, { childList: true });
-  });
-</script>
-
-<!--/radix_placeholder_site_in_header-->
-
-
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body>
+<body class="floating nav-fixed">
 
-<!--radix_placeholder_front_matter-->
-
-<script id="distill-front-matter" type="text/json">
-{"title":"Zooming GGraph Plots","description":"Some code demonstrating how to zoom into portions of a ggraph.","authors":[{"author":"Robert M Flight","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-11T00:00:00.000-05:00","citationText":"Flight, 2021"}
-</script>
-
-<!--/radix_placeholder_front_matter-->
-<!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="../../index.html" class="title">Deciphering Life: One Bit at a Time</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="../../index.html">Home</a>
-<a href="../../about.html">About</a>
-<a href="../../random_code_snippets.html">RCS</a>
-<a href="../../index.xml">
-<i class="fa fa-rss" aria-hidden="true"></i>
-</a>
-<a href="https://github.com/rmflight/researchBlog_distill" aria-label="Link to source">
-<i class="fab fa-github" aria-hidden="true"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
-<!--/radix_placeholder_navigation_before_body-->
-<!--radix_placeholder_site_before_body-->
-<!--/radix_placeholder_site_before_body-->
-
-<div class="d-title">
-<h1>Zooming GGraph Plots</h1>
-<!--radix_placeholder_categories-->
-<div class="dt-tags">
-  <a href="../../index.html#category:graphing" class="dt-tag">graphing</a>
-  <a href="../../index.html#category:ggraph" class="dt-tag">ggraph</a>
-  <a href="../../index.html#category:visualization" class="dt-tag">visualization</a>
-  <a href="../../index.html#category:random-code-snippets" class="dt-tag">random-code-snippets</a>
-</div>
-<!--/radix_placeholder_categories-->
-<p><p>Some code demonstrating how to zoom into portions of a ggraph.</p></p>
-</div>
-
-<div class="d-byline">
-  Robert M Flight true 
-  
-<br/>2021-11-11
-</div>
-
-<div class="d-article">
-<div class="d-contents d-contents-float">
-<nav class="l-text toc figcaption" id="TOC">
-<h3>Contents</h3>
-<ul>
-<li><a href="#inspiration">Inspiration</a></li>
-<li><a href="#setup">Setup</a></li>
-<li><a href="#initial-view">Initial View</a></li>
-<li><a href="#find-those-nodes">Find Those Nodes</a></li>
-<li><a href="#initial-layout">Initial Layout</a></li>
-<li><a href="#subset-nodes-and-get-range">Subset Nodes and Get Range</a></li>
-<li><a href="#plot-subset">Plot Subset</a></li>
-<li><a href="#plot-using-subset-ranges">Plot Using Subset Ranges</a></li>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Deciphering Life: One Bit at a Time</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rmflight"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0001-8141-7788">
+ <span class="menu-text"><i class="ai  ai-orcid" title="" style="color:"></i></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.social/@rmflight"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
 </ul>
-</nav>
-</div>
-<h2 id="inspiration">Inspiration</h2>
-<p>I was recently working with a <strong>largish</strong> graph that I am using the ggraph package, and I needed to zoom into a sub-region of the graph.</p>
-<h2 id="setup">Setup</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>warning <span class='op'>=</span> <span class='cn'>FALSE</span>, message <span class='op'>=</span> <span class='cn'>FALSE</span>, fig.width <span class='op'>=</span> <span class='fl'>10</span>, fig.height <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
-<span class='va'>example_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1L</span>, <span class='fl'>2L</span>, <span class='fl'>3L</span>, <span class='fl'>4L</span>, <span class='fl'>5L</span>, <span class='fl'>6L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, 
-                                     <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>8L</span>, <span class='fl'>9L</span>, <span class='fl'>10L</span>, <span class='fl'>11L</span>, <span class='fl'>12L</span>, <span class='fl'>12L</span>, <span class='fl'>12L</span>, <span class='fl'>13L</span>, 
-                                     <span class='fl'>13L</span>, <span class='fl'>13L</span>, <span class='fl'>13L</span>, <span class='fl'>13L</span>, <span class='fl'>13L</span>, <span class='fl'>13L</span>, <span class='fl'>14L</span>, <span class='fl'>15L</span>, <span class='fl'>16L</span>, <span class='fl'>16L</span>, <span class='fl'>17L</span>, <span class='fl'>17L</span>, <span class='fl'>18L</span>, 
-                                     <span class='fl'>18L</span>, <span class='fl'>19L</span>, <span class='fl'>20L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, 
-                                     <span class='fl'>21L</span>, <span class='fl'>21L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>6L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, 
-                                     <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>23L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, 
-                                     <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>24L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>25L</span>, 
-                                     <span class='fl'>25L</span>, <span class='fl'>25L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, <span class='fl'>26L</span>, 
-                                     <span class='fl'>26L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, <span class='fl'>27L</span>, 
-                                     <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>28L</span>, <span class='fl'>29L</span>, 
-                                     <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>29L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, 
-                                     <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>30L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, 
-                                     <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>31L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, 
-                                     <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>32L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, 
-                                     <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>33L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, 
-                                     <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>34L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, 
-                                     <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>35L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, 
-                                     <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>36L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, 
-                                     <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>37L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>38L</span>, 
-                                     <span class='fl'>38L</span>, <span class='fl'>38L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, <span class='fl'>39L</span>, 
-                                     <span class='fl'>39L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, <span class='fl'>40L</span>, 
-                                     <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>41L</span>, <span class='fl'>42L</span>, 
-                                     <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, 
-                                     <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>43L</span>, <span class='fl'>43L</span>, <span class='fl'>44L</span>, <span class='fl'>44L</span>, <span class='fl'>45L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, 
-                                     <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>50L</span>, <span class='fl'>51L</span>, <span class='fl'>52L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, 
-                                     <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>55L</span>, <span class='fl'>56L</span>, <span class='fl'>57L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>58L</span>, <span class='fl'>59L</span>, <span class='fl'>60L</span>, <span class='fl'>61L</span>, <span class='fl'>61L</span>, <span class='fl'>62L</span>, 
-                                     <span class='fl'>16L</span>, <span class='fl'>17L</span>, <span class='fl'>18L</span>, <span class='fl'>63L</span>, <span class='fl'>64L</span>, <span class='fl'>65L</span>, <span class='fl'>66L</span>, <span class='fl'>67L</span>, <span class='fl'>68L</span>, <span class='fl'>69L</span>, <span class='fl'>70L</span>, <span class='fl'>71L</span>, <span class='fl'>72L</span>, 
-                                     <span class='fl'>73L</span>, <span class='fl'>74L</span>, <span class='fl'>75L</span>, <span class='fl'>76L</span>, <span class='fl'>20L</span>, <span class='fl'>77L</span>, <span class='fl'>77L</span>, <span class='fl'>78L</span>, <span class='fl'>79L</span>, <span class='fl'>79L</span>, <span class='fl'>80L</span>, <span class='fl'>81L</span>, <span class='fl'>82L</span>, 
-                                     <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>14L</span>, <span class='fl'>15L</span>, <span class='fl'>19L</span>, <span class='fl'>21L</span>, <span class='fl'>21L</span>, 
-                                     <span class='fl'>22L</span>, <span class='fl'>83L</span>, <span class='fl'>84L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>51L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, 
-                                     <span class='fl'>56L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>59L</span>, <span class='fl'>85L</span>, <span class='fl'>48L</span>, <span class='fl'>48L</span>, <span class='fl'>48L</span>, <span class='fl'>48L</span>, <span class='fl'>48L</span>, <span class='fl'>46L</span>, <span class='fl'>46L</span>, <span class='fl'>46L</span>, 
-                                     <span class='fl'>46L</span>, <span class='fl'>86L</span>, <span class='fl'>86L</span>, <span class='fl'>13L</span>, <span class='fl'>13L</span>, <span class='fl'>22L</span>, <span class='fl'>7L</span>, <span class='fl'>55L</span>, <span class='fl'>55L</span>, <span class='fl'>55L</span>, <span class='fl'>55L</span>, <span class='fl'>55L</span>, <span class='fl'>51L</span>, 
-                                     <span class='fl'>51L</span>, <span class='fl'>51L</span>, <span class='fl'>58L</span>, <span class='fl'>58L</span>, <span class='fl'>58L</span>, <span class='fl'>58L</span>, <span class='fl'>53L</span>, <span class='fl'>53L</span>, <span class='fl'>53L</span>, <span class='fl'>53L</span>, <span class='fl'>49L</span>, <span class='fl'>49L</span>, <span class='fl'>49L</span>, 
-                                     <span class='fl'>49L</span>, <span class='fl'>87L</span>, <span class='fl'>87L</span><span class='op'>)</span>, to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>7L</span>, <span class='fl'>61L</span>, <span class='fl'>61L</span>, <span class='fl'>61L</span>, <span class='fl'>8L</span>, <span class='fl'>88L</span>, <span class='fl'>89L</span>, 
-                                                            <span class='fl'>90L</span>, <span class='fl'>91L</span>, <span class='fl'>92L</span>, <span class='fl'>93L</span>, <span class='fl'>94L</span>, <span class='fl'>95L</span>, <span class='fl'>96L</span>, <span class='fl'>9L</span>, <span class='fl'>7L</span>, <span class='fl'>9L</span>, <span class='fl'>9L</span>, <span class='fl'>16L</span>, <span class='fl'>17L</span>, 
-                                                            <span class='fl'>18L</span>, <span class='fl'>14L</span>, <span class='fl'>15L</span>, <span class='fl'>16L</span>, <span class='fl'>17L</span>, <span class='fl'>18L</span>, <span class='fl'>19L</span>, <span class='fl'>10L</span>, <span class='fl'>10L</span>, <span class='fl'>10L</span>, <span class='fl'>10L</span>, <span class='fl'>42L</span>, <span class='fl'>10L</span>, 
-                                                            <span class='fl'>42L</span>, <span class='fl'>10L</span>, <span class='fl'>42L</span>, <span class='fl'>10L</span>, <span class='fl'>12L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, 
-                                                            <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>6L</span>, <span class='fl'>9L</span>, <span class='fl'>9L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, 
-                                                            <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, 
-                                                            <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, 
-                                                            <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, 
-                                                            <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, 
-                                                            <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, 
-                                                            <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, 
-                                                            <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, 
-                                                            <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, 
-                                                            <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, 
-                                                            <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, 
-                                                            <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, 
-                                                            <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, 
-                                                            <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, 
-                                                            <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, 
-                                                            <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, 
-                                                            <span class='fl'>55L</span>, <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, 
-                                                            <span class='fl'>57L</span>, <span class='fl'>58L</span>, <span class='fl'>45L</span>, <span class='fl'>46L</span>, <span class='fl'>47L</span>, <span class='fl'>48L</span>, <span class='fl'>49L</span>, <span class='fl'>50L</span>, <span class='fl'>52L</span>, <span class='fl'>53L</span>, <span class='fl'>54L</span>, <span class='fl'>55L</span>, <span class='fl'>57L</span>, 
-                                                            <span class='fl'>58L</span>, <span class='fl'>9L</span>, <span class='fl'>97L</span>, <span class='fl'>98L</span>, <span class='fl'>99L</span>, <span class='fl'>100L</span>, <span class='fl'>101L</span>, <span class='fl'>4L</span>, <span class='fl'>5L</span>, <span class='fl'>102L</span>, <span class='fl'>10L</span>, <span class='fl'>103L</span>, 
-                                                            <span class='fl'>104L</span>, <span class='fl'>105L</span>, <span class='fl'>60L</span>, <span class='fl'>106L</span>, <span class='fl'>107L</span>, <span class='fl'>108L</span>, <span class='fl'>109L</span>, <span class='fl'>13L</span>, <span class='fl'>22L</span>, <span class='fl'>110L</span>, <span class='fl'>83L</span>, 
-                                                            <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>44L</span>, 
-                                                            <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, <span class='fl'>21L</span>, <span class='fl'>44L</span>, 
-                                                            <span class='fl'>44L</span>, <span class='fl'>111L</span>, <span class='fl'>111L</span>, <span class='fl'>112L</span>, <span class='fl'>60L</span>, <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, 
-                                                            <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>110L</span>, 
-                                                            <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>110L</span>, <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>22L</span>, <span class='fl'>22L</span>, <span class='fl'>113L</span>, <span class='fl'>114L</span>, <span class='fl'>115L</span>, <span class='fl'>116L</span>, <span class='fl'>117L</span>, 
-                                                            <span class='fl'>118L</span>, <span class='fl'>119L</span>, <span class='fl'>120L</span>, <span class='fl'>121L</span>, <span class='fl'>122L</span>, <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>83L</span>, <span class='fl'>86L</span>, <span class='fl'>2L</span>, <span class='fl'>123L</span>, <span class='fl'>78L</span>, 
-                                                            <span class='fl'>21L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>84L</span>, 
-                                                            <span class='fl'>84L</span>, <span class='fl'>84L</span>, <span class='fl'>10L</span>, <span class='fl'>79L</span>, <span class='fl'>124L</span>, <span class='fl'>86L</span>, <span class='fl'>125L</span>, <span class='fl'>84L</span>, <span class='fl'>79L</span>, <span class='fl'>124L</span>, <span class='fl'>86L</span>, <span class='fl'>125L</span>, 
-                                                            <span class='fl'>110L</span>, <span class='fl'>83L</span>, <span class='fl'>42L</span>, <span class='fl'>11L</span>, <span class='fl'>126L</span>, <span class='fl'>111L</span>, <span class='fl'>48L</span>, <span class='fl'>79L</span>, <span class='fl'>124L</span>, <span class='fl'>86L</span>, <span class='fl'>125L</span>, <span class='fl'>79L</span>, 
-                                                            <span class='fl'>86L</span>, <span class='fl'>125L</span>, <span class='fl'>79L</span>, <span class='fl'>124L</span>, <span class='fl'>86L</span>, <span class='fl'>125L</span>, <span class='fl'>79L</span>, <span class='fl'>124L</span>, <span class='fl'>86L</span>, <span class='fl'>125L</span>, <span class='fl'>79L</span>, <span class='fl'>124L</span>, 
-                                                            <span class='fl'>86L</span>, <span class='fl'>125L</span>, <span class='fl'>46L</span>, <span class='fl'>48L</span><span class='op'>)</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='st'>"data.frame"</span>, row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, 
-                                                                                                                       <span class='op'>-</span><span class='fl'>432L</span><span class='op'>)</span><span class='op'>)</span>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Zooming GGraph Plots</h1>
+            <p class="subtitle lead"></p><p>Some code demonstrating how to zoom into portions of a ggraph.</p><p></p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">graphing</div>
+                <div class="quarto-category">ggraph</div>
+                <div class="quarto-category">visualization</div>
+                <div class="quarto-category">random-code-snippets</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
 
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggraph.data-imaginist.com'>ggraph</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidygraph.data-imaginist.com'>tidygraph</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://igraph.org'>igraph</a></span><span class='op'>)</span>
-<span class='va'>example_graph</span> <span class='op'>=</span> <span class='fu'><a href='https://tidygraph.data-imaginist.com/reference/tbl_graph.html'>as_tbl_graph</a></span><span class='op'>(</span><span class='va'>example_df</span><span class='op'>)</span>
-</code></pre>
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Robert M Flight <a href="https://orcid.org/0000-0001-8141-7788" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 11, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#inspiration" id="toc-inspiration" class="nav-link active" data-scroll-target="#inspiration">Inspiration</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#initial-view" id="toc-initial-view" class="nav-link" data-scroll-target="#initial-view">Initial View</a></li>
+  <li><a href="#find-those-nodes" id="toc-find-those-nodes" class="nav-link" data-scroll-target="#find-those-nodes">Find Those Nodes</a></li>
+  <li><a href="#initial-layout" id="toc-initial-layout" class="nav-link" data-scroll-target="#initial-layout">Initial Layout</a></li>
+  <li><a href="#subset-nodes-and-get-range" id="toc-subset-nodes-and-get-range" class="nav-link" data-scroll-target="#subset-nodes-and-get-range">Subset Nodes and Get Range</a></li>
+  <li><a href="#plot-subset" id="toc-plot-subset" class="nav-link" data-scroll-target="#plot-subset">Plot Subset</a></li>
+  <li><a href="#plot-using-subset-ranges" id="toc-plot-using-subset-ranges" class="nav-link" data-scroll-target="#plot-using-subset-ranges">Plot Using Subset Ranges</a></li>
+  </ul>
+</nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="inspiration" class="level2">
+<h2 class="anchored" data-anchor-id="inspiration">Inspiration</h2>
+<p>I was recently working with a <strong>largish</strong> graph that I am using the ggraph package, and I needed to zoom into a sub-region of the graph.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>, <span class="at">fig.width =</span> <span class="dv">10</span>, <span class="at">fig.height =</span> <span class="dv">8</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>example_df <span class="ot">=</span> <span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">from =</span> <span class="fu">c</span>(1L, 2L, 3L, 4L, 5L, 6L, 7L, 7L, 7L, 7L, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                     7L, 7L, 7L, 7L, 7L, 7L, 8L, 9L, 10L, 11L, 12L, 12L, 12L, 13L, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                     13L, 13L, 13L, 13L, 13L, 13L, 14L, 15L, 16L, 16L, 17L, 17L, 18L, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                     18L, 19L, 20L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                                     21L, 21L, 22L, 22L, 6L, 23L, 23L, 23L, 23L, 23L, 23L, 23L, 23L, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                                     23L, 23L, 23L, 23L, 24L, 24L, 24L, 24L, 24L, 24L, 24L, 24L, 24L, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                                     24L, 24L, 24L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                     25L, 25L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                     26L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                     28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 29L, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                     29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 30L, 30L, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                     30L, 30L, 30L, 30L, 30L, 30L, 30L, 30L, 30L, 30L, 31L, 31L, 31L, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                     31L, 31L, 31L, 31L, 31L, 31L, 31L, 31L, 31L, 32L, 32L, 32L, 32L, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                                     32L, 32L, 32L, 32L, 32L, 32L, 32L, 32L, 33L, 33L, 33L, 33L, 33L, </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                                     33L, 33L, 33L, 33L, 33L, 33L, 33L, 34L, 34L, 34L, 34L, 34L, 34L, </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                                     34L, 34L, 34L, 34L, 34L, 34L, 35L, 35L, 35L, 35L, 35L, 35L, 35L, </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                     35L, 35L, 35L, 35L, 35L, 36L, 36L, 36L, 36L, 36L, 36L, 36L, 36L, </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                     36L, 36L, 36L, 36L, 37L, 37L, 37L, 37L, 37L, 37L, 37L, 37L, 37L, </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                                     37L, 37L, 37L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                                     38L, 38L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                                     39L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                                     41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 42L, </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                                     22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                                     22L, 22L, 22L, 22L, 43L, 43L, 44L, 44L, 45L, 45L, 46L, 46L, 47L, </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                                     47L, 48L, 48L, 49L, 49L, 50L, 50L, 51L, 52L, 52L, 53L, 53L, 54L, </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                                     54L, 55L, 55L, 56L, 57L, 57L, 58L, 58L, 59L, 60L, 61L, 61L, 62L, </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                                     16L, 17L, 18L, 63L, 64L, 65L, 66L, 67L, 68L, 69L, 70L, 71L, 72L, </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                                     73L, 74L, 75L, 76L, 20L, 77L, 77L, 78L, 79L, 79L, 80L, 81L, 82L, </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                                     7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 14L, 15L, 19L, 21L, 21L, </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                                     22L, 83L, 84L, 45L, 46L, 47L, 49L, 50L, 51L, 52L, 53L, 54L, 55L, </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                                     56L, 57L, 58L, 59L, 85L, 48L, 48L, 48L, 48L, 48L, 46L, 46L, 46L, </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>                                     46L, 86L, 86L, 13L, 13L, 22L, 7L, 55L, 55L, 55L, 55L, 55L, 51L, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                                     51L, 51L, 58L, 58L, 58L, 58L, 53L, 53L, 53L, 53L, 49L, 49L, 49L, </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>                                     49L, 87L, 87L), <span class="at">to =</span> <span class="fu">c</span>(7L, 7L, 7L, 61L, 61L, 61L, 8L, 88L, 89L, </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                                                            90L, 91L, 92L, 93L, 94L, 95L, 96L, 9L, 7L, 9L, 9L, 16L, 17L, </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                                                            18L, 14L, 15L, 16L, 17L, 18L, 19L, 10L, 10L, 10L, 10L, 42L, 10L, </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                                                            42L, 10L, 42L, 10L, 12L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                                                            54L, 55L, 57L, 58L, 6L, 9L, 9L, 45L, 46L, 47L, 48L, 49L, 50L, </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                                                            52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                                                            53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                                                            54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>                                                            55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                                                            57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>                                                            58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                                                            45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                                                            46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                                                            47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>                                                            48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, </span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>                                                            49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, </span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>                                                            50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, </span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>                                                            52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, </span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>                                                            53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>                                                            54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>                                                            55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, </span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>                                                            57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                                                            58L, 9L, 97L, 98L, 99L, 100L, 101L, 4L, 5L, 102L, 10L, 103L, </span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>                                                            104L, 105L, 60L, 106L, 107L, 108L, 109L, 13L, 22L, 110L, 83L, </span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>                                                            21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 44L, </span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>                                                            21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 44L, 21L, 44L, 21L, 44L, </span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>                                                            44L, 111L, 111L, 112L, 60L, 83L, 83L, 83L, 22L, 22L, 22L, 22L, </span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>                                                            22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 83L, 83L, 110L, </span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>                                                            83L, 83L, 110L, 83L, 83L, 22L, 22L, 113L, 114L, 115L, 116L, 117L, </span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>                                                            118L, 119L, 120L, 121L, 122L, 83L, 83L, 83L, 86L, 2L, 123L, 78L, </span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>                                                            21L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, </span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>                                                            84L, 84L, 10L, 79L, 124L, 86L, 125L, 84L, 79L, 124L, 86L, 125L, </span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>                                                            110L, 83L, 42L, 11L, 126L, 111L, 48L, 79L, 124L, 86L, 125L, 79L, </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>                                                            86L, 125L, 79L, 124L, 86L, 125L, 79L, 124L, 86L, 125L, 79L, 124L, </span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>                                                            86L, 125L, 46L, 48L)), <span class="at">class =</span> <span class="st">"data.frame"</span>, <span class="at">row.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>, </span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>                                                                                                                       <span class="sc">-</span>432L))</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggplot2</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'tidygraph'</code></pre>
 </div>
-<h2 id="initial-view">Initial View</h2>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'igraph'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidygraph':
+
+    groups</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    decompose, spectrum</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>example_graph <span class="ot">=</span> <span class="fu">as_tbl_graph</span>(example_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="initial-view" class="level2">
+<h2 class="anchored" data-anchor-id="initial-view">Initial View</h2>
 <p>Let’s generate a plot of this to start.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
-<span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>example_graph</span>, <span class='st'>"graphopt"</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_link.html'>geom_edge_link</a></span><span class='op'>(</span>arrow <span class='op'>=</span> <span class='fu'>arrow</span><span class='op'>(</span>length <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>'mm'</span><span class='op'>)</span><span class='op'>)</span>,
-                end_cap <span class='op'>=</span> <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geometry.html'>circle</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='st'>"mm"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_node_point.html'>geom_node_point</a></span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(example_graph, <span class="st">"graphopt"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">'mm'</span>)),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">10</span>, <span class="st">"mm"</span>)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/plot_full-1.png" class="img-fluid" width="960"></p>
 </div>
-<p><img src="zooming-ggraph-plots_files/figure-html5/plot_full-1.png" width="960" /></p>
 </div>
 <p>You can see the bottom left section of this graph looks like a mess. It sure would be awesome if we could zoom into that region, and replot it.</p>
-<h2 id="find-those-nodes">Find Those Nodes</h2>
+</section>
+<section id="find-those-nodes" class="level2">
+<h2 class="anchored" data-anchor-id="find-those-nodes">Find Those Nodes</h2>
 <p>We will use <code>igraph</code>s community detection to break this into community sets and select the correct group.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>walk_membership</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/cluster_walktrap.html'>cluster_walktrap</a></span><span class='op'>(</span><span class='va'>example_graph</span><span class='op'>)</span>
-<span class='va'>walk_communities</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/communities.html'>membership</a></span><span class='op'>(</span><span class='va'>walk_membership</span><span class='op'>)</span>
-<span class='va'>split_comms</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>walk_communities</span><span class='op'>)</span>, <span class='va'>walk_communities</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>split_comms</span><span class='op'>)</span> <span class='op'>=</span> <span class='cn'>NULL</span>
-
-<span class='va'>which_comm</span> <span class='op'>=</span> <span class='va'>split_comms</span><span class='op'>[[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_lgl</a></span><span class='op'>(</span><span class='va'>split_comms</span>, <span class='op'>~</span> <span class='st'>"58"</span> <span class='op'>%in%</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span><span class='op'>]</span>
-</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>walk_membership <span class="ot">=</span> <span class="fu">cluster_walktrap</span>(example_graph)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>walk_communities <span class="ot">=</span> <span class="fu">membership</span>(walk_membership)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>split_comms <span class="ot">=</span> <span class="fu">split</span>(<span class="fu">names</span>(walk_communities), walk_communities)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(split_comms) <span class="ot">=</span> <span class="cn">NULL</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>which_comm <span class="ot">=</span> split_comms[[<span class="fu">which</span>(purrr<span class="sc">::</span><span class="fu">map_lgl</span>(split_comms, <span class="sc">~</span> <span class="st">"58"</span> <span class="sc">%in%</span> .x))]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<h2 id="initial-layout">Initial Layout</h2>
+</section>
+<section id="initial-layout" class="level2">
+<h2 class="anchored" data-anchor-id="initial-layout">Initial Layout</h2>
 <p>One way to make sure we can get the same layout is to create the layout, which is treated as a graph by ggraph.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># we set the seed so its the same layout as previous</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
-<span class='va'>example_layout</span> <span class='op'>=</span> <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>create_layout</a></span><span class='op'>(</span><span class='va'>example_graph</span>, <span class='st'>"graphopt"</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>example_layout</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_link.html'>geom_edge_link</a></span><span class='op'>(</span>arrow <span class='op'>=</span> <span class='fu'>arrow</span><span class='op'>(</span>length <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>'mm'</span><span class='op'>)</span><span class='op'>)</span>,
-                end_cap <span class='op'>=</span> <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geometry.html'>circle</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='st'>"mm"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_node_point.html'>geom_node_point</a></span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we set the seed so its the same layout as previous</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>example_layout <span class="ot">=</span> <span class="fu">create_layout</span>(example_graph, <span class="st">"graphopt"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(example_layout) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">'mm'</span>)),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">10</span>, <span class="st">"mm"</span>)) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/initial_layout-1.png" class="img-fluid" width="960"></p>
 </div>
-<p><img src="zooming-ggraph-plots_files/figure-html5/initial_layout-1.png" width="960" /></p>
 </div>
 <p>Awesome, looks the same as the previous.</p>
-<h2 id="subset-nodes-and-get-range">Subset Nodes and Get Range</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sub_layout</span> <span class='op'>=</span> <span class='va'>example_layout</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>name</span> <span class='op'>%in%</span> <span class='va'>which_comm</span><span class='op'>)</span>
-<span class='va'>sub_xlim</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>sub_layout</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>
-<span class='va'>sub_ylim</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>sub_layout</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>
-</code></pre>
+</section>
+<section id="subset-nodes-and-get-range" class="level2">
+<h2 class="anchored" data-anchor-id="subset-nodes-and-get-range">Subset Nodes and Get Range</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sub_layout <span class="ot">=</span> example_layout <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">%in%</span> which_comm)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sub_xlim <span class="ot">=</span> <span class="fu">range</span>(sub_layout<span class="sc">$</span>x)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>sub_ylim <span class="ot">=</span> <span class="fu">range</span>(sub_layout<span class="sc">$</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<h2 id="plot-subset">Plot Subset</h2>
+</section>
+<section id="plot-subset" class="level2">
+<h2 class="anchored" data-anchor-id="plot-subset">Plot Subset</h2>
 <p>We would think we should be able to just use the sub-layout to plot the subset of nodes. Lets try that first.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>sub_layout</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_link.html'>geom_edge_link</a></span><span class='op'>(</span>arrow <span class='op'>=</span> <span class='fu'>arrow</span><span class='op'>(</span>length <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>'mm'</span><span class='op'>)</span><span class='op'>)</span>,
-                end_cap <span class='op'>=</span> <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geometry.html'>circle</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='st'>"mm"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_node_point.html'>geom_node_point</a></span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(sub_layout) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">'mm'</span>)),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">10</span>, <span class="st">"mm"</span>)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/plot_subset-1.png" class="img-fluid" width="960"></p>
 </div>
-<p><img src="zooming-ggraph-plots_files/figure-html5/plot_subset-1.png" width="960" /></p>
 </div>
 <p>As we can see, this isn’t quite right. We are missing some of the edges.</p>
-<h2 id="plot-using-subset-ranges">Plot Using Subset Ranges</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggraph.data-imaginist.com/reference/ggraph.html'>ggraph</a></span><span class='op'>(</span><span class='va'>example_layout</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_edge_link.html'>geom_edge_link</a></span><span class='op'>(</span>arrow <span class='op'>=</span> <span class='fu'>arrow</span><span class='op'>(</span>length <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>'mm'</span><span class='op'>)</span><span class='op'>)</span>,
-                end_cap <span class='op'>=</span> <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geometry.html'>circle</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='st'>"mm"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggraph.data-imaginist.com/reference/geom_node_point.html'>geom_node_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>coord_cartesian</span><span class='op'>(</span>xlim <span class='op'>=</span> <span class='va'>sub_xlim</span>, ylim <span class='op'>=</span> <span class='va'>sub_ylim</span><span class='op'>)</span>
-</code></pre>
+</section>
+<section id="plot-using-subset-ranges" class="level2">
+<h2 class="anchored" data-anchor-id="plot-using-subset-ranges">Plot Using Subset Ranges</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(example_layout) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">'mm'</span>)),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">end_cap =</span> <span class="fu">circle</span>(<span class="dv">10</span>, <span class="st">"mm"</span>)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> sub_xlim, <span class="at">ylim =</span> sub_ylim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/plot_ranges-1.png" class="img-fluid" width="960"></p>
 </div>
-<p><img src="zooming-ggraph-plots_files/figure-html5/plot_ranges-1.png" width="960" /></p>
 </div>
 <p>Finally! This is what we wanted. And we can see why it’s so overlapped in the full plot! It’s pretty much a hairball in that part of the graph.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<!--radix_placeholder_article_footer-->
-<div class="article-footer">
-  <p class="social_footer">
-    <span class="article-sharing">
-      Share: &nbsp;
-      <a href="https://twitter.com/share?text=Zooming%20GGraph%20Plots&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-11-zooming-ggraph-plots%2F" aria-label="share on twitter">
-        <i class="fab fa-twitter" aria-hidden="true"></i>
-      </a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-11-zooming-ggraph-plots%2F&amp;title=Zooming%20GGraph%20Plots" aria-label="share on linkedin">
-        <i class="fab fa-linkedin" aria-hidden="true"></i>
-      </a>
-      <a href="https://pinterest.com/pin/create/link/?url=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-11-zooming-ggraph-plots%2F&amp;description=Zooming%20GGraph%20Plots" aria-label="share on pinterest">
-        <i class="fab fa-pinterest" aria-hidden="true"></i>
-      </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Frmflight.github.io%2Fposts%2F2021-11-11-zooming-ggraph-plots%2F" aria-label="share on facebook">
-        <i class="fab fa-facebook" aria-hidden="true"></i>
-      </a>
-    </span>
-  </p>
-</div>
-<!--/radix_placeholder_article_footer-->
-</div>
-
-<div class="d-appendix">
-</div>
 
 
-<!--radix_placeholder_site_after_body-->
-<!--/radix_placeholder_site_after_body-->
-<!--radix_placeholder_appendices-->
-<div class="appendix-bottom">
-  <h3 id="updates-and-corrections">Corrections</h3>
-  <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/rmflight/researchBlog_distill/issues/new">create an issue</a> on the source repository.</p>
-  <h3 id="reuse">Reuse</h3>
-  <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/rmflight/researchBlog_distill">https://github.com/rmflight/researchBlog_distill</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
-  <h3 id="citation">Citation</h3>
-  <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Flight (2021, Nov. 11). Deciphering Life: One Bit at a Time: Zooming GGraph Plots. Retrieved from https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/</pre>
-  <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{flight2021zooming,
-  author = {Flight, Robert M},
-  title = {Deciphering Life: One Bit at a Time: Zooming GGraph Plots},
-  url = {https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/},
-  year = {2021}
-}</pre>
-</div>
-<!--/radix_placeholder_appendices-->
-<!--radix_placeholder_navigation_after_body-->
-<!--/radix_placeholder_navigation_after_body-->
+</section>
 
-</body>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
+  author = {Robert M Flight},
+  title = {Zooming {GGraph} {Plots}},
+  date = {2021-11-11},
+  url = {https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Robert M Flight. 2021. <span>“Zooming GGraph Plots.”</span> November 11,
+2021. <a href="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots">https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
 
-</html>
+
+
+</body></html>
