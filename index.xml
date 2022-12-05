@@ -44,8 +44,9 @@ quarto install extension schochastics/academicons</code></pre>
 <section id="including-the-icon-in-navbar" class="level2">
 <h2 class="anchored" data-anchor-id="including-the-icon-in-navbar">Including the Icon in Navbar</h2>
 <p>It’s often nice to include various icons in the navigation bar (navbar) or footer of your site. If you want to use it in the navbar, you will have to use</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><span class="at" style="color: #657422;">  </span><span class="kw" style="color: #003B4F;">-</span><span class="at" style="color: #657422;"> </span><span class="fu" style="color: #4758AB;">text</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> </span><span class="st" style="color: #20794D;">"{{&lt; source icon &gt;}}"</span></span>
-<span id="cb3-2"><span class="at" style="color: #657422;">    </span><span class="fu" style="color: #4758AB;">href</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> link</span></span></code></pre></div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># this would be an item under the navbar</span></span>
+<span id="cb3-2"><span class="at" style="color: #657422;">  </span><span class="kw" style="color: #003B4F;">-</span><span class="at" style="color: #657422;"> </span><span class="fu" style="color: #4758AB;">text</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> </span><span class="st" style="color: #20794D;">"{{&lt; source icon &gt;}}"</span></span>
+<span id="cb3-3"><span class="at" style="color: #657422;">    </span><span class="fu" style="color: #4758AB;">href</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> link</span></span></code></pre></div>
 <p>I hope this helps someone else!</p>
 
 

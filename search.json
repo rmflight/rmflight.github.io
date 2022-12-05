@@ -791,6 +791,34 @@
     "text": "Conclusions\nSo on my computer, the split and match implementations are mostly comparable, although on my motivating real world example, I actually got a 3X speedup by using the split method. That may be because of issues related to DataFrame and matching elements within that structure. The join method is 10-14X faster than the others, which is what I’ve seen in my motivating work. I also think it makes the code easier to read and reason over, because you can see what is being subtracted from what directly in the code."
   },
   {
+    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html",
+    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html",
+    "title": "Using Academicons in Your Quarto Blog",
+    "section": "",
+    "text": "Install the academicons extension in your Quarto project, and then use the “text” option."
+  },
+  {
+    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#academicons",
+    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#academicons",
+    "title": "Using Academicons in Your Quarto Blog",
+    "section": "Academicons??",
+    "text": "Academicons??\nAcademicons are an awesome set of academic project themed icons in the same spirit as the Font-Awesome icon collection. In particular, they include a variety of icons related to various academic projects and software. The one I really wanted access to, was the ORCID icon, ."
+  },
+  {
+    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#using-in-quarto",
+    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#using-in-quarto",
+    "title": "Using Academicons in Your Quarto Blog",
+    "section": "Using in Quarto",
+    "text": "Using in Quarto\nYou can download the academicons for use in Latex, HTML, and also in Quarto projects.\nFor quarto in particular, you need to install the extension in the particular project!\n\n\nI was using the instructions on the academicons site, and didn’t see that I needed to cd into my blog directory first to have the extension installed into the project. I do appreciate that the default for quarto is on a project basis.\ncd myblog\nquarto install extension schochastics/academicons\nThen including any of the academicons in your document is easily accomplished using the short codes, like we can include the ORCID icon  using:\n{{< source icon >}}\nwhere source = ai and icon = orcid or whatever other icon you want to use."
+  },
+  {
+    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#including-the-icon-in-navbar",
+    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#including-the-icon-in-navbar",
+    "title": "Using Academicons in Your Quarto Blog",
+    "section": "Including the Icon in Navbar",
+    "text": "Including the Icon in Navbar\nIt’s often nice to include various icons in the navigation bar (navbar) or footer of your site. If you want to use it in the navbar, you will have to use\n# this would be an item under the navbar\n  - text: \"{{< source icon >}}\"\n    href: link\nI hope this helps someone else!"
+  },
+  {
     "objectID": "posts/2022-01-31-heatmap-colormaps/index.html",
     "href": "posts/2022-01-31-heatmap-colormaps/index.html",
     "title": "Heatmap Colormaps!",
@@ -2371,33 +2399,5 @@
     "title": "Random Forest Classification Using Parsnip",
     "section": "",
     "text": "I’ve been working on a “machine learning” project, and in the process I’ve been learning to use the tidymodels framework (“Tidymodels” 2021), which helps save you from leaking information from testing to training data, as well as creating workflows in a consistent way across methods.\nHowever, I got tripped up recently by one issue. When I’ve previously used Random Forests (“Random Forest Wiki Page” 2021), I’ve found that for classification problems, the out-of-bag (OOB) error reported is a good proxy for the area-under-the-curve (AUC), or estimate of how good any other machine learning technique will do (see (Flight 2015) for an example using actual random data). Therefore, I like to put my data through a Random Forest algorithm and check the OOB error, and then maybe reach for a tuned boosted tree to squeeze every last bit of performance out.\ntidymodels default is to use a probability tree, even for classification problems. This isn’t normally a problem for most people, because you will have a train and test set, and estimate performance on the test set using AUC. However, it is a problem if you just want to see the OOB error from the random forest, because it is reported differently for probability vs classification.\nLets run an example using the tidymodels cell data set.\n\nlibrary(tidymodels)\nlibrary(modeldata)\nlibrary(skimr)\ndata(cells, package = \"modeldata\")\nlibrary(ranger)\ntidymodels_prefer()\n\ncells$case = NULL\nset.seed(1234)\nranger(class ~ ., data = cells, min.node.size = 10, classification = TRUE)\n\nRanger result\n\nCall:\n ranger(class ~ ., data = cells, min.node.size = 10, classification = TRUE) \n\nType:                             Classification \nNumber of trees:                  500 \nSample size:                      2019 \nNumber of independent variables:  56 \nMtry:                             7 \nTarget node size:                 10 \nVariable importance mode:         none \nSplitrule:                        gini \nOOB prediction error:             17.29 % \n\n\nHere we can see that we get an OOB error of 17%, which isn’t too shabby. Now, let’s setup a workflow to do the same thing via tidymodels parsnip.\n\nrf_spec = rand_forest() %>%\n  set_engine(\"ranger\") %>%\n  set_mode(\"classification\")\n\nrf_recipe = recipe(class ~ ., data = cells) %>%\n  step_dummy(class, -class)\n\nset.seed(1234)\nworkflow() %>%\n  add_recipe(rf_recipe) %>%\n  add_model(rf_spec) %>%\n  fit(data = cells)\n\n══ Workflow [trained] ══════════════════════════════════════════════════════════\nPreprocessor: Recipe\nModel: rand_forest()\n\n── Preprocessor ────────────────────────────────────────────────────────────────\n1 Recipe Step\n\n• step_dummy()\n\n── Model ───────────────────────────────────────────────────────────────────────\nRanger result\n\nCall:\n ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1), probability = TRUE) \n\nType:                             Probability estimation \nNumber of trees:                  500 \nSample size:                      2019 \nNumber of independent variables:  56 \nMtry:                             7 \nTarget node size:                 10 \nVariable importance mode:         none \nSplitrule:                        gini \nOOB prediction error (Brier s.):  0.1198456 \n\n\nHere we see the OOB error is 12% (0.119), which is not significantly different than the 17% above, but still different. Also, the “Type” shows “Probability estimation” instead of “Classification estimation”.\nIf we run ranger again with a “probability” instead of “classification”, do we match up with the result above?\n\nset.seed(1234)\nranger(class ~ ., data = cells, min.node.size = 10, probability = TRUE)\n\nRanger result\n\nCall:\n ranger(class ~ ., data = cells, min.node.size = 10, probability = TRUE) \n\nType:                             Probability estimation \nNumber of trees:                  500 \nSample size:                      2019 \nNumber of independent variables:  56 \nMtry:                             7 \nTarget node size:                 10 \nVariable importance mode:         none \nSplitrule:                        gini \nOOB prediction error (Brier s.):  0.119976 \n\n\nThat is much closer to the tidymodels result! Great! Except, it’s a misestimation of the true OOB error for classification. How do we get what we want while using the tidymodels framework?\nI couldn’t find the answer, and the above looked like a bug, so I filed one on the parsnip github (“Ranger \"Classification\" Mode Still Looks Like \"Probability\"” 2021). Julia Silge helpfully provided the solution to my problem.\n\nrf_spec_class = rand_forest() %>%\n  set_engine(\"ranger\", probability = FALSE) %>%\n  set_mode(\"classification\")\n\nset.seed(1234)\nworkflow() %>%\n  add_recipe(rf_recipe) %>%\n  add_model(rf_spec_class) %>%\n  fit(data = cells)\n\n══ Workflow [trained] ══════════════════════════════════════════════════════════\nPreprocessor: Recipe\nModel: rand_forest()\n\n── Preprocessor ────────────────────────────────────────────────────────────────\n1 Recipe Step\n\n• step_dummy()\n\n── Model ───────────────────────────────────────────────────────────────────────\nRanger result\n\nCall:\n ranger::ranger(x = maybe_data_frame(x), y = y, probability = ~FALSE,      num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1)) \n\nType:                             Classification \nNumber of trees:                  500 \nSample size:                      2019 \nNumber of independent variables:  56 \nMtry:                             7 \nTarget node size:                 1 \nVariable importance mode:         none \nSplitrule:                        gini \nOOB prediction error:             16.54 % \n\n\nAha! Now we are much closer to the original value of 17%, and the “Type” is “Classification”.\nI know in this case, the differences in OOB error are honestly not that much different, but in my recent project, they differed by 20%, where I had a 45% using classification, and 25% using probability. Therefore, I was being fooled by the tidymodels framework investigation, and then wondering why my final AUC on a tuned model was only hitting just > 55%.\nSo remember, this isn’t how I would run the model for final classification and estimation of AUC on a test set, but if you want the OOB errors for a quick “feel” of your data, it’s very useful.\n\n\n\n\nReferences\n\nFlight, Robert M. 2015. “Deciphering Life: One Bit at a Time: Random Forest Vs PLS on Random Data.” https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/.\n\n\n“Random Forest Wiki Page.” 2021. https://en.wikipedia.org/wiki/Random_forest.\n\n\n“Ranger \"Classification\" Mode Still Looks Like \"Probability\".” 2021. https://github.com/tidymodels/parsnip/issues/546.\n\n\n“Tidymodels.” 2021. https://www.tidymodels.org/.\n\nReusehttps://creativecommons.org/licenses/by/4.0/CitationBibTeX citation:@online{mflight2021,\n  author = {Robert M Flight},\n  title = {Random {Forest} {Classification} {Using} {Parsnip}},\n  date = {2021-08-30},\n  url = {https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nRobert M Flight. 2021. “Random Forest Classification Using\nParsnip.” August 30, 2021. https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip."
-  },
-  {
-    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html",
-    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html",
-    "title": "Using Academicons in Your Quarto Blog",
-    "section": "",
-    "text": "Install the academicons extension in your Quarto project, and then use the “text” option."
-  },
-  {
-    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#academicons",
-    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#academicons",
-    "title": "Using Academicons in Your Quarto Blog",
-    "section": "Academicons??",
-    "text": "Academicons??\nAcademicons are an awesome set of academic project themed icons in the same spirit as the Font-Awesome icon collection. In particular, they include a variety of icons related to various academic projects and software. The one I really wanted access to, was the ORCID icon, ."
-  },
-  {
-    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#using-in-quarto",
-    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#using-in-quarto",
-    "title": "Using Academicons in Your Quarto Blog",
-    "section": "Using in Quarto",
-    "text": "Using in Quarto\nYou can download the academicons for use in Latex, HTML, and also in Quarto projects.\nFor quarto in particular, you need to install the extension in the particular project!\n\n\nI was using the instructions on the academicons site, and didn’t see that I needed to cd into my blog directory first to have the extension installed into the project. I do appreciate that the default for quarto is on a project basis.\ncd myblog\nquarto install extension schochastics/academicons\nThen including any of the academicons in your document is easily accomplished using the short codes, like we can include the ORCID icon  using:\n{{< source icon >}}\nwhere source = ai and icon = orcid or whatever other icon you want to use."
-  },
-  {
-    "objectID": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#including-the-icon-in-navbar",
-    "href": "posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html#including-the-icon-in-navbar",
-    "title": "Using Academicons in Your Quarto Blog",
-    "section": "Including the Icon in Navbar",
-    "text": "Including the Icon in Navbar\nIt’s often nice to include various icons in the navigation bar (navbar) or footer of your site. If you want to use it in the navbar, you will have to use\n  - text: \"{{< source icon >}}\"\n    href: link\nI hope this helps someone else!"
   }
 ]
