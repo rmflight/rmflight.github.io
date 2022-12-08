@@ -10,7 +10,49 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Wed, 07 Dec 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 08 Dec 2022 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Customizing the Displayed Date in Quarto Pubs</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>If you want to change how the date is displayed in your <code>{quarto}</code> documents, this is handy.</p>
+<p>One, decide <strong>what</strong> <a href="https://quarto.org/docs/authoring/title-blocks.html#date">date</a> you want included:</p>
+<ul>
+<li>now</li>
+<li>today</li>
+<li>last-modified (this is my favorite, because I can tell if I’ve got the most recent version)</li>
+</ul>
+<p>Then, you can change how the date is displayed using the <code>date-format</code> <a href="https://quarto.org/docs/reference/dates.html">option</a>.</p>
+<p>My personal preference is for something like 2022-12-08 13:42, to avoid any ambiguity when I’m generating reports for others.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><span class="pp" style="color: #AD0000;">---</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">date</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> last-modified</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">date-format</span><span class="kw" style="color: #003B4F;">:</span><span class="at" style="color: #657422;"> YYYY-MM-DD HH:mm</span></span>
+<span id="cb1-4"><span class="pp" style="color: #AD0000;">---</span></span></code></pre></div>
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
+  author = {Robert M Flight},
+  title = {Customizing the {Displayed} {Date} in {Quarto} {Pubs}},
+  date = {2022-12-08},
+  url = {https://rmflight.github.io/posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2022. <span>“Customizing the Displayed Date in Quarto
+Pubs.”</span> December 8, 2022. <a href="https://rmflight.github.io/posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs">https://rmflight.github.io/posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs</a>.
+</div></div></section></div> ]]></description>
+  <category>quarto</category>
+  <category>R</category>
+  <category>random-code-snippets</category>
+  <guid>https://rmflight.github.io/posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html</guid>
+  <pubDate>Thu, 08 Dec 2022 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Measuring Changes in Height Over Time</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2691,129 +2733,6 @@ Robert M Flight. 2021. <span>“My Geographic Introduction.”</span> May 2,
   <category>animation</category>
   <guid>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index.html</guid>
   <pubDate>Sun, 02 May 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Proportional Error in Mass Spectrometry</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The other day, Kareem Carr asked for a statistics / data science opinion that results in the daggers being drawn on you <span class="citation" data-cites="kareem2021">(Carr, n.d.)</span>, and I replied <span class="citation" data-cites="flight2021">(Flight, n.d.)</span>:</p>
-<blockquote class="blockquote">
-<p>Every physical analytical measurement in -omics suffers from some proportional error. Either model it (neg binomial in RNA-seq for example), or transform your data appropriately (log-transform).</p>
-<p>This includes DNA microarrays, RNA-seq, Mass Spec, and NMR (I need data to confirm)</p>
-</blockquote>
-<p>I wanted to give some proof of what I’m talking about, because I don’t think enough people understand or care. For example, if you get mass-spec data from Metabolon, their Surveyor tool defaults to using non-log-transformed data. Trust me, you should log-transform the values.</p>
-</section>
-<section id="example-data" class="level2">
-<h2 class="anchored" data-anchor-id="example-data">Example Data</h2>
-<p>I have some direct-injection mass spec data on a polar fraction examining ECF derivatized amino-acids, with multiple “scans” from a Thermo Fisher Fusion Tribrid Mass Spectrometer. Each scan is the product of a small number of micro-scans. However, based on the spectrometer, and the lack of chromatography, it would not be unreasonable to expect that each scan is essentially a “replicate” of the other scans, so comparing one to any other is reasonable.</p>
-<p>I’m going to load up the data, and plot two scans in “raw” space. The data are already log10 transformed, so we will “untransform” it back to “raw” first before plotting it.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(dplyr)</span>
-<span id="cb1-3">scan_data <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">readRDS</span>(here<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">here</span>(<span class="st" style="color: #20794D;">"data_files/mass_spec_example_data.rds"</span>))</span>
-<span id="cb1-4">raw_data <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map_dfc</span>(scan_data, <span class="sc" style="color: #5E5E5E;">~</span> <span class="dv" style="color: #AD0000;">10</span><span class="sc" style="color: #5E5E5E;">^</span>.x)</span>
-<span id="cb1-5"></span>
-<span id="cb1-6">raw_data <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb1-7">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(scan174 <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="fl" style="color: #AD0000;">1e7</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb1-8"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> scan174, <span class="at" style="color: #657422;">y =</span> scan175)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb1-9">  <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb1-10">  <span class="fu" style="color: #4758AB;">coord_equal</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb1-11">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">"Scan-Scan Intensities, Raw Values"</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index_files/figure-html/load_data-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>As you can see here, the points <em>really</em> start to diverge as they cross the line at 2.5 x 10^6.</p>
-<p>Now lets plot the log10 transformed values.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">scan_data <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(scan174 <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="fl" style="color: #AD0000;">1e7</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-3"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> scan174, <span class="at" style="color: #657422;">y =</span> scan175)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb2-4">  <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb2-5">  <span class="fu" style="color: #4758AB;">coord_equal</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb2-6">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">"Scan-Scan Intensities, Log10 Values"</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index_files/figure-html/plot_log-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>And now everything is coming to a point as the intensity increases.</p>
-<p>If you’ve worked with microarray or RNASeq data, this is also commonly seen in those data.</p>
-<p>To show the presence of the proportional error more generally, we can calculate the mean and variance of each point across the scans, and plot those. To make sure we are getting “good” representations of the data, we will only use points that were present in at least 20 scans.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">point_mean <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rowMeans</span>(raw_data, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
-<span id="cb3-2">point_sd <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">apply</span>(raw_data, <span class="dv" style="color: #AD0000;">1</span>, sd, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
-<span id="cb3-3">n_present <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">apply</span>(raw_data, <span class="dv" style="color: #AD0000;">1</span>, <span class="cf" style="color: #003B4F;">function</span>(.x){<span class="fu" style="color: #4758AB;">sum</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(.x))})</span>
-<span id="cb3-4"></span>
-<span id="cb3-5">mean_sd <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">mean =</span> point_mean,</span>
-<span id="cb3-6">                     <span class="at" style="color: #657422;">sd =</span> point_sd,</span>
-<span id="cb3-7">                     <span class="at" style="color: #657422;">n =</span> n_present)</span>
-<span id="cb3-8">mean_sd <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-9">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(n <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">20</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-10">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> mean, <span class="at" style="color: #657422;">y =</span> sd)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb3-11">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">"Standard Deviation vs Mean"</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index_files/figure-html/calculate_mean_sd-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>There you have it, the standard deviation is increasing with the mean, and doing so in two different ways, one increasing slowly, and one increasing quickly. Either of these are not good. Whether increasing slowly or quickly, the point is that the error / variance / standard deviation is somehow dependent on the mean, which most standard statistical methods <em>do not</em> handle well. This actually drove the whole development of using the negative-binomial distribution in RNASeq!</p>
-</section>
-<section id="why" class="level2">
-<h2 class="anchored" data-anchor-id="why">Why??</h2>
-<p>Why does this happen? Try this thought experiment:</p>
-<ul>
-<li>I take 5 people in a room, and ask you to count how many people are in the room in 60 seconds and give me an answer.</li>
-<li>I ask you to do this 20 times.</li>
-<li>Your answer should be 5 each time, right?</li>
-<li>Now I put 10 people in the room, and ask again how many are there. And ask multiple times.</li>
-<li>Now 20 people in the same size room.</li>
-<li>And then 30 people …</li>
-<li>And then 40 people …</li>
-<li>And so on.</li>
-</ul>
-<p>If you think about it, given an constantly sized room, it will get harder and harder to count the people in it as their number increases, and with repeated counting, your estimates are likely to have more and more variance or a higher standard deviation as the number of people goes up. Thus the “error” is proportional or depends on the actual number of things you are estimating, much like the mass spec data above.</p>
-<p>In DNA microarrays and RNA-seq, the technology was measuring photons. The higher the number of photons, the more difficult it is to be sure how many there are. And that gets translated to any downstream quantity based on the number of photons.</p>
-<p>In Fourier-transform mass spectrometry, the instrument is still trying to quantify “how many” of each ion there is, and the more ions, the more difficult it is to quantify them. And we end up with proportional error.</p>
-<p>I think in any technology that is trying to “count” how many of something there is within a finite space, these properties will manifest themselves. You just have to know how to look.</p>
-</section>
-<section id="solution" class="level2">
-<h2 class="anchored" data-anchor-id="solution">Solution</h2>
-<p>In the short term, transform your data using log’s. In the long term, I think we need more biostatisticians working with more mass-spectrometry and NMR data to determine what the error structure is for more instruments and analytical measurement types.</p>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-kareem2021" class="csl-entry">
-Carr, Kareem. n.d. <a href="https://twitter.com/kareem_carr/status/1380159451345346569?s=20">https://twitter.com/kareem_carr/status/1380159451345346569?s=20</a>.
-</div>
-<div id="ref-flight2021" class="csl-entry">
-Flight, Robert M. n.d. <a href="https://twitter.com/rmflight/status/1380161512837410835?s=20">https://twitter.com/rmflight/status/1380161512837410835?s=20</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Proportional {Error} in {Mass} {Spectrometry}},
-  date = {2021-04-09},
-  url = {https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Proportional Error in Mass
-Spectrometry.”</span> April 9, 2021. <a href="https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry">https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry</a>.
-</div></div></section></div> ]]></description>
-  <category>mass-spectrometry</category>
-  <category>proportional-error</category>
-  <category>omics</category>
-  <category>metabolomics</category>
-  <guid>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index.html</guid>
-  <pubDate>Fri, 09 Apr 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
