@@ -10,7 +10,107 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Sat, 03 Dec 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 07 Dec 2022 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Measuring Changes in Height Over Time</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="why-measure-height-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="why-measure-height-over-time">Why Measure Height Over Time?</h2>
+<p>I have a possibly really weird theory, that I’ve not been able to find any literature on. I think that over the course of a full menstrual cycle, that some women’s height changes. The reason I think this happens, is that my spouse and I are almost exactly the same height, 99% of the time we look at each other directly in the eyes. However, there are regularly certain days of the month when we both notice that she is either slightly taller or slightly shorter than usual.</p>
+<p>So, it would be really, really cool if we could record heights daily and see if it changes in any measurable way. Even neater would be if we could get a <strong>large sample</strong> of people at various life stages and genders to measure their height daily and compare amongst all of them to see if this change in height is specific to people who are regularly menstruating.</p>
+</section>
+<section id="ideal-method" class="level2">
+<h2 class="anchored" data-anchor-id="ideal-method">Ideal Method</h2>
+<p>Ideally we need to be able to do this anywhere in the world, and people should be able to do it themselves, without needing a partner or to travel anywhere. If we can do it with photos that do not involve taking a photo of the person themselves, nor use any other photo data except the date the photo was taken (if we want to be able to line up changes in height with stages of the menstrual cycle), that would also be ideal to help protect participants identity.</p>
+</section>
+<section id="what-i-came-up-with" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-came-up-with">What I Came Up With</h2>
+<p>Just FYI, last winter I tried a method that involved printed lines on paper, selfies, and eye detection using OpenCV. It was a total bust.</p>
+<p>A month ago, I was hashing this over in my mind again, and realized if only we could get someone else to measure people with a mark on the wall every day it might possibly work. And then I realized that if there were permanent marks on the wall (using permanent marker), and the person marked their own height with a pencil in between them, then the pencil mark location in between the two lines might possibly be used to detect changes in height.</p>
+<p>Figure&nbsp;1 shows me measuring my own height, and Figure&nbsp;2 an actual photo of one of my own pencil marks to test this on the right.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-making-marks" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time/hcc_making_a_mark_lores.jpg" class="img-fluid figure-img" width="1632"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Author taking a selfie while pretending to mark their own height.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-example-mark" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time/hcc_example_lores.jpg" class="img-fluid figure-img" width="888"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: An actual height mark on the wall.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="testing-it" class="level2">
+<h2 class="anchored" data-anchor-id="testing-it">Testing It</h2>
+<p>To test the idea, I bought some relatively thin pegboard that has a thickness of 4mm (see Figure&nbsp;3). I then marked my own height 4 times, with no pegboard (0), 1 (4 mm), and 2 (8 mm). Each marking was a full replicate of:</p>
+<ul>
+<li>standing up against the wall,</li>
+<li>making a pencil mark,</li>
+<li>moving away from the wall,</li>
+<li>taking a photo,</li>
+<li>erasing the pencil mark,</li>
+<li>repeat</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pegboard" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time/hcc_lifts_lores.jpg" class="img-fluid figure-img" width="2016"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: The pegboard I used to vary my own height.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I then cropped the photos to just include the pencil mark and the lines, and then used <code>{stringr}</code> to generate random names for each of the photos so I wouldn’t know which height photo I was annotating.</p>
+<p>For this test, I opened each photo in <a href="https://glimpse-editor.org/">Glimpse</a>, and measured the distance in pixels from the pencil mark to the top line, and then the pencil mark to the bottom line using the measure tool, and recorded them in an quarto-doc.</p>
+<p>Finally, I calculated the ratio of the distances in pixels between the top and bottom measured values.</p>
+<p>Figure&nbsp;4 shows the distributions for each height. We can see that there is a fair bit of variance in the ratios of top / bottom distances, however, the variance <strong>between</strong> heights is larger than the variance <strong>within</strong> heights, even at a difference of 4mm.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ratios" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time/hcc_ratios.png" class="img-fluid figure-img" width="1200"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: Plot of top to bottom distance ratios for the three heights, with 4 replicate measurements for each height.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Therefore, I think this is doable. Even more so, if the lines are made a standard distance apart (say 5 cm or 2 in), then we should be able to calculate <strong>actuall</strong> changes in height. And I think we could easily make a Shiny app that loads a photo, and records three mouse clicks to annotate the top line location, height location, and bottom location, making it easier to extract measurements from a given photo.</p>
+<p>So people anywhere in the world, with at least a digital camera, could make the permanent lines, self measure using a pencil and photograph every day (erasing the pencil mark). We could use a form to upload their photos, and then take information on reproductive status, age, and dates of menses (if they are open to providing them). To do this right we would want people of various genders / sexes, and at multiple stages of life: pre-pubescent, puberty, pregnant, with and without birth control, post-menopausal, etc.</p>
+<p>I’m open to other ideas, but I think Figure&nbsp;4 shows that it could possibly work. I do plan to try taking my own height and my spouses (peri-menopausal) for a couple of months and see what we get for preliminary data.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
+  author = {Robert M Flight},
+  title = {Measuring {Changes} in {Height} {Over} {Time}},
+  date = {2022-12-07},
+  url = {https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2022. <span>“Measuring Changes in Height Over
+Time.”</span> December 7, 2022. <a href="https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time">https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://rmflight.github.io/posts/2022-12-07-measuring-changes-in-height-over-time/index.html</guid>
+  <pubDate>Wed, 07 Dec 2022 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Using Academicons in Your Quarto Blog</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2710,89 +2810,6 @@ Spectrometry.”</span> April 9, 2021. <a href="https://rmflight.github.io/posts
   <category>metabolomics</category>
   <guid>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index.html</guid>
   <pubDate>Fri, 09 Apr 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Highlighting a Row of A ComplexHeatmap</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>The ComplexHeatmap Bioconductor package <span class="citation" data-cites="complexheatmapPub complexheatmapPackage complexheatmapRef">(Gu, Eils, and Schlesner 2016; Gu 2021a, 2021b)</span> has become my goto for visualizing sample-sample correlation heatmaps, which I use a lot. Recently, I had a report where I wanted to highlight a particular row of the heatmap. There is not an <strong>easy</strong> way that I could find to add something that wraps around a particular column. However, you can indicate that there is a grouping in the heatmap, and use that grouping to separate a sample or samples from the others.</p>
-<p>Lets do an example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(ComplexHeatmap)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">123</span>)</span>
-<span id="cb1-3">nr1 <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">4</span>; nr2 <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">8</span>; nr3 <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">6</span>; nr <span class="ot" style="color: #003B4F;">=</span> nr1 <span class="sc" style="color: #5E5E5E;">+</span> nr2 <span class="sc" style="color: #5E5E5E;">+</span> nr3</span>
-<span id="cb1-4">nc1 <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">6</span>; nc2 <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">8</span>; nc3 <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">10</span>; nc <span class="ot" style="color: #003B4F;">=</span> nc1 <span class="sc" style="color: #5E5E5E;">+</span> nc2 <span class="sc" style="color: #5E5E5E;">+</span> nc3</span>
-<span id="cb1-5">mat <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">cbind</span>(<span class="fu" style="color: #4758AB;">rbind</span>(<span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr1<span class="sc" style="color: #5E5E5E;">*</span>nc1, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">1</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr1),</span>
-<span id="cb1-6">          <span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr2<span class="sc" style="color: #5E5E5E;">*</span>nc1, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">0</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr2),</span>
-<span id="cb1-7">          <span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr3<span class="sc" style="color: #5E5E5E;">*</span>nc1, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">0</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr3)),</span>
-<span id="cb1-8">    <span class="fu" style="color: #4758AB;">rbind</span>(<span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr1<span class="sc" style="color: #5E5E5E;">*</span>nc2, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">0</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr1),</span>
-<span id="cb1-9">          <span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr2<span class="sc" style="color: #5E5E5E;">*</span>nc2, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">1</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr2),</span>
-<span id="cb1-10">          <span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr3<span class="sc" style="color: #5E5E5E;">*</span>nc2, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">0</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr3)),</span>
-<span id="cb1-11">    <span class="fu" style="color: #4758AB;">rbind</span>(<span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr1<span class="sc" style="color: #5E5E5E;">*</span>nc3, <span class="at" style="color: #657422;">mean =</span> <span class="fl" style="color: #AD0000;">0.5</span>, <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr1),</span>
-<span id="cb1-12">          <span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr2<span class="sc" style="color: #5E5E5E;">*</span>nc3, <span class="at" style="color: #657422;">mean =</span> <span class="fl" style="color: #AD0000;">0.5</span>, <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr2),</span>
-<span id="cb1-13">          <span class="fu" style="color: #4758AB;">matrix</span>(<span class="fu" style="color: #4758AB;">rnorm</span>(nr3<span class="sc" style="color: #5E5E5E;">*</span>nc3, <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">1</span>,   <span class="at" style="color: #657422;">sd =</span> <span class="fl" style="color: #AD0000;">0.5</span>), <span class="at" style="color: #657422;">nr =</span> nr3))</span>
-<span id="cb1-14">   )</span>
-<span id="cb1-15">mat <span class="ot" style="color: #003B4F;">=</span> mat[<span class="fu" style="color: #4758AB;">sample</span>(nr, nr), <span class="fu" style="color: #4758AB;">sample</span>(nc, nc)] <span class="co" style="color: #5E5E5E;"># random shuffle rows and columns</span></span>
-<span id="cb1-16"><span class="fu" style="color: #4758AB;">rownames</span>(mat) <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"row"</span>, <span class="fu" style="color: #4758AB;">seq_len</span>(nr))</span>
-<span id="cb1-17"><span class="fu" style="color: #4758AB;">colnames</span>(mat) <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"column"</span>, <span class="fu" style="color: #4758AB;">seq_len</span>(nc))</span>
-<span id="cb1-18"></span>
-<span id="cb1-19"><span class="fu" style="color: #4758AB;">Heatmap</span>(mat, <span class="at" style="color: #657422;">cluster_rows =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">cluster_columns =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index_files/figure-html/create_heatmap-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Now, lets suppose we just want to highlight <strong>row2</strong>.</p>
-<p>We create a data.frame with a factor to represent the grouping:</p>
-<div class="cell" data-preview="true">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">which_row2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">which</span>(<span class="fu" style="color: #4758AB;">grepl</span>(<span class="st" style="color: #20794D;">"row2"</span>, <span class="fu" style="color: #4758AB;">rownames</span>(mat)))</span>
-<span id="cb2-2">split <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">x =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fu" style="color: #4758AB;">rep</span>(<span class="st" style="color: #20794D;">"A"</span>, which_row2 <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>), <span class="st" style="color: #20794D;">"B"</span>,</span>
-<span id="cb2-3">                   <span class="fu" style="color: #4758AB;">rep</span>(<span class="st" style="color: #20794D;">"C"</span>, <span class="fu" style="color: #4758AB;">nrow</span>(mat) <span class="sc" style="color: #5E5E5E;">-</span> which_row2)))</span>
-<span id="cb2-4"><span class="fu" style="color: #4758AB;">Heatmap</span>(mat, <span class="at" style="color: #657422;">cluster_rows =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">cluster_columns =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,</span>
-<span id="cb2-5">        <span class="at" style="color: #657422;">row_split =</span> split,</span>
-<span id="cb2-6">        <span class="at" style="color: #657422;">row_title =</span> <span class="cn" style="color: #8f5902;">NULL</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index_files/figure-html/highlight_row2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Voila! <strong>row2</strong> is separated from the others to draw attention to it. It’s not perfect, but hopefully it’s useful to others. Note, that you can’t use clustering with this method. If you have actual dendrograms to display, this will fail, because ComplexHeatmap expects you to use a numeric argument to tell the cut height for dendrograms for splitting <span class="citation" data-cites="complexheatmapSplit">(Gu 2021c)</span>. Therefore, if you have dendrograms, reorder your columns and rows according to the dendrogram <strong>first</strong> and then add the splitting information and keep the clustering off.</p>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-complexheatmapPackage" class="csl-entry">
-Gu, Zuguang. 2021a. <span>“ComplexHeatmap.”</span> <a href="https://doi.org/10.18129/B9.bioc.ComplexHeatmap">https://doi.org/10.18129/B9.bioc.ComplexHeatmap</a>.
-</div>
-<div id="ref-complexheatmapRef" class="csl-entry">
-———. 2021b. <span>“ComplexHeatmap Complete Reference.”</span> <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/">https://jokergoo.github.io/ComplexHeatmap-reference/book/</a>.
-</div>
-<div id="ref-complexheatmapSplit" class="csl-entry">
-———. 2021c. <span>“ComplexHeatmap Complete Reference.”</span> <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/a-single-heatmap.html#heatmap-split">https://jokergoo.github.io/ComplexHeatmap-reference/book/a-single-heatmap.html#heatmap-split</a>.
-</div>
-<div id="ref-complexheatmapPub" class="csl-entry">
-Gu, Zuguang, Roland Eils, and Matthias Schlesner. 2016. <span>“Complex Heatmaps Reveal Patterns and Correlations in Multidimensional Genomic Data.”</span> <em>Bioinformatics</em>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Highlighting a {Row} of {A} {ComplexHeatmap}},
-  date = {2021-03-26},
-  url = {https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Highlighting a Row of A
-ComplexHeatmap.”</span> March 26, 2021. <a href="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap">https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap</a>.
-</div></div></section></div> ]]></description>
-  <category>random-code-snippets</category>
-  <category>heatmap</category>
-  <category>visualization</category>
-  <guid>https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html</guid>
-  <pubDate>Fri, 26 Mar 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-12-07-measuring-changes-in-height-over-time/index.html",
       "/posts/2022-12-03-using-academicons-in-your-quarto-blog/index.html",
       "/posts/2022-09-27-creating-an-analysis-using-targets/index.html",
       "/posts/2022-06-22-compiling-against-pythonh/index.html",
