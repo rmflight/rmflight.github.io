@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Robert M Flight">
-<meta name="dcterms.date" content="2017-03-29">
+<meta name="dcterms.date" content="2022-12-22">
 
-<title>Deciphering Life: One Bit at a Time - Criticizing a Publication, and Lying About It</title>
+<title>Deciphering Life: One Bit at a Time - targets and Child Documents</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,13 +183,13 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Criticizing a Publication, and Lying About It</h1>
-            <p class="subtitle lead"></p><p>Critics of our last publication claimed we didn’t make our data available, which is an outright lie.</p><p></p>
+      <h1 class="title">targets and Child Documents</h1>
+            <p class="subtitle lead"></p><p>How to make sure that main documents update when a child document is modified in a targets workflow.</p><p></p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">publications</div>
-                <div class="quarto-category">peer-review</div>
-                <div class="quarto-category">zinc</div>
-                <div class="quarto-category">academia</div>
+                <div class="quarto-category">random-code-snippets</div>
+                <div class="quarto-category">quarto</div>
+                <div class="quarto-category">rmarkdown</div>
+                <div class="quarto-category">targets</div>
               </div>
                   </div>
   </div>
@@ -144,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 29, 2017</p>
+        <p class="date">December 22, 2022</p>
       </div>
     </div>
     
@@ -160,18 +223,10 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
-  <li><a href="#original-publication" id="toc-original-publication" class="nav-link" data-scroll-target="#original-publication">Original Publication</a></li>
-  <li><a href="#critique" id="toc-critique" class="nav-link" data-scroll-target="#critique">Critique</a></li>
-  <li><a href="#response" id="toc-response" class="nav-link" data-scroll-target="#response">Response</a>
-  <ul class="collapse">
-  <li><a href="#follow-up-paper-on-5-metals" id="toc-follow-up-paper-on-5-metals" class="nav-link" data-scroll-target="#follow-up-paper-on-5-metals">Follow-Up Paper on 5 Metals</a></li>
-  <li><a href="#critique-direct-response" id="toc-critique-direct-response" class="nav-link" data-scroll-target="#critique-direct-response">Critique Direct Response</a></li>
-  <li><a href="#open-results-and-code" id="toc-open-results-and-code" class="nav-link" data-scroll-target="#open-results-and-code">Open Results and Code</a></li>
-  </ul></li>
-  <li><a href="#peer-review" id="toc-peer-review" class="nav-link" data-scroll-target="#peer-review">Peer Review</a>
-  <ul class="collapse">
-  <li><a href="#papers-discussed" id="toc-papers-discussed" class="nav-link" data-scroll-target="#papers-discussed">Papers Discussed</a></li>
-  </ul></li>
+  <li><a href="#the-setup" id="toc-the-setup" class="nav-link" data-scroll-target="#the-setup">The Setup</a></li>
+  <li><a href="#the-workflow" id="toc-the-workflow" class="nav-link" data-scroll-target="#the-workflow">The Workflow</a></li>
+  <li><a href="#the-main" id="toc-the-main" class="nav-link" data-scroll-target="#the-main">The Main</a></li>
+  <li><a href="#include" id="toc-include" class="nav-link" data-scroll-target="#include">Include</a></li>
   </ul>
 </nav>
 </nav>
@@ -186,65 +241,75 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
-<p>Other researchers <a href="https://dx.doi/org/10.1002/prot.25024">directly criticized</a> a <a href="https://dx.doi.org/10.1002/prot.24834">recent publication of ours</a> in a “research article”. Although they raised valid points, they <strong>outright lied</strong> about the availability of our results. In addition, they did not provide access to their own results. We have published <a href="https://dx.doi.org/10.1002/prot.25257">new work</a> supporting our original results, and a direct rebuttal of their critique in a <a href="https://dx.doi.org/10.1002/prot.25263">perspective article</a>. The peer reviewers of their “research article” must have been asleep at the wheel to allow the major point, lack of access to our results, to stand.</p>
+<p>Make sure the child document is a target of the workflow, and that the child document target is loaded in the main.</p>
 </section>
-<section id="original-publication" class="level2">
-<h2 class="anchored" data-anchor-id="original-publication">Original Publication</h2>
-<p>Back in the summer of 2015, I was second author on a publication (<a href="http://onlinelibrary.wiley.com/doi/10.1002/prot.24834/full">Yao et al., 2015</a>, hereafter YS2015) describing an automated method to characterize zinc ion coordination geometries (CGs). Applying our automated method to all zinc sites in the worldwide Protein Data Bank (wwPDB), we found <em>abberrant</em> zinc CGs that don’t fit the canonical CGs. We were pretty sure that these aberrant CGs are real, and they have always existed, but had not been previously characterized because methods assumed that only the <em>canonical</em> geometries should be observed in biological systems, and were excluding the <em>abberrant</em> ones because they didn’t have good methods to detect and characterize them.</p>
-<p>Also of note, the proteins with aberrant zinc geometries showed enrichment for different types of enzyme classifications than those with canonical zinc geometries.</p>
-<p>For this publication, we made <strong>all</strong> of our code and results available in a tarball that could be downloaded from our <a href="http://bioinformatics.cesb.uky.edu/bin/view/Main/SoftwareDevelopment#Metal_ion_coordination_analysis_software">website</a>. This data went up while the paper was in review, on Dec 7, 2015 (with a correction on Dec 15). Recently, we’ve also put a copy of the tarball on <a href="https://figshare.com/articles/Zn_metalloprotein_paper/4229333">FigShare</a>. Every draft of the publication, from initial submission through to accepted publication, included the link to the tarball on the website.</p>
+<section id="the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="the-setup">The Setup</h2>
+<p>So you’ve gone and decided to use the awesome <code>{targets}</code> workflow manager for your project, including generating your final reports. In a bid to keep things manageable, you are also using child documents. This allows you to keep different pieces of the report separated as needed. However, how do you make sure that <code>{targets}</code> knows that the main document needs to be re-rendered when the child document is modified?</p>
 </section>
-<section id="critique" class="level2">
-<h2 class="anchored" data-anchor-id="critique">Critique</h2>
-<p>Less than a year later, <a href="http://sci-hub.cc/doi/10.1002/prot.25024">Raczynska, Wlodawer, and Jaskolski</a> (RJW2016) published a <em>critique</em> of YS2015 as a “research article”. In their publication, they questioned the existence of the <em>abberrant</em> sites completely, based on the examination and remodeling of four aberrant structures highlighted in YS2015. To be fair, they did have some valid criticisms of the methods, and Sen Yao did a lot of work in our latest paper to address them.</p>
-<p>As part of the critique, however, they claimed that they could only evaluate the four structures listed in two figures <strong>because we didn’t provide all of our results</strong>. However, we had previously made our full results available as a tarball from our website. As you can see in the below figure, <strong>all</strong> of the results were really available in that tarball.</p>
-<p>&lt;img src = “/img/ys2017_figure1.png”, width = “600”&gt;</p>
-<p>In addition, although RWJ2016 went to all the trouble to actually remodel those four structures by going back to the original X-ray density, they <strong>didn’t make any of their models available</strong>.</p>
-<p>Finally, no one from RWJ2016 ever contacted our research group to see if the results might be available.</p>
+<section id="the-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="the-workflow">The Workflow</h2>
+<p>Our workflow for this example is <strong>just</strong> the child document and the main document. The child is <strong>only</strong> a file target (as opposed to a fully rendered document), because we just need to know if it changed or not, and not render it again before it gets included in the main.</p>
+<p>So, <code>_targets.R</code> looks something like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_plan</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(child_doc,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"path/to/child.qmd"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"file"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>             </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_quarto</span>(main_doc,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"path/to/main.qmd"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>             </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="response" class="level2">
-<h2 class="anchored" data-anchor-id="response">Response</h2>
-<section id="follow-up-paper-on-5-metals" class="level3">
-<h3 class="anchored" data-anchor-id="follow-up-paper-on-5-metals">Follow-Up Paper on 5 Metals</h3>
-<p>By the time the critiques appeared in RJW2016, Sen was already hard at work showing that the previously developed methods could be modified and then applied to other metal ion CGs, and that they also contained aberrant CGs (see <a href="https://dx.doi.org/10.1002/prot.25257">YS2017-1</a>).</p>
+<section id="the-main" class="level2">
+<h2 class="anchored" data-anchor-id="the-main">The Main</h2>
+<p>In the main document we need to do two things:</p>
+<ol type="1">
+<li>load the <code>child_doc</code> target,</li>
+<li>include the <code>child_doc</code> as an actual child document</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(targets)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Some text ...</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load_targets</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(child_doc)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>More text</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: include_child</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| child: !expr child_doc</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>Even more text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice the <code>!expr child_doc</code> in the second code block. We are taking advantage of the fact that the <code>child_doc</code> actually encodes the <strong>location</strong> of the child document, and the <code>!expr</code> is how we tell <code>{quarto}</code> that we want to evaluate an expression.</p>
 </section>
-<section id="critique-direct-response" class="level3">
-<h3 class="anchored" data-anchor-id="critique-direct-response">Critique Direct Response</h3>
-<p>In addition to YS2017-1, we felt that the critique deserved separate response (<a href="https://doi.org/10.6084/m9.figshare.4754263.v1">YS2017-2</a>). To that end, we began drafting a response, wherein we pointed out some of the problems with RJW2016, the first being that we did indeed provide the <strong>full</strong> set of results from YS2015, and therefore it was possible to evaluate our full work. We also addressed each of their other criticisms of YS2015, in many cases going beyond the original criticism, and explaining how it was being addressed in YS2017-1.</p>
-</section>
-<section id="open-results-and-code" class="level3">
-<h3 class="anchored" data-anchor-id="open-results-and-code">Open Results and Code</h3>
-<p>A major part of the conclusions in YS2017-2 was also devoted to the idea that code and results in science need to be shared, highlighting the fact that RJW2016 <strong>did not share their models</strong> they used to try and discredit our work, lied about the fact that we did not share our own results, and pointing out some other projects in this research area that have shared well and others that have shared badly, and that the previous attitude of competition among research groups does not move science forward.</p>
-</section>
-</section>
-<section id="peer-review" class="level2">
-<h2 class="anchored" data-anchor-id="peer-review">Peer Review</h2>
-<p>Let’s just say that the <em>peer-review</em> of both of the papers was <strong>interesting</strong>. Both manuscripts had the same set of reviewers. YS2017-1, the five metal paper, had some rather rigorous peer review, and was definitely improved by the reviewer’s comments. YS2017-2, our perspective, in contrast, was attacked by one peer reviewer right from submission, and was questioned almost continually as to whether it should even be published. I am thankful that one reviewer saw the need for it to be published, and that the Editor ultimately decided that it should be published, and that we were able to rebut each of the reviewer’s criticisms.</p>
-<p>Finally, I really don’t know what happened in the peer review of RWJ2016. The first major claim was that our data wasn’t available, it should have taken a reviewer 10 minutes to verify and debunk that claim. I would have expected a much different critique from the authors had they actually examined our full data set. But, because of traditional closed peer review, that record is closed to us.</p>
-<p>Overall though, I’m very happy both of our publications are now out, and we can move on to new stages of our analyses. Looking forward to continuing to work with my co-authors to move the work forward.</p>
-<section id="papers-discussed" class="level3">
-<h3 class="anchored" data-anchor-id="papers-discussed">Papers Discussed</h3>
-<ul>
-<li>Original Zinc CGs: <a href="https://dx.doi.org/10.1002/prot.24834">Yao et al 2015</a></li>
-<li>Critique of Zinc CGs: Raczynska, Wlodawer &amp; Jaskolski 2016, <a href="https://dx.doi.org/10.1002/prot.25024">publisher</a>, <a href="https://sci-hub.cc/10.1002/prot.25024">sci-hub</a></li>
-<li>5 Metal CGs: <a href="https://dx.doi.org/10.1002/prot.25257">Yao et al 2017</a></li>
-<li>Response to critique: Yao et al 2017, <a href="https://dx.doi.org/10.1002/prot.25263">publisher</a>, <a href="https://doi.org/10.6084/m9.figshare.4754263.v1">copy on figshare</a></li>
-</ul>
+<section id="include" class="level2">
+<h2 class="anchored" data-anchor-id="include">Include</h2>
+<p>The <code>{quarto}</code> <a href="https://quarto.org/docs/authoring/includes.html">docs</a> also suggest using <code>include</code>d documents. However, I don’t know how those would work with the path of an object, and I don’t really want to test it. Given we are using <code>tar_quarto</code> to control the rendering here, I think it is safer to use <code>child</code> over <code>include</code>.</p>
 
 
 </section>
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2017,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
   author = {Robert M Flight},
-  title = {Criticizing a {Publication,} and {Lying} {About} {It}},
-  date = {2017-03-29},
-  url = {https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it},
+  title = {Targets and {Child} {Documents}},
+  date = {2022-12-22},
+  url = {https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2017" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Robert M Flight. 2017. <span>“Criticizing a Publication, and Lying About
-It.”</span> March 29, 2017. <a href="https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it">https://rmflight.github.io/posts/2017-03-29-criticizing-a-publication-and-lying-about-it</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Robert M Flight. 2022. <span>“Targets and Child Documents.”</span>
+December 22, 2022. <a href="https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents">https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

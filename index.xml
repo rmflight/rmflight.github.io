@@ -10,7 +10,95 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Thu, 08 Dec 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 22 Dec 2022 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>targets and Child Documents</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>Make sure the child document is a target of the workflow, and that the child document target is loaded in the main.</p>
+</section>
+<section id="the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="the-setup">The Setup</h2>
+<p>So you’ve gone and decided to use the awesome <code>{targets}</code> workflow manager for your project, including generating your final reports. In a bid to keep things manageable, you are also using child documents. This allows you to keep different pieces of the report separated as needed. However, how do you make sure that <code>{targets}</code> knows that the main document needs to be re-rendered when the child document is modified?</p>
+</section>
+<section id="the-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="the-workflow">The Workflow</h2>
+<p>Our workflow for this example is <strong>just</strong> the child document and the main document. The child is <strong>only</strong> a file target (as opposed to a fully rendered document), because we just need to know if it changed or not, and not render it again before it gets included in the main.</p>
+<p>So, <code>_targets.R</code> looks something like this:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">tar_plan</span>(</span>
+<span id="cb1-2">  </span>
+<span id="cb1-3">  <span class="fu" style="color: #4758AB;">tar_target</span>(child_doc,</span>
+<span id="cb1-4">             <span class="st" style="color: #20794D;">"path/to/child.qmd"</span>,</span>
+<span id="cb1-5">             <span class="at" style="color: #657422;">format =</span> <span class="st" style="color: #20794D;">"file"</span>),</span>
+<span id="cb1-6">             </span>
+<span id="cb1-7">  <span class="fu" style="color: #4758AB;">tar_quarto</span>(main_doc,</span>
+<span id="cb1-8">            <span class="st" style="color: #20794D;">"path/to/main.qmd"</span>)</span>
+<span id="cb1-9">             </span>
+<span id="cb1-10">)</span></code></pre></div>
+</section>
+<section id="the-main" class="level2">
+<h2 class="anchored" data-anchor-id="the-main">The Main</h2>
+<p>In the main document we need to do two things:</p>
+<ol type="1">
+<li>load the <code>child_doc</code> target,</li>
+<li>include the <code>child_doc</code> as an actual child document</li>
+</ol>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"></span>
+<span id="cb2-2"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;">#| label: setup</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;">library</span>(targets)</span>
+<span id="cb2-5">...</span>
+<span id="cb2-6"><span class="in" style="color: #5E5E5E;">```</span></span>
+<span id="cb2-7"></span>
+<span id="cb2-8">Some text ...</span>
+<span id="cb2-9"></span>
+<span id="cb2-10"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
+<span id="cb2-11"><span class="co" style="color: #5E5E5E;">#| label: load_targets</span></span>
+<span id="cb2-12"><span class="fu" style="color: #4758AB;">tar_load</span>(child_doc)</span>
+<span id="cb2-13"><span class="in" style="color: #5E5E5E;">```</span></span>
+<span id="cb2-14"></span>
+<span id="cb2-15">More text</span>
+<span id="cb2-16"></span>
+<span id="cb2-17"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
+<span id="cb2-18"><span class="co" style="color: #5E5E5E;">#| label: include_child</span></span>
+<span id="cb2-19"><span class="co" style="color: #5E5E5E;">#| child: !expr child_doc</span></span>
+<span id="cb2-20"><span class="in" style="color: #5E5E5E;">```</span></span>
+<span id="cb2-21"></span>
+<span id="cb2-22">Even more text</span></code></pre></div>
+<p>Notice the <code>!expr child_doc</code> in the second code block. We are taking advantage of the fact that the <code>child_doc</code> actually encodes the <strong>location</strong> of the child document, and the <code>!expr</code> is how we tell <code>{quarto}</code> that we want to evaluate an expression.</p>
+</section>
+<section id="include" class="level2">
+<h2 class="anchored" data-anchor-id="include">Include</h2>
+<p>The <code>{quarto}</code> <a href="https://quarto.org/docs/authoring/includes.html">docs</a> also suggest using <code>include</code>d documents. However, I don’t know how those would work with the path of an object, and I don’t really want to test it. Given we are using <code>tar_quarto</code> to control the rendering here, I think it is safer to use <code>child</code> over <code>include</code>.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
+  author = {Robert M Flight},
+  title = {Targets and {Child} {Documents}},
+  date = {2022-12-22},
+  url = {https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2022. <span>“Targets and Child Documents.”</span>
+December 22, 2022. <a href="https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents">https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents</a>.
+</div></div></section></div> ]]></description>
+  <category>random-code-snippets</category>
+  <category>quarto</category>
+  <category>rmarkdown</category>
+  <category>targets</category>
+  <guid>https://rmflight.github.io/posts/2022-12-22-targets-and-child-documents/index.html</guid>
+  <pubDate>Thu, 22 Dec 2022 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Customizing the Displayed Date in Quarto Pubs</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2396,343 +2484,6 @@ Document.”</span> July 22, 2021. <a href="https://rmflight.github.io/posts/202
   <category>rmarkdown</category>
   <guid>https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/index.html</guid>
   <pubDate>Thu, 22 Jul 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>My Geographic Introduction</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>I thought the recent animated map at Piping Hot Data {<span class="citation" data-cites="pileggi2021gganimating">Pileggi (2021)</span>} was a really neat way to demonstrate where someone has lived and what their various experiences may have been (while acknowledging that we are also more than the sum of where we have lived of course), so I thought I would take a go at creating my own, which includes stints in various parts of Canada, a stint in Germany, as well as two moves within Kentucky.</p>
-<p>I’ll start by getting all of the locations, as well as my time at each one. I had to add the year dates so I could get the number of years correct, as my initial try I was missing 6 years. Now I’m only missing 1.5, which isn’t bad if we are using years as our unit of time.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(tibble)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(dplyr)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(gganimate)</span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(extrafont)</span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(ggtext)</span>
-<span id="cb1-6">residence <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">tribble</span>(</span>
-<span id="cb1-7"><span class="sc" style="color: #5E5E5E;">~</span>city,           <span class="sc" style="color: #5E5E5E;">~</span>state,  <span class="sc" style="color: #5E5E5E;">~</span>lat,   <span class="sc" style="color: #5E5E5E;">~</span>long, <span class="sc" style="color: #5E5E5E;">~</span>years, <span class="sc" style="color: #5E5E5E;">~</span>description, <span class="sc" style="color: #5E5E5E;">~</span>dates,</span>
-<span id="cb1-8"><span class="st" style="color: #20794D;">"Brandon"</span>,  <span class="st" style="color: #20794D;">"MB"</span>, <span class="fl" style="color: #AD0000;">49.8485</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">99.9501</span>, <span class="fl" style="color: #AD0000;">2.5</span>, <span class="st" style="color: #20794D;">"Born"</span>, <span class="st" style="color: #20794D;">"1979-1982"</span>,</span>
-<span id="cb1-9"><span class="st" style="color: #20794D;">"Lahr"</span>,     <span class="st" style="color: #20794D;">"Baden-Württemberg"</span>, <span class="fl" style="color: #AD0000;">48.3392</span>, <span class="fl" style="color: #AD0000;">7.8781</span>, <span class="dv" style="color: #AD0000;">6</span>, <span class="st" style="color: #20794D;">"Childhood"</span>, <span class="st" style="color: #20794D;">"1982-1988"</span>,</span>
-<span id="cb1-10"><span class="st" style="color: #20794D;">"Oromocto"</span>, <span class="st" style="color: #20794D;">"NB"</span>, <span class="fl" style="color: #AD0000;">45.8487</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">66.4813</span>, <span class="dv" style="color: #AD0000;">4</span>, <span class="st" style="color: #20794D;">"Childhood"</span>, <span class="st" style="color: #20794D;">"1988-1992"</span>,</span>
-<span id="cb1-11"><span class="st" style="color: #20794D;">"Victoria"</span>, <span class="st" style="color: #20794D;">"BC"</span>, <span class="fl" style="color: #AD0000;">48.4284</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">123.3656</span>, <span class="dv" style="color: #AD0000;">1</span>, <span class="st" style="color: #20794D;">"Childhood"</span>, <span class="st" style="color: #20794D;">"1992-1993"</span>,</span>
-<span id="cb1-12"><span class="st" style="color: #20794D;">"Burton"</span>, <span class="st" style="color: #20794D;">"NB"</span>, <span class="fl" style="color: #AD0000;">45.8752</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">66.3611</span>, <span class="dv" style="color: #AD0000;">9</span>, <span class="st" style="color: #20794D;">"Childhood&lt;br&gt;Undergrad at UNB"</span>, <span class="st" style="color: #20794D;">"1993-2002"</span>,</span>
-<span id="cb1-13"><span class="st" style="color: #20794D;">"Fredericton"</span>, <span class="st" style="color: #20794D;">"NB"</span>, <span class="fl" style="color: #AD0000;">45.9636</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">66.6431</span>, <span class="dv" style="color: #AD0000;">2</span>, <span class="st" style="color: #20794D;">"Masters at UNB"</span>, <span class="st" style="color: #20794D;">"2002-2004"</span>,</span>
-<span id="cb1-14"><span class="st" style="color: #20794D;">"Halifax"</span>, <span class="st" style="color: #20794D;">"NS"</span>, <span class="fl" style="color: #AD0000;">44.6488</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">63.5752</span>, <span class="dv" style="color: #AD0000;">5</span>, <span class="st" style="color: #20794D;">"PhD at Dalhousie"</span>, <span class="st" style="color: #20794D;">"2004-2009"</span>,</span>
-<span id="cb1-15"><span class="st" style="color: #20794D;">"Louisville"</span>, <span class="st" style="color: #20794D;">"KY"</span>, <span class="fl" style="color: #AD0000;">38.2527</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">85.7585</span>, <span class="dv" style="color: #AD0000;">2</span>, <span class="st" style="color: #20794D;">"PostDoc at UofL"</span>, <span class="st" style="color: #20794D;">"2010-2012"</span>,</span>
-<span id="cb1-16"><span class="st" style="color: #20794D;">"Lexington"</span>, <span class="st" style="color: #20794D;">"KY"</span>, <span class="fl" style="color: #AD0000;">38.0406</span>, <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">84.5037</span>, <span class="dv" style="color: #AD0000;">9</span>, <span class="st" style="color: #20794D;">"PostDoc at UK&lt;br&gt;Research Associate at UK"</span>, <span class="st" style="color: #20794D;">"2012-2021"</span></span>
-<span id="cb1-17">)</span></code></pre></div>
-</div>
-<p>I created a function from Shannon’s original code because I end up using it twice, and I was missing all of the variables I needed to change to make it work properly.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">create_connections <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(residence){</span>
-<span id="cb2-2">  residence_connections_prelim <span class="ot" style="color: #003B4F;">=</span> residence <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb2-3">  <span class="fu" style="color: #4758AB;">mutate</span>(</span>
-<span id="cb2-4">    <span class="co" style="color: #5E5E5E;"># need this to create transition state ----</span></span>
-<span id="cb2-5">    <span class="at" style="color: #657422;">city_order =</span> <span class="fu" style="color: #4758AB;">row_number</span>() <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb2-6">    <span class="co" style="color: #5E5E5E;"># where I moved to next, for curved arrows ----</span></span>
-<span id="cb2-7">    <span class="at" style="color: #657422;">lat_next =</span> <span class="fu" style="color: #4758AB;">lead</span>(lat),</span>
-<span id="cb2-8">    <span class="at" style="color: #657422;">long_next =</span> <span class="fu" style="color: #4758AB;">lead</span>(long),</span>
-<span id="cb2-9">    <span class="co" style="color: #5E5E5E;"># label to show in plot, styled using ggtext ---</span></span>
-<span id="cb2-10">    <span class="at" style="color: #657422;">label =</span> glue<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">glue</span>(<span class="st" style="color: #20794D;">"**{city}, {state}** ({years} yrs)&lt;br&gt;*{description}*"</span>),</span>
-<span id="cb2-11">    <span class="co" style="color: #5E5E5E;"># label of next location ----</span></span>
-<span id="cb2-12">    <span class="at" style="color: #657422;">label_next =</span> <span class="fu" style="color: #4758AB;">lead</span>(label)</span>
-<span id="cb2-13">  ) </span>
-<span id="cb2-14">  n_entry <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">nrow</span>(residence_connections_prelim)</span>
-<span id="cb2-15">residence_connections <span class="ot" style="color: #003B4F;">=</span> residence_connections_prelim <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-16">  <span class="co" style="color: #5E5E5E;"># get first row of residence ----</span></span>
-<span id="cb2-17">  <span class="fu" style="color: #4758AB;">slice</span>(<span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb2-18">  <span class="co" style="color: #5E5E5E;"># manually modify for plotting ----</span></span>
-<span id="cb2-19">  <span class="fu" style="color: #4758AB;">mutate</span>(</span>
-<span id="cb2-20">    <span class="at" style="color: #657422;">city_order =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb2-21">    <span class="at" style="color: #657422;">label_next =</span> label,</span>
-<span id="cb2-22">    <span class="at" style="color: #657422;">lat_next =</span> lat,</span>
-<span id="cb2-23">    <span class="at" style="color: #657422;">long_next =</span> long,</span>
-<span id="cb2-24">    ) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb2-25">  <span class="co" style="color: #5E5E5E;"># combine with all other residences ----</span></span>
-<span id="cb2-26">  <span class="fu" style="color: #4758AB;">bind_rows</span>(residence_connections_prelim) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb2-27">  <span class="co" style="color: #5E5E5E;"># last (9th) row irrelevant ----</span></span>
-<span id="cb2-28">  <span class="fu" style="color: #4758AB;">slice_head</span>(<span class="at" style="color: #657422;">n =</span> n_entry) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb2-29">  <span class="co" style="color: #5E5E5E;"># keep what we neeed ----</span></span>
-<span id="cb2-30">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(city_order, lat, long, lat_next, long_next, label_next)</span>
-<span id="cb2-31">  residence_connections</span>
-<span id="cb2-32">}</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">world_data <span class="ot" style="color: #003B4F;">=</span> ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map_data</span>(<span class="st" style="color: #20794D;">"world"</span>)</span>
-<span id="cb3-2">trim_world <span class="ot" style="color: #003B4F;">=</span> world_data <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb3-3">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(long <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">130</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> long <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">20</span>, lat <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">35</span>, lat <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">70</span>)</span>
-<span id="cb3-4"><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_polygon</span>(<span class="at" style="color: #657422;">data =</span> trim_world, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>long, <span class="at" style="color: #657422;">y =</span> lat, <span class="at" style="color: #657422;">group =</span> group)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb3-5"><span class="fu" style="color: #4758AB;">coord_fixed</span>(<span class="fl" style="color: #AD0000;">1.3</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index_files/figure-html/get_world_data_trim-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>OK, at least that looks like the right region that I want to use. Basically from British Columbia to Germany, and the northern part of North America.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">base_map <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb4-2">  <span class="co" style="color: #5E5E5E;"># plot states ----</span></span>
-<span id="cb4-3">  <span class="fu" style="color: #4758AB;">geom_polygon</span>(</span>
-<span id="cb4-4">    <span class="at" style="color: #657422;">data =</span> trim_world,</span>
-<span id="cb4-5">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb4-6">      <span class="at" style="color: #657422;">x     =</span> long, </span>
-<span id="cb4-7">      <span class="at" style="color: #657422;">y     =</span> lat, </span>
-<span id="cb4-8">      <span class="at" style="color: #657422;">group =</span> group</span>
-<span id="cb4-9">      ),</span>
-<span id="cb4-10">    <span class="at" style="color: #657422;">fill  =</span> <span class="st" style="color: #20794D;">"#F2F2F2"</span>,</span>
-<span id="cb4-11">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"white"</span></span>
-<span id="cb4-12">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb4-13">  <span class="co" style="color: #5E5E5E;"># lines for pins ----</span></span>
-<span id="cb4-14">  <span class="fu" style="color: #4758AB;">geom_segment</span>(</span>
-<span id="cb4-15">    <span class="at" style="color: #657422;">data =</span> residence,</span>
-<span id="cb4-16">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb4-17">      <span class="at" style="color: #657422;">x    =</span> long,</span>
-<span id="cb4-18">      <span class="at" style="color: #657422;">xend =</span> long,</span>
-<span id="cb4-19">      <span class="at" style="color: #657422;">y    =</span> lat,</span>
-<span id="cb4-20">      <span class="at" style="color: #657422;">yend =</span> lat <span class="sc" style="color: #5E5E5E;">+</span> <span class="fl" style="color: #AD0000;">0.5</span></span>
-<span id="cb4-21">      ),</span>
-<span id="cb4-22">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#181818"</span>,</span>
-<span id="cb4-23">    <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">0.3</span></span>
-<span id="cb4-24">    ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb4-25">    <span class="co" style="color: #5E5E5E;"># pin heads, a bit above actual location, color with R ladies lighter purple ----</span></span>
-<span id="cb4-26">  <span class="fu" style="color: #4758AB;">geom_point</span>(</span>
-<span id="cb4-27">    <span class="at" style="color: #657422;">data =</span> residence,</span>
-<span id="cb4-28">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb4-29">      <span class="at" style="color: #657422;">x =</span> long, </span>
-<span id="cb4-30">      <span class="at" style="color: #657422;">y =</span> lat <span class="sc" style="color: #5E5E5E;">+</span> <span class="fl" style="color: #AD0000;">0.5</span></span>
-<span id="cb4-31">      ),</span>
-<span id="cb4-32">    <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">0.5</span>,</span>
-<span id="cb4-33">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#88398A"</span></span>
-<span id="cb4-34">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb4-35">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb4-36">  <span class="fu" style="color: #4758AB;">coord_fixed</span>(<span class="fl" style="color: #AD0000;">1.3</span>)</span>
-<span id="cb4-37">base_map</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index_files/figure-html/pin_labels-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">res_connections <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">create_connections</span>(residence)</span>
-<span id="cb5-2">n_res <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">nrow</span>(res_connections)</span>
-<span id="cb5-3">anim <span class="ot" style="color: #003B4F;">=</span> base_map <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb5-4">  <span class="co" style="color: #5E5E5E;"># show arrows connecting residences ----</span></span>
-<span id="cb5-5">  <span class="fu" style="color: #4758AB;">geom_curve</span>(</span>
-<span id="cb5-6">    <span class="co" style="color: #5E5E5E;"># do not include 1st residence in arrows as no arrow is intended ----</span></span>
-<span id="cb5-7">    <span class="co" style="color: #5E5E5E;"># and inclusion messes up transition ---</span></span>
-<span id="cb5-8">    <span class="at" style="color: #657422;">data =</span> res_connections <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">slice</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>),</span>
-<span id="cb5-9">    <span class="co" style="color: #5E5E5E;"># add slight adjustment to arrow positioning ----</span></span>
-<span id="cb5-10">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb5-11">      <span class="at" style="color: #657422;">y     =</span> lat <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">0.1</span>,</span>
-<span id="cb5-12">      <span class="at" style="color: #657422;">x     =</span> long,</span>
-<span id="cb5-13">      <span class="at" style="color: #657422;">yend  =</span> lat_next <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">0.2</span>,</span>
-<span id="cb5-14">      <span class="at" style="color: #657422;">xend  =</span> long_next,</span>
-<span id="cb5-15">      <span class="co" style="color: #5E5E5E;"># group is used to create the transition ----</span></span>
-<span id="cb5-16">      <span class="at" style="color: #657422;">group =</span> <span class="fu" style="color: #4758AB;">seq_along</span>(city_order)</span>
-<span id="cb5-17">    ),</span>
-<span id="cb5-18">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#181818"</span>,</span>
-<span id="cb5-19">    <span class="at" style="color: #657422;">curvature =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">0.5</span>,</span>
-<span id="cb5-20">    <span class="at" style="color: #657422;">arrow =</span> <span class="fu" style="color: #4758AB;">arrow</span>(<span class="at" style="color: #657422;">length =</span> <span class="fu" style="color: #4758AB;">unit</span>(<span class="fl" style="color: #AD0000;">0.02</span>, <span class="st" style="color: #20794D;">"npc"</span>)),</span>
-<span id="cb5-21">    <span class="at" style="color: #657422;">size  =</span> <span class="fl" style="color: #AD0000;">0.2</span></span>
-<span id="cb5-22">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb5-23">  <span class="co" style="color: #5E5E5E;"># add in labels for pins, with inward positioning ----</span></span>
-<span id="cb5-24">  <span class="co" style="color: #5E5E5E;"># show labels either top left or top right of pin ----</span></span>
-<span id="cb5-25">  <span class="fu" style="color: #4758AB;">geom_richtext</span>(</span>
-<span id="cb5-26">    <span class="at" style="color: #657422;">data =</span> res_connections,</span>
-<span id="cb5-27">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb5-28">      <span class="at" style="color: #657422;">x     =</span> <span class="fu" style="color: #4758AB;">ifelse</span>(long_next <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, long_next <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>, long_next <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>),</span>
-<span id="cb5-29">      <span class="at" style="color: #657422;">y     =</span> lat_next <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">5</span>,</span>
-<span id="cb5-30">      <span class="at" style="color: #657422;">label =</span> label_next,</span>
-<span id="cb5-31">      <span class="at" style="color: #657422;">vjust =</span> <span class="st" style="color: #20794D;">"top"</span>,</span>
-<span id="cb5-32">      <span class="at" style="color: #657422;">hjust =</span> <span class="fu" style="color: #4758AB;">ifelse</span>(long_next <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">1</span>),</span>
-<span id="cb5-33">      <span class="co" style="color: #5E5E5E;"># group is used to create the transition ----</span></span>
-<span id="cb5-34">      <span class="at" style="color: #657422;">group =</span> <span class="fu" style="color: #4758AB;">seq_along</span>(city_order)</span>
-<span id="cb5-35">    ),</span>
-<span id="cb5-36">    <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
-<span id="cb5-37">    <span class="at" style="color: #657422;">label.colour =</span> <span class="st" style="color: #20794D;">"white"</span>,</span>
-<span id="cb5-38">    <span class="co" style="color: #5E5E5E;"># R ladies purple ----</span></span>
-<span id="cb5-39">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#562457"</span>,</span>
-<span id="cb5-40">    <span class="co" style="color: #5E5E5E;"># R ladies font used in xaringan theme ----</span></span>
-<span id="cb5-41">    <span class="at" style="color: #657422;">family =</span> <span class="st" style="color: #20794D;">"Lato"</span></span>
-<span id="cb5-42">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb5-43">  <span class="co" style="color: #5E5E5E;"># title determined by group value in transition ----</span></span>
-<span id="cb5-44">  <span class="fu" style="color: #4758AB;">ggtitle</span>(<span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"Home {closest_state} of "</span>, n_res)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb5-45">  <span class="co" style="color: #5E5E5E;"># create animation ----</span></span>
-<span id="cb5-46">  <span class="fu" style="color: #4758AB;">transition_states</span>(</span>
-<span id="cb5-47">    city_order,</span>
-<span id="cb5-48">    <span class="at" style="color: #657422;">transition_length =</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
-<span id="cb5-49">    <span class="at" style="color: #657422;">state_length =</span> <span class="dv" style="color: #AD0000;">5</span></span>
-<span id="cb5-50">    ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb5-51">  <span class="co" style="color: #5E5E5E;"># style title ----</span></span>
-<span id="cb5-52">  <span class="fu" style="color: #4758AB;">theme</span>(</span>
-<span id="cb5-53">    <span class="at" style="color: #657422;">plot.title =</span> <span class="fu" style="color: #4758AB;">element_text</span>(</span>
-<span id="cb5-54">      <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#562457"</span>,</span>
-<span id="cb5-55">      <span class="at" style="color: #657422;">family =</span> <span class="st" style="color: #20794D;">"Permanent Marker"</span>,</span>
-<span id="cb5-56">      <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">12</span></span>
-<span id="cb5-57">      )</span>
-<span id="cb5-58">    )</span>
-<span id="cb5-59"><span class="co" style="color: #5E5E5E;"># render and save transition ----</span></span>
-<span id="cb5-60"><span class="co" style="color: #5E5E5E;"># the default nframes 100 frames, 150 makes the gif a bit longer for readability ----</span></span>
-<span id="cb5-61"><span class="co" style="color: #5E5E5E;"># changing dimensions for output w/ height &amp; width ----</span></span>
-<span id="cb5-62"><span class="co" style="color: #5E5E5E;"># increasing resolution with res ----</span></span>
-<span id="cb5-63"><span class="fu" style="color: #4758AB;">animate</span>(anim, <span class="at" style="color: #657422;">nframes =</span> <span class="dv" style="color: #AD0000;">150</span>, <span class="at" style="color: #657422;">height =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">units =</span> <span class="st" style="color: #20794D;">"in"</span>, <span class="at" style="color: #657422;">res =</span> <span class="dv" style="color: #AD0000;">150</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index_files/figure-html/animate_it-1.gif" class="img-fluid"></p>
-</div>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">anim_save</span>(<span class="st" style="color: #20794D;">"homes_animation.gif"</span>)</span></code></pre></div>
-</div>
-<p>That’s not bad! The only issue with it is that because of the crossing of the Atlantic Ocean, the travels within North America, especially the very close travels from NB to NS, and then within KY are way too crushed together.</p>
-<p>So lets see what happens if we trim to the region of North America, and remove the overseas trip to Germany.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">trim_world2 <span class="ot" style="color: #003B4F;">=</span> world_data <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(long <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">130</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> long <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">60</span>, lat <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="dv" style="color: #AD0000;">35</span>, lat <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">70</span>)</span>
-<span id="cb7-3"><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_polygon</span>(<span class="at" style="color: #657422;">data =</span> trim_world2, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>long, <span class="at" style="color: #657422;">y =</span> lat, <span class="at" style="color: #657422;">group =</span> group)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-4"><span class="fu" style="color: #4758AB;">coord_fixed</span>(<span class="fl" style="color: #AD0000;">1.3</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index_files/figure-html/trim_na-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">residence2 <span class="ot" style="color: #003B4F;">=</span> residence <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb8-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">grepl</span>(<span class="st" style="color: #20794D;">"Lahr"</span>, city))</span>
-<span id="cb8-3">res_connections2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">create_connections</span>(residence2)</span>
-<span id="cb8-4">n_res2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">nrow</span>(res_connections2)</span>
-<span id="cb8-5">base_map2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-6">  <span class="co" style="color: #5E5E5E;"># plot states ----</span></span>
-<span id="cb8-7">  <span class="fu" style="color: #4758AB;">geom_polygon</span>(</span>
-<span id="cb8-8">    <span class="at" style="color: #657422;">data =</span> trim_world2,</span>
-<span id="cb8-9">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb8-10">      <span class="at" style="color: #657422;">x     =</span> long, </span>
-<span id="cb8-11">      <span class="at" style="color: #657422;">y     =</span> lat, </span>
-<span id="cb8-12">      <span class="at" style="color: #657422;">group =</span> group</span>
-<span id="cb8-13">      ),</span>
-<span id="cb8-14">    <span class="at" style="color: #657422;">fill  =</span> <span class="st" style="color: #20794D;">"#F2F2F2"</span>,</span>
-<span id="cb8-15">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"white"</span></span>
-<span id="cb8-16">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-17">  <span class="co" style="color: #5E5E5E;"># lines for pins ----</span></span>
-<span id="cb8-18">  <span class="fu" style="color: #4758AB;">geom_segment</span>(</span>
-<span id="cb8-19">    <span class="at" style="color: #657422;">data =</span> residence2,</span>
-<span id="cb8-20">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb8-21">      <span class="at" style="color: #657422;">x    =</span> long,</span>
-<span id="cb8-22">      <span class="at" style="color: #657422;">xend =</span> long,</span>
-<span id="cb8-23">      <span class="at" style="color: #657422;">y    =</span> lat,</span>
-<span id="cb8-24">      <span class="at" style="color: #657422;">yend =</span> lat <span class="sc" style="color: #5E5E5E;">+</span> <span class="fl" style="color: #AD0000;">0.5</span></span>
-<span id="cb8-25">      ),</span>
-<span id="cb8-26">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#181818"</span>,</span>
-<span id="cb8-27">    <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">0.3</span></span>
-<span id="cb8-28">    ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-29">    <span class="co" style="color: #5E5E5E;"># pin heads, a bit above actual location, color with R ladies lighter purple ----</span></span>
-<span id="cb8-30">  <span class="fu" style="color: #4758AB;">geom_point</span>(</span>
-<span id="cb8-31">    <span class="at" style="color: #657422;">data =</span> residence2,</span>
-<span id="cb8-32">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb8-33">      <span class="at" style="color: #657422;">x =</span> long, </span>
-<span id="cb8-34">      <span class="at" style="color: #657422;">y =</span> lat <span class="sc" style="color: #5E5E5E;">+</span> <span class="fl" style="color: #AD0000;">0.5</span></span>
-<span id="cb8-35">      ),</span>
-<span id="cb8-36">    <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">0.5</span>,</span>
-<span id="cb8-37">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#88398A"</span></span>
-<span id="cb8-38">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-39">  <span class="fu" style="color: #4758AB;">theme_void</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-40">  <span class="fu" style="color: #4758AB;">coord_fixed</span>(<span class="fl" style="color: #AD0000;">1.3</span>)</span>
-<span id="cb8-41">base_map2</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index_files/figure-html/base_map2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">anim2 <span class="ot" style="color: #003B4F;">=</span> base_map2 <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb9-2">  <span class="co" style="color: #5E5E5E;"># show arrows connecting residences ----</span></span>
-<span id="cb9-3">  <span class="fu" style="color: #4758AB;">geom_curve</span>(</span>
-<span id="cb9-4">    <span class="co" style="color: #5E5E5E;"># do not include 1st residence in arrows as no arrow is intended ----</span></span>
-<span id="cb9-5">    <span class="co" style="color: #5E5E5E;"># and inclusion messes up transition ---</span></span>
-<span id="cb9-6">    <span class="at" style="color: #657422;">data =</span> res_connections2 <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">slice</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>),</span>
-<span id="cb9-7">    <span class="co" style="color: #5E5E5E;"># add slight adjustment to arrow positioning ----</span></span>
-<span id="cb9-8">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb9-9">      <span class="at" style="color: #657422;">y     =</span> lat <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">0.1</span>,</span>
-<span id="cb9-10">      <span class="at" style="color: #657422;">x     =</span> long,</span>
-<span id="cb9-11">      <span class="at" style="color: #657422;">yend  =</span> lat_next <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">0.2</span>,</span>
-<span id="cb9-12">      <span class="at" style="color: #657422;">xend  =</span> long_next,</span>
-<span id="cb9-13">      <span class="co" style="color: #5E5E5E;"># group is used to create the transition ----</span></span>
-<span id="cb9-14">      <span class="at" style="color: #657422;">group =</span> <span class="fu" style="color: #4758AB;">seq_along</span>(city_order)</span>
-<span id="cb9-15">    ),</span>
-<span id="cb9-16">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#181818"</span>,</span>
-<span id="cb9-17">    <span class="at" style="color: #657422;">curvature =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">0.5</span>,</span>
-<span id="cb9-18">    <span class="at" style="color: #657422;">arrow =</span> <span class="fu" style="color: #4758AB;">arrow</span>(<span class="at" style="color: #657422;">length =</span> <span class="fu" style="color: #4758AB;">unit</span>(<span class="fl" style="color: #AD0000;">0.02</span>, <span class="st" style="color: #20794D;">"npc"</span>)),</span>
-<span id="cb9-19">    <span class="at" style="color: #657422;">size  =</span> <span class="fl" style="color: #AD0000;">0.2</span></span>
-<span id="cb9-20">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb9-21">  <span class="co" style="color: #5E5E5E;"># add in labels for pins, with inward positioning ----</span></span>
-<span id="cb9-22">  <span class="co" style="color: #5E5E5E;"># show labels either top left or top right of pin ----</span></span>
-<span id="cb9-23">  <span class="fu" style="color: #4758AB;">geom_richtext</span>(</span>
-<span id="cb9-24">    <span class="at" style="color: #657422;">data =</span> res_connections2,</span>
-<span id="cb9-25">    <span class="fu" style="color: #4758AB;">aes</span>(</span>
-<span id="cb9-26">      <span class="at" style="color: #657422;">x     =</span> <span class="fu" style="color: #4758AB;">ifelse</span>(long_next <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, long_next <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>, long_next <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>),</span>
-<span id="cb9-27">      <span class="at" style="color: #657422;">y     =</span> lat_next <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">5</span>,</span>
-<span id="cb9-28">      <span class="at" style="color: #657422;">label =</span> label_next,</span>
-<span id="cb9-29">      <span class="at" style="color: #657422;">vjust =</span> <span class="st" style="color: #20794D;">"top"</span>,</span>
-<span id="cb9-30">      <span class="at" style="color: #657422;">hjust =</span> <span class="fu" style="color: #4758AB;">ifelse</span>(long_next <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">1</span>),</span>
-<span id="cb9-31">      <span class="co" style="color: #5E5E5E;"># group is used to create the transition ----</span></span>
-<span id="cb9-32">      <span class="at" style="color: #657422;">group =</span> <span class="fu" style="color: #4758AB;">seq_along</span>(city_order)</span>
-<span id="cb9-33">    ),</span>
-<span id="cb9-34">    <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
-<span id="cb9-35">    <span class="at" style="color: #657422;">label.colour =</span> <span class="st" style="color: #20794D;">"white"</span>,</span>
-<span id="cb9-36">    <span class="co" style="color: #5E5E5E;"># R ladies purple ----</span></span>
-<span id="cb9-37">    <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#562457"</span>,</span>
-<span id="cb9-38">    <span class="co" style="color: #5E5E5E;"># R ladies font used in xaringan theme ----</span></span>
-<span id="cb9-39">    <span class="at" style="color: #657422;">family =</span> <span class="st" style="color: #20794D;">"Lato"</span></span>
-<span id="cb9-40">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb9-41">  <span class="co" style="color: #5E5E5E;"># title determined by group value in transition ----</span></span>
-<span id="cb9-42">  <span class="fu" style="color: #4758AB;">ggtitle</span>(<span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"Home {closest_state} of "</span>, n_res2)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb9-43">  <span class="co" style="color: #5E5E5E;"># create animation ----</span></span>
-<span id="cb9-44">  <span class="fu" style="color: #4758AB;">transition_states</span>(</span>
-<span id="cb9-45">    city_order,</span>
-<span id="cb9-46">    <span class="at" style="color: #657422;">transition_length =</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
-<span id="cb9-47">    <span class="at" style="color: #657422;">state_length =</span> <span class="dv" style="color: #AD0000;">5</span></span>
-<span id="cb9-48">    ) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb9-49">  <span class="co" style="color: #5E5E5E;"># style title ----</span></span>
-<span id="cb9-50">  <span class="fu" style="color: #4758AB;">theme</span>(</span>
-<span id="cb9-51">    <span class="at" style="color: #657422;">plot.title =</span> <span class="fu" style="color: #4758AB;">element_text</span>(</span>
-<span id="cb9-52">      <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#562457"</span>,</span>
-<span id="cb9-53">      <span class="at" style="color: #657422;">family =</span> <span class="st" style="color: #20794D;">"Permanent Marker"</span>,</span>
-<span id="cb9-54">      <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">12</span></span>
-<span id="cb9-55">      )</span>
-<span id="cb9-56">    )</span>
-<span id="cb9-57"><span class="co" style="color: #5E5E5E;"># render and save transition ----</span></span>
-<span id="cb9-58"><span class="co" style="color: #5E5E5E;"># the default nframes 100 frames, 150 makes the gif a bit longer for readability ----</span></span>
-<span id="cb9-59"><span class="co" style="color: #5E5E5E;"># changing dimensions for output w/ height &amp; width ----</span></span>
-<span id="cb9-60"><span class="co" style="color: #5E5E5E;"># increasing resolution with res ----</span></span>
-<span id="cb9-61"><span class="fu" style="color: #4758AB;">animate</span>(anim2, <span class="at" style="color: #657422;">nframes =</span> <span class="dv" style="color: #AD0000;">150</span>, <span class="at" style="color: #657422;">height =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">units =</span> <span class="st" style="color: #20794D;">"in"</span>, <span class="at" style="color: #657422;">res =</span> <span class="dv" style="color: #AD0000;">150</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index_files/figure-html/animate_it2-1.gif" class="img-fluid"></p>
-</div>
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">anim_save</span>(<span class="st" style="color: #20794D;">"homes_animation2.gif"</span>)</span></code></pre></div>
-</div>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-pileggi2021gganimating" class="csl-entry">
-Pileggi, Shannon. 2021. <span>“PIPING HOT DATA: GGanimating a Geographic Introduction.”</span> <a href="https://www.pipinghotdata.com/posts/2021-02-15-gganimating-a-geographic-introduction/">https://www.pipinghotdata.com/posts/2021-02-15-gganimating-a-geographic-introduction/</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {My {Geographic} {Introduction}},
-  date = {2021-05-02},
-  url = {https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“My Geographic Introduction.”</span> May 2,
-2021. <a href="https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction">https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction</a>.
-</div></div></section></div> ]]></description>
-  <category>maps</category>
-  <category>graphing</category>
-  <category>visualization</category>
-  <category>animation</category>
-  <guid>https://rmflight.github.io/posts/2021-05-02-animating-a-geographic-introduction/index.html</guid>
-  <pubDate>Sun, 02 May 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
