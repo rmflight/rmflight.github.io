@@ -10,7 +10,106 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Thu, 22 Dec 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 25 Dec 2022 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Journal Impact Factor Distributions</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>Journal impact factor distributions seem to be log-normal. If we <strong>decide</strong> they should be used, then at the very least, they should be log-transformed before doing any calculations with them.</p>
+</section>
+<section id="journal-impact-factor" class="level2">
+<h2 class="anchored" data-anchor-id="journal-impact-factor">Journal Impact Factor</h2>
+<p>At some point in history, someone decided that we could <strong>measure</strong> how important a journal is by the number of citations the manuscripts within it get. Of course this is ridiculous on it’s face, but over time those journals with higher impact factors have become <strong>more important</strong> and <strong>prestigous</strong> to publish in. In fact, instead of judging each others work on the publications themselves, academia started doing this thing where we instead judge papers (and academics) by <strong>where</strong> they are published and the publications journal impact factors (JIF). Most publishers make a big deal out of announcing their journals JIF and report them to the 3rd decimal place. Stupid, I know, but here we are. Even more ridiculous, Thomson Reuters makes big money counting all of these citations, calculating the JIF and selling the data to others.</p>
+</section>
+<section id="lariviere-et-al" class="level2">
+<h2 class="anchored" data-anchor-id="lariviere-et-al">Larivi{`e}re et al</h2>
+<p>Way back in 2016, Larivi`ere et al published a nice paper on the distributions of journal impact factors and how to compare them <span class="citation" data-cites="Lariviere062109">(Larivière et al. 2016)</span>. I heartily recommend you check that publication out. I’m not going to discuss this manuscript in particular, except to note two things:</p>
+<ol type="1">
+<li>that they provided a very nice description of how to acquire and calculate citation counts from a service such as Thomson Reuters Web of Science.</li>
+<li>when I look at their graphs, I thought they looked likely to be log-normal (see Figure&nbsp;1).</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-larivier-graph" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions/leviervre-F1.large.jpg" class="img-fluid figure-img" width="513"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Figure 1 from Lariviere et al: Citation distributions of 11 different science journals. Citations are to citable documents as classified by Thomson Reuters, which include standard research articles and reviews. The distributions contain citations accumulated in 2015 to citable documents published in 2013 and 2014 in order to be comparable to the 2015 JIFs published by Thomson Reuters. To facilitate direct comparison, distributions are plotted with the same range of citations (0-100) in each plot; articles with more than 100 citations are shown as a single bar at the right of each plot.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-data" class="level2">
+<h2 class="anchored" data-anchor-id="getting-data">Getting Data</h2>
+<p>Unfortunately, Larivi{`e}re et al didn’t provide their data. Which makes sense, it’s from a closed source. However, I used their description of getting the data from Web of Science, and went and created my own version of the data for a set of journals so I could do my own analysis.</p>
+<p>Following the guide provided in the Appendix of <span class="citation" data-cites="Lariviere062109">(Larivière et al. 2016)</span>, I went into Web Of Science and produced citation reports for 7 journals (eLife, EMBO Journal, Nature, Nature Communications, PLOS Biology, PLOS Genetics, and Science), and saved them. Unfortunately, the preprint shows data for publications published in 2013-2014, but the guide showed 2012-2013, so I ended up downloading the citation data for publications published in 2012-2013, which would have influenced the 2014 JIF. However, I think the conclusions are the same.</p>
+<p>If you want the original data I acquired, you can go check out <span class="citation" data-cites="Flight2021">(Flight 2021)</span>.</p>
+</section>
+<section id="raw-plots" class="level2">
+<h2 class="anchored" data-anchor-id="raw-plots">Raw Plots</h2>
+<p>So lets load up the data and plot the citation counts for each journal, as shown in Figure&nbsp;2.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-raw-counts" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions/index_files/figure-html/fig-raw-counts-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Raw citation counts for chosen journals for 2012-2013.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I think these still look pretty similar to those shown in Figure&nbsp;1. We can see that the means are heavily influenced by the very long tails in these graphs.</p>
+</section>
+<section id="log-transform" class="level2">
+<h2 class="anchored" data-anchor-id="log-transform">Log Transform</h2>
+<p>Now, lets log-transform them, and calculate summary statistics on the log-transformed data, as shown in Figure&nbsp;3.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-log-counts" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions/index_files/figure-html/fig-log-counts-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Log citation counts for chosen journals for 2012-2013</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These look much more normal, at least for some of the heavily cited journals like Nature and Science.</p>
+<p>So, if we are going to continue using these kinds of metrics, we should either adopt the metrics that Larivi`ere propose, or at the very least log-transform the citation counts.</p>
+<p>Or we could drop them altogher.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Flight2021" class="csl-entry">
+Flight, R. M. 2021. <span>“Curry JIF Analysis.”</span> <em>GitHub Repository</em>. <a href="https://github.com/rmflight/curry_jif_paper" class="uri">https://github.com/rmflight/curry_jif_paper</a>; GitHub.
+</div>
+<div id="ref-Lariviere062109" class="csl-entry">
+Larivière, Vincent, Véronique Kiermer, Catriona J. MacCallum, Marcia McNutt, Mark Patterson, Bernd Pulverer, Sowmya Swaminathan, Stuart Taylor, and Stephen Curry. 2016. <span>“A Simple Proposal for the Publication of Journal Citation Distributions.”</span> <em>bioRxiv</em>. <a href="https://doi.org/10.1101/062109">https://doi.org/10.1101/062109</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
+  author = {Robert M Flight},
+  title = {Journal {Impact} {Factor} {Distributions}},
+  date = {2022-12-25},
+  url = {https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2022. <span>“Journal Impact Factor
+Distributions.”</span> December 25, 2022. <a href="https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions">https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions</a>.
+</div></div></section></div> ]]></description>
+  <category>impact-factor</category>
+  <guid>https://rmflight.github.io/posts/2022-12-25-journal-impact-factor-distributions/index.html</guid>
+  <pubDate>Sun, 25 Dec 2022 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>targets and Child Documents</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2427,63 +2526,6 @@ Ggraph.”</span> August 3, 2021. <a href="https://rmflight.github.io/posts/2021
   <category>dendrogram</category>
   <guid>https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html</guid>
   <pubDate>Tue, 03 Aug 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Keeping Figures in an Rmd – Word Document</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>I’ve been working with a lot of collaborators who expect Word documents lately. I don’t really like it, but it makes it a lot easier for them to edit and work with things back and forth. So I’ve really been working on generating nice output in the Word document.</p>
-<p>Recently, someone brought up collecting the figures for a manuscript for submission. For those in the know, when you submit a manuscript, you often submit the text with or without figures embedded, and then you also submit “high” resolution figure files separately (yes it’s annoying, but that’s the way it is for many submission systems). Now, you could plot twice in each chunk, but thats freaking annoying. Ideally, Rmarkdown or knitr should do all the work for us. And thanks to the R Markdown Cookbook <span class="citation" data-cites="rmarkdowncookbook">(Xie 2021)</span>, there is a simple way to do this.</p>
-<p>In the yaml preamble, simply set the parameter: <code>keep_md: true</code>, like this:</p>
-<pre><code>output:
-  word_document:
-    keep_md: true</code></pre>
-<p>Alternatively, if using Quarto:</p>
-<pre><code>output:
-  docx:
-    keep-md: true</code></pre>
-<p>This means the markdown intermediate is kept, as well as the directory of figures. The figures will be named with the name of the chunk, so you will want to name your chunks well to make it easy to find the figures.</p>
-<p>You can also control <strong>where</strong> your figures get written to, as well as the default figure size, output type, and resolution.</p>
-<p>This chunk sets the directory (path) the dpi to 300, to use cairo PNG output, the figure width to 8 in, height to 5 in. And then creates the directory (which I’m sure knitr does, but this is for my own sanity).</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># the trailing slash is important!</span></span>
-<span id="cb3-2">fig_dir <span class="ot" style="color: #003B4F;">=</span> here<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">here</span>(<span class="st" style="color: #20794D;">"doc"</span>, <span class="st" style="color: #20794D;">"figure_directory/"</span>) </span>
-<span id="cb3-3">knitr<span class="sc" style="color: #5E5E5E;">::</span>opts_chunk<span class="sc" style="color: #5E5E5E;">$</span><span class="fu" style="color: #4758AB;">set</span>(<span class="at" style="color: #657422;">echo =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">warning =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">dpi =</span> <span class="dv" style="color: #AD0000;">300</span>,</span>
-<span id="cb3-4">                      <span class="at" style="color: #657422;">dev.args =</span> <span class="fu" style="color: #4758AB;">list</span>(<span class="at" style="color: #657422;">png =</span> <span class="fu" style="color: #4758AB;">list</span>(<span class="at" style="color: #657422;">type =</span> <span class="st" style="color: #20794D;">"cairo"</span>)),</span>
-<span id="cb3-5">                      <span class="at" style="color: #657422;">fig.width =</span> <span class="dv" style="color: #AD0000;">8</span>, <span class="at" style="color: #657422;">fig.height =</span> <span class="dv" style="color: #AD0000;">5</span>,</span>
-<span id="cb3-6">                      <span class="at" style="color: #657422;">fig.path =</span> fig_dir)</span>
-<span id="cb3-7"><span class="cf" style="color: #003B4F;">if</span> (<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">dir.exists</span>(fig_dir)) {</span>
-<span id="cb3-8">  <span class="fu" style="color: #4758AB;">dir.create</span>(fig_dir)</span>
-<span id="cb3-9">}</span></code></pre></div>
-<p>Edit: I rolled all of this functionality into a little package <a href="https://github.com/rmflight/documentNumbering"><code>documentNumbering</code></a>.</p>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-rmarkdowncookbook" class="csl-entry">
-Xie, C; Riederer, Y; Dervieux. 2021. <span>“R Markdown Cookbook.”</span> <a href="https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html">https://bookdown.org/yihui/rmarkdown-cookbook/keep-files.html</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Keeping {Figures} in an {Rmd} -\/- {Word} {Document}},
-  date = {2021-07-22},
-  url = {https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Keeping Figures in an Rmd -- Word
-Document.”</span> July 22, 2021. <a href="https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document">https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document</a>.
-</div></div></section></div> ]]></description>
-  <category>random-code-snippets</category>
-  <category>reproducibility</category>
-  <category>rmarkdown</category>
-  <guid>https://rmflight.github.io/posts/2021-07-22-keep-figures-in-a-word-document/index.html</guid>
-  <pubDate>Thu, 22 Jul 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
