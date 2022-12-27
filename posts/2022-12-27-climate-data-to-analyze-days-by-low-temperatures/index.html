@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Robert M Flight">
+<meta name="dcterms.date" content="2022-12-27">
+
+<title>Deciphering Life: One Bit at a Time - Climate Data to Analyze Days by Low Temperatures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Deciphering Life: One Bit at a Time</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://rmflight.github.io/#category=random-code-snippets">
+ <span class="menu-text">RCS</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rmflight"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0001-8141-7788">
+ <span class="menu-text"><i class="ai  ai-orcid" title="" style="color:"></i></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.social/@rmflight"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Climate Data to Analyze Days by Low Temperatures</h1>
+            <p class="subtitle lead"></p><p>Inspired by XKCD to figure out how to get local temperature data and plot it.</p><p></p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">xkcd</div>
+                <div class="quarto-category">climate-data</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Robert M Flight <a href="https://orcid.org/0000-0001-8141-7788" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 27, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#xkcd" id="toc-xkcd" class="nav-link active" data-scroll-target="#xkcd">XKCD?</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#double-check-using-lambert-airport-in-st.-louis" id="toc-double-check-using-lambert-airport-in-st.-louis" class="nav-link" data-scroll-target="#double-check-using-lambert-airport-in-st.-louis">Double Check Using Lambert Airport in St.&nbsp;Louis</a></li>
+  </ul>
+</nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="xkcd" class="level2">
+<h2 class="anchored" data-anchor-id="xkcd">XKCD?</h2>
+<p>In the past few years I’ve seen a lot of spiral graphs of temperature anomolies, temperature records knit into scarves, among others. But, hats off to Randall Munroe’s XKCD, I think this is one of the more useful graphics about local temperature records (full comic in <a href="#fig-cold">Figure&nbsp;1</a>, and inset blown up in <a href="#fig-inset">Figure&nbsp;2</a>) <span class="citation" data-cites="xkcdclimate2022">(<a href="#ref-xkcdclimate2022" role="doc-biblioref">Munroe 2022</a>)</span>. I’m not sure why I’m just seeing this comic, as it is listed as comic 1321, and XKCD is up to 2717 as of 2022-12-27, but better late than never!</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cold" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="cold.png" class="img-fluid figure-img" style="width:8in"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Randall Monroe XKCD comic 1321, “Cold”.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-inset" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="cold_inset.png" class="img-fluid figure-img" style="width:8in"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Inset from XKCD comic 1321, “Cold”.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This very, very quickly shows people that the lows since 2000 have not gone below 0F until very recently, and the frequency of days below 0F in a given year were quickly decreasing. I think it’s a very effective graphic (and comic).</p>
+<p>But what if we want to generate our own for another location?</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>In the comic, Randall lists the <strong>rcc-acis</strong> as the source of the data. I managed to find <a href="https://www.rcc-acis.org/" class="uri">https://www.rcc-acis.org/</a> as the likely source. I looked for an API, and found this page <span class="citation" data-cites="rccapi">(<a href="#ref-rccapi" role="doc-biblioref"><span>“RCC-ACIS API”</span> 2022</a>)</span>.</p>
+<p>The description of the various API end points seems reasonable enough, except we really want to know where and what we are looking for.</p>
+<p>I live in Lexington, KY, USA, so I’m going to use that for the following code.</p>
+<p>First, we need to find the census code for the county we want to search for weather stations in.</p>
+<p>We can find the county codes from the census.gov website <span class="citation" data-cites="censusdotgov">(<a href="#ref-censusdotgov" role="doc-biblioref"><span>“Census.gov County Codes”</span> 2022</a>)</span>. In my case, Fayette Co KY is <code>21,067</code>, which we will input into the API as <code>21067</code> (without the comma).</p>
+<p>Then I can go to the rcc-acis API at <a href="http://data.rcc-acis.org/StnMeta?county=21067" class="uri">http://data.rcc-acis.org/StnMeta?county=21067</a> and see the list of stations.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"meta"</span><span class="fu">:</span><span class="ot">[</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">8251</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.4994</span><span class="ot">,</span> <span class="fl">38.1336</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"154748 2"</span><span class="ot">,</span> <span class="st">"LSFK2 7"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">930.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON SPINDLETOP FARM"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">8252</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.5</span><span class="ot">,</span> <span class="fl">38.03333</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"154741 2"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">1030.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON SOLAR RAD"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">8253</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.61138</span><span class="ot">,</span> <span class="fl">38.03391</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"93820 1"</span><span class="ot">,</span> <span class="st">"154746 2"</span><span class="ot">,</span> <span class="st">"LEX 3"</span><span class="ot">,</span> <span class="st">"72422 4"</span><span class="ot">,</span> <span class="st">"KLEX 5"</span><span class="ot">,</span> <span class="st">"USW00093820 6"</span><span class="ot">,</span> <span class="st">"LEX 7"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">962.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON BLUEGRASS AP"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">8387</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.53333</span><span class="ot">,</span> <span class="fl">38.1</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"153408 2"</span><span class="ot">,</span> <span class="st">"USC00153408 6"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">947.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"GREENDALE"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">31507</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.52694</span><span class="ot">,</span> <span class="fl">38.01556</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"154736 2"</span><span class="ot">,</span> <span class="st">"LEXK2 7"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">987.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 3 SE"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">40338</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.36667</span><span class="ot">,</span> <span class="fl">38.0</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"151548 2"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"CHILESBURGH"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">53409</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.5097</span><span class="ot">,</span> <span class="fl">37.98434</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0001 6"</span><span class="ot">,</span> <span class="st">"KYFY0001 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">951.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 4.9 SW"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">53410</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.48511</span><span class="ot">,</span> <span class="fl">37.96729</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0002 6"</span><span class="ot">,</span> <span class="st">"KYFY0002 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">981.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON-FAYETTE 6.3 S"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">53411</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.51874</span><span class="ot">,</span> <span class="fl">38.01625</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0003 6"</span><span class="ot">,</span> <span class="st">"KYFY0003 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">1004.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 3.7 WSW"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">53412</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.49503</span><span class="ot">,</span> <span class="fl">38.02486</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0009 6"</span><span class="ot">,</span> <span class="st">"KYFY0009 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">1010.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 1.7 SSE"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">53413</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.4816</span><span class="ot">,</span> <span class="fl">37.9876</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0012 6"</span><span class="ot">,</span> <span class="st">"KYFY0012 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">929.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON-FAYETTE 4.0 SSW"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">53414</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.51935</span><span class="ot">,</span> <span class="fl">38.01643</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0014 6"</span><span class="ot">,</span> <span class="st">"KYFY0014 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">999.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 1.7 SW"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">69236</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.53672</span><span class="ot">,</span> <span class="fl">38.05231</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0019 6"</span><span class="ot">,</span> <span class="st">"KYFY0019 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">957.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 4.3 W"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">82402</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.45337</span><span class="ot">,</span> <span class="fl">37.99841</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0023 6"</span><span class="ot">,</span> <span class="st">"KYFY0023 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">1045.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 4.2 SSE"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">86252</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.41615</span><span class="ot">,</span> <span class="fl">38.04699</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0027 6"</span><span class="ot">,</span> <span class="st">"KYFY0027 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">947.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 4.7 E"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">86818</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.51712</span><span class="ot">,</span> <span class="fl">37.97325</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0029 6"</span><span class="ot">,</span> <span class="st">"KYFY0029 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">974.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 5.7 SSW"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">89211</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.55495</span><span class="ot">,</span> <span class="fl">37.97623</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0032 6"</span><span class="ot">,</span> <span class="st">"KYFY0032 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">975.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 6.9 SW"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">93426</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.52242</span><span class="ot">,</span> <span class="fl">37.98129</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0036 6"</span><span class="ot">,</span> <span class="st">"KYFY0036 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">993.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 4.8 S"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">101642</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.44324</span><span class="ot">,</span> <span class="fl">38.05104</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0040 6"</span><span class="ot">,</span> <span class="st">"KYFY0040 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">953.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 3.3 E"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"uid"</span><span class="fu">:</span> <span class="dv">102039</span><span class="fu">,</span> <span class="dt">"ll"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-84.54735</span><span class="ot">,</span> <span class="fl">37.9821</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"sids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"US1KYFY0041 6"</span><span class="ot">,</span> <span class="st">"KYFY0041 10"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"KY"</span><span class="fu">,</span> <span class="dt">"elev"</span><span class="fu">:</span> <span class="fl">996.0</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"LEXINGTON 4.5 SSW"</span><span class="fu">}</span><span class="ot">]</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The easiest, and likely most consistent location for me to use is the Bluegrass Airport, which has UID <code>8253</code>.</p>
+<p>Let’s pull the json data for daily maximum and minimum temperatures since 1970 to yesterday (2022-12-25) using this json query:</p>
+<pre><code>http://data.rcc-acis.org/StnData?uid=8253&amp;sdate=1970-01-01&amp;edate=2022-12-25&amp;elems=1,2</code></pre>
+<p>We can pull all that data into R directly using:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temp_data <span class="ot">=</span> jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(<span class="st">"http://data.rcc-acis.org/StnData?uid=8253&amp;sdate=1970-01-01&amp;edate=2022-12-25&amp;elems=1,2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I’m actually going to cache that data in a local file, so I’m not making 20 pulls while I’m writing this blog post.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>temp_data <span class="ot">=</span> jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(<span class="st">"bluegrass_dailytemps.json"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(temp_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 2
+ $ meta:List of 6
+  ..$ uid  : int 8253
+  ..$ ll   : num [1:2] -84.6 38
+  ..$ sids : chr [1:7] "93820 1" "154746 2" "LEX 3" "72422 4" ...
+  ..$ state: chr "KY"
+  ..$ elev : num 962
+  ..$ name : chr "LEXINGTON BLUEGRASS AP"
+ $ data: chr [1:19352, 1:3] "1970-01-01" "1970-01-02" "1970-01-03" "1970-01-04" ...</code></pre>
+</div>
+</div>
+<p>We’ve got some metadata about the station we pulled from, and then a matrix of dates and daily maximum and minimum recorded temperatures. We’ll turn that into a <code>tibble</code> and convert the dates to something more useful. I’m going to aggregate by year to make this easy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bluegrass_df <span class="ot">=</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(temp_data<span class="sc">$</span>data)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bluegrass_df) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"max"</span>, <span class="st">"min"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>bluegrass_df <span class="ot">=</span> bluegrass_df <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">date2 =</span> lubridate<span class="sc">::</span><span class="fu">as_date</span>(date),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date2),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date2),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">ym =</span> <span class="fu">paste0</span>(year, <span class="st">"-"</span>, month))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>bluegrass_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,352 × 7
+   date       max   min   date2       year month ym    
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+ 1 1970-01-01 33    23    1970-01-01  1970     1 1970-1
+ 2 1970-01-02 34    23    1970-01-02  1970     1 1970-1
+ 3 1970-01-03 26    15    1970-01-03  1970     1 1970-1
+ 4 1970-01-04 35    14    1970-01-04  1970     1 1970-1
+ 5 1970-01-05 44    23    1970-01-05  1970     1 1970-1
+ 6 1970-01-06 34    11    1970-01-06  1970     1 1970-1
+ 7 1970-01-07 11    -6    1970-01-07  1970     1 1970-1
+ 8 1970-01-08 3     -5    1970-01-08  1970     1 1970-1
+ 9 1970-01-09 8     -3    1970-01-09  1970     1 1970-1
+10 1970-01-10 18    -6    1970-01-10  1970     1 1970-1
+# … with 19,342 more rows</code></pre>
+</div>
+</div>
+<p>Let’s count how many days a year a minimum was below a set temperature. Similar to XKCD, I’ll try a cutoff of 0F (see <a href="#fig-lex-below_0">Figure&nbsp;3</a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>bluegrass_0 <span class="ot">=</span> bluegrass_df <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">below_cutoff =</span> min <span class="sc">&lt;</span> cutoff) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">nday =</span> <span class="fu">sum</span>(below_cutoff)) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="co">#|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#dplyr::mutate(ym = lubridate::ym(ym))</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>bluegrass_0 <span class="sc">|&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> nday)) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"No. days &lt; 0F at Bluegrass Airport Lexington."</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"No. of Days &lt; 0F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-lex-below_0" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-lex-below_0-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Number of days &lt; 0F at Bluegrass International Airport (LEX) by year since 1970.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nice. Definitely fewer days at less than 0F in more recent times than previously.</p>
+</section>
+<section id="double-check-using-lambert-airport-in-st.-louis" class="level2">
+<h2 class="anchored" data-anchor-id="double-check-using-lambert-airport-in-st.-louis">Double Check Using Lambert Airport in St.&nbsp;Louis</h2>
+<p>But how do I know it’s probably right? We can double check if I get a very similar plot to the XKCD one when using the data from St.&nbsp;Louis’ Lambert Airport, as shown in <a href="#fig-lambert">Figure&nbsp;4</a>. I went through the same procedure as above to find the county code for St.&nbsp;Louis, and then the UID for Lambert Airport, and saved the JSON.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>temp_lambert <span class="ot">=</span> jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(<span class="st">"lambert_stlous_dailytemps.json"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>lambert_df <span class="ot">=</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(temp_lambert<span class="sc">$</span>data)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lambert_df) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"max"</span>, <span class="st">"min"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>lambert_df <span class="ot">=</span> lambert_df <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">date2 =</span> lubridate<span class="sc">::</span><span class="fu">as_date</span>(date),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date2),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date2),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">ym =</span> <span class="fu">paste0</span>(year, <span class="st">"-"</span>, month))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>lambert_0 <span class="ot">=</span> lambert_df <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">below_cutoff =</span> min <span class="sc">&lt;</span> cutoff) <span class="sc">|&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">nday =</span> <span class="fu">sum</span>(below_cutoff)) <span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>lambert_0 <span class="sc">|&gt;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> nday)) <span class="sc">+</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"No. days &lt; 0F at Lambert Airport St. Louis."</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"No. of Days &lt; 0F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-lambert" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-lambert-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: Number of days &lt; 0F at Lambert Airport by month since 1970.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So <a href="#fig-lambert">Figure&nbsp;4</a> is <strong>similar</strong> to the one from XKCD, but I’d really like to see the data file they used and which station. I also think they probably used only the fall and winter months for a given year, like December to February, and that was the count for that particular year, excluding the next December. Regardless, the frequency of days where the minimum was below 0F has dropped significantly since the 80’s and 90’s, whether here in Lexington or St.&nbsp;Louis.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-censusdotgov" class="csl-entry" role="doc-biblioentry">
+<span>“Census.gov County Codes.”</span> 2022. <a href="https://www.census.gov/library/reference/code-lists/ansi.html#county" class="uri">https://www.census.gov/library/reference/code-lists/ansi.html#county</a>; Web.
+</div>
+<div id="ref-xkcdclimate2022" class="csl-entry" role="doc-biblioentry">
+Munroe, Randall. 2022. <span>“Cold.”</span> <a href="https://xkcd.com/1321/" class="uri">https://xkcd.com/1321/</a>; Web.
+</div>
+<div id="ref-rccapi" class="csl-entry" role="doc-biblioentry">
+<span>“RCC-ACIS API.”</span> 2022. <a href="https://www.rcc-acis.org/docs_webservices.html" class="uri">https://www.rcc-acis.org/docs_webservices.html</a>; Web.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
+  author = {Robert M Flight},
+  title = {Climate {Data} to {Analyze} {Days} by {Low} {Temperatures}},
+  date = {2022-12-27},
+  url = {https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Robert M Flight. 2022. <span>“Climate Data to Analyze Days by Low
+Temperatures.”</span> December 27, 2022. <a href="https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures">https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="rmflight/researchblog" data-repo-id="R_kgDOIjZROQ" data-category="Announcements" data-category-id="DIC_kwDOIjZROc4CS6Xp" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="dark" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

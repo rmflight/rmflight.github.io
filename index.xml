@@ -10,7 +10,218 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Sun, 25 Dec 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 27 Dec 2022 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Climate Data to Analyze Days by Low Temperatures</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="xkcd" class="level2">
+<h2 class="anchored" data-anchor-id="xkcd">XKCD?</h2>
+<p>In the past few years I’ve seen a lot of spiral graphs of temperature anomolies, temperature records knit into scarves, among others. But, hats off to Randall Munroe’s XKCD, I think this is one of the more useful graphics about local temperature records (full comic in Figure&nbsp;1, and inset blown up in Figure&nbsp;2) <span class="citation" data-cites="xkcdclimate2022">(Munroe 2022)</span>. I’m not sure why I’m just seeing this comic, as it is listed as comic 1321, and XKCD is up to 2717 as of 2022-12-27, but better late than never!</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cold" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures/cold.png" class="img-fluid figure-img" style="width:8in"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Randall Monroe XKCD comic 1321, “Cold”.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-inset" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures/cold_inset.png" class="img-fluid figure-img" style="width:8in"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Inset from XKCD comic 1321, “Cold”.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This very, very quickly shows people that the lows since 2000 have not gone below 0F until very recently, and the frequency of days below 0F in a given year were quickly decreasing. I think it’s a very effective graphic (and comic).</p>
+<p>But what if we want to generate our own for another location?</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>In the comic, Randall lists the <strong>rcc-acis</strong> as the source of the data. I managed to find <a href="https://www.rcc-acis.org/" class="uri">https://www.rcc-acis.org/</a> as the likely source. I looked for an API, and found this page <span class="citation" data-cites="rccapi">(<span>“RCC-ACIS API”</span> 2022)</span>.</p>
+<p>The description of the various API end points seems reasonable enough, except we really want to know where and what we are looking for.</p>
+<p>I live in Lexington, KY, USA, so I’m going to use that for the following code.</p>
+<p>First, we need to find the census code for the county we want to search for weather stations in.</p>
+<p>We can find the county codes from the census.gov website <span class="citation" data-cites="censusdotgov">(<span>“Census.gov County Codes”</span> 2022)</span>. In my case, Fayette Co KY is <code>21,067</code>, which we will input into the API as <code>21067</code> (without the comma).</p>
+<p>Then I can go to the rcc-acis API at <a href="http://data.rcc-acis.org/StnMeta?county=21067" class="uri">http://data.rcc-acis.org/StnMeta?county=21067</a> and see the list of stations.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"meta"</span><span class="fu" style="color: #4758AB;">:</span><span class="ot" style="color: #003B4F;">[</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">8251</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.4994</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.1336</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"154748 2"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"LSFK2 7"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">930.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON SPINDLETOP FARM"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">8252</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.5</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.03333</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"154741 2"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">1030.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON SOLAR RAD"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">8253</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.61138</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.03391</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"93820 1"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"154746 2"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"LEX 3"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"72422 4"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KLEX 5"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"USW00093820 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"LEX 7"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">962.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON BLUEGRASS AP"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">8387</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.53333</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.1</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"153408 2"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"USC00153408 6"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">947.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"GREENDALE"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">31507</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.52694</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.01556</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"154736 2"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"LEXK2 7"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">987.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 3 SE"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">40338</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.36667</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.0</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"151548 2"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"CHILESBURGH"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">53409</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.5097</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.98434</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0001 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0001 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">951.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 4.9 SW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">53410</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.48511</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.96729</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0002 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0002 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">981.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON-FAYETTE 6.3 S"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">53411</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.51874</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.01625</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0003 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0003 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">1004.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 3.7 WSW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">53412</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.49503</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.02486</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0009 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0009 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">1010.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 1.7 SSE"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-12"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">53413</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.4816</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.9876</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0012 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0012 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">929.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON-FAYETTE 4.0 SSW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-13"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">53414</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.51935</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.01643</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0014 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0014 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">999.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 1.7 SW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-14"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">69236</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.53672</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.05231</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0019 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0019 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">957.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 4.3 W"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-15"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">82402</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.45337</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.99841</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0023 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0023 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">1045.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 4.2 SSE"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-16"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">86252</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.41615</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.04699</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0027 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0027 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">947.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 4.7 E"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-17"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">86818</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.51712</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.97325</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0029 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0029 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">974.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 5.7 SSW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-18"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">89211</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.55495</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.97623</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0032 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0032 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">975.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 6.9 SW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-19"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">93426</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.52242</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.98129</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0036 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0036 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">993.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 4.8 S"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-20"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">101642</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.44324</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">38.05104</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0040 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0040 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">953.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 3.3 E"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">,</span></span>
+<span id="cb1-21"><span class="fu" style="color: #4758AB;">{</span><span class="dt" style="color: #AD0000;">"uid"</span><span class="fu" style="color: #4758AB;">:</span> <span class="dv" style="color: #AD0000;">102039</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"ll"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="fl" style="color: #AD0000;">-84.54735</span><span class="ot" style="color: #003B4F;">,</span> <span class="fl" style="color: #AD0000;">37.9821</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"sids"</span><span class="fu" style="color: #4758AB;">:</span> <span class="ot" style="color: #003B4F;">[</span><span class="st" style="color: #20794D;">"US1KYFY0041 6"</span><span class="ot" style="color: #003B4F;">,</span> <span class="st" style="color: #20794D;">"KYFY0041 10"</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"state"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"KY"</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"elev"</span><span class="fu" style="color: #4758AB;">:</span> <span class="fl" style="color: #AD0000;">996.0</span><span class="fu" style="color: #4758AB;">,</span> <span class="dt" style="color: #AD0000;">"name"</span><span class="fu" style="color: #4758AB;">:</span> <span class="st" style="color: #20794D;">"LEXINGTON 4.5 SSW"</span><span class="fu" style="color: #4758AB;">}</span><span class="ot" style="color: #003B4F;">]</span><span class="fu" style="color: #4758AB;">}</span></span></code></pre></div>
+<p>The easiest, and likely most consistent location for me to use is the Bluegrass Airport, which has UID <code>8253</code>.</p>
+<p>Let’s pull the json data for daily maximum and minimum temperatures since 1970 to yesterday (2022-12-25) using this json query:</p>
+<pre><code>http://data.rcc-acis.org/StnData?uid=8253&amp;sdate=1970-01-01&amp;edate=2022-12-25&amp;elems=1,2</code></pre>
+<p>We can pull all that data into R directly using:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">temp_data <span class="ot" style="color: #003B4F;">=</span> jsonlite<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">fromJSON</span>(<span class="st" style="color: #20794D;">"http://data.rcc-acis.org/StnData?uid=8253&amp;sdate=1970-01-01&amp;edate=2022-12-25&amp;elems=1,2"</span>)</span></code></pre></div>
+</div>
+<p>I’m actually going to cache that data in a local file, so I’m not making 20 pulls while I’m writing this blog post.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">temp_data <span class="ot" style="color: #003B4F;">=</span> jsonlite<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">fromJSON</span>(<span class="st" style="color: #20794D;">"bluegrass_dailytemps.json"</span>)</span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;">str</span>(temp_data)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 2
+ $ meta:List of 6
+  ..$ uid  : int 8253
+  ..$ ll   : num [1:2] -84.6 38
+  ..$ sids : chr [1:7] "93820 1" "154746 2" "LEX 3" "72422 4" ...
+  ..$ state: chr "KY"
+  ..$ elev : num 962
+  ..$ name : chr "LEXINGTON BLUEGRASS AP"
+ $ data: chr [1:19352, 1:3] "1970-01-01" "1970-01-02" "1970-01-03" "1970-01-04" ...</code></pre>
+</div>
+</div>
+<p>We’ve got some metadata about the station we pulled from, and then a matrix of dates and daily maximum and minimum recorded temperatures. We’ll turn that into a <code>tibble</code> and convert the dates to something more useful. I’m going to aggregate by year to make this easy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">library</span>(lubridate)</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
+<span id="cb6-3"><span class="fu" style="color: #4758AB;">theme_set</span>(cowplot<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_cowplot</span>())</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">bluegrass_df <span class="ot" style="color: #003B4F;">=</span> tibble<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_tibble</span>(temp_data<span class="sc" style="color: #5E5E5E;">$</span>data)</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;">names</span>(bluegrass_df) <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"date"</span>, <span class="st" style="color: #20794D;">"max"</span>, <span class="st" style="color: #20794D;">"min"</span>)</span>
+<span id="cb7-3">bluegrass_df <span class="ot" style="color: #003B4F;">=</span> bluegrass_df <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb7-4">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">date2 =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_date</span>(date),</span>
+<span id="cb7-5">                <span class="at" style="color: #657422;">year =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">year</span>(date2),</span>
+<span id="cb7-6">                <span class="at" style="color: #657422;">month =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">month</span>(date2),</span>
+<span id="cb7-7">                <span class="at" style="color: #657422;">ym =</span> <span class="fu" style="color: #4758AB;">paste0</span>(year, <span class="st" style="color: #20794D;">"-"</span>, month))</span>
+<span id="cb7-8">bluegrass_df</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,352 × 7
+   date       max   min   date2       year month ym    
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+ 1 1970-01-01 33    23    1970-01-01  1970     1 1970-1
+ 2 1970-01-02 34    23    1970-01-02  1970     1 1970-1
+ 3 1970-01-03 26    15    1970-01-03  1970     1 1970-1
+ 4 1970-01-04 35    14    1970-01-04  1970     1 1970-1
+ 5 1970-01-05 44    23    1970-01-05  1970     1 1970-1
+ 6 1970-01-06 34    11    1970-01-06  1970     1 1970-1
+ 7 1970-01-07 11    -6    1970-01-07  1970     1 1970-1
+ 8 1970-01-08 3     -5    1970-01-08  1970     1 1970-1
+ 9 1970-01-09 8     -3    1970-01-09  1970     1 1970-1
+10 1970-01-10 18    -6    1970-01-10  1970     1 1970-1
+# … with 19,342 more rows</code></pre>
+</div>
+</div>
+<p>Let’s count how many days a year a minimum was below a set temperature. Similar to XKCD, I’ll try a cutoff of 0F (see Figure&nbsp;3).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">cutoff <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb9-2">bluegrass_0 <span class="ot" style="color: #003B4F;">=</span> bluegrass_df <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb9-3">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">below_cutoff =</span> min <span class="sc" style="color: #5E5E5E;">&lt;</span> cutoff) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb9-4">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">group_by</span>(year) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb9-5">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">summarize</span>(<span class="at" style="color: #657422;">nday =</span> <span class="fu" style="color: #4758AB;">sum</span>(below_cutoff)) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb9-6">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ungroup</span>() <span class="co" style="color: #5E5E5E;">#|&gt;</span></span>
+<span id="cb9-7">  <span class="co" style="color: #5E5E5E;">#dplyr::mutate(ym = lubridate::ym(ym))</span></span>
+<span id="cb9-8"></span>
+<span id="cb9-9"></span>
+<span id="cb9-10">bluegrass_0 <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb9-11">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> year, <span class="at" style="color: #657422;">y =</span> nday)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-12">  <span class="fu" style="color: #4758AB;">geom_col</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-13">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">"No. days &lt; 0F at Bluegrass Airport Lexington."</span>,</span>
+<span id="cb9-14">       <span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Year"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"No. of Days &lt; 0F"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-lex-below_0" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures/index_files/figure-html/fig-lex-below_0-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Number of days &lt; 0F at Bluegrass International Airport (LEX) by year since 1970.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nice. Definitely fewer days at less than 0F in more recent times than previously.</p>
+</section>
+<section id="double-check-using-lambert-airport-in-st.-louis" class="level2">
+<h2 class="anchored" data-anchor-id="double-check-using-lambert-airport-in-st.-louis">Double Check Using Lambert Airport in St.&nbsp;Louis</h2>
+<p>But how do I know it’s probably right? We can double check if I get a very similar plot to the XKCD one when using the data from St.&nbsp;Louis’ Lambert Airport, as shown in Figure&nbsp;4. I went through the same procedure as above to find the county code for St.&nbsp;Louis, and then the UID for Lambert Airport, and saved the JSON.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">temp_lambert <span class="ot" style="color: #003B4F;">=</span> jsonlite<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">fromJSON</span>(<span class="st" style="color: #20794D;">"lambert_stlous_dailytemps.json"</span>)</span>
+<span id="cb10-2">lambert_df <span class="ot" style="color: #003B4F;">=</span> tibble<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_tibble</span>(temp_lambert<span class="sc" style="color: #5E5E5E;">$</span>data)</span>
+<span id="cb10-3"><span class="fu" style="color: #4758AB;">names</span>(lambert_df) <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"date"</span>, <span class="st" style="color: #20794D;">"max"</span>, <span class="st" style="color: #20794D;">"min"</span>)</span>
+<span id="cb10-4">lambert_df <span class="ot" style="color: #003B4F;">=</span> lambert_df <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb10-5">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">date2 =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_date</span>(date),</span>
+<span id="cb10-6">                <span class="at" style="color: #657422;">year =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">year</span>(date2),</span>
+<span id="cb10-7">                <span class="at" style="color: #657422;">month =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">month</span>(date2),</span>
+<span id="cb10-8">                <span class="at" style="color: #657422;">ym =</span> <span class="fu" style="color: #4758AB;">paste0</span>(year, <span class="st" style="color: #20794D;">"-"</span>, month))</span>
+<span id="cb10-9">lambert_0 <span class="ot" style="color: #003B4F;">=</span> lambert_df <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb10-10">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">below_cutoff =</span> min <span class="sc" style="color: #5E5E5E;">&lt;</span> cutoff) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb10-11">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">group_by</span>(year) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb10-12">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">summarize</span>(<span class="at" style="color: #657422;">nday =</span> <span class="fu" style="color: #4758AB;">sum</span>(below_cutoff)) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb10-13">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ungroup</span>()</span>
+<span id="cb10-14"></span>
+<span id="cb10-15"></span>
+<span id="cb10-16">lambert_0 <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb10-17">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> year, <span class="at" style="color: #657422;">y =</span> nday)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-18">  <span class="fu" style="color: #4758AB;">geom_col</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-19">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">"No. days &lt; 0F at Lambert Airport St. Louis."</span>,</span>
+<span id="cb10-20">       <span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Year"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"No. of Days &lt; 0F"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-lambert" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures/index_files/figure-html/fig-lambert-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: Number of days &lt; 0F at Lambert Airport by month since 1970.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So Figure&nbsp;4 is <strong>similar</strong> to the one from XKCD, but I’d really like to see the data file they used and which station. I also think they probably used only the fall and winter months for a given year, like December to February, and that was the count for that particular year, excluding the next December. Regardless, the frequency of days where the minimum was below 0F has dropped significantly since the 80’s and 90’s, whether here in Lexington or St.&nbsp;Louis.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-censusdotgov" class="csl-entry">
+<span>“Census.gov County Codes.”</span> 2022. <a href="https://www.census.gov/library/reference/code-lists/ansi.html#county" class="uri">https://www.census.gov/library/reference/code-lists/ansi.html#county</a>; Web.
+</div>
+<div id="ref-xkcdclimate2022" class="csl-entry">
+Munroe, Randall. 2022. <span>“Cold.”</span> <a href="https://xkcd.com/1321/" class="uri">https://xkcd.com/1321/</a>; Web.
+</div>
+<div id="ref-rccapi" class="csl-entry">
+<span>“RCC-ACIS API.”</span> 2022. <a href="https://www.rcc-acis.org/docs_webservices.html" class="uri">https://www.rcc-acis.org/docs_webservices.html</a>; Web.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2022,
+  author = {Robert M Flight},
+  title = {Climate {Data} to {Analyze} {Days} by {Low} {Temperatures}},
+  date = {2022-12-27},
+  url = {https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2022" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2022. <span>“Climate Data to Analyze Days by Low
+Temperatures.”</span> December 27, 2022. <a href="https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures">https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures</a>.
+</div></div></section></div> ]]></description>
+  <category>xkcd</category>
+  <category>climate-data</category>
+  <guid>https://rmflight.github.io/posts/2022-12-27-climate-data-to-analyze-days-by-low-temperatures/index.html</guid>
+  <pubDate>Tue, 27 Dec 2022 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Journal Impact Factor Distributions</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2383,149 +2594,6 @@ Parsnip.”</span> August 30, 2021. <a href="https://rmflight.github.io/posts/20
   <category>random-code-snippets</category>
   <guid>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/index.html</guid>
   <pubDate>Mon, 30 Aug 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Coloring Dendrogram Edges with ggraph</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>I wanted to color the dendrogram edges according to their class in ggraph, and I was getting stuck because of something that isn’t explicitly mentioned in the documentation, but is implied. <strong>You must use “node.” to access the data from the Node Data in the call to <code>aes(...)</code></strong>.</p>
-<p>Lets set it up. We will borrow from the “Edges” vignette in the ggraph package <span class="citation" data-cites="ggraphEdgesVignette">(Pederson 2021)</span>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(ggraph)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggplot2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">library</span>(tidygraph)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'tidygraph'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:stats':
-
-    filter</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">library</span>(purrr)</span>
-<span id="cb6-2"><span class="fu" style="color: #4758AB;">library</span>(rlang)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'rlang'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:purrr':
-
-    %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,
-    flatten_lgl, flatten_raw, invoke, splice</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">set_graph_style</span>(<span class="at" style="color: #657422;">plot_margin =</span> <span class="fu" style="color: #4758AB;">margin</span>(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">1</span>))</span>
-<span id="cb9-2">hierarchy <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as_tbl_graph</span>(<span class="fu" style="color: #4758AB;">hclust</span>(<span class="fu" style="color: #4758AB;">dist</span>(iris[, <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">4</span>]))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb9-3">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">Class =</span> <span class="fu" style="color: #4758AB;">map_bfs_back_chr</span>(<span class="fu" style="color: #4758AB;">node_is_root</span>(), <span class="at" style="color: #657422;">.f =</span> <span class="cf" style="color: #003B4F;">function</span>(node, path, ...) {</span>
-<span id="cb9-4">    <span class="cf" style="color: #003B4F;">if</span> (leaf[node]) {</span>
-<span id="cb9-5">      <span class="fu" style="color: #4758AB;">as.character</span>(iris<span class="sc" style="color: #5E5E5E;">$</span>Species[<span class="fu" style="color: #4758AB;">as.integer</span>(label[node])])</span>
-<span id="cb9-6">    } <span class="cf" style="color: #003B4F;">else</span> {</span>
-<span id="cb9-7">      species <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">unique</span>(<span class="fu" style="color: #4758AB;">unlist</span>(path<span class="sc" style="color: #5E5E5E;">$</span>result))</span>
-<span id="cb9-8">      <span class="cf" style="color: #003B4F;">if</span> (<span class="fu" style="color: #4758AB;">length</span>(species) <span class="sc" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">1</span>) {</span>
-<span id="cb9-9">        species</span>
-<span id="cb9-10">      } <span class="cf" style="color: #003B4F;">else</span> {</span>
-<span id="cb9-11">        <span class="cn" style="color: #8f5902;">NA_character_</span></span>
-<span id="cb9-12">      }</span>
-<span id="cb9-13">    }</span>
-<span id="cb9-14">  }))</span>
-<span id="cb9-15"></span>
-<span id="cb9-16">hierarchy</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tbl_graph: 299 nodes and 298 edges
-#
-# A rooted tree
-#
-# Node Data: 299 × 5 (active)
-  height leaf  label members Class    
-   &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    
-1  0     TRUE  "108"       1 virginica
-2  0     TRUE  "131"       1 virginica
-3  0.265 FALSE ""          2 virginica
-4  0     TRUE  "103"       1 virginica
-5  0     TRUE  "126"       1 virginica
-6  0     TRUE  "130"       1 virginica
-# … with 293 more rows
-#
-# Edge Data: 298 × 2
-   from    to
-  &lt;int&gt; &lt;int&gt;
-1     3     1
-2     3     2
-3     7     5
-# … with 295 more rows</code></pre>
-</div>
-</div>
-<p>And with this, we can create a dendrogram.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">ggraph</span>(hierarchy, <span class="st" style="color: #20794D;">"dendrogram"</span>, <span class="at" style="color: #657422;">height =</span> height) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb11-2">  <span class="fu" style="color: #4758AB;">geom_edge_elbow</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` in the `default_aes` field and elsewhere instead.</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index_files/figure-html/plot_dendrogram-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Nice! But what if we want the leaves colored by which “Class” they belong to?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">ggraph</span>(hierarchy, <span class="st" style="color: #20794D;">"dendrogram"</span>, <span class="at" style="color: #657422;">height =</span> height) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-2">  <span class="fu" style="color: #4758AB;">geom_edge_elbow2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color =</span> node.Class))</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index_files/figure-html/plot_class-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Note the differences in this function call compared to the previous:</p>
-<ol type="1">
-<li>Using <code>geom_edge_elbow2</code> instead of <code>geom_edge_elbow</code></li>
-<li>Using <code>node.Class</code>, not just <code>Class</code>.</li>
-</ol>
-<p>The second point is really important! When you look at the <code>hierarchy</code> object printed above, the <code>Class</code> bit is part of the <code>Node Data</code>, which gets identified by <code>ggraph</code> by the prefix “node.”.</p>
-<p>If we don’t use <code>node.Class</code>, here is the error:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">ggraph</span>(hierarchy, <span class="st" style="color: #20794D;">"dendrogram"</span>, <span class="at" style="color: #657422;">height =</span> height) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-2">  <span class="fu" style="color: #4758AB;">geom_edge_elbow2</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color =</span> Class))</span></code></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `geom_edge_elbow2()`:
-! Problem while computing aesthetics.
-ℹ Error occurred in the 1st layer.
-Caused by error in `FUN()`:
-! object 'Class' not found</code></pre>
-</div>
-</div>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-ggraphEdgesVignette" class="csl-entry">
-Pederson, Thomas Lin. 2021. <span>“Edges.”</span> <a href="https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html">https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Coloring {Dendrogram} {Edges} with Ggraph},
-  date = {2021-08-03},
-  url = {https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Coloring Dendrogram Edges with
-Ggraph.”</span> August 3, 2021. <a href="https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph">https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph</a>.
-</div></div></section></div> ]]></description>
-  <category>random-code-snippets</category>
-  <category>visualization</category>
-  <category>graphing</category>
-  <category>dendrogram</category>
-  <guid>https://rmflight.github.io/posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html</guid>
-  <pubDate>Tue, 03 Aug 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
