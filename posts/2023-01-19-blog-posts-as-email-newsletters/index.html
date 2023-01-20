@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Robert M Flight">
-<meta name="dcterms.date" content="2021-03-26">
+<meta name="dcterms.date" content="2023-01-19">
 
-<title>Deciphering Life: One Bit at a Time - Highlighting a Row of A ComplexHeatmap</title>
+<title>Deciphering Life: One Bit at a Time - Blog Posts as Email Newsletters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -212,12 +212,11 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Highlighting a Row of A ComplexHeatmap</h1>
-            <p class="subtitle lead"></p><p>A simple way to highlight or bring attention to a row or column in a ComplexHeatmap.</p><p></p>
+      <h1 class="title">Blog Posts as Email Newsletters</h1>
+            <p class="subtitle lead"></p><p>With the new blog2newsletter, you can have email subscribers to your blog controlled by R thanks to gmailr, googlesheets4, and tidyRSS.</p><p></p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">random-code-snippets</div>
-                <div class="quarto-category">heatmap</div>
-                <div class="quarto-category">visualization</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">newsletters</div>
               </div>
                   </div>
   </div>
@@ -235,7 +234,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 26, 2021</p>
+        <p class="date">January 19, 2023</p>
       </div>
     </div>
     
@@ -246,7 +245,18 @@ div.csl-indent {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
+  <li><a href="#a-newsletter-really" id="toc-a-newsletter-really" class="nav-link" data-scroll-target="#a-newsletter-really">A Newsletter? Really?</a></li>
+  <li><a href="#the-power-of-r-to-the-rescue" id="toc-the-power-of-r-to-the-rescue" class="nav-link" data-scroll-target="#the-power-of-r-to-the-rescue">The Power of R to the Rescue!</a></li>
+  <li><a href="#blog2newsletter-package" id="toc-blog2newsletter-package" class="nav-link" data-scroll-target="#blog2newsletter-package">blog2newsletter Package</a></li>
+  <li><a href="#example-script" id="toc-example-script" class="nav-link" data-scroll-target="#example-script">Example Script</a></li>
+  <li><a href="#semi-automatic" id="toc-semi-automatic" class="nav-link" data-scroll-target="#semi-automatic">Semi-Automatic</a></li>
+  </ul>
+</nav>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -257,73 +267,114 @@ div.csl-indent {
 
 
 
-<p>The ComplexHeatmap Bioconductor package <span class="citation" data-cites="complexheatmapPub complexheatmapPackage complexheatmapRef">(<a href="#ref-complexheatmapPub" role="doc-biblioref">Gu, Eils, and Schlesner 2016</a>; <a href="#ref-complexheatmapPackage" role="doc-biblioref">Gu 2021a</a>, <a href="#ref-complexheatmapRef" role="doc-biblioref">2021b</a>)</span> has become my goto for visualizing sample-sample correlation heatmaps, which I use a lot. Recently, I had a report where I wanted to highlight a particular row of the heatmap. There is not an <strong>easy</strong> way that I could find to add something that wraps around a particular column. However, you can indicate that there is a grouping in the heatmap, and use that grouping to separate a sample or samples from the others.</p>
-<p>Lets do an example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ComplexHeatmap)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>nr1 <span class="ot">=</span> <span class="dv">4</span>; nr2 <span class="ot">=</span> <span class="dv">8</span>; nr3 <span class="ot">=</span> <span class="dv">6</span>; nr <span class="ot">=</span> nr1 <span class="sc">+</span> nr2 <span class="sc">+</span> nr3</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>nc1 <span class="ot">=</span> <span class="dv">6</span>; nc2 <span class="ot">=</span> <span class="dv">8</span>; nc3 <span class="ot">=</span> <span class="dv">10</span>; nc <span class="ot">=</span> nc1 <span class="sc">+</span> nc2 <span class="sc">+</span> nc3</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">rbind</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr1<span class="sc">*</span>nc1, <span class="at">mean =</span> <span class="dv">1</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr1),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr2<span class="sc">*</span>nc1, <span class="at">mean =</span> <span class="dv">0</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr2),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr3<span class="sc">*</span>nc1, <span class="at">mean =</span> <span class="dv">0</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr3)),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr1<span class="sc">*</span>nc2, <span class="at">mean =</span> <span class="dv">0</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr1),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr2<span class="sc">*</span>nc2, <span class="at">mean =</span> <span class="dv">1</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr2),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr3<span class="sc">*</span>nc2, <span class="at">mean =</span> <span class="dv">0</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr3)),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr1<span class="sc">*</span>nc3, <span class="at">mean =</span> <span class="fl">0.5</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr1),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr2<span class="sc">*</span>nc3, <span class="at">mean =</span> <span class="fl">0.5</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr2),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nr3<span class="sc">*</span>nc3, <span class="at">mean =</span> <span class="dv">1</span>,   <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">nr =</span> nr3))</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   )</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> mat[<span class="fu">sample</span>(nr, nr), <span class="fu">sample</span>(nc, nc)] <span class="co"># random shuffle rows and columns</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">"row"</span>, <span class="fu">seq_len</span>(nr))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mat) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">"column"</span>, <span class="fu">seq_len</span>(nc))</span>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>Want to be able to have people subscribe to your blog via email? Check out the <code>{blog2newsletter}</code> package on GitHub <span class="citation" data-cites="blog2newsletter">(<a href="#ref-blog2newsletter" role="doc-biblioref">Flight, n.d.</a>)</span>.</p>
+</section>
+<section id="a-newsletter-really" class="level2">
+<h2 class="anchored" data-anchor-id="a-newsletter-really">A Newsletter? Really?</h2>
+<p>OK, so hear me out. For some reason, if a newsletter shows up in my email inbox, I’m much more likely to read it. For example, I subscribe to Bob Rudis awesome Daily Drops <span class="citation" data-cites="dailydrop">(<a href="#ref-dailydrop" role="doc-biblioref">Rudis, n.d.</a>)</span>, and they almost always get read right when they come in Let’s be honest, SubStack has definitely made email newsletters popular. However, while I’m interested in making my blog available to people in other ways, I’m not going to use something like SubStack’s platform to do it (Bob Rudis has frequently complained about the formatting options in the SubStack editor, for instance).</p>
+</section>
+<section id="the-power-of-r-to-the-rescue" class="level2">
+<h2 class="anchored" data-anchor-id="the-power-of-r-to-the-rescue">The Power of R to the Rescue!</h2>
+<p>Now, I’ll admit, Google is another “platform”, but it’s one with a well known and documented API, with awesome R packages to interact with the APIs. For example, <code>{gmailr}</code> lets us compose, draft, and send emails from our GMail accounts <span class="citation" data-cites="gmailr">(<a href="#ref-gmailr" role="doc-biblioref">Hester and Bryan, n.d.</a>)</span>. <code>{googlesheets4}</code> provides access to Google Sheets, like those used to store reponses to Google Forms <span class="citation" data-cites="googlesheets4">(<a href="#ref-googlesheets4" role="doc-biblioref">Bryan, n.d.</a>)</span>.</p>
+<p>With these packages, we can cobble together another package that provides functions to send blog posts as email newsletters! And thus my holiday break project was born!</p>
+<p>Caveats, I don’t know the API limits for GMail, but I’m sure there isn’t really a limit to how many people can be <code>bcc'ed</code> on a single email. Also, Google could theoretically shut down API access to GMail and Google Sheets tomorrow, but that seems really, really unlikely.</p>
+</section>
+<section id="blog2newsletter-package" class="level2">
+<h2 class="anchored" data-anchor-id="blog2newsletter-package">blog2newsletter Package</h2>
+<p>It’s taken longer than I wanted to finish it off, but I think <code>{blog2newsletter}</code> is finally ready for primetime (and if you are one of the two subscribers to my blog, then you know it is because you received this post as an email) <span class="citation" data-cites="blog2newsletter">(<a href="#ref-blog2newsletter" role="doc-biblioref">Flight, n.d.</a>)</span>. The <a href="https://rmflight.github.io/blog2newsletter/">README</a> of the package goes into great detail of how to set up all the prerequisites and use it.</p>
+<p>The basic workflow, is this:</p>
+<ul>
+<li>have a blog with an RSS feed with full posts included in the RSS (default for <code>{quarto}</code> blogs with RSS enabled);</li>
+<li>have a Google project that you have the secrets for;</li>
+<li>authorize <code>{gmailr}</code> and <code>{googlesheets4}</code> to access the Google API for your Google project;</li>
+<li>have a Google Sheet storing subscriber information from a Google Form (like <a href="https://forms.gle/yEJ8gdzPHLQUmzpdA">this form</a>);</li>
+<li>create a script that checks for subscribers, gets the post, and composes and sends the email.</li>
+</ul>
+<p>The package doesn’t have that many functions, honestly. I’m very thankful that <code>{gmailr}</code> and <code>{googlesheets4}</code> handled all the Google specific stuff, and then <code>{tidyRSS}</code> provides all the functionality I needed for taking a blog post and putting it in a format that emails nicely <span class="citation" data-cites="tidyrss">(<a href="#ref-tidyrss" role="doc-biblioref">McDonnell 2022</a>)</span>!</p>
+<p>The use of <code>{tidyrss}</code> also means that you don’t have to actually use an R based blogging platform either to use <code>{blog2newsletter}</code>! You just need an RSS feed with the full posts in it! That can be a local file in the case of a statically generated blog, or the URL of your RSS feed for something generated / hosted by WordPress, for example.</p>
+<p>The other major consideration was being able to cache a local copy of the subscriber list, as well as what newsletters were previously sent so that you don’t accidentally resend the same blog post 20 times. We use simple <code>rds</code> files in a cache directory for this.</p>
+</section>
+<section id="example-script" class="level2">
+<h2 class="anchored" data-anchor-id="example-script">Example Script</h2>
+<p>Here I’m going to break down the example script <code>_blog2newsletter.R</code> from the README. In a real directory / project being used to manage this, this is what we would run using <code>b2n_run()</code>.</p>
+<p>At the top, we load the needed packages, and set a bunch of variables, including where the Google project secrets are stored, and where <code>{gargle}</code> should be putting the oauth tokens, and then loading the authorization tokens:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gmailr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(blog2newsletter)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>secrets_path <span class="ot">=</span> <span class="st">"secrets/client_secret_file_googleusercontent.com.json"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>oauth_cache <span class="ot">=</span> <span class="st">"secrets/gargle_cache/"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># don't forget to use your actual email</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>my_gmail <span class="ot">=</span> <span class="st">"my-gmail@gmail.com"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">gargle_oauth_cache =</span> oauth_cache,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">gargle_oauth_email =</span> secrets_path</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">gm_auth_configure</span>(<span class="at">path  =</span> secrets_path)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">gm_auth</span>(<span class="at">scopes =</span> <span class="fu">c</span>(<span class="st">"compose"</span>, <span class="st">"send"</span>), </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">email =</span> my_gmail)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">Heatmap</span>(mat, <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/create_heatmap-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Now, lets suppose we just want to highlight <strong>row2</strong>.</p>
-<p>We create a data.frame with a factor to represent the grouping:</p>
-<div class="cell" data-preview="true">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>which_row2 <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">grepl</span>(<span class="st">"row2"</span>, <span class="fu">rownames</span>(mat)))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>split <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, which_row2 <span class="sc">-</span> <span class="dv">1</span>), <span class="st">"B"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">rep</span>(<span class="st">"C"</span>, <span class="fu">nrow</span>(mat) <span class="sc">-</span> which_row2)))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Heatmap</span>(mat, <span class="at">cluster_rows =</span> <span class="cn">FALSE</span>, <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">row_split =</span> split,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">row_title =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/highlight_row2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Voila! <strong>row2</strong> is separated from the others to draw attention to it. It’s not perfect, but hopefully it’s useful to others. Note, that you can’t use clustering with this method. If you have actual dendrograms to display, this will fail, because ComplexHeatmap expects you to use a numeric argument to tell the cut height for dendrograms for splitting <span class="citation" data-cites="complexheatmapSplit">(<a href="#ref-complexheatmapSplit" role="doc-biblioref">Gu 2021c</a>)</span>. Therefore, if you have dendrograms, reorder your columns and rows according to the dendrogram <strong>first</strong> and then add the splitting information and keep the clustering off.</p>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_auth_configure</span>(<span class="at">path =</span> secrets_path)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">gs4_auth</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">scopes =</span> <span class="st">"https://www.googleapis.com/auth/spreadsheets.readonly"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">email =</span> my_gmail)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The bottom half starts with setting a variable for the blog directory (for <code>{quarto}</code> blogs) or alternatively where to find the RSS file directly. Then setting the Google Sheet id and grabbing the subscribers. Finally, what should be pre-pended to the email subject before the blog post title.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># switch from directory, full path to index.xml, or url as needed</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>blog_dir <span class="ot">=</span> <span class="st">"blog/directory"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>subscribers_id <span class="ot">=</span> <span class="st">"your-sheet-id"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>subscriber_data <span class="ot">=</span> <span class="fu">b2n_fetch_subscribers</span>(subscribers_id)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># newsletter subject</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>extra_subject <span class="ot">=</span> <span class="st">"my newsletter"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>blog_dir <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">b2n_post_to_email</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">b2n_add_subscribers</span>(subscriber_data) <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">b2n_from</span>(my_gmail) <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">b2n_add_subject</span>(extra_subject) <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">b2n_send_newsletter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to see what the composed email looks like <strong>before</strong> sending it, then you can use the <code>b2n_draft_email</code> instead of <code>b2n_send_newsletter</code>, and if you’ve got the right authorizations setup, then the email will show up in your GMail drafts.</p>
+</section>
+<section id="semi-automatic" class="level2">
+<h2 class="anchored" data-anchor-id="semi-automatic">Semi-Automatic</h2>
+<p>Finally, something like this would be a pain to type all that out everytime you wanted to send a new newsletter. This is part of the reason the default post to grab is the <strong>latest</strong> post that is available in the RSS feed. With that, it’s trivial to have a single script that is run each time you want to send out your latest available blog post. To help with this, there is the <code>b2n_run</code> function, that by default looks for <code>_blog2newsletter.R</code>, and <code>source</code>’s it.</p>
+<p>Therefore, you just need a project / directory for the subscription management, with the cache and the above script, and when you have a new blog post up, just do <code>blog2newsletter::b2n_run()</code>, and the post will be sent out if there are subscribers with matching categories.</p>
 
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-complexheatmapPackage" class="csl-entry" role="doc-biblioentry">
-Gu, Zuguang. 2021a. <span>“ComplexHeatmap.”</span> <a href="https://doi.org/10.18129/B9.bioc.ComplexHeatmap">https://doi.org/10.18129/B9.bioc.ComplexHeatmap</a>.
+<div id="ref-googlesheets4" class="csl-entry" role="doc-biblioentry">
+Bryan, Jenny. n.d. <span>“Googlesheets4 Package.”</span> <a href="https://googlesheets4.tidyverse.org/">https://googlesheets4.tidyverse.org/</a>.
 </div>
-<div id="ref-complexheatmapRef" class="csl-entry" role="doc-biblioentry">
-———. 2021b. <span>“ComplexHeatmap Complete Reference.”</span> <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/">https://jokergoo.github.io/ComplexHeatmap-reference/book/</a>.
+<div id="ref-blog2newsletter" class="csl-entry" role="doc-biblioentry">
+Flight, Robert M. n.d. <span>“Blog2newsletter Package.”</span> <a href="https://rmflight.github.io/blog2newsletter">https://rmflight.github.io/blog2newsletter</a>.
 </div>
-<div id="ref-complexheatmapSplit" class="csl-entry" role="doc-biblioentry">
-———. 2021c. <span>“ComplexHeatmap Complete Reference.”</span> <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/a-single-heatmap.html#heatmap-split">https://jokergoo.github.io/ComplexHeatmap-reference/book/a-single-heatmap.html#heatmap-split</a>.
+<div id="ref-gmailr" class="csl-entry" role="doc-biblioentry">
+Hester, Jim, and Jenny Bryan. n.d. <span>“Gmailr Package.”</span> <a href="https://gmailr.r-lib.org/">https://gmailr.r-lib.org/</a>.
 </div>
-<div id="ref-complexheatmapPub" class="csl-entry" role="doc-biblioentry">
-Gu, Zuguang, Roland Eils, and Matthias Schlesner. 2016. <span>“Complex Heatmaps Reveal Patterns and Correlations in Multidimensional Genomic Data.”</span> <em>Bioinformatics</em>.
+<div id="ref-tidyrss" class="csl-entry" role="doc-biblioentry">
+McDonnell, Robert Myles. 2022. <span>“tidyRSS: Tidy RSS for r.”</span> <a href="https://CRAN.R-project.org/package=tidyRSS">https://CRAN.R-project.org/package=tidyRSS</a>.
 </div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
+<div id="ref-dailydrop" class="csl-entry" role="doc-biblioentry">
+Rudis, Bob. n.d. <span>“Hrbrmstr’s Daily Drop.”</span> <a href="https://dailyfinds.hrbrmstr.dev/">https://dailyfinds.hrbrmstr.dev/</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
   author = {Robert M Flight},
-  title = {Highlighting a {Row} of {A} {ComplexHeatmap}},
-  date = {2021-03-26},
-  url = {https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap},
+  title = {Blog {Posts} as {Email} {Newsletters}},
+  date = {2023-01-19},
+  url = {https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Robert M Flight. 2021. <span>“Highlighting a Row of A
-ComplexHeatmap.”</span> March 26, 2021. <a href="https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap">https://rmflight.github.io/posts/2021-03-26-highlighting-a-row-of-a-complexheatmap</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Robert M Flight. 2023. <span>“Blog Posts as Email Newsletters.”</span>
+January 19, 2023. <a href="https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters">https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

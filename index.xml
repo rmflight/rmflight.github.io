@@ -10,7 +10,130 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Tue, 27 Dec 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 19 Jan 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Blog Posts as Email Newsletters</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>Want to be able to have people subscribe to your blog via email? Check out the <code>{blog2newsletter}</code> package on GitHub <span class="citation" data-cites="blog2newsletter">(Flight, n.d.)</span>.</p>
+</section>
+<section id="a-newsletter-really" class="level2">
+<h2 class="anchored" data-anchor-id="a-newsletter-really">A Newsletter? Really?</h2>
+<p>OK, so hear me out. For some reason, if a newsletter shows up in my email inbox, I’m much more likely to read it. For example, I subscribe to Bob Rudis awesome Daily Drops <span class="citation" data-cites="dailydrop">(Rudis, n.d.)</span>, and they almost always get read right when they come in Let’s be honest, SubStack has definitely made email newsletters popular. However, while I’m interested in making my blog available to people in other ways, I’m not going to use something like SubStack’s platform to do it (Bob Rudis has frequently complained about the formatting options in the SubStack editor, for instance).</p>
+</section>
+<section id="the-power-of-r-to-the-rescue" class="level2">
+<h2 class="anchored" data-anchor-id="the-power-of-r-to-the-rescue">The Power of R to the Rescue!</h2>
+<p>Now, I’ll admit, Google is another “platform”, but it’s one with a well known and documented API, with awesome R packages to interact with the APIs. For example, <code>{gmailr}</code> lets us compose, draft, and send emails from our GMail accounts <span class="citation" data-cites="gmailr">(Hester and Bryan, n.d.)</span>. <code>{googlesheets4}</code> provides access to Google Sheets, like those used to store reponses to Google Forms <span class="citation" data-cites="googlesheets4">(Bryan, n.d.)</span>.</p>
+<p>With these packages, we can cobble together another package that provides functions to send blog posts as email newsletters! And thus my holiday break project was born!</p>
+<p>Caveats, I don’t know the API limits for GMail, but I’m sure there isn’t really a limit to how many people can be <code>bcc'ed</code> on a single email. Also, Google could theoretically shut down API access to GMail and Google Sheets tomorrow, but that seems really, really unlikely.</p>
+</section>
+<section id="blog2newsletter-package" class="level2">
+<h2 class="anchored" data-anchor-id="blog2newsletter-package">blog2newsletter Package</h2>
+<p>It’s taken longer than I wanted to finish it off, but I think <code>{blog2newsletter}</code> is finally ready for primetime (and if you are one of the two subscribers to my blog, then you know it is because you received this post as an email) <span class="citation" data-cites="blog2newsletter">(Flight, n.d.)</span>. The <a href="https://rmflight.github.io/blog2newsletter/">README</a> of the package goes into great detail of how to set up all the prerequisites and use it.</p>
+<p>The basic workflow, is this:</p>
+<ul>
+<li>have a blog with an RSS feed with full posts included in the RSS (default for <code>{quarto}</code> blogs with RSS enabled);</li>
+<li>have a Google project that you have the secrets for;</li>
+<li>authorize <code>{gmailr}</code> and <code>{googlesheets4}</code> to access the Google API for your Google project;</li>
+<li>have a Google Sheet storing subscriber information from a Google Form (like <a href="https://forms.gle/yEJ8gdzPHLQUmzpdA">this form</a>);</li>
+<li>create a script that checks for subscribers, gets the post, and composes and sends the email.</li>
+</ul>
+<p>The package doesn’t have that many functions, honestly. I’m very thankful that <code>{gmailr}</code> and <code>{googlesheets4}</code> handled all the Google specific stuff, and then <code>{tidyRSS}</code> provides all the functionality I needed for taking a blog post and putting it in a format that emails nicely <span class="citation" data-cites="tidyrss">(McDonnell 2022)</span>!</p>
+<p>The use of <code>{tidyrss}</code> also means that you don’t have to actually use an R based blogging platform either to use <code>{blog2newsletter}</code>! You just need an RSS feed with the full posts in it! That can be a local file in the case of a statically generated blog, or the URL of your RSS feed for something generated / hosted by WordPress, for example.</p>
+<p>The other major consideration was being able to cache a local copy of the subscriber list, as well as what newsletters were previously sent so that you don’t accidentally resend the same blog post 20 times. We use simple <code>rds</code> files in a cache directory for this.</p>
+</section>
+<section id="example-script" class="level2">
+<h2 class="anchored" data-anchor-id="example-script">Example Script</h2>
+<p>Here I’m going to break down the example script <code>_blog2newsletter.R</code> from the README. In a real directory / project being used to manage this, this is what we would run using <code>b2n_run()</code>.</p>
+<p>At the top, we load the needed packages, and set a bunch of variables, including where the Google project secrets are stored, and where <code>{gargle}</code> should be putting the oauth tokens, and then loading the authorization tokens:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(gmailr)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(googlesheets4)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(blog2newsletter)</span>
+<span id="cb1-4">secrets_path <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"secrets/client_secret_file_googleusercontent.com.json"</span></span>
+<span id="cb1-5">oauth_cache <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"secrets/gargle_cache/"</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;"># don't forget to use your actual email</span></span>
+<span id="cb1-8">my_gmail <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"my-gmail@gmail.com"</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;">options</span>(</span>
+<span id="cb1-11">  <span class="at" style="color: #657422;">gargle_oauth_cache =</span> oauth_cache,</span>
+<span id="cb1-12">  <span class="at" style="color: #657422;">gargle_oauth_email =</span> secrets_path</span>
+<span id="cb1-13">)</span>
+<span id="cb1-14"></span>
+<span id="cb1-15"><span class="fu" style="color: #4758AB;">gm_auth_configure</span>(<span class="at" style="color: #657422;">path  =</span> secrets_path)</span>
+<span id="cb1-16"><span class="fu" style="color: #4758AB;">gm_auth</span>(<span class="at" style="color: #657422;">scopes =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"compose"</span>, <span class="st" style="color: #20794D;">"send"</span>), </span>
+<span id="cb1-17">        <span class="at" style="color: #657422;">email =</span> my_gmail)</span>
+<span id="cb1-18"></span>
+<span id="cb1-19"><span class="fu" style="color: #4758AB;">gs4_auth_configure</span>(<span class="at" style="color: #657422;">path =</span> secrets_path)</span>
+<span id="cb1-20"><span class="fu" style="color: #4758AB;">gs4_auth</span>(</span>
+<span id="cb1-21">  <span class="at" style="color: #657422;">scopes =</span> <span class="st" style="color: #20794D;">"https://www.googleapis.com/auth/spreadsheets.readonly"</span>,</span>
+<span id="cb1-22">  <span class="at" style="color: #657422;">email =</span> my_gmail)</span></code></pre></div>
+<p>The bottom half starts with setting a variable for the blog directory (for <code>{quarto}</code> blogs) or alternatively where to find the RSS file directly. Then setting the Google Sheet id and grabbing the subscribers. Finally, what should be pre-pended to the email subject before the blog post title.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># switch from directory, full path to index.xml, or url as needed</span></span>
+<span id="cb2-2">blog_dir <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"blog/directory"</span></span>
+<span id="cb2-3"></span>
+<span id="cb2-4">subscribers_id <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"your-sheet-id"</span></span>
+<span id="cb2-5">subscriber_data <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">b2n_fetch_subscribers</span>(subscribers_id)</span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;"># newsletter subject</span></span>
+<span id="cb2-8">extra_subject <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"my newsletter"</span></span>
+<span id="cb2-9"></span>
+<span id="cb2-10">blog_dir <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb2-11">  <span class="fu" style="color: #4758AB;">b2n_post_to_email</span>() <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb2-12">  <span class="fu" style="color: #4758AB;">b2n_add_subscribers</span>(subscriber_data) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb2-13">  <span class="fu" style="color: #4758AB;">b2n_from</span>(my_gmail) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb2-14">  <span class="fu" style="color: #4758AB;">b2n_add_subject</span>(extra_subject) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb2-15">  <span class="fu" style="color: #4758AB;">b2n_send_newsletter</span>()</span></code></pre></div>
+<p>If you want to see what the composed email looks like <strong>before</strong> sending it, then you can use the <code>b2n_draft_email</code> instead of <code>b2n_send_newsletter</code>, and if you’ve got the right authorizations setup, then the email will show up in your GMail drafts.</p>
+</section>
+<section id="semi-automatic" class="level2">
+<h2 class="anchored" data-anchor-id="semi-automatic">Semi-Automatic</h2>
+<p>Finally, something like this would be a pain to type all that out everytime you wanted to send a new newsletter. This is part of the reason the default post to grab is the <strong>latest</strong> post that is available in the RSS feed. With that, it’s trivial to have a single script that is run each time you want to send out your latest available blog post. To help with this, there is the <code>b2n_run</code> function, that by default looks for <code>_blog2newsletter.R</code>, and <code>source</code>’s it.</p>
+<p>Therefore, you just need a project / directory for the subscription management, with the cache and the above script, and when you have a new blog post up, just do <code>blog2newsletter::b2n_run()</code>, and the post will be sent out if there are subscribers with matching categories.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-googlesheets4" class="csl-entry">
+Bryan, Jenny. n.d. <span>“Googlesheets4 Package.”</span> <a href="https://googlesheets4.tidyverse.org/">https://googlesheets4.tidyverse.org/</a>.
+</div>
+<div id="ref-blog2newsletter" class="csl-entry">
+Flight, Robert M. n.d. <span>“Blog2newsletter Package.”</span> <a href="https://rmflight.github.io/blog2newsletter">https://rmflight.github.io/blog2newsletter</a>.
+</div>
+<div id="ref-gmailr" class="csl-entry">
+Hester, Jim, and Jenny Bryan. n.d. <span>“Gmailr Package.”</span> <a href="https://gmailr.r-lib.org/">https://gmailr.r-lib.org/</a>.
+</div>
+<div id="ref-tidyrss" class="csl-entry">
+McDonnell, Robert Myles. 2022. <span>“tidyRSS: Tidy RSS for r.”</span> <a href="https://CRAN.R-project.org/package=tidyRSS">https://CRAN.R-project.org/package=tidyRSS</a>.
+</div>
+<div id="ref-dailydrop" class="csl-entry">
+Rudis, Bob. n.d. <span>“Hrbrmstr’s Daily Drop.”</span> <a href="https://dailyfinds.hrbrmstr.dev/">https://dailyfinds.hrbrmstr.dev/</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
+  author = {Robert M Flight},
+  title = {Blog {Posts} as {Email} {Newsletters}},
+  date = {2023-01-19},
+  url = {https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2023" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2023. <span>“Blog Posts as Email Newsletters.”</span>
+January 19, 2023. <a href="https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters">https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters</a>.
+</div></div></section></div> ]]></description>
+  <category>R</category>
+  <category>newsletters</category>
+  <guid>https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters/index.html</guid>
+  <pubDate>Thu, 19 Jan 2023 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Climate Data to Analyze Days by Low Temperatures</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2412,188 +2535,6 @@ Pressure.”</span> September 20, 2021. <a href="https://rmflight.github.io/post
   <category>visualization</category>
   <guid>https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index.html</guid>
   <pubDate>Mon, 20 Sep 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Random Forest Classification Using Parsnip</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>I’ve been working on a “machine learning” project, and in the process I’ve been learning to use the tidymodels framework <span class="citation" data-cites="tidymodelsSite">(<span>“Tidymodels”</span> 2021)</span>, which helps save you from leaking information from testing to training data, as well as creating workflows in a consistent way across methods.</p>
-<p>However, I got tripped up recently by one issue. When I’ve previously used Random Forests <span class="citation" data-cites="rfWiki">(<span>“Random Forest Wiki Page”</span> 2021)</span>, I’ve found that for <strong>classification</strong> problems, the out-of-bag (OOB) error reported is a good proxy for the area-under-the-curve (AUC), or estimate of how good any other machine learning technique will do (see <span class="citation" data-cites="flight2015random">(Flight 2015)</span> for an example using actual random data). Therefore, I like to put my data through a Random Forest algorithm and check the OOB error, and then maybe reach for a tuned boosted tree to squeeze every last bit of performance out.</p>
-<p>tidymodels default is to use a <code>probability</code> tree, even for classification problems. This isn’t normally a problem for most people, because you will have a train and test set, and estimate performance on the test set using AUC. However, it is a problem if you just want to see the OOB error from the random forest, because it is reported differently for probability vs classification.</p>
-<p>Lets run an example using the tidymodels <em>cell</em> data set.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(tidymodels)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(modeldata)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(skimr)</span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;">data</span>(cells, <span class="at" style="color: #657422;">package =</span> <span class="st" style="color: #20794D;">"modeldata"</span>)</span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(ranger)</span>
-<span id="cb1-6"><span class="fu" style="color: #4758AB;">tidymodels_prefer</span>()</span>
-<span id="cb1-7"></span>
-<span id="cb1-8">cells<span class="sc" style="color: #5E5E5E;">$</span>case <span class="ot" style="color: #003B4F;">=</span> <span class="cn" style="color: #8f5902;">NULL</span></span>
-<span id="cb1-9"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
-<span id="cb1-10"><span class="fu" style="color: #4758AB;">ranger</span>(class <span class="sc" style="color: #5E5E5E;">~</span> ., <span class="at" style="color: #657422;">data =</span> cells, <span class="at" style="color: #657422;">min.node.size =</span> <span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">classification =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Ranger result
-
-Call:
- ranger(class ~ ., data = cells, min.node.size = 10, classification = TRUE) 
-
-Type:                             Classification 
-Number of trees:                  500 
-Sample size:                      2019 
-Number of independent variables:  56 
-Mtry:                             7 
-Target node size:                 10 
-Variable importance mode:         none 
-Splitrule:                        gini 
-OOB prediction error:             17.29 % </code></pre>
-</div>
-</div>
-<p>Here we can see that we get an OOB error of 17%, which isn’t too shabby. Now, let’s setup a workflow to do the same thing via tidymodels parsnip.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">rf_spec <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rand_forest</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-2">  <span class="fu" style="color: #4758AB;">set_engine</span>(<span class="st" style="color: #20794D;">"ranger"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-3">  <span class="fu" style="color: #4758AB;">set_mode</span>(<span class="st" style="color: #20794D;">"classification"</span>)</span>
-<span id="cb3-4"></span>
-<span id="cb3-5">rf_recipe <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">recipe</span>(class <span class="sc" style="color: #5E5E5E;">~</span> ., <span class="at" style="color: #657422;">data =</span> cells) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-6">  <span class="fu" style="color: #4758AB;">step_dummy</span>(class, <span class="sc" style="color: #5E5E5E;">-</span>class)</span>
-<span id="cb3-7"></span>
-<span id="cb3-8"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
-<span id="cb3-9"><span class="fu" style="color: #4758AB;">workflow</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-10">  <span class="fu" style="color: #4758AB;">add_recipe</span>(rf_recipe) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-11">  <span class="fu" style="color: #4758AB;">add_model</span>(rf_spec) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb3-12">  <span class="fu" style="color: #4758AB;">fit</span>(<span class="at" style="color: #657422;">data =</span> cells)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>══ Workflow [trained] ══════════════════════════════════════════════════════════
-Preprocessor: Recipe
-Model: rand_forest()
-
-── Preprocessor ────────────────────────────────────────────────────────────────
-1 Recipe Step
-
-• step_dummy()
-
-── Model ───────────────────────────────────────────────────────────────────────
-Ranger result
-
-Call:
- ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1), probability = TRUE) 
-
-Type:                             Probability estimation 
-Number of trees:                  500 
-Sample size:                      2019 
-Number of independent variables:  56 
-Mtry:                             7 
-Target node size:                 10 
-Variable importance mode:         none 
-Splitrule:                        gini 
-OOB prediction error (Brier s.):  0.1198456 </code></pre>
-</div>
-</div>
-<p>Here we see the OOB error is 12% (0.119), which is not significantly different than the 17% above, but still different. Also, the “Type” shows “Probability estimation” instead of “Classification estimation”.</p>
-<p>If we run ranger again with a “probability” instead of “classification”, do we match up with the result above?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
-<span id="cb5-2"><span class="fu" style="color: #4758AB;">ranger</span>(class <span class="sc" style="color: #5E5E5E;">~</span> ., <span class="at" style="color: #657422;">data =</span> cells, <span class="at" style="color: #657422;">min.node.size =</span> <span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">probability =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Ranger result
-
-Call:
- ranger(class ~ ., data = cells, min.node.size = 10, probability = TRUE) 
-
-Type:                             Probability estimation 
-Number of trees:                  500 
-Sample size:                      2019 
-Number of independent variables:  56 
-Mtry:                             7 
-Target node size:                 10 
-Variable importance mode:         none 
-Splitrule:                        gini 
-OOB prediction error (Brier s.):  0.119976 </code></pre>
-</div>
-</div>
-<p>That is much closer to the tidymodels result! Great! Except, it’s a misestimation of the true OOB error for classification. How do we get what we want while using the tidymodels framework?</p>
-<p>I couldn’t find the answer, and the above <strong>looked</strong> like a bug, so I filed one on the parsnip github <span class="citation" data-cites="parsnipIssue">(<span>“Ranger "Classification" Mode Still Looks Like "Probability"”</span> 2021)</span>. Julia Silge helpfully provided the solution to my problem.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">rf_spec_class <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rand_forest</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb7-2">  <span class="fu" style="color: #4758AB;">set_engine</span>(<span class="st" style="color: #20794D;">"ranger"</span>, <span class="at" style="color: #657422;">probability =</span> <span class="cn" style="color: #8f5902;">FALSE</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb7-3">  <span class="fu" style="color: #4758AB;">set_mode</span>(<span class="st" style="color: #20794D;">"classification"</span>)</span>
-<span id="cb7-4"></span>
-<span id="cb7-5"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
-<span id="cb7-6"><span class="fu" style="color: #4758AB;">workflow</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb7-7">  <span class="fu" style="color: #4758AB;">add_recipe</span>(rf_recipe) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb7-8">  <span class="fu" style="color: #4758AB;">add_model</span>(rf_spec_class) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb7-9">  <span class="fu" style="color: #4758AB;">fit</span>(<span class="at" style="color: #657422;">data =</span> cells)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>══ Workflow [trained] ══════════════════════════════════════════════════════════
-Preprocessor: Recipe
-Model: rand_forest()
-
-── Preprocessor ────────────────────────────────────────────────────────────────
-1 Recipe Step
-
-• step_dummy()
-
-── Model ───────────────────────────────────────────────────────────────────────
-Ranger result
-
-Call:
- ranger::ranger(x = maybe_data_frame(x), y = y, probability = ~FALSE,      num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1)) 
-
-Type:                             Classification 
-Number of trees:                  500 
-Sample size:                      2019 
-Number of independent variables:  56 
-Mtry:                             7 
-Target node size:                 1 
-Variable importance mode:         none 
-Splitrule:                        gini 
-OOB prediction error:             16.54 % </code></pre>
-</div>
-</div>
-<p>Aha! Now we are much closer to the original value of 17%, and the “Type” is “Classification”.</p>
-<p>I know in this case, the differences in OOB error are honestly not that much different, but in my recent project, they differed by 20%, where I had a 45% using classification, and 25% using probability. Therefore, I was being fooled by the tidymodels framework investigation, and then wondering why my final AUC on a tuned model was only hitting just &gt; 55%.</p>
-<p>So remember, this isn’t how I would run the model for final classification and estimation of AUC on a test set, but if you want the OOB errors for a quick “feel” of your data, it’s very useful.</p>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-flight2015random" class="csl-entry">
-Flight, Robert M. 2015. <span>“Deciphering Life: One Bit at a Time: Random Forest Vs PLS on Random Data.”</span> <a href="https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/">https://rmflight.github.io/posts/2015-12-12-random-forest-vs-pls-on-random-data/</a>.
-</div>
-<div id="ref-rfWiki" class="csl-entry">
-<span>“Random Forest Wiki Page.”</span> 2021. <a href="https://en.wikipedia.org/wiki/Random_forest">https://en.wikipedia.org/wiki/Random_forest</a>.
-</div>
-<div id="ref-parsnipIssue" class="csl-entry">
-<span>“Ranger "Classification" Mode Still Looks Like "Probability".”</span> 2021. <a href="https://github.com/tidymodels/parsnip/issues/546">https://github.com/tidymodels/parsnip/issues/546</a>.
-</div>
-<div id="ref-tidymodelsSite" class="csl-entry">
-<span>“Tidymodels.”</span> 2021. <a href="https://www.tidymodels.org/">https://www.tidymodels.org/</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Random {Forest} {Classification} {Using} {Parsnip}},
-  date = {2021-08-30},
-  url = {https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Random Forest Classification Using
-Parsnip.”</span> August 30, 2021. <a href="https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip">https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip</a>.
-</div></div></section></div> ]]></description>
-  <category>parsnip</category>
-  <category>tidymodels</category>
-  <category>machine-learning</category>
-  <category>random-forest</category>
-  <category>random-code-snippets</category>
-  <guid>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/index.html</guid>
-  <pubDate>Mon, 30 Aug 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
