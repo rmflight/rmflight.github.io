@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rmflight.github.io/index.html</loc>
-    <lastmod>2023-01-20T02:29:17.607Z</lastmod>
+    <lastmod>2023-05-08T14:34:57.219Z</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/about.html</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2023-01-19-blog-posts-as-email-newsletters/index.html</loc>
-    <lastmod>2023-01-20T02:29:21.847Z</lastmod>
+    <lastmod>2023-02-24T15:22:54.036Z</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-04-09-proportional-error-in-mass-spectrometry/index.html</loc>
@@ -339,5 +339,17 @@
   <url>
     <loc>https://rmflight.github.io/posts/2021-08-30-random-forest-classification-using-parsnip/index.html</loc>
     <lastmod>2023-01-20T02:30:08.247Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2023-02-24-testing-meta-data/index.html</loc>
+    <lastmod>2023-05-08T01:37:25.833Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2023-05-07-targets-and-safe-functions/index.html</loc>
+    <lastmod>2023-05-08T14:25:30.306Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions/index.html</loc>
+    <lastmod>2023-05-08T14:34:55.083Z</lastmod>
   </url>
 </urlset>

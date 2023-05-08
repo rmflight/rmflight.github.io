@@ -10,7 +10,1154 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Thu, 19 Jan 2023 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 08 May 2023 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>targets and Safe Functions</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>If you are using the <code>{targets}</code> workflow manager for your analyses, and also using <code>{purrr::safely}</code> (or others) to control possible errors, do not do the simplest version of function replacement to make your function <code>safe</code>. See here for the final versions.</p>
+</section>
+<section id="targets" class="level2">
+<h2 class="anchored" data-anchor-id="targets">targets</h2>
+<p>A bit of an introduction, <code>{targets}</code> is a workflow manager written and managed completely in <code>R</code> <span class="citation" data-cites="wlandautargets">(Landau 2021)</span>. It is the second workfow manager written by the amazing William Landau. It keeps track of all the interdependencies amongst function inputs and outputs, files, etc, for you, and only reruns things that need to be rerun. This makes it easier to modularize a script into separate functions, and not worry about the order that things get run in, or which bits need to be rerun when you change things without rerunning the entire script.</p>
+<p>If you are familiar with <code>{knitr}</code> cache’ing, it’s somewhat like that, but very beefed up, and not dependent on the document at all. Also, in my opinion, much smarter than <code>{knitr}</code> caches <span class="citation" data-cites="yihuicache">(Yihui Xie 2022)</span>.</p>
+</section>
+<section id="safely" class="level2">
+<h2 class="anchored" data-anchor-id="safely">safely?</h2>
+<p>Outside of iterations, another subset of functionality in <code>{purrr}</code> are various adverbs, or functions that modify the effect of another function <span class="citation" data-cites="hadleypurrr">(Wickham and Henry 2023)</span>. One of these is <code>safely</code>. From the help page:</p>
+<blockquote class="blockquote">
+<p>Creates a modified version of .f that always succeeds. It returns a list with components result and error. If the function succeeds, result contains the returned value and error is NULL. If an error occurred, error is an error object and result is either NULL or otherwise.</p>
+</blockquote>
+<p>As you can imagine, this is incredibly useful for handling error conditions without explicitly handling it within your own function. By the way, it is worth looking at the help page for {purrr::safely} just to see all the adverbs that {purrr} provides, some may be useful for you in other contexts.</p>
+</section>
+<section id="the-issue" class="level2">
+<h2 class="anchored" data-anchor-id="the-issue">The Issue</h2>
+<p>So, what happens if you try to use <code>{purrr::safely}</code> to modify a user defined function from within a <code>{targets}</code> workflow? It turns out, you have to be very careful <strong>how</strong> you incorporate <code>{purrr::safely}</code> into your workflow. If you do it wrong, then {targets} can’t tell you changed the underlying function, and won’t rerun the workflow. I do want to thank Neil Wright for bringing this up on Mastodon, as it’s not obvious what the best solution is or <strong>why</strong> this happens <span class="citation" data-cites="neilpost">(Wright 2023)</span>. I also note that Neil does post the solution in their next post.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>So this post assumes you have a recent version of <code>{targets}</code> installed (I’m using 1.0.0) as well as <code>{purrr}</code> (using 1.0.1). We are not going to setup a full <code>{targets}</code> workflow, but will use the functions <code>tar_deparse_safe</code> and <code>digest_obj64</code> (internal to <code>{targets}</code>), as that will illuminate the issues for us.</p>
+</section>
+<section id="initial-functions" class="level2">
+<h2 class="anchored" data-anchor-id="initial-functions">Initial Functions</h2>
+<p>So we need a few functions for this, ideally ones that will generate the same output, but that we can implement in a couple of different ways. Thanks to the fact that R is a statistical language, we can do that fairly easily. For example, we can make two functions for calculating the mean of a set of values. One doing the actual calculation, and another that simply wraps the built-in <code>mean</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">mean_by_hand <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb1-2">{</span>
+<span id="cb1-3">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb1-4">    <span class="fu" style="color: #4758AB;">sum</span>(values) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">length</span>(values)</span>
+<span id="cb1-5">  )</span>
+<span id="cb1-6">}</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">mean_builtin <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb1-9">{</span>
+<span id="cb1-10">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb1-11">    <span class="fu" style="color: #4758AB;">mean</span>(values)</span>
+<span id="cb1-12">  )</span>
+<span id="cb1-13">}</span></code></pre></div>
+</div>
+<p>From these we can then wrap them in <code>safely</code> to make them better able to handle a possible error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">safe_by_hand <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">safely</span>(mean_by_hand)</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">safe_builtin <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">safely</span>(mean_builtin)</span></code></pre></div>
+</div>
+</section>
+<section id="hashes" class="level2">
+<h2 class="anchored" data-anchor-id="hashes">Hashes</h2>
+<p>Now, for all of these, we can get the object hash that <code>{targets}</code> would use to tell when things changed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">hash_values <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"by-hand"</span> <span class="ot" style="color: #003B4F;">=</span> mean_by_hand,</span>
+<span id="cb3-2">                           <span class="st" style="color: #20794D;">"built-in"</span> <span class="ot" style="color: #003B4F;">=</span> mean_builtin,</span>
+<span id="cb3-3">                           <span class="st" style="color: #20794D;">"safe-by-hand"</span> <span class="ot" style="color: #003B4F;">=</span> safe_by_hand,</span>
+<span id="cb3-4">                           <span class="st" style="color: #20794D;">"safe-built-in"</span> <span class="ot" style="color: #003B4F;">=</span> safe_builtin),</span>
+<span id="cb3-5">                         <span class="cf" style="color: #003B4F;">function</span>(.x){</span>
+<span id="cb3-6">                           targets<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">tar_deparse_safe</span>(.x) <span class="sc" style="color: #5E5E5E;">|&gt;</span> targets<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">digest_chr64</span>()</span>
+<span id="cb3-7">                         })</span>
+<span id="cb3-8">hash_table <span class="ot" style="color: #003B4F;">=</span> tibble<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_tibble_row</span>(hash_values) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb3-9">  tidyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pivot_longer</span>(<span class="at" style="color: #657422;">cols =</span> tidyselect<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">everything</span>(), <span class="at" style="color: #657422;">names_to =</span> <span class="st" style="color: #20794D;">"which"</span>, <span class="at" style="color: #657422;">values_to =</span> <span class="st" style="color: #20794D;">"hash"</span>)</span>
+<span id="cb3-10">gt<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">gt</span>(hash_table)</span></code></pre></div>
+<div class="cell-output-display">
+<div id="tbl-initial-hashes" class="anchored">
+
+<div id="zupfsnnoll" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zupfsnnoll table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#zupfsnnoll thead, #zupfsnnoll tbody, #zupfsnnoll tfoot, #zupfsnnoll tr, #zupfsnnoll td, #zupfsnnoll th {
+  border-style: none;
+}
+
+#zupfsnnoll p {
+  margin: 0;
+  padding: 0;
+}
+
+#zupfsnnoll .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#zupfsnnoll .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zupfsnnoll .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zupfsnnoll .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zupfsnnoll .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zupfsnnoll .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zupfsnnoll .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zupfsnnoll .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zupfsnnoll .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#zupfsnnoll .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#zupfsnnoll .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zupfsnnoll .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#zupfsnnoll .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#zupfsnnoll .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zupfsnnoll .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zupfsnnoll .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#zupfsnnoll .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#zupfsnnoll .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#zupfsnnoll .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zupfsnnoll .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#zupfsnnoll .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zupfsnnoll .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zupfsnnoll .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zupfsnnoll .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zupfsnnoll .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zupfsnnoll .gt_left {
+  text-align: left;
+}
+
+#zupfsnnoll .gt_center {
+  text-align: center;
+}
+
+#zupfsnnoll .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zupfsnnoll .gt_font_normal {
+  font-weight: normal;
+}
+
+#zupfsnnoll .gt_font_bold {
+  font-weight: bold;
+}
+
+#zupfsnnoll .gt_font_italic {
+  font-style: italic;
+}
+
+#zupfsnnoll .gt_super {
+  font-size: 65%;
+}
+
+#zupfsnnoll .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#zupfsnnoll .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#zupfsnnoll .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#zupfsnnoll .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#zupfsnnoll .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#zupfsnnoll .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#zupfsnnoll .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false"><caption>Table&nbsp;1:  Initial hashes of the various functions. </caption>
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="which">which</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="hash">hash</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="which" class="gt_row gt_left">by-hand</td>
+<td headers="hash" class="gt_row gt_left">b3f5384d3554e21a</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">built-in</td>
+<td headers="hash" class="gt_row gt_left">35321f32205c905b</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">safe-by-hand</td>
+<td headers="hash" class="gt_row gt_left">00758262fad8ce25</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">safe-built-in</td>
+<td headers="hash" class="gt_row gt_left">00758262fad8ce25</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+<p>As we can see from Table&nbsp;1, the two <code>safe</code> variants have <strong>identical</strong> hashes. If you look at the help page for <code>tar_cue</code>, you might see why:</p>
+<blockquote class="blockquote">
+<p>User-defined functions are hashed in the following way:</p>
+<ol type="1">
+<li><p>Deparse the function with <strong>targets:::tar_deparse_safe().</strong> This function computes a string representation of the function body and arguments. This string representation is invariant to changes in comments and whitespace, which means trivial changes to formatting do not cue targets to rerun.</p></li>
+<li><p>Manually remove any literal pointers from the function string using targets:::mask_pointers(). Such pointers arise from inline compiled C/C++ functions.</p></li>
+<li><p>Using static code analysis (i.e.&nbsp;tar_deps(), which is based on codetools::findGlobals()) identify any user-defined functions and global objects that the current function depends on. Append the hashes of those dependencies to the string representation of the current function.</p></li>
+<li><p>Compute the hash of the final string representation using <strong>targets:::digest_chr64()</strong>.</p></li>
+</ol>
+</blockquote>
+<p>See that bit about <strong>deparsing</strong> the function in step 1. What does that look like for the <code>safe</code> versions?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">targets<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">tar_deparse_safe</span>(safe_by_hand)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "function (...) \ncapture_error(.f(...), otherwise, quiet)"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">targets<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">tar_deparse_safe</span>(safe_builtin)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "function (...) \ncapture_error(.f(...), otherwise, quiet)"</code></pre>
+</div>
+</div>
+<p>They have the same output! Now, I understand why the functions should look this way due to how they work, and I also understand why Will implemented the hashing of user defined functions this way as well. However, for our purposes, it makes things a teensy bit harder.</p>
+</section>
+<section id="better-functions" class="level2">
+<h2 class="anchored" data-anchor-id="better-functions">Better Functions</h2>
+<p>If we still want to use the magic of <code>safely</code> (and any likely some of the other <code>{purrr}</code> adverbs) while using <code>{targets}</code>, then we need to think about this problem a little more. One way to make sure that any changes to the function will be reflected in the hash is to embed the <code>safely</code> call <strong>within</strong> the function body.</p>
+<p>In the next two functions, we can see that we’ve done just that. Note that right now, we are concentrating on making functions that do the same thing, in a <em>safe</em> way, but their deparsed hash will be different.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">safe_by_hand_v2 <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb8-2">{</span>
+<span id="cb8-3">  internal_byhand <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb8-4">  {</span>
+<span id="cb8-5">    <span class="fu" style="color: #4758AB;">sum</span>(values) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">length</span>(values)</span>
+<span id="cb8-6">  }</span>
+<span id="cb8-7">  safe_internal <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">safely</span>(internal_byhand)</span>
+<span id="cb8-8">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb8-9">    <span class="fu" style="color: #4758AB;">safe_internal</span>(values)</span>
+<span id="cb8-10">  )</span>
+<span id="cb8-11">}</span>
+<span id="cb8-12"></span>
+<span id="cb8-13">safe_builtin_v2 <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb8-14">{</span>
+<span id="cb8-15">  safe_builtin <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">safely</span>(mean)</span>
+<span id="cb8-16">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb8-17">    <span class="fu" style="color: #4758AB;">safe_builtin</span>(values)</span>
+<span id="cb8-18">  )</span>
+<span id="cb8-19">}</span></code></pre></div>
+</div>
+</section>
+<section id="more-hashes" class="level2">
+<h2 class="anchored" data-anchor-id="more-hashes">More Hashes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">hash_values2 <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map</span>(<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"safe-by-hand-v2"</span> <span class="ot" style="color: #003B4F;">=</span> safe_by_hand_v2,</span>
+<span id="cb9-2">                           <span class="st" style="color: #20794D;">"safe-built-in-v2"</span> <span class="ot" style="color: #003B4F;">=</span> safe_builtin_v2),</span>
+<span id="cb9-3">                         <span class="cf" style="color: #003B4F;">function</span>(.x){</span>
+<span id="cb9-4">                           targets<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">tar_deparse_safe</span>(.x) <span class="sc" style="color: #5E5E5E;">|&gt;</span> targets<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">digest_chr64</span>()</span>
+<span id="cb9-5">                         })</span>
+<span id="cb9-6">hash_table2 <span class="ot" style="color: #003B4F;">=</span> tibble<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_tibble_row</span>(hash_values2) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb9-7">  tidyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pivot_longer</span>(<span class="at" style="color: #657422;">cols =</span> tidyselect<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">everything</span>(), <span class="at" style="color: #657422;">names_to =</span> <span class="st" style="color: #20794D;">"which"</span>, <span class="at" style="color: #657422;">values_to =</span> <span class="st" style="color: #20794D;">"hash"</span>)</span>
+<span id="cb9-8">gt<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">gt</span>(dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">bind_rows</span>(hash_table, hash_table2))</span></code></pre></div>
+<div class="cell-output-display">
+<div id="tbl-more-hashes" class="anchored">
+
+<div id="fkhsdumwip" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fkhsdumwip table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#fkhsdumwip thead, #fkhsdumwip tbody, #fkhsdumwip tfoot, #fkhsdumwip tr, #fkhsdumwip td, #fkhsdumwip th {
+  border-style: none;
+}
+
+#fkhsdumwip p {
+  margin: 0;
+  padding: 0;
+}
+
+#fkhsdumwip .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#fkhsdumwip .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fkhsdumwip .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fkhsdumwip .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fkhsdumwip .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fkhsdumwip .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fkhsdumwip .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fkhsdumwip .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fkhsdumwip .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#fkhsdumwip .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#fkhsdumwip .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fkhsdumwip .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fkhsdumwip .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fkhsdumwip .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fkhsdumwip .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fkhsdumwip .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#fkhsdumwip .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#fkhsdumwip .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#fkhsdumwip .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fkhsdumwip .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#fkhsdumwip .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fkhsdumwip .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fkhsdumwip .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fkhsdumwip .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fkhsdumwip .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fkhsdumwip .gt_left {
+  text-align: left;
+}
+
+#fkhsdumwip .gt_center {
+  text-align: center;
+}
+
+#fkhsdumwip .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fkhsdumwip .gt_font_normal {
+  font-weight: normal;
+}
+
+#fkhsdumwip .gt_font_bold {
+  font-weight: bold;
+}
+
+#fkhsdumwip .gt_font_italic {
+  font-style: italic;
+}
+
+#fkhsdumwip .gt_super {
+  font-size: 65%;
+}
+
+#fkhsdumwip .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#fkhsdumwip .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#fkhsdumwip .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#fkhsdumwip .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#fkhsdumwip .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#fkhsdumwip .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#fkhsdumwip .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false"><caption>Table&nbsp;2:  More hashes of the safe variants from the above functions. </caption>
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="which">which</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="hash">hash</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="which" class="gt_row gt_left">by-hand</td>
+<td headers="hash" class="gt_row gt_left">b3f5384d3554e21a</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">built-in</td>
+<td headers="hash" class="gt_row gt_left">35321f32205c905b</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">safe-by-hand</td>
+<td headers="hash" class="gt_row gt_left">00758262fad8ce25</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">safe-built-in</td>
+<td headers="hash" class="gt_row gt_left">00758262fad8ce25</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">safe-by-hand-v2</td>
+<td headers="hash" class="gt_row gt_left">8259616adc47b8cc</td></tr>
+    <tr><td headers="which" class="gt_row gt_left">safe-built-in-v2</td>
+<td headers="hash" class="gt_row gt_left">b35ae69ffbd4ec65</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+<p>As shown in Table&nbsp;2, now we see different hashes, even though our functions are <code>safe</code>, and generate the same results, as long as we don’t have any overflow or underflow issues.</p>
+</section>
+<section id="changing-the-referenced-function" class="level2">
+<h2 class="anchored" data-anchor-id="changing-the-referenced-function">Changing the Referenced Function</h2>
+<p>The <code>{targets}</code> documentation notes that it is also examining the dependent user defined functions and then concatenating the hashes together to check for changes to the overall set of functions being called. This is hard to show here in our simple post, but I’ve verified that it does indeed work for our specific case <span class="citation" data-cites="rmflightdiff">(Flight 2023)</span>.</p>
+<p>We can imagine this pair of functions to make a safe version:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">mean_function <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb10-2">{</span>
+<span id="cb10-3">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb10-4">    <span class="fu" style="color: #4758AB;">mean</span>(values)</span>
+<span id="cb10-5">  )</span>
+<span id="cb10-6">}</span>
+<span id="cb10-7"></span>
+<span id="cb10-8">safe_mean <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb10-9">{</span>
+<span id="cb10-10">  safe_version <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">safely</span>(mean_function)</span>
+<span id="cb10-11">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb10-12">    <span class="fu" style="color: #4758AB;">safe_version</span>(values)</span>
+<span id="cb10-13">  )</span>
+<span id="cb10-14">}</span></code></pre></div>
+</div>
+<p>If we change our <code>mean_function</code> to something different, <code>{targets}</code> will pick up the changes and change the hash accordingly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">mean_function <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb11-2">{</span>
+<span id="cb11-3">  <span class="fu" style="color: #4758AB;">return</span>(</span>
+<span id="cb11-4">    <span class="fu" style="color: #4758AB;">sum</span>(values) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">length</span>(values)</span>
+<span id="cb11-5">  )</span>
+<span id="cb11-6">}</span></code></pre></div>
+</div>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>If you want <code>{targets}</code> to pick up on changes to your functions, it helps to understand exactly how <code>{targets}</code> is generating hashable representations of your user defined functions, and what gets returned by them. Thankfully, it does not require much more in terms of lines of code to make sure that <code>{targets}</code> picks up on your changed function definition.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-rmflightdiff" class="csl-entry">
+Flight, Robert M. 2023. <span>“Diff of Two Commits in a Targets Workflow.”</span> <a href="https://fediscience.org/@neilstats/110312534619119343">https://fediscience.org/@neilstats/110312534619119343</a>.
+</div>
+<div id="ref-wlandautargets" class="csl-entry">
+Landau, William Michael. 2021. <span>“The Targets r Package: A Dynamic Make-Like Function-Oriented Pipeline Toolkit for Reproducibility and High-Performance Computing.”</span> <em>Journal of Open Source Software</em> 6 (57): 2959. <a href="https://doi.org/10.21105/joss.02959">https://doi.org/10.21105/joss.02959</a>.
+</div>
+<div id="ref-hadleypurrr" class="csl-entry">
+Wickham, Hadley, and Lionel Henry. 2023. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a>.
+</div>
+<div id="ref-neilpost" class="csl-entry">
+Wright, Neil. 2023. <span>“Neil Wright on Fedi Science.”</span> <a href="https://fediscience.org/@neilstats/110312534619119343">https://fediscience.org/@neilstats/110312534619119343</a>.
+</div>
+<div id="ref-yihuicache" class="csl-entry">
+Yihui Xie, Emily Riederer, Christophe Dervieux. 2022. <em>R Markdown Cookbook</em>. <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache.html">https://bookdown.org/yihui/rmarkdown-cookbook/cache.html</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
+  author = {Robert M Flight},
+  title = {Targets and {Safe} {Functions}},
+  date = {2023-05-08},
+  url = {https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2023" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2023. <span>“Targets and Safe Functions.”</span> May 8,
+2023. <a href="https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions">https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions</a>.
+</div></div></section></div> ]]></description>
+  <category>R</category>
+  <category>targets</category>
+  <category>workflow</category>
+  <category>purrr</category>
+  <guid>https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions/index.html</guid>
+  <pubDate>Mon, 08 May 2023 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Blog Posts as Email Newsletters</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -26,7 +1173,7 @@
 </section>
 <section id="a-newsletter-really" class="level2">
 <h2 class="anchored" data-anchor-id="a-newsletter-really">A Newsletter? Really?</h2>
-<p>OK, so hear me out. For some reason, if a newsletter shows up in my email inbox, I’m much more likely to read it. For example, I subscribe to Bob Rudis awesome Daily Drops <span class="citation" data-cites="dailydrop">(Rudis, n.d.)</span>, and they almost always get read right when they come in Let’s be honest, SubStack has definitely made email newsletters popular. However, while I’m interested in making my blog available to people in other ways, I’m not going to use something like SubStack’s platform to do it (Bob Rudis has frequently complained about the formatting options in the SubStack editor, for instance).</p>
+<p>OK, so hear me out. For some reason, if a newsletter shows up in my email inbox, I’m much more likely to read it. For example, I subscribe to Bob Rudis awesome Daily Drops <span class="citation" data-cites="dailydrop">(Rudis, n.d.)</span>, and they almost always get read right when they come in. Let’s be honest, SubStack has definitely made email newsletters popular. However, while I’m interested in making my blog available to people in other ways, I’m not going to use something like SubStack’s platform to do it (Bob Rudis has frequently complained about the formatting options in the SubStack editor, for instance).</p>
 </section>
 <section id="the-power-of-r-to-the-rescue" class="level2">
 <h2 class="anchored" data-anchor-id="the-power-of-r-to-the-rescue">The Power of R to the Rescue!</h2>
@@ -2378,163 +3525,6 @@ October 27, 2021. <a href="https://rmflight.github.io/posts/2021-10-27-r-cmd-che
   <category>random-code-snippets</category>
   <guid>https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html</guid>
   <pubDate>Wed, 27 Oct 2021 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>My Vacation in Barometric Pressure</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="the-what" class="level2">
-<h2 class="anchored" data-anchor-id="the-what">The What?</h2>
-<p>I recently took a proper vacation, that involved driving from Lexington, KY, USA to Digby, NS, Canada and all points in between. I also have an app, <a href="https://play.google.com/store/apps/details?id=net.hubalek.android.apps.barometer&amp;hl=en_US&amp;gl=US">Barometer Reborn</a>, on my phone that measures the air pressure every 15 minutes or so. This data is useful for someone who suffers from pressure induced migraines. I decided it would be interesting to examine the air pressure readings over the course of my vacation, given that we crossed an extremely wide variety of terrain (and weather) in our travels.</p>
-<p>So lets see what kinds of things we can see. A big caveat with this data is that we are essentially recording local pressure, a combination of pressure changes from both elevation and weather changes, as I don’t have the correction for elevation turned on. I think it will still be interesting to examine whats in here.</p>
-</section>
-<section id="load-data" class="level2">
-<h2 class="anchored" data-anchor-id="load-data">Load Data</h2>
-<p>I’ve previously uploaded data to Google Drive from my phone and downloaded it. Although it says “csv”, it turns out it’s actually tab-separated. I also do the conversion to a date-time format explicitly here, because it was easier than parsing the date format that the app uses.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(dplyr)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
-<span id="cb5-2"><span class="fu" style="color: #4758AB;">library</span>(ggforce)</span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;">theme_set</span>(cowplot<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_cowplot</span>())</span>
-<span id="cb5-4">barometer_readings <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">read.table</span>(here<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">here</span>(<span class="st" style="color: #20794D;">"data_files/barometer_2021-09-17.csv"</span>), <span class="at" style="color: #657422;">sep =</span> <span class="st" style="color: #20794D;">"</span><span class="sc" style="color: #5E5E5E;">\t</span><span class="st" style="color: #20794D;">"</span>, <span class="at" style="color: #657422;">header =</span> <span class="cn" style="color: #8f5902;">TRUE</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb5-5">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">pressure =</span> Pressure..mBar.,</span>
-<span id="cb5-6">                <span class="at" style="color: #657422;">datetime =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_datetime</span>(Timestamp..Unix.Time. <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">1000</span>, <span class="at" style="color: #657422;">tz =</span> <span class="st" style="color: #20794D;">"America/New_York"</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb5-7">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(datetime <span class="sc" style="color: #5E5E5E;">&gt;=</span> <span class="st" style="color: #20794D;">"2021-08-21"</span>, datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-15"</span>)</span></code></pre></div>
-</div>
-</section>
-<section id="initial-plot" class="level2">
-<h2 class="anchored" data-anchor-id="initial-plot">Initial Plot</h2>
-<p>We can plot the whole thing, with the pressure at sea level as well.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">ggplot</span>(barometer_readings, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> datetime,</span>
-<span id="cb6-2">                               <span class="at" style="color: #657422;">y =</span> pressure)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb6-3">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">1.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb6-4">  <span class="fu" style="color: #4758AB;">geom_hline</span>(<span class="at" style="color: #657422;">yintercept =</span> <span class="fl" style="color: #AD0000;">1013.25</span>, <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"red"</span>, <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">1.5</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb6-5">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Date"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Pressure (mBar)"</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/plot_them-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>This is kinda cool. At both ends it’s easy to see the passage there and back through the mountains (not big ones, but still)! It’s also easy to see that outside of those, I spent a lot of time near sea level, which is expected from Bangor, ME on.</p>
-</section>
-<section id="annotations" class="level2">
-<h2 class="anchored" data-anchor-id="annotations">Annotations</h2>
-<p>Let’s annotate it! We can come up with some simple annotations, like the driving sections, and then when we were in a location, and add those to the plot. The (1) and (2) labels are to keep from having weird plot artifacts appearing in the line plot.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">barometer_readings <span class="ot" style="color: #003B4F;">=</span> barometer_readings <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb7-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">location =</span></span>
-<span id="cb7-3">   dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">case_when</span>(</span>
-<span id="cb7-4">     </span>
-<span id="cb7-5">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-08-22 08:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Lexington - Bangor"</span>,</span>
-<span id="cb7-6">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-08-23 08:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Waiting on Covid Test"</span>,</span>
-<span id="cb7-7">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-08-23 19:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Bangor - Digby"</span>,</span>
-<span id="cb7-8">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-08-28 08:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Digby 1"</span>,</span>
-<span id="cb7-9">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-08-28 14:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Daytrip to Liverpool"</span>,</span>
-<span id="cb7-10">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-03 10:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Digby 2"</span>,</span>
-<span id="cb7-11">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-03 16:30"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Digby - Burton"</span>,</span>
-<span id="cb7-12">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-08 09:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Burton 1"</span>,</span>
-<span id="cb7-13">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-08 20:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Daytrip to Moncton"</span>,</span>
-<span id="cb7-14">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-13 08:00"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Burton 2"</span>,</span>
-<span id="cb7-15">     datetime <span class="sc" style="color: #5E5E5E;">&lt;=</span> <span class="st" style="color: #20794D;">"2021-09-15"</span> <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"Burton - Lexington"</span></span>
-<span id="cb7-16">   ),</span>
-<span id="cb7-17">   <span class="at" style="color: #657422;">day =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_date</span>(datetime))</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">big_plot <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">ggplot</span>(barometer_readings, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> datetime, <span class="at" style="color: #657422;">y =</span> pressure, <span class="at" style="color: #657422;">color =</span> location)) <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb8-2">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">1.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-3">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fl" style="color: #AD0000;">0.2</span>, <span class="fl" style="color: #AD0000;">0.3</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb8-4">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Date"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Pressure (mBar)"</span>)</span>
-<span id="cb8-5">big_plot</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/plot_full-1.png" class="img-fluid" width="768"></p>
-</div>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">big_plot2 <span class="ot" style="color: #003B4F;">=</span> big_plot <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"none"</span>)</span></code></pre></div>
-</div>
-<p>We can plot some of these as subsets and zoom in on them.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">big_plot2 <span class="sc" style="color: #5E5E5E;">+</span> </span>
-<span id="cb10-2">  <span class="fu" style="color: #4758AB;">facet_zoom</span>(<span class="at" style="color: #657422;">x =</span> location <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Lexington - Bangor"</span>, <span class="st" style="color: #20794D;">"Waiting on Covid Test"</span>, <span class="st" style="color: #20794D;">"Bangor - Digby"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb10-3">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Going from Lexington to Bangor, awaiting test results, and then driving to Digby."</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/section1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">big_plot2 <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb11-2">  <span class="fu" style="color: #4758AB;">facet_zoom</span>(<span class="at" style="color: #657422;">x =</span> location <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Digby 1"</span>, <span class="st" style="color: #20794D;">"Daytrip to Liverpool"</span>, <span class="st" style="color: #20794D;">"Digby 2"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb11-3">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Digby, with a trip across land to Liverpool."</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/section2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">big_plot2 <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb12-2">  <span class="fu" style="color: #4758AB;">facet_zoom</span>(<span class="at" style="color: #657422;">x =</span> location <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Digby - Burton"</span>, <span class="st" style="color: #20794D;">"Burton 1"</span>, <span class="st" style="color: #20794D;">"Daytrip to Moncton"</span>, <span class="st" style="color: #20794D;">"Burton 2"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb12-3">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Traveling from Digby to Burton, a daytrip to Moncton, and remainder in Burton."</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/section3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>You can actually see towards the tail end of our stay in Burton, the big increase in local pressure from a high-front that gave me a massive migraine and kept me home from activities with the family. Thankfully that was the only one.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">big_plot2 <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-2">  <span class="fu" style="color: #4758AB;">facet_zoom</span>(<span class="at" style="color: #657422;">x =</span> <span class="fu" style="color: #4758AB;">as.character</span>(day) <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"2021-09-10"</span>, <span class="st" style="color: #20794D;">"2021-09-11"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-3">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Migraine day, stayed home."</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/migraine-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">big_plot2 <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-2">  <span class="fu" style="color: #4758AB;">facet_zoom</span>(<span class="at" style="color: #657422;">x =</span> location <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"Burton - Lexington"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-3">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Traveling home to Lexington from Burton over 2 days."</span>)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index_files/figure-html/section4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="conclusions" class="level2">
-<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
-<p>I dunno, honestly. This would probably be more interesting if it was one or the other of changes due to altitude, or due to changes in the weather with an adjustment for the altitude. Many of the dips are due to changes occurring because of a change in altitude, with the biggest ones noted as we drove through the Appalachian mountains.</p>
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {My {Vacation} in {Barometric} {Pressure}},
-  date = {2021-09-20},
-  url = {https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“My Vacation in Barometric
-Pressure.”</span> September 20, 2021. <a href="https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure">https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure</a>.
-</div></div></section></div> ]]></description>
-  <category>graphing</category>
-  <category>maps</category>
-  <category>visualization</category>
-  <guid>https://rmflight.github.io/posts/2021-09-20-my-vacation-in-barometric-pressure/index.html</guid>
-  <pubDate>Mon, 20 Sep 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
