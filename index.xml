@@ -10,7 +10,471 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Mon, 08 May 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 29 May 2023 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Fast Kendall-tau Correlation with Rcpp</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>Check out our <code>{ICIKendallTau}</code> R package if you want access to a fast version of Kendall-tau correlation in R <span class="citation" data-cites="iciktflight">(Robert M. Flight and Moseley 2022b)</span> with only a few dependencies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># remotes::install_github("moseleybioinformaticslab/icikendalltau)</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;"># install.packages("microbenchmark")</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(ICIKendallTau)</span></code></pre></div>
+</div>
+</section>
+<section id="kendall-tau" class="level2">
+<h2 class="anchored" data-anchor-id="kendall-tau">Kendall Tau??</h2>
+<p>Yes, Kendall-tau correlation! It is a rank based correlation based on the number of concordant and discordant <strong>pairs</strong> of points. This graphic from Wikipedia explains it really well <span class="citation" data-cites="kendallwikipedia">(Wikipedia, n.d.)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">knitr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">include_graphics</span>(<span class="st" style="color: #20794D;">"Concordant_Points_Kendall_Correlation.svg"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-wikipedia-points" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp/Concordant_Points_Kendall_Correlation.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: All points in the gray area are concordant and all points in the white area are discordant with respect to point X1, Y1. With n = 30 points, there are a total of 435 possible point pairs. In this example there are 395 concordant point pairs and 40 discordant point pairs, leading to a Kendall rank correlation coefficient of 0.816. <span class="citation" data-cites="kendallfigure">(Retodomax 2021)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is a really useful correlation to use if you don’t want to have to worry about how linearly related things are, just whether the points from two samples go in the same direction or not. In addition, we think there is a neat variant we can make to incorporate the presence of missing values when they are missing not at random, and we have a preprint on that that I am working on revising <span class="citation" data-cites="flightInformationContentInformedKendalltauCorrelation2022a">(Robert M. Flight, Bhatt, and Moseley 2022)</span>.</p>
+</section>
+<section id="need-for-speed" class="level2">
+<h2 class="anchored" data-anchor-id="need-for-speed">Need for Speed!</h2>
+<p>However, there is an issue with the basic Kendall-tau algorithm. It is slower than molasses going uphill in January (as my parents used to say). Especially as we increase to correlations calculated using tens of thousands of features in both <em>x</em> and <em>y</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">x_large <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10000</span>)</span>
+<span id="cb3-2">y_large <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10000</span>)</span>
+<span id="cb3-3">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x_large, y_large, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb3-4">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: seconds
+                                      expr      min       lq     mean   median
+ cor(x_large, y_large, method = "kendall") 1.086599 1.104935 1.146724 1.127946
+       uq      max neval
+ 1.137544 1.417044    20</code></pre>
+</div>
+</div>
+<p>That took a full second! And the size of things we frequently want to calculate for eukaryotic based transcriptomics are 2X - 4X that size, and across many, many samples.</p>
+<p>So if we can speed it up, that would be awesome.</p>
+<p>I will note through all of this work, that I’ve already been through this once in the development of our <code>{ICIKendallTau}</code> package, so I already know the answer. However, I felt it would be useful to work through all of this again to help others who might be looking at similar types of problems. And yes, some of the below code seems silly, but they are first stabs at an implementation.</p>
+</section>
+<section id="differences-of-signs" class="level2">
+<h2 class="anchored" data-anchor-id="differences-of-signs">Differences of Signs</h2>
+<p>The simplest way to find the concordant and discordant pairs is to generate all the possible pair indices of the points, and then compare their directions; the same direction of a pair in both X and Y means they are concordant, and different directions means they are discordant.</p>
+<p>And in fact, that is exactly what is happening in the C code for R’s covariance / correlation code, iterating over each pair of points (<code>k</code> and <code>n1</code>; snippet shown here from lines 108 - 118 of file src/library/stats/src/cov.c in R-4.3.0).</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><span class="cf" style="color: #003B4F;">else</span> <span class="op" style="color: #5E5E5E;">{</span> <span class="co" style="color: #5E5E5E;">/* Kendall's tau */</span>                      \</span>
+<span id="cb5-2">    <span class="cf" style="color: #003B4F;">for</span><span class="op" style="color: #5E5E5E;">(</span>n1<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">0</span> <span class="op" style="color: #5E5E5E;">;</span> n1 <span class="op" style="color: #5E5E5E;">&lt;</span> k <span class="op" style="color: #5E5E5E;">;</span> n1<span class="op" style="color: #5E5E5E;">++)</span>                   \</span>
+<span id="cb5-3">        <span class="cf" style="color: #003B4F;">if</span><span class="op" style="color: #5E5E5E;">(!(</span>ISNAN<span class="op" style="color: #5E5E5E;">(</span>xx<span class="op" style="color: #5E5E5E;">[</span>n1<span class="op" style="color: #5E5E5E;">])</span> <span class="op" style="color: #5E5E5E;">||</span> ISNAN<span class="op" style="color: #5E5E5E;">(</span>yy<span class="op" style="color: #5E5E5E;">[</span>n1<span class="op" style="color: #5E5E5E;">])))</span> <span class="op" style="color: #5E5E5E;">{</span> \</span>
+<span id="cb5-4">            xm <span class="op" style="color: #5E5E5E;">=</span> sign<span class="op" style="color: #5E5E5E;">(</span>xx<span class="op" style="color: #5E5E5E;">[</span>k<span class="op" style="color: #5E5E5E;">]</span> <span class="op" style="color: #5E5E5E;">-</span> xx<span class="op" style="color: #5E5E5E;">[</span>n1<span class="op" style="color: #5E5E5E;">]);</span>          \</span>
+<span id="cb5-5">            ym <span class="op" style="color: #5E5E5E;">=</span> sign<span class="op" style="color: #5E5E5E;">(</span>yy<span class="op" style="color: #5E5E5E;">[</span>k<span class="op" style="color: #5E5E5E;">]</span> <span class="op" style="color: #5E5E5E;">-</span> yy<span class="op" style="color: #5E5E5E;">[</span>n1<span class="op" style="color: #5E5E5E;">]);</span>          \</span>
+<span id="cb5-6">                                                \</span>
+<span id="cb5-7">            COV_SUM_UPDATE                      \</span>
+<span id="cb5-8">        <span class="op" style="color: #5E5E5E;">}</span>                                       \</span>
+<span id="cb5-9"><span class="op" style="color: #5E5E5E;">}</span>                                               \</span></code></pre></div>
+<section id="r-based-copy-all-pairs" class="level3">
+<h3 class="anchored" data-anchor-id="r-based-copy-all-pairs">R Based, Copy All Pairs</h3>
+<p>What can we do in R that is similar? We can generate all the pairwise indices, create actual vectors, and then get the signs of the differences maybe?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">reference_ici <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x, y)</span>
+<span id="cb6-2">{</span>
+<span id="cb6-3">  n_x <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(x)</span>
+<span id="cb6-4">  n_y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(y)</span>
+<span id="cb6-5">  pairs <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">combn</span>(n_x, <span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb6-6">  x_pairs <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rbind</span>(x[pairs[<span class="dv" style="color: #AD0000;">1</span>, ]],</span>
+<span id="cb6-7">                  x[pairs[<span class="dv" style="color: #AD0000;">2</span>, ]])</span>
+<span id="cb6-8">  y_pairs <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rbind</span>(y[pairs[<span class="dv" style="color: #AD0000;">1</span>, ]],</span>
+<span id="cb6-9">                  y[pairs[<span class="dv" style="color: #AD0000;">2</span>, ]])</span>
+<span id="cb6-10">  x_sign <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sign</span>(x_pairs[<span class="dv" style="color: #AD0000;">1</span>, ] <span class="sc" style="color: #5E5E5E;">-</span> x_pairs[<span class="dv" style="color: #AD0000;">2</span>, ])</span>
+<span id="cb6-11">  y_sign <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sign</span>(y_pairs[<span class="dv" style="color: #AD0000;">1</span>, ] <span class="sc" style="color: #5E5E5E;">-</span> y_pairs[<span class="dv" style="color: #AD0000;">2</span>, ])</span>
+<span id="cb6-12">  x_y_sign <span class="ot" style="color: #003B4F;">=</span> x_sign <span class="sc" style="color: #5E5E5E;">*</span> y_sign</span>
+<span id="cb6-13">  sum_concordant <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(x_y_sign <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">0</span>)</span>
+<span id="cb6-14">  sum_discordant <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(x_y_sign <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="dv" style="color: #AD0000;">0</span>)</span>
+<span id="cb6-15">  </span>
+<span id="cb6-16">  x_is_dup <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">duplicated</span>(x)</span>
+<span id="cb6-17">  x_dup <span class="ot" style="color: #003B4F;">=</span> x[x_is_dup]</span>
+<span id="cb6-18">  x_tied_values_t1 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">table</span>(x_dup) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>;</span>
+<span id="cb6-19">  y_is_dup <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">duplicated</span>(y)</span>
+<span id="cb6-20">  y_dup <span class="ot" style="color: #003B4F;">=</span> y[y_is_dup]</span>
+<span id="cb6-21">  y_tied_values_t2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">table</span>(y_dup) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb6-22">  </span>
+<span id="cb6-23">  x_tied_sum_t1 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(x_tied_values_t1 <span class="sc" style="color: #5E5E5E;">*</span> (x_tied_values_t1 <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb6-24">  y_tied_sum_t2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(y_tied_values_t2 <span class="sc" style="color: #5E5E5E;">*</span> (y_tied_values_t2 <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb6-25">  t_0 <span class="ot" style="color: #003B4F;">=</span> n_x <span class="sc" style="color: #5E5E5E;">*</span> (n_x <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb6-26">  </span>
+<span id="cb6-27">  k_denominator <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sqrt</span>((t_0 <span class="sc" style="color: #5E5E5E;">-</span> x_tied_sum_t1) <span class="sc" style="color: #5E5E5E;">*</span> (t_0 <span class="sc" style="color: #5E5E5E;">-</span> y_tied_sum_t2))</span>
+<span id="cb6-28">  k_numerator <span class="ot" style="color: #003B4F;">=</span> sum_concordant <span class="sc" style="color: #5E5E5E;">-</span> sum_discordant</span>
+<span id="cb6-29">  </span>
+<span id="cb6-30">  k_tau <span class="ot" style="color: #003B4F;">=</span> k_numerator <span class="sc" style="color: #5E5E5E;">/</span> k_denominator</span>
+<span id="cb6-31">  </span>
+<span id="cb6-32">  k_tau</span>
+<span id="cb6-33">}</span></code></pre></div>
+</div>
+<p>Let’s see how long this takes as a baseline, and how it compares to the <code>{stats::cor}</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
+<span id="cb7-2">x <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">1000</span>)</span>
+<span id="cb7-3">y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">1000</span>)</span>
+<span id="cb7-4">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x, y, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb7-5">                               <span class="fu" style="color: #4758AB;">reference_ici</span>(x, y),</span>
+<span id="cb7-6">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: milliseconds
+                          expr       min        lq      mean    median
+ cor(x, y, method = "kendall")  11.44744  12.47315  12.84324  13.07735
+           reference_ici(x, y) 351.74901 368.20867 392.19704 387.35215
+        uq       max neval
+  13.28316  13.63687    20
+ 417.69942 432.55782    20</code></pre>
+</div>
+</div>
+<p>Not so great. Not that surprising, given the main correlation algorithm in R is written in C. Let’s see if we can speed that up. Although our code <strong>seems</strong> vectorized here, there is significant time taken in creating the large matrices to hold the pair indices, and then create the pairs themselves. Therefore, if we can avoid the creation of those large matrices, we can probably improve the speed.</p>
+</section>
+<section id="r-based-increment-count" class="level3">
+<h3 class="anchored" data-anchor-id="r-based-increment-count">R Based, Increment Count</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">iterators_ici <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x, y)</span>
+<span id="cb9-2">{</span>
+<span id="cb9-3">  n_entry <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(x)</span>
+<span id="cb9-4">  sum_concordant <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb9-5">  sum_discordant <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb9-6">  <span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">1</span>, n_entry <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) {</span>
+<span id="cb9-7">    <span class="cf" style="color: #003B4F;">for</span> (j <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq</span>(i <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>, n_entry)) {</span>
+<span id="cb9-8">      sum_concordant <span class="ot" style="color: #003B4F;">=</span> sum_concordant <span class="sc" style="color: #5E5E5E;">+</span>  ((<span class="fu" style="color: #4758AB;">sign</span>(x[i] <span class="sc" style="color: #5E5E5E;">-</span> x[j]) <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">sign</span>(y[i] <span class="sc" style="color: #5E5E5E;">-</span> y[j])) <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">0</span>)</span>
+<span id="cb9-9">      sum_discordant <span class="ot" style="color: #003B4F;">=</span> sum_discordant <span class="sc" style="color: #5E5E5E;">+</span> ((<span class="fu" style="color: #4758AB;">sign</span>(x[i] <span class="sc" style="color: #5E5E5E;">-</span> x[j]) <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">sign</span>(y[i] <span class="sc" style="color: #5E5E5E;">-</span> y[j])) <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="dv" style="color: #AD0000;">0</span>)</span>
+<span id="cb9-10">    }</span>
+<span id="cb9-11">  }</span>
+<span id="cb9-12">  k_numerator <span class="ot" style="color: #003B4F;">=</span> sum_concordant <span class="sc" style="color: #5E5E5E;">-</span> sum_discordant</span>
+<span id="cb9-13">  </span>
+<span id="cb9-14">  x_is_dup <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">duplicated</span>(x)</span>
+<span id="cb9-15">  x_dup <span class="ot" style="color: #003B4F;">=</span> x[x_is_dup]</span>
+<span id="cb9-16">  x_tied_values_t1 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">table</span>(x_dup) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>;</span>
+<span id="cb9-17">  y_is_dup <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">duplicated</span>(y)</span>
+<span id="cb9-18">  y_dup <span class="ot" style="color: #003B4F;">=</span> y[y_is_dup]</span>
+<span id="cb9-19">  y_tied_values_t2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">table</span>(y_dup) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb9-20">  </span>
+<span id="cb9-21">  x_tied_sum_t1 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(x_tied_values_t1 <span class="sc" style="color: #5E5E5E;">*</span> (x_tied_values_t1 <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb9-22">  y_tied_sum_t2 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(y_tied_values_t2 <span class="sc" style="color: #5E5E5E;">*</span> (y_tied_values_t2 <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb9-23">  t_0 <span class="ot" style="color: #003B4F;">=</span> n_entry <span class="sc" style="color: #5E5E5E;">*</span> (n_entry <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb9-24">  </span>
+<span id="cb9-25">  k_denominator <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sqrt</span>((t_0 <span class="sc" style="color: #5E5E5E;">-</span> x_tied_sum_t1) <span class="sc" style="color: #5E5E5E;">*</span> (t_0 <span class="sc" style="color: #5E5E5E;">-</span> y_tied_sum_t2))</span>
+<span id="cb9-26">  k_numerator <span class="ot" style="color: #003B4F;">=</span> sum_concordant <span class="sc" style="color: #5E5E5E;">-</span> sum_discordant</span>
+<span id="cb9-27">  </span>
+<span id="cb9-28">  k_tau <span class="ot" style="color: #003B4F;">=</span> k_numerator <span class="sc" style="color: #5E5E5E;">/</span> k_denominator</span>
+<span id="cb9-29">  </span>
+<span id="cb9-30">  k_tau</span>
+<span id="cb9-31">}</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x, y, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb10-2">                               <span class="fu" style="color: #4758AB;">reference_ici</span>(x, y),</span>
+<span id="cb10-3">                               <span class="fu" style="color: #4758AB;">iterators_ici</span>(x, y),</span>
+<span id="cb10-4">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: milliseconds
+                          expr       min        lq      mean    median
+ cor(x, y, method = "kendall")  11.55812  12.49837  12.83441  12.69495
+           reference_ici(x, y) 357.29120 371.24522 387.07048 378.65192
+           iterators_ici(x, y) 279.28479 283.04712 289.51380 284.79317
+        uq       max neval
+  13.19846  14.45556    20
+ 403.50524 438.96896    20
+ 290.43204 335.47143    20</code></pre>
+</div>
+</div>
+<p>Allright! We’ve got some decent improvement over our base attempt. We also know, thanks to the SciPy project, that there is a better way to do get the number of concordant and discordant pairs (which is what we use in <code>{ICIKendallTau}</code>). Let’s see if we can manage that in pure R, and see if it helps us out any.</p>
+</section>
+<section id="r-based-sort" class="level3">
+<h3 class="anchored" data-anchor-id="r-based-sort">R Based, Sort</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">sort_ici <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x, y)</span>
+<span id="cb12-2">{</span>
+<span id="cb12-3"></span>
+<span id="cb12-4">  get_sort <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(values)</span>
+<span id="cb12-5">  {</span>
+<span id="cb12-6">    value_order <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">order</span>(values, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"radix"</span>)</span>
+<span id="cb12-7">  }</span>
+<span id="cb12-8">  </span>
+<span id="cb12-9">  compare_self <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x){</span>
+<span id="cb12-10">    n_entry <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(x)</span>
+<span id="cb12-11">    match_self <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"integer"</span>, n_entry)</span>
+<span id="cb12-12">    match_self[<span class="dv" style="color: #AD0000;">1</span>] <span class="ot" style="color: #003B4F;">=</span> 1L</span>
+<span id="cb12-13">  </span>
+<span id="cb12-14">    idx <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb12-15">  </span>
+<span id="cb12-16">    <span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">2</span>, n_entry)) {</span>
+<span id="cb12-17">      <span class="cf" style="color: #003B4F;">if</span> (x[i] <span class="sc" style="color: #5E5E5E;">!=</span> x[(i <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)]) {</span>
+<span id="cb12-18">        match_self[idx] <span class="ot" style="color: #003B4F;">=</span> 1L;</span>
+<span id="cb12-19">      } <span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb12-20">        match_self[idx] <span class="ot" style="color: #003B4F;">=</span> 0L;</span>
+<span id="cb12-21">      }</span>
+<span id="cb12-22">      idx <span class="ot" style="color: #003B4F;">=</span> idx <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-23">    }</span>
+<span id="cb12-24">    <span class="fu" style="color: #4758AB;">return</span>(match_self)</span>
+<span id="cb12-25">  }</span>
+<span id="cb12-26">  </span>
+<span id="cb12-27">  compare_both <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x, y)</span>
+<span id="cb12-28">  {</span>
+<span id="cb12-29">    n_entry <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(x)</span>
+<span id="cb12-30">    match_self <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"integer"</span>, n_entry <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb12-31">    match_self[<span class="dv" style="color: #AD0000;">1</span>] <span class="ot" style="color: #003B4F;">=</span> 1L</span>
+<span id="cb12-32">    </span>
+<span id="cb12-33">    idx <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb12-34">    </span>
+<span id="cb12-35">    <span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">2</span>, n_entry)) {</span>
+<span id="cb12-36">      <span class="cf" style="color: #003B4F;">if</span> ((x[i] <span class="sc" style="color: #5E5E5E;">!=</span> x[(i <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)]) <span class="sc" style="color: #5E5E5E;">||</span> (y[i] <span class="sc" style="color: #5E5E5E;">!=</span> y[(i <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)])) {</span>
+<span id="cb12-37">        match_self[idx] <span class="ot" style="color: #003B4F;">=</span> 1L</span>
+<span id="cb12-38">      } <span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb12-39">        match_self[idx] <span class="ot" style="color: #003B4F;">=</span> 0L</span>
+<span id="cb12-40">      }</span>
+<span id="cb12-41">      idx <span class="ot" style="color: #003B4F;">=</span> idx <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-42">    }</span>
+<span id="cb12-43">    match_self[n_entry <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>] <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-44">    <span class="fu" style="color: #4758AB;">return</span>(match_self)</span>
+<span id="cb12-45">  }</span>
+<span id="cb12-46"></span>
+<span id="cb12-47">  count_rank_tie <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(ranks)</span>
+<span id="cb12-48">  {</span>
+<span id="cb12-49">  </span>
+<span id="cb12-50">    dup_ranks <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">duplicated</span>(ranks)</span>
+<span id="cb12-51">    ranks2 <span class="ot" style="color: #003B4F;">=</span> ranks[dup_ranks]</span>
+<span id="cb12-52">    number_tied <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">table</span>(ranks2) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-53">    </span>
+<span id="cb12-54">    <span class="fu" style="color: #4758AB;">return</span>(<span class="fu" style="color: #4758AB;">list</span>(<span class="at" style="color: #657422;">ntie =</span> <span class="fu" style="color: #4758AB;">sum</span>(number_tied <span class="sc" style="color: #5E5E5E;">*</span> (number_tied <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
+<span id="cb12-55">                <span class="at" style="color: #657422;">t0 =</span> <span class="fu" style="color: #4758AB;">sum</span>(number_tied <span class="sc" style="color: #5E5E5E;">*</span> (number_tied <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">*</span> (number_tied <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
+<span id="cb12-56">                <span class="at" style="color: #657422;">t1 =</span> <span class="fu" style="color: #4758AB;">sum</span>(number_tied <span class="sc" style="color: #5E5E5E;">*</span> (number_tied <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">*</span> (<span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">*</span> number_tied <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">5</span>))))</span>
+<span id="cb12-57">  }</span>
+<span id="cb12-58">  </span>
+<span id="cb12-59">  which_notzero <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x){</span>
+<span id="cb12-60">    notzero <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"integer"</span>, <span class="fu" style="color: #4758AB;">length</span>(x))</span>
+<span id="cb12-61">    idx <span class="ot" style="color: #003B4F;">=</span> 1L</span>
+<span id="cb12-62">    </span>
+<span id="cb12-63">    <span class="cf" style="color: #003B4F;">for</span> (i <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">1</span>, <span class="fu" style="color: #4758AB;">length</span>(x))) {</span>
+<span id="cb12-64">      <span class="cf" style="color: #003B4F;">if</span> (x[i] <span class="sc" style="color: #5E5E5E;">!=</span> <span class="dv" style="color: #AD0000;">0</span>) {</span>
+<span id="cb12-65">        notzero[idx] <span class="ot" style="color: #003B4F;">=</span> i <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-66">        idx <span class="ot" style="color: #003B4F;">=</span> idx <span class="sc" style="color: #5E5E5E;">+</span> 1L</span>
+<span id="cb12-67">      }</span>
+<span id="cb12-68">    }</span>
+<span id="cb12-69">    keep_loc <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">1</span>, idx <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb12-70">    notzero <span class="ot" style="color: #003B4F;">=</span> notzero[keep_loc]</span>
+<span id="cb12-71">    <span class="fu" style="color: #4758AB;">return</span>(notzero)</span>
+<span id="cb12-72">  }</span>
+<span id="cb12-73">  </span>
+<span id="cb12-74">  kendall_discordant <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(x, y){</span>
+<span id="cb12-75">    <span class="co" style="color: #5E5E5E;">#x = x4</span></span>
+<span id="cb12-76">    <span class="co" style="color: #5E5E5E;">#y = y4</span></span>
+<span id="cb12-77">    sup <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">max</span>(y)</span>
+<span id="cb12-78">    </span>
+<span id="cb12-79">    arr <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"integer"</span>, sup)</span>
+<span id="cb12-80">    i <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb12-81">    k <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb12-82">    n <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(x)</span>
+<span id="cb12-83">    idx <span class="ot" style="color: #003B4F;">=</span> 1L</span>
+<span id="cb12-84">    dis <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb12-85">    </span>
+<span id="cb12-86">    <span class="cf" style="color: #003B4F;">while</span> (i <span class="sc" style="color: #5E5E5E;">&lt;</span> n) {</span>
+<span id="cb12-87">      <span class="cf" style="color: #003B4F;">while</span> ((k <span class="sc" style="color: #5E5E5E;">&lt;</span> n) <span class="sc" style="color: #5E5E5E;">&amp;&amp;</span> (x[i <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>] <span class="sc" style="color: #5E5E5E;">==</span> x[k <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>])) {</span>
+<span id="cb12-88">        dis <span class="ot" style="color: #003B4F;">=</span> dis <span class="sc" style="color: #5E5E5E;">+</span> i</span>
+<span id="cb12-89">        idx <span class="ot" style="color: #003B4F;">=</span> y[k <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb12-90">        <span class="cf" style="color: #003B4F;">while</span> (idx <span class="sc" style="color: #5E5E5E;">!=</span> <span class="dv" style="color: #AD0000;">0</span>) {</span>
+<span id="cb12-91">          dis <span class="ot" style="color: #003B4F;">=</span> dis <span class="sc" style="color: #5E5E5E;">-</span> arr[idx <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb12-92">          idx <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">bitwAnd</span>(idx, idx <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb12-93">        }</span>
+<span id="cb12-94">        k <span class="ot" style="color: #003B4F;">=</span> k <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-95">      }</span>
+<span id="cb12-96">      <span class="cf" style="color: #003B4F;">while</span> (i <span class="sc" style="color: #5E5E5E;">&lt;</span> k) {</span>
+<span id="cb12-97">        idx <span class="ot" style="color: #003B4F;">=</span> y[i <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb12-98">        <span class="cf" style="color: #003B4F;">while</span> (idx <span class="sc" style="color: #5E5E5E;">&lt;</span> sup) {</span>
+<span id="cb12-99">          arr[idx <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>] <span class="ot" style="color: #003B4F;">=</span> arr[idx <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>] <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-100">          idx <span class="ot" style="color: #003B4F;">=</span> idx <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">bitwAnd</span>(idx, (<span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">*</span>idx))</span>
+<span id="cb12-101">        }</span>
+<span id="cb12-102">        i <span class="ot" style="color: #003B4F;">=</span> i <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-103">      }</span>
+<span id="cb12-104">    }</span>
+<span id="cb12-105">    dis</span>
+<span id="cb12-106">  }</span>
+<span id="cb12-107"></span>
+<span id="cb12-108"></span>
+<span id="cb12-109">  n_entry <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">length</span>(x)</span>
+<span id="cb12-110">  perm_y <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">get_sort</span>(y)</span>
+<span id="cb12-111">  x <span class="ot" style="color: #003B4F;">=</span> x[perm_y]</span>
+<span id="cb12-112">  y <span class="ot" style="color: #003B4F;">=</span> y[perm_y]</span>
+<span id="cb12-113">  y3 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">compare_self</span>(y)</span>
+<span id="cb12-114">  y4 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">cumsum</span>(y3)</span>
+<span id="cb12-115">  </span>
+<span id="cb12-116">  perm_x <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">get_sort</span>(x);</span>
+<span id="cb12-117">  x <span class="ot" style="color: #003B4F;">=</span> x[perm_x]</span>
+<span id="cb12-118">  y4 <span class="ot" style="color: #003B4F;">=</span> y4[perm_x]</span>
+<span id="cb12-119">  x3 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">compare_self</span>(x)</span>
+<span id="cb12-120">  x4 <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">cumsum</span>(x3)</span>
+<span id="cb12-121">  </span>
+<span id="cb12-122">  obs <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">compare_both</span>(x4, y4)</span>
+<span id="cb12-123">  sum_obs <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>(obs)</span>
+<span id="cb12-124">  cnt <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">diff</span>(<span class="fu" style="color: #4758AB;">which_notzero</span>(obs))</span>
+<span id="cb12-125">  dis <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">kendall_discordant</span>(x4, y4)</span>
+<span id="cb12-126">  </span>
+<span id="cb12-127">  ntie <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sum</span>((cnt <span class="sc" style="color: #5E5E5E;">*</span> (cnt <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb12-128">  x_counts <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">count_rank_tie</span>(x4)</span>
+<span id="cb12-129">  xtie <span class="ot" style="color: #003B4F;">=</span> x_counts[[<span class="dv" style="color: #AD0000;">1</span>]]</span>
+<span id="cb12-130">  x0 <span class="ot" style="color: #003B4F;">=</span> x_counts[[<span class="dv" style="color: #AD0000;">2</span>]]</span>
+<span id="cb12-131">  x1 <span class="ot" style="color: #003B4F;">=</span> x_counts[[<span class="dv" style="color: #AD0000;">3</span>]]</span>
+<span id="cb12-132">  </span>
+<span id="cb12-133">  y_counts <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">count_rank_tie</span>(y4)</span>
+<span id="cb12-134">  ytie <span class="ot" style="color: #003B4F;">=</span> y_counts[[<span class="dv" style="color: #AD0000;">1</span>]]</span>
+<span id="cb12-135">  y0 <span class="ot" style="color: #003B4F;">=</span> y_counts[[<span class="dv" style="color: #AD0000;">2</span>]]</span>
+<span id="cb12-136">  y1 <span class="ot" style="color: #003B4F;">=</span> y_counts[[<span class="dv" style="color: #AD0000;">3</span>]]</span>
+<span id="cb12-137">  </span>
+<span id="cb12-138">  tot <span class="ot" style="color: #003B4F;">=</span> (n_entry <span class="sc" style="color: #5E5E5E;">*</span> (n_entry <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb12-139">  con_minus_dis <span class="ot" style="color: #003B4F;">=</span> tot <span class="sc" style="color: #5E5E5E;">-</span> xtie <span class="sc" style="color: #5E5E5E;">-</span> ytie <span class="sc" style="color: #5E5E5E;">+</span> ntie <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">2</span> <span class="sc" style="color: #5E5E5E;">*</span> dis</span>
+<span id="cb12-140">  tau <span class="ot" style="color: #003B4F;">=</span> con_minus_dis <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">sqrt</span>((tot <span class="sc" style="color: #5E5E5E;">-</span> xtie) <span class="sc" style="color: #5E5E5E;">*</span> (tot <span class="sc" style="color: #5E5E5E;">-</span> ytie))</span>
+<span id="cb12-141">  <span class="fu" style="color: #4758AB;">return</span>(tau)</span>
+<span id="cb12-142">}</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x, y, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb13-2">                               <span class="fu" style="color: #4758AB;">reference_ici</span>(x, y),</span>
+<span id="cb13-3">                               <span class="fu" style="color: #4758AB;">iterators_ici</span>(x, y),</span>
+<span id="cb13-4">                               <span class="fu" style="color: #4758AB;">sort_ici</span>(x, y),</span>
+<span id="cb13-5">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: milliseconds
+                          expr        min        lq      mean     median
+ cor(x, y, method = "kendall")  11.709530  12.33871  12.63373  12.488732
+           reference_ici(x, y) 355.224637 367.46692 387.70370 374.809739
+           iterators_ici(x, y) 273.673038 276.02535 280.80801 281.919287
+                sort_ici(x, y)   8.760096   8.98937  13.48845   9.395173
+        uq       max neval
+  12.87524  14.06242    20
+ 421.60254 441.29727    20
+ 283.32639 289.62743    20
+  10.02100  87.38422    20</code></pre>
+</div>
+</div>
+<p>So, I thought I could implement the sorting method in R, and it would help. It helps, in that it looks like it gets back to C speed, in R. Which isn’t bad, but still isn’t great. This is more than likely because I don’t actually understand the sort based Kendall-tau algorithm on a theoretical level. I was able to copy it from the Python into <code>{Rcpp}</code>, and use a lot of debugging and test cases to make sure I had it implemented correctly, but there are things it is doing that I don’t understand algorithmically, which means I don’t know the best way to create an R-centric method for them. For this example, I literally just translated my previous <code>{Rcpp}</code> code into R, which of course doesn’t necessarily make for fast code.</p>
+</section>
+<section id="c-based-differences" class="level3">
+<h3 class="anchored" data-anchor-id="c-based-differences">C++ Based, Differences</h3>
+<p>As a reference, I also implemented the iterating differences algorithm in <code>{Rcpp}</code>. Note that this is not meant to be called by normal users of <code>{ICIKendallTau}</code>, we have it there as a reference to make sure that everything else is working properly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x, y, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb15-2">                               <span class="fu" style="color: #4758AB;">reference_ici</span>(x, y),</span>
+<span id="cb15-3">                               <span class="fu" style="color: #4758AB;">iterators_ici</span>(x, y),</span>
+<span id="cb15-4">                               <span class="fu" style="color: #4758AB;">sort_ici</span>(x, y),</span>
+<span id="cb15-5">                               ICIKendallTau<span class="sc" style="color: #5E5E5E;">:::</span><span class="fu" style="color: #4758AB;">ici_kt_pairs</span>(x, y),</span>
+<span id="cb15-6">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: milliseconds
+                               expr        min         lq       mean     median
+      cor(x, y, method = "kendall")  11.829116  12.051790  12.872894  12.815848
+                reference_ici(x, y) 347.066153 382.616886 400.650147 395.033647
+                iterators_ici(x, y) 271.020774 273.111584 284.668516 274.988955
+                     sort_ici(x, y)   8.978789   9.393873  10.498460  10.161402
+ ICIKendallTau:::ici_kt_pairs(x, y)   4.336266   4.493440   4.806514   4.771994
+         uq        max neval
+  13.380157  14.977161    20
+ 418.945940 465.485468    20
+ 292.175271 342.778833    20
+  11.554007  13.605138    20
+   4.891025   6.397218    20</code></pre>
+</div>
+</div>
+<p>We can see that is faster than the C-based <code>cor</code> by maybe 2X for 1000 long vectors. Given that <code>ici_kt_pairs</code> has only the single iterator logic for the one correlation method, that makes sense.</p>
+</section>
+<section id="c-based-sort" class="level3">
+<h3 class="anchored" data-anchor-id="c-based-sort">C++ Based, Sort</h3>
+<p>Let’s compare the actual sort-based function that is implemented in the <code>{ICIKendallTau}</code> package (which you can see in <span class="citation" data-cites="iciktcode">(Robert M. Flight and Moseley 2022a)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x, y, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb17-2">                               <span class="fu" style="color: #4758AB;">reference_ici</span>(x, y),</span>
+<span id="cb17-3">                               <span class="fu" style="color: #4758AB;">iterators_ici</span>(x, y),</span>
+<span id="cb17-4">                               <span class="fu" style="color: #4758AB;">sort_ici</span>(x, y),</span>
+<span id="cb17-5">                               <span class="fu" style="color: #4758AB;">ici_kt</span>(x, y),</span>
+<span id="cb17-6">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: microseconds
+                          expr        min          lq        mean     median
+ cor(x, y, method = "kendall")  11922.472  12154.2850  12992.5719  12916.488
+           reference_ici(x, y) 352612.664 380621.5915 399187.5410 393977.078
+           iterators_ici(x, y) 266384.200 270873.1345 286840.9181 273214.937
+                sort_ici(x, y)   8862.455   9607.5720  10356.4879  10301.072
+                  ici_kt(x, y)    216.761    245.6465    273.3186    265.784
+         uq        max neval
+  13522.521  16085.135    20
+ 424152.088 444856.163    20
+ 289494.598 338773.242    20
+  11140.300  12458.339    20
+    291.693    367.443    20</code></pre>
+</div>
+</div>
+<p>That’s fast! Notice the time moved from <em>milliseconds</em> to <em>microseconds</em>, and the <code>{ICIKendallTau}</code> version is ~ 50X faster than the base R version. Let’s increase the size of our vectors by 10X and compare the run times again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">x_large <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10000</span>)</span>
+<span id="cb19-2">y_large <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="dv" style="color: #AD0000;">10000</span>)</span>
+<span id="cb19-3">microbenchmark<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">microbenchmark</span>(<span class="fu" style="color: #4758AB;">cor</span>(x, y, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb19-4">                               <span class="fu" style="color: #4758AB;">cor</span>(x_large, y_large, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"kendall"</span>),</span>
+<span id="cb19-5">                               <span class="fu" style="color: #4758AB;">ici_kt</span>(x, y),</span>
+<span id="cb19-6">                               <span class="fu" style="color: #4758AB;">ici_kt</span>(x_large, y_large),</span>
+<span id="cb19-7">                               <span class="at" style="color: #657422;">times =</span> <span class="dv" style="color: #AD0000;">20</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: microseconds
+                                      expr         min           lq
+             cor(x, y, method = "kendall")   11654.425   11757.9275
+ cor(x_large, y_large, method = "kendall") 1134471.513 1149212.6425
+                              ici_kt(x, y)     211.174     228.8565
+                  ici_kt(x_large, y_large)    2341.995    2370.5770
+         mean      median          uq         max neval
+   12088.3777   11816.745   12018.914   15825.794    20
+ 1201616.7482 1168728.874 1243587.177 1456530.477    20
+     259.2706     247.703     265.988     531.182    20
+    2643.4572    2392.539    2453.216    4024.673    20</code></pre>
+</div>
+</div>
+<p>The base R method increases time taken by 100X, but the sort based method of <code>{ICIKendallTau}</code> increases only 10X. This is the advantage of the sort method, it’s complexity is <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(n%5Clog%7B%7Dn))">, <em>vs</em> <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(n%5E2)">.</p>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-flightInformationContentInformedKendalltauCorrelation2022a" class="csl-entry">
+Flight, Robert M., Praneeth S. Bhatt, and Hunter NB Moseley. 2022. <span>“Information-<span>Content</span>-<span>Informed</span> <span>Kendall</span>-Tau <span>Correlation</span>: <span>Utilizing</span> <span>Missing</span> <span>Values</span>.”</span> <a href="https://doi.org/10.1101/2022.02.24.481854">https://doi.org/10.1101/2022.02.24.481854</a>.
+</div>
+<div id="ref-iciktcode" class="csl-entry">
+Flight, Robert M, and Hunter NB Moseley. 2022a. <span>“Ici_kt Code.”</span> <a href="https://github.com/MoseleyBioinformaticsLab/ICIKendallTau/blob/main/src/kendallc.cpp#L131">https://github.com/MoseleyBioinformaticsLab/ICIKendallTau/blob/main/src/kendallc.cpp#L131</a>.
+</div>
+<div id="ref-iciktflight" class="csl-entry">
+———. 2022b. <span>“ICI-Kt r Package.”</span> <a href="https://github.com/moseleybioinformaticslab/icikendalltau">https://github.com/moseleybioinformaticslab/icikendalltau</a>.
+</div>
+<div id="ref-kendallfigure" class="csl-entry">
+Retodomax. 2021. <span>“Kendall-Tau Example Image.”</span> <a href="https://commons.wikimedia.org/wiki/File:Concordant_Points_Kendall_Correlation.svg">https://commons.wikimedia.org/wiki/File:Concordant_Points_Kendall_Correlation.svg</a>.
+</div>
+<div id="ref-kendallwikipedia" class="csl-entry">
+Wikipedia. n.d. <span>“Kendall Rank Correlation Coefficient.”</span> <a href="https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient">https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
+  author = {Robert M Flight},
+  title = {Fast {Kendall-tau} {Correlation} with {Rcpp}},
+  date = {2023-05-29},
+  url = {https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2023" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2023. <span>“Fast Kendall-Tau Correlation with
+Rcpp.”</span> May 29, 2023. <a href="https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp">https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp</a>.
+</div></div></section></div> ]]></description>
+  <category>c++</category>
+  <category>R</category>
+  <category>packages</category>
+  <guid>https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp/index.html</guid>
+  <pubDate>Mon, 29 May 2023 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>targets and Safe Functions</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -2471,7 +2935,7 @@ Robert M Flight. 2022. <span>“Heatmap Colormaps!”</span> January 31,
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig2_cropped.png" class="external img-fluid figure-img" width="950"></p>
+<p><img src="https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig2_cropped.png" class="external img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure 2(a) from <span class="citation" data-cites="Gierlinski2015">(Gierliński et al. 2015)</span>. Identifying bad RNA-seq replicates in the WT (left) and Δsnf2 (right) data. The top three panels (a–c) show individual criteria for identifying ‘bad’ replicates which are combined into a quality score (d) in order to identify ‘bad’ replicates in each condition. The identified ‘bad’ replicates are shown as numbered points in each panel. The individual criteria are (a) median correlation coefficient, ri∼⁠, for each replicate i against all other replicates, (b) outlier fraction, fi⁠, calculated as a fraction of genes where the given replicate is more than five-trimmed standard deviations from the trimmed mean and (c) median reduced χ2 of pileup depth, χ∼2i⁠, as a measure of the non-uniformity of read distribution within genes (see also Fig. 3)</figcaption><p></p>
 </figure>
 </div>
@@ -2823,7 +3287,7 @@ Robert M Flight. 2022. <span>“Heatmap Colormaps!”</span> January 31,
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig5.jpeg" class="external img-fluid figure-img" width="950"></p>
+<p><img src="https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/gierlinski_2015_fig5.jpeg" class="external img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure 5 from <span class="citation" data-cites="Gierlinski2015">(Gierliński et al. 2015)</span>. Goodness-of-fit test results for normal (top panels), log-normal (middle panels) and negative binomial (bottom panels) distributions. Each panel shows the test P-value versus the mean count across replicates. Each dot represents equal-count normalized data from one gene. Panels on the left (a, b, e, f, i, j) show clean data with bad replicates rejected (42 and 44 replicates remaining in WT and Δsnf2, respectively). Panels on the right (c, d, g, h, k, l) show all available data (48 replicates in each condition). Due to the number of bootstraps performed, P-values for the negative-binomial test are limited to ∼10−2. Due to numerical precision of the software library used, P-values from the normal and log-normal tests are limited to ∼10−16. Below these limits data points are marked in orange (light gray in black and white) at the bottom of each panel. Horizontal lines show the Benjamini–Hochberg limit corresponding to the significance of 0.05 for the given dataset. The numbers in the right bottom corner of each panel indicate the number of genes with P-values below the significance limit and the total number of genes</figcaption><p></p>
 </figure>
 </div>
@@ -2920,6 +3384,7 @@ Robert M Flight. 2022. <span>“Recreating Correlation Values from Another
 Manuscript.”</span> January 15, 2022. <a href="https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript">https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript</a>.
 </div></div></section></div> ]]></description>
   <category>reproducibility</category>
+  <category>correlation</category>
   <guid>https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/index.html</guid>
   <pubDate>Sat, 15 Jan 2022 05:00:00 GMT</pubDate>
 </item>
@@ -3471,60 +3936,6 @@ Robert M Flight. 2021. <span>“Zooming GGraph Plots.”</span> November 11,
   <category>random-code-snippets</category>
   <guid>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index.html</guid>
   <pubDate>Thu, 11 Nov 2021 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>R CMD Check and Non-PDF Vignettes</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="r-cmd-check" class="level2">
-<h2 class="anchored" data-anchor-id="r-cmd-check">R CMD Check</h2>
-<p>If you’ve written an R package that you want hosted by CRAN (or even if not hosted), then you generally want to run the infamous <code>R CMD check</code> on your package.</p>
-<p>Although it can be a pain in the butt, it has a wide array of checks that make sense (and some that don’t, just look at posts on the R-devel list).</p>
-</section>
-<section id="missing-files" class="level2">
-<h2 class="anchored" data-anchor-id="missing-files">Missing Files</h2>
-<p>If you are using <code>rmarkdown</code> to generate non-standard vignettes, or even using <code>rmarkdown</code> because of features that aren’t present directly in <code>knitr</code>, then the <strong>check</strong> process may fail after it re-builds the package. You may see this message:</p>
-<pre><code>Warning: Files in the 'vignettes' directory but no files in 'inst/doc':
-  ‘vignette_file.Rmd’</code></pre>
-<p>The solution, as far as I can tell, is to:</p>
-<ul>
-<li>add both <code>knitr</code> and <code>rmarkdown</code> to the <strong>Suggests</strong> field of DESCRIPTION.</li>
-<li>add <strong>VignetteBuilder: knitr</strong> to the DESCRIPTION.</li>
-<li>add <code>%\VignetteEngine{knitr::rmarkdown}</code> to the vignette meta-data.</li>
-<li>use <strong>output: …</strong> whatever actual output document type you wanted in the vignette itself.</li>
-</ul>
-<p>I think that the <strong>build</strong> command only recognizes the <code>knitr</code> engine properly, and that is the only one that builds the vignettes and shoves them in the right location.</p>
-<p>Otherwise, you should build them manually and double check the options to <strong>build</strong> and <strong>check</strong> so that vignettes don’t get rebuilt during either build or check.</p>
-<p>Depending on your needs, you might want to use something like Drew Schmidt’s approach <span class="citation" data-cites="vignettelessarticles">(<span>“Vignette-Less Articles with Pkgdown”</span> 2020)</span>.</p>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-vignettelessarticles" class="csl-entry">
-<span>“Vignette-Less Articles with Pkgdown.”</span> 2020. <a href="https://fml-fam.github.io/blog/2020/06/23/vignette-less-articles-with-pkgdown/">https://fml-fam.github.io/blog/2020/06/23/vignette-less-articles-with-pkgdown/</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {R {CMD} {Check} and {Non-PDF} {Vignettes}},
-  date = {2021-10-27},
-  url = {https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“R CMD Check and Non-PDF Vignettes.”</span>
-October 27, 2021. <a href="https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes">https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes</a>.
-</div></div></section></div> ]]></description>
-  <category>packages</category>
-  <category>random-code-snippets</category>
-  <guid>https://rmflight.github.io/posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html</guid>
-  <pubDate>Wed, 27 Oct 2021 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

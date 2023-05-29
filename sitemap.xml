@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rmflight.github.io/index.html</loc>
-    <lastmod>2023-05-08T16:32:49.324Z</lastmod>
+    <lastmod>2023-05-29T18:39:50.071Z</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/about.html</loc>
@@ -210,7 +210,7 @@
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2022-01-15-recreating-correlation-values-from-another-manuscript/index.html</loc>
-    <lastmod>2023-01-20T02:29:48.983Z</lastmod>
+    <lastmod>2023-05-29T18:39:47.979Z</lastmod>
   </url>
   <url>
     <loc>https://rmflight.github.io/posts/2021-03-02-packages-dont-work-well-for-analyses-in-practice/index.html</loc>
@@ -351,5 +351,9 @@
   <url>
     <loc>https://rmflight.github.io/posts/2023-05-08-targets-and-safe-functions/index.html</loc>
     <lastmod>2023-05-08T16:32:47.032Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rmflight.github.io/posts/2023-05-29-fast-kendalltau-correlation-with-rcpp/index.html</loc>
+    <lastmod>2023-05-29T18:23:52.478Z</lastmod>
   </url>
 </urlset>
