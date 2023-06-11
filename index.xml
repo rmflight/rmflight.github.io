@@ -124,7 +124,7 @@ Attaching package: 'tuneR'</code></pre>
 <span id="cb6-3">holderness_transcribed <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">convert_transcribe</span>(audio_file)</span>
 <span id="cb6-4">tictoc<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">toc</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>333.297 sec elapsed</code></pre>
+<pre><code>344.642 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
