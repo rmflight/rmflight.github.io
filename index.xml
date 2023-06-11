@@ -10,7 +10,172 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Mon, 29 May 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 11 Jun 2023 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Transcribing A File Using carelesswhisper</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>You can iterate through an audio file and transcribe it using the new <code>carelesswhisper</code> package <span class="citation" data-cites="cool_whisper">(coolbutuseless 2023)</span>.</p>
+</section>
+<section id="carelesswhisper" class="level2">
+<h2 class="anchored" data-anchor-id="carelesswhisper">carelesswhisper</h2>
+<p>If you don’t follow coolbutuseless on Mastodon, you are missing out, especially if you want to know about really intriguing R packages <span class="citation" data-cites="cool_mastodon">(coolbutuseless, n.d.)</span>. Just this week, they released a new R package built upon the <code>whisper</code> C library <span class="citation" data-cites="cool_whisper">(coolbutuseless 2023)</span>. Although I don’t do any actual work with audio, especially human audio that one might want to do automatic speech recognition or transcription with, I dug into it to see if it would be possible to actually transcribe a full audio file.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>We are going to need a few packages besides <code>carelesswhisper</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># for transcription</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(carelesswhisper)</span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;"># for converting from m4a</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(av)</span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;"># for audio processing</span></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(tuneR)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'tuneR'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:av':
+
+    sine</code></pre>
+</div>
+</div>
+<p>We also need an audio file. I decided to download an episode of Holderness Family Laughs <span class="citation" data-cites="holderness_vacation">(Family 2023)</span>, and see if we can transcribe it. I used yt-dlp to download and convert to audio <span class="citation" data-cites="yt_dlp">(<span>“YT-DLP”</span> 2023)</span>.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;">yt-dlp</span> https://youtu.be/DFM4Ey5oyhI <span class="at" style="color: #657422;">-x</span> <span class="at" style="color: #657422;">--audio-format</span><span class="op" style="color: #5E5E5E;">=</span>m4a</span></code></pre></div>
+</section>
+<section id="conversion" class="level2">
+<h2 class="anchored" data-anchor-id="conversion">Conversion</h2>
+<p>Now, we don’t want to convert the whole thing, because it creates a giant piece of audio that will then have to be loaded into memory. Just our 5 minute Holderness episode is 69 MB on disk. So for longer pieces of audio it would be even worse. However, we can do piecewise conversion and transcription over the length of the file.</p>
+<p>When we do the conversion, we do have to keep a couple of things in mind about what <code>carelesswhisper</code> expects. It wants single channel, 16 KHz files. This can be done during conversion. The other thing it expects is a range of values between -1 and 1. This we can take care of after conversion.</p>
+<p>So we will write a function to do the conversion, read in the file, and do the transcription. We will also overlap the time steps by 2 seconds, so that if we cut a word off in a previous conversion, then we should get the full thing in the next one.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;"># generate time indexes for transcription</span></span>
+<span id="cb5-2">split_time <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(audio_length)</span>
+<span id="cb5-3">{</span>
+<span id="cb5-4">  n_piece <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">ceiling</span>(audio_length <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">30</span>) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb5-5">  out_time <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"list"</span>, n_piece)</span>
+<span id="cb5-6">  start_time <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb5-7">  <span class="cf" style="color: #003B4F;">for</span> (i_piece <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq_len</span>(n_piece)) {</span>
+<span id="cb5-8">    <span class="cf" style="color: #003B4F;">if</span> (start_time <span class="sc" style="color: #5E5E5E;">&gt;</span> audio_length) {</span>
+<span id="cb5-9">      <span class="cf" style="color: #003B4F;">break</span>()</span>
+<span id="cb5-10">    }</span>
+<span id="cb5-11">    out_time[[i_piece]] <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">start =</span> start_time,</span>
+<span id="cb5-12">                                         <span class="at" style="color: #657422;">end =</span> <span class="fu" style="color: #4758AB;">min</span>(<span class="fu" style="color: #4758AB;">c</span>(start_time <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">30</span>, audio_length)))</span>
+<span id="cb5-13">    start_time <span class="ot" style="color: #003B4F;">=</span> start_time <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">28</span></span>
+<span id="cb5-14">  }</span>
+<span id="cb5-15">  </span>
+<span id="cb5-16">  not_null <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map_lgl</span>(out_time, \(x){<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.null</span>(x)})</span>
+<span id="cb5-17">  out_time[not_null]</span>
+<span id="cb5-18">}</span>
+<span id="cb5-19"></span>
+<span id="cb5-20"><span class="co" style="color: #5E5E5E;"># rescale the values in the wav object</span></span>
+<span id="cb5-21">rescale_wav <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(wav_object)</span>
+<span id="cb5-22">{</span>
+<span id="cb5-23">  wav_values <span class="ot" style="color: #003B4F;">=</span> wav_object<span class="sc" style="color: #5E5E5E;">@</span>left</span>
+<span id="cb5-24">  wav_range <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">max</span>(<span class="fu" style="color: #4758AB;">abs</span>(wav_values))</span>
+<span id="cb5-25">  wav_sign <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sign</span>(wav_values)</span>
+<span id="cb5-26">  wav_fraction <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">abs</span>(wav_values) <span class="sc" style="color: #5E5E5E;">/</span> wav_range</span>
+<span id="cb5-27">  wav_convert <span class="ot" style="color: #003B4F;">=</span> wav_sign <span class="sc" style="color: #5E5E5E;">*</span> wav_fraction</span>
+<span id="cb5-28">  wav_convert</span>
+<span id="cb5-29">}</span>
+<span id="cb5-30"></span>
+<span id="cb5-31"><span class="co" style="color: #5E5E5E;"># do the actual conversion and transcription</span></span>
+<span id="cb5-32">inner_convert_transcribe <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(time_index, audio_file, whisper_model)</span>
+<span id="cb5-33">{</span>
+<span id="cb5-34">  out_wav <span class="ot" style="color: #003B4F;">=</span> av<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">av_audio_convert</span>(audio_file, <span class="at" style="color: #657422;">output =</span> <span class="st" style="color: #20794D;">"tmp.wav"</span>, <span class="at" style="color: #657422;">channels =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb5-35">                                 <span class="at" style="color: #657422;">sample_rate =</span> <span class="dv" style="color: #AD0000;">16000</span>, <span class="at" style="color: #657422;">start_time =</span> time_index[<span class="st" style="color: #20794D;">"start"</span>],</span>
+<span id="cb5-36">                                 <span class="at" style="color: #657422;">total_time =</span> time_index[<span class="st" style="color: #20794D;">"end"</span>] <span class="sc" style="color: #5E5E5E;">-</span> time_index[<span class="st" style="color: #20794D;">"start"</span>],</span>
+<span id="cb5-37">                                 <span class="at" style="color: #657422;">verbose =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)</span>
+<span id="cb5-38">  in_audio <span class="ot" style="color: #003B4F;">=</span> tuneR<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">readWave</span>(<span class="st" style="color: #20794D;">"tmp.wav"</span>)</span>
+<span id="cb5-39">  scaled_audio <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rescale_wav</span>(in_audio)</span>
+<span id="cb5-40">  transcribed <span class="ot" style="color: #003B4F;">=</span> carelesswhisper<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">whisper</span>(whisper_model, scaled_audio)</span>
+<span id="cb5-41">  transcribed</span>
+<span id="cb5-42">}</span>
+<span id="cb5-43"></span>
+<span id="cb5-44"><span class="co" style="color: #5E5E5E;"># convert an actual file</span></span>
+<span id="cb5-45">convert_transcribe <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(audio_file)</span>
+<span id="cb5-46">{</span>
+<span id="cb5-47">  <span class="co" style="color: #5E5E5E;"># audio_file = "posts/2023-06-10-transcribing-a-file-using-carelesswhisper/20s vs 40s Vacation [DFM4Ey5oyhI].m4a"</span></span>
+<span id="cb5-48">  audio_info <span class="ot" style="color: #003B4F;">=</span> av<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">av_media_info</span>(audio_file)</span>
+<span id="cb5-49">  audio_length <span class="ot" style="color: #003B4F;">=</span> audio_info<span class="sc" style="color: #5E5E5E;">$</span>duration</span>
+<span id="cb5-50">  </span>
+<span id="cb5-51">  time_splits <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">split_time</span>(audio_length)</span>
+<span id="cb5-52">  whisper_model <span class="ot" style="color: #003B4F;">=</span> carelesswhisper<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">whisper_init</span>()</span>
+<span id="cb5-53">  transcribed_data <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map</span>(time_splits,</span>
+<span id="cb5-54">                                inner_convert_transcribe,</span>
+<span id="cb5-55">                                audio_file,</span>
+<span id="cb5-56">                                whisper_model)</span>
+<span id="cb5-57">  <span class="fu" style="color: #4758AB;">file.remove</span>(<span class="st" style="color: #20794D;">"tmp.wav"</span>)</span>
+<span id="cb5-58">  transcribed_data</span>
+<span id="cb5-59">}</span></code></pre></div>
+</div>
+<p>OK, so we have our four files, lets see if we can run through the entire 5 minutes. And see how long it takes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">tictoc<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">tic</span>()</span>
+<span id="cb6-2">audio_file <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"20s vs 40s Vacation [DFM4Ey5oyhI].m4a"</span></span>
+<span id="cb6-3">holderness_transcribed <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">convert_transcribe</span>(audio_file)</span>
+<span id="cb6-4">tictoc<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">toc</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>333.297 sec elapsed</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">holderness_transcribed[<span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span>)]</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "I've accrue 3.4 vacation days after working at my job for an entire year. If we stay up the entire time, that's like a 10 day vacation. Okay, so we have the whole week off, but really it's 2.5 days. Who are we kidding? It takes me a couple of days to unwind and I'd like to come back by Friday so I can go grocery shopping at the laundry done. I mean, I'm not going to just jump back into my workway. After being around all you people, I'm going to need a day alone on my phone just in the dark. Okay, three bikinis, a cover up, and some heels. I'll pack, to know how to eat!"
+
+[[2]]
+[1] "heels, I'll pack to know how to, I need this bag. These are my good hats, I can't just put my good hats in with clothes, it'll ruin. This is my supplement, that's the bag full of stuff I know the kids are gonna forget because they pack like it is. It's like 12 pair of underwear, one pair of socks, and a sweater. We're going to the beat. This is the snack bag, we're not buying snacks when we get to the beat. I'm at pain, $10 for a bag of chips. Yeah. Gotta bring my good shampoo, that travel shampoo does not cut it."
+
+[[3]]
+[1] "who does not cut it. We need a shampoo bag. Yes, I do. I price line this hotel. If we split this one room between the 12 of us, it'll be super affordable. Let's go girls. Let's just get the same house we went to last year. I mean, I know that it costs more than a car, but everyone will get their own bathroom. Everyone needs their own space. For their special morning time, right babe? If we sleep, shoulder to shoulder, we can at least get four people on the bed. And easily eight on the floor, right here. Cook on Housekeeping and get"</code></pre>
+</div>
+</div>
+<p>So this took just longer than the time of the video itself, which honestly isn’t too bad. The conversion of small bits of file, and then re-scaling to work with <code>whisper</code>, doesn’t seem to be imposing much overhead. Is the transcription perfect? No. Is it pretty decent? I think so, especially given that we can do it all locally, from our own audio file. The only other free way I know to do this is using “Voice Typing” in Google Docs, which is only accessible from the Chrome browser, and means putting your audio through Google’s servers.</p>
+<p>Also, <code>carelesswhisper</code> default is to use the smallest possible model. There may be other models that will work on your machine, depending on how much RAM you have available. The <code>carelesswhisper</code> README mentions how to use other speech recognition models from the <code>whisper</code> website <span class="citation" data-cites="cool_whisper">(coolbutuseless 2023)</span>.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cool_whisper" class="csl-entry">
+coolbutuseless. 2023. <span>“Carelesswhisper.”</span> <a href="https://github.com/coolbutuseless/carelesswhisper">https://github.com/coolbutuseless/carelesswhisper</a>.
+</div>
+<div id="ref-cool_mastodon" class="csl-entry">
+———. n.d. <a href="https://fosstodon.org/@coolbutuseless">https://fosstodon.org/@coolbutuseless</a>.
+</div>
+<div id="ref-holderness_vacation" class="csl-entry">
+Family, Holderness. 2023. <span>“20s Vs 40s Vaction.”</span> <a href="https://youtu.be/DFM4Ey5oyhI">https://youtu.be/DFM4Ey5oyhI</a>.
+</div>
+<div id="ref-yt_dlp" class="csl-entry">
+<span>“YT-DLP.”</span> 2023. <a href="https://github.com/yt-dlp/yt-dlp">https://github.com/yt-dlp/yt-dlp</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
+  author = {Robert M Flight},
+  title = {Transcribing {A} {File} {Using} Carelesswhisper},
+  date = {2023-06-11},
+  url = {https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2023" class="csl-entry quarto-appendix-citeas">
+Robert M Flight. 2023. <span>“Transcribing A File Using
+Carelesswhisper.”</span> June 11, 2023. <a href="https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper">https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper</a>.
+</div></div></section></div> ]]></description>
+  <category>R</category>
+  <category>audio</category>
+  <guid>https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper/index.html</guid>
+  <pubDate>Sun, 11 Jun 2023 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Fast Kendall-tau Correlation with Rcpp</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -3709,233 +3874,6 @@ GitHub.”</span> November 25, 2021. <a href="https://rmflight.github.io/posts/2
   <category>gitlab</category>
   <guid>https://rmflight.github.io/posts/2021-11-25-migrating-self-hosted-gitlab-projects-to-github/index.html</guid>
   <pubDate>Thu, 25 Nov 2021 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Zooming GGraph Plots</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="inspiration" class="level2">
-<h2 class="anchored" data-anchor-id="inspiration">Inspiration</h2>
-<p>I was recently working with a <strong>largish</strong> graph that I am using the ggraph package, and I needed to zoom into a sub-region of the graph.</p>
-</section>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">knitr<span class="sc" style="color: #5E5E5E;">::</span>opts_chunk<span class="sc" style="color: #5E5E5E;">$</span><span class="fu" style="color: #4758AB;">set</span>(<span class="at" style="color: #657422;">warning =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">message =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">fig.width =</span> <span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">fig.height =</span> <span class="dv" style="color: #AD0000;">8</span>)</span>
-<span id="cb1-2">example_df <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">structure</span>(<span class="fu" style="color: #4758AB;">list</span>(<span class="at" style="color: #657422;">from =</span> <span class="fu" style="color: #4758AB;">c</span>(1L, 2L, 3L, 4L, 5L, 6L, 7L, 7L, 7L, 7L, </span>
-<span id="cb1-3">                                     7L, 7L, 7L, 7L, 7L, 7L, 8L, 9L, 10L, 11L, 12L, 12L, 12L, 13L, </span>
-<span id="cb1-4">                                     13L, 13L, 13L, 13L, 13L, 13L, 14L, 15L, 16L, 16L, 17L, 17L, 18L, </span>
-<span id="cb1-5">                                     18L, 19L, 20L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, 21L, </span>
-<span id="cb1-6">                                     21L, 21L, 22L, 22L, 6L, 23L, 23L, 23L, 23L, 23L, 23L, 23L, 23L, </span>
-<span id="cb1-7">                                     23L, 23L, 23L, 23L, 24L, 24L, 24L, 24L, 24L, 24L, 24L, 24L, 24L, </span>
-<span id="cb1-8">                                     24L, 24L, 24L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, 25L, </span>
-<span id="cb1-9">                                     25L, 25L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, 26L, </span>
-<span id="cb1-10">                                     26L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, 27L, </span>
-<span id="cb1-11">                                     28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 28L, 29L, </span>
-<span id="cb1-12">                                     29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 29L, 30L, 30L, </span>
-<span id="cb1-13">                                     30L, 30L, 30L, 30L, 30L, 30L, 30L, 30L, 30L, 30L, 31L, 31L, 31L, </span>
-<span id="cb1-14">                                     31L, 31L, 31L, 31L, 31L, 31L, 31L, 31L, 31L, 32L, 32L, 32L, 32L, </span>
-<span id="cb1-15">                                     32L, 32L, 32L, 32L, 32L, 32L, 32L, 32L, 33L, 33L, 33L, 33L, 33L, </span>
-<span id="cb1-16">                                     33L, 33L, 33L, 33L, 33L, 33L, 33L, 34L, 34L, 34L, 34L, 34L, 34L, </span>
-<span id="cb1-17">                                     34L, 34L, 34L, 34L, 34L, 34L, 35L, 35L, 35L, 35L, 35L, 35L, 35L, </span>
-<span id="cb1-18">                                     35L, 35L, 35L, 35L, 35L, 36L, 36L, 36L, 36L, 36L, 36L, 36L, 36L, </span>
-<span id="cb1-19">                                     36L, 36L, 36L, 36L, 37L, 37L, 37L, 37L, 37L, 37L, 37L, 37L, 37L, </span>
-<span id="cb1-20">                                     37L, 37L, 37L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, 38L, </span>
-<span id="cb1-21">                                     38L, 38L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, 39L, </span>
-<span id="cb1-22">                                     39L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, 40L, </span>
-<span id="cb1-23">                                     41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 41L, 42L, </span>
-<span id="cb1-24">                                     22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, </span>
-<span id="cb1-25">                                     22L, 22L, 22L, 22L, 43L, 43L, 44L, 44L, 45L, 45L, 46L, 46L, 47L, </span>
-<span id="cb1-26">                                     47L, 48L, 48L, 49L, 49L, 50L, 50L, 51L, 52L, 52L, 53L, 53L, 54L, </span>
-<span id="cb1-27">                                     54L, 55L, 55L, 56L, 57L, 57L, 58L, 58L, 59L, 60L, 61L, 61L, 62L, </span>
-<span id="cb1-28">                                     16L, 17L, 18L, 63L, 64L, 65L, 66L, 67L, 68L, 69L, 70L, 71L, 72L, </span>
-<span id="cb1-29">                                     73L, 74L, 75L, 76L, 20L, 77L, 77L, 78L, 79L, 79L, 80L, 81L, 82L, </span>
-<span id="cb1-30">                                     7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 14L, 15L, 19L, 21L, 21L, </span>
-<span id="cb1-31">                                     22L, 83L, 84L, 45L, 46L, 47L, 49L, 50L, 51L, 52L, 53L, 54L, 55L, </span>
-<span id="cb1-32">                                     56L, 57L, 58L, 59L, 85L, 48L, 48L, 48L, 48L, 48L, 46L, 46L, 46L, </span>
-<span id="cb1-33">                                     46L, 86L, 86L, 13L, 13L, 22L, 7L, 55L, 55L, 55L, 55L, 55L, 51L, </span>
-<span id="cb1-34">                                     51L, 51L, 58L, 58L, 58L, 58L, 53L, 53L, 53L, 53L, 49L, 49L, 49L, </span>
-<span id="cb1-35">                                     49L, 87L, 87L), <span class="at" style="color: #657422;">to =</span> <span class="fu" style="color: #4758AB;">c</span>(7L, 7L, 7L, 61L, 61L, 61L, 8L, 88L, 89L, </span>
-<span id="cb1-36">                                                            90L, 91L, 92L, 93L, 94L, 95L, 96L, 9L, 7L, 9L, 9L, 16L, 17L, </span>
-<span id="cb1-37">                                                            18L, 14L, 15L, 16L, 17L, 18L, 19L, 10L, 10L, 10L, 10L, 42L, 10L, </span>
-<span id="cb1-38">                                                            42L, 10L, 42L, 10L, 12L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, </span>
-<span id="cb1-39">                                                            54L, 55L, 57L, 58L, 6L, 9L, 9L, 45L, 46L, 47L, 48L, 49L, 50L, </span>
-<span id="cb1-40">                                                            52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, </span>
-<span id="cb1-41">                                                            53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, </span>
-<span id="cb1-42">                                                            54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, </span>
-<span id="cb1-43">                                                            55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, </span>
-<span id="cb1-44">                                                            57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, </span>
-<span id="cb1-45">                                                            58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, </span>
-<span id="cb1-46">                                                            45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, </span>
-<span id="cb1-47">                                                            46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, </span>
-<span id="cb1-48">                                                            47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, </span>
-<span id="cb1-49">                                                            48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, </span>
-<span id="cb1-50">                                                            49L, 50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, </span>
-<span id="cb1-51">                                                            50L, 52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, </span>
-<span id="cb1-52">                                                            52L, 53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, </span>
-<span id="cb1-53">                                                            53L, 54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, </span>
-<span id="cb1-54">                                                            54L, 55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, </span>
-<span id="cb1-55">                                                            55L, 57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, </span>
-<span id="cb1-56">                                                            57L, 58L, 45L, 46L, 47L, 48L, 49L, 50L, 52L, 53L, 54L, 55L, 57L, </span>
-<span id="cb1-57">                                                            58L, 9L, 97L, 98L, 99L, 100L, 101L, 4L, 5L, 102L, 10L, 103L, </span>
-<span id="cb1-58">                                                            104L, 105L, 60L, 106L, 107L, 108L, 109L, 13L, 22L, 110L, 83L, </span>
-<span id="cb1-59">                                                            21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 44L, </span>
-<span id="cb1-60">                                                            21L, 44L, 21L, 44L, 21L, 44L, 21L, 44L, 44L, 21L, 44L, 21L, 44L, </span>
-<span id="cb1-61">                                                            44L, 111L, 111L, 112L, 60L, 83L, 83L, 83L, 22L, 22L, 22L, 22L, </span>
-<span id="cb1-62">                                                            22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 22L, 83L, 83L, 110L, </span>
-<span id="cb1-63">                                                            83L, 83L, 110L, 83L, 83L, 22L, 22L, 113L, 114L, 115L, 116L, 117L, </span>
-<span id="cb1-64">                                                            118L, 119L, 120L, 121L, 122L, 83L, 83L, 83L, 86L, 2L, 123L, 78L, </span>
-<span id="cb1-65">                                                            21L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, 84L, </span>
-<span id="cb1-66">                                                            84L, 84L, 10L, 79L, 124L, 86L, 125L, 84L, 79L, 124L, 86L, 125L, </span>
-<span id="cb1-67">                                                            110L, 83L, 42L, 11L, 126L, 111L, 48L, 79L, 124L, 86L, 125L, 79L, </span>
-<span id="cb1-68">                                                            86L, 125L, 79L, 124L, 86L, 125L, 79L, 124L, 86L, 125L, 79L, 124L, </span>
-<span id="cb1-69">                                                            86L, 125L, 46L, 48L)), <span class="at" style="color: #657422;">class =</span> <span class="st" style="color: #20794D;">"data.frame"</span>, <span class="at" style="color: #657422;">row.names =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="cn" style="color: #8f5902;">NA</span>, </span>
-<span id="cb1-70">                                                                                                                       <span class="sc" style="color: #5E5E5E;">-</span>432L))</span>
-<span id="cb1-71"></span>
-<span id="cb1-72"><span class="fu" style="color: #4758AB;">library</span>(ggraph)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ggplot2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">library</span>(tidygraph)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'tidygraph'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:stats':
-
-    filter</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">library</span>(igraph)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'igraph'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:tidygraph':
-
-    groups</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    decompose, spectrum</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:base':
-
-    union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">example_graph <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">as_tbl_graph</span>(example_df)</span></code></pre></div>
-</div>
-</section>
-<section id="initial-view" class="level2">
-<h2 class="anchored" data-anchor-id="initial-view">Initial View</h2>
-<p>Let’s generate a plot of this to start.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
-<span id="cb12-2"><span class="fu" style="color: #4758AB;">ggraph</span>(example_graph, <span class="st" style="color: #20794D;">"graphopt"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb12-3">  <span class="fu" style="color: #4758AB;">geom_edge_link</span>(<span class="at" style="color: #657422;">arrow =</span> <span class="fu" style="color: #4758AB;">arrow</span>(<span class="at" style="color: #657422;">length =</span> <span class="fu" style="color: #4758AB;">unit</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="st" style="color: #20794D;">'mm'</span>)),</span>
-<span id="cb12-4">                <span class="at" style="color: #657422;">end_cap =</span> <span class="fu" style="color: #4758AB;">circle</span>(<span class="dv" style="color: #AD0000;">10</span>, <span class="st" style="color: #20794D;">"mm"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb12-5">  <span class="fu" style="color: #4758AB;">geom_node_point</span>()</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index_files/figure-html/plot_full-1.png" class="img-fluid" width="960"></p>
-</div>
-</div>
-<p>You can see the bottom left section of this graph looks like a mess. It sure would be awesome if we could zoom into that region, and replot it.</p>
-</section>
-<section id="find-those-nodes" class="level2">
-<h2 class="anchored" data-anchor-id="find-those-nodes">Find Those Nodes</h2>
-<p>We will use <code>igraph</code>s community detection to break this into community sets and select the correct group.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">walk_membership <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">cluster_walktrap</span>(example_graph)</span>
-<span id="cb13-2">walk_communities <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">membership</span>(walk_membership)</span>
-<span id="cb13-3">split_comms <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">split</span>(<span class="fu" style="color: #4758AB;">names</span>(walk_communities), walk_communities)</span>
-<span id="cb13-4"><span class="fu" style="color: #4758AB;">names</span>(split_comms) <span class="ot" style="color: #003B4F;">=</span> <span class="cn" style="color: #8f5902;">NULL</span></span>
-<span id="cb13-5"></span>
-<span id="cb13-6">which_comm <span class="ot" style="color: #003B4F;">=</span> split_comms[[<span class="fu" style="color: #4758AB;">which</span>(purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map_lgl</span>(split_comms, <span class="sc" style="color: #5E5E5E;">~</span> <span class="st" style="color: #20794D;">"58"</span> <span class="sc" style="color: #5E5E5E;">%in%</span> .x))]]</span></code></pre></div>
-</div>
-</section>
-<section id="initial-layout" class="level2">
-<h2 class="anchored" data-anchor-id="initial-layout">Initial Layout</h2>
-<p>One way to make sure we can get the same layout is to create the layout, which is treated as a graph by ggraph.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="co" style="color: #5E5E5E;"># we set the seed so its the same layout as previous</span></span>
-<span id="cb14-2"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
-<span id="cb14-3">example_layout <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">create_layout</span>(example_graph, <span class="st" style="color: #20794D;">"graphopt"</span>)</span>
-<span id="cb14-4"></span>
-<span id="cb14-5"><span class="fu" style="color: #4758AB;">ggraph</span>(example_layout) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-6">  <span class="fu" style="color: #4758AB;">geom_edge_link</span>(<span class="at" style="color: #657422;">arrow =</span> <span class="fu" style="color: #4758AB;">arrow</span>(<span class="at" style="color: #657422;">length =</span> <span class="fu" style="color: #4758AB;">unit</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="st" style="color: #20794D;">'mm'</span>)),</span>
-<span id="cb14-7">                <span class="at" style="color: #657422;">end_cap =</span> <span class="fu" style="color: #4758AB;">circle</span>(<span class="dv" style="color: #AD0000;">10</span>, <span class="st" style="color: #20794D;">"mm"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-8">  <span class="fu" style="color: #4758AB;">geom_node_point</span>()</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index_files/figure-html/initial_layout-1.png" class="img-fluid" width="960"></p>
-</div>
-</div>
-<p>Awesome, looks the same as the previous.</p>
-</section>
-<section id="subset-nodes-and-get-range" class="level2">
-<h2 class="anchored" data-anchor-id="subset-nodes-and-get-range">Subset Nodes and Get Range</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">sub_layout <span class="ot" style="color: #003B4F;">=</span> example_layout <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb15-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(name <span class="sc" style="color: #5E5E5E;">%in%</span> which_comm)</span>
-<span id="cb15-3">sub_xlim <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">range</span>(sub_layout<span class="sc" style="color: #5E5E5E;">$</span>x)</span>
-<span id="cb15-4">sub_ylim <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">range</span>(sub_layout<span class="sc" style="color: #5E5E5E;">$</span>y)</span></code></pre></div>
-</div>
-</section>
-<section id="plot-subset" class="level2">
-<h2 class="anchored" data-anchor-id="plot-subset">Plot Subset</h2>
-<p>We would think we should be able to just use the sub-layout to plot the subset of nodes. Lets try that first.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;">ggraph</span>(sub_layout) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb16-2">  <span class="fu" style="color: #4758AB;">geom_edge_link</span>(<span class="at" style="color: #657422;">arrow =</span> <span class="fu" style="color: #4758AB;">arrow</span>(<span class="at" style="color: #657422;">length =</span> <span class="fu" style="color: #4758AB;">unit</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="st" style="color: #20794D;">'mm'</span>)),</span>
-<span id="cb16-3">                <span class="at" style="color: #657422;">end_cap =</span> <span class="fu" style="color: #4758AB;">circle</span>(<span class="dv" style="color: #AD0000;">10</span>, <span class="st" style="color: #20794D;">"mm"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb16-4">  <span class="fu" style="color: #4758AB;">geom_node_point</span>()</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index_files/figure-html/plot_subset-1.png" class="img-fluid" width="960"></p>
-</div>
-</div>
-<p>As we can see, this isn’t quite right. We are missing some of the edges.</p>
-</section>
-<section id="plot-using-subset-ranges" class="level2">
-<h2 class="anchored" data-anchor-id="plot-using-subset-ranges">Plot Using Subset Ranges</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">ggraph</span>(example_layout) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb17-2">  <span class="fu" style="color: #4758AB;">geom_edge_link</span>(<span class="at" style="color: #657422;">arrow =</span> <span class="fu" style="color: #4758AB;">arrow</span>(<span class="at" style="color: #657422;">length =</span> <span class="fu" style="color: #4758AB;">unit</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="st" style="color: #20794D;">'mm'</span>)),</span>
-<span id="cb17-3">                <span class="at" style="color: #657422;">end_cap =</span> <span class="fu" style="color: #4758AB;">circle</span>(<span class="dv" style="color: #AD0000;">10</span>, <span class="st" style="color: #20794D;">"mm"</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb17-4">  <span class="fu" style="color: #4758AB;">geom_node_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb17-5">  <span class="fu" style="color: #4758AB;">coord_cartesian</span>(<span class="at" style="color: #657422;">xlim =</span> sub_xlim, <span class="at" style="color: #657422;">ylim =</span> sub_ylim)</span></code></pre></div>
-<div class="cell-output-display">
-<p><img src="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index_files/figure-html/plot_ranges-1.png" class="img-fluid" width="960"></p>
-</div>
-</div>
-<p>Finally! This is what we wanted. And we can see why it’s so overlapped in the full plot! It’s pretty much a hairball in that part of the graph.</p>
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Zooming {GGraph} {Plots}},
-  date = {2021-11-11},
-  url = {https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Zooming GGraph Plots.”</span> November 11,
-2021. <a href="https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots">https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots</a>.
-</div></div></section></div> ]]></description>
-  <category>graphing</category>
-  <category>ggraph</category>
-  <category>visualization</category>
-  <category>random-code-snippets</category>
-  <guid>https://rmflight.github.io/posts/2021-11-11-zooming-ggraph-plots/index.html</guid>
-  <pubDate>Thu, 11 Nov 2021 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
