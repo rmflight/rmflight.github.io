@@ -362,14 +362,14 @@ Attaching package: 'tuneR'</code></pre>
 <span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>  transcribed_data</span>
 <span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>OK, so we have our four files, lets see if we can run through the entire 5 minutes. And see how long it takes.</p>
+<p>OK, so we have our four functions, lets see if we can run through the entire 5 minutes. And see how long it takes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">tic</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>audio_file <span class="ot">=</span> <span class="st">"20s vs 40s Vacation [DFM4Ey5oyhI].m4a"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>holderness_transcribed <span class="ot">=</span> <span class="fu">convert_transcribe</span>(audio_file)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tictoc<span class="sc">::</span><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>344.642 sec elapsed</code></pre>
+<pre><code>292.956 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
