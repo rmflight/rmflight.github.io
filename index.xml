@@ -10,11 +10,11 @@
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Sun, 11 Jun 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 01 Nov 2023 04:00:00 GMT</lastBuildDate>
 <item>
-  <title>Transcribing A File Using carelesswhisper</title>
+  <title>Installing OpenBLAS for self-compiled R</title>
   <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper/index.html</link>
+  <link>https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r/index.html</link>
   <description><![CDATA[ 
 
 
@@ -22,159 +22,71 @@
 
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
-<p>You can iterate through an audio file and transcribe it using the new <code>carelesswhisper</code> package <span class="citation" data-cites="cool_whisper">(coolbutuseless 2023)</span>.</p>
+<p>When you compile R from scratch on Linux, it doesn’t use the system BLAS libraries, it uses one that is compiled itself. This BLAS library may be rather slow. If you want to compile and use OpenBLAS, you then tell R to use the newly compiled library.</p>
 </section>
-<section id="carelesswhisper" class="level2">
-<h2 class="anchored" data-anchor-id="carelesswhisper">carelesswhisper</h2>
-<p>If you don’t follow coolbutuseless on Mastodon, you are missing out, especially if you want to know about really intriguing R packages <span class="citation" data-cites="cool_mastodon">(coolbutuseless, n.d.)</span>. Just this week, they released a new R package built upon the <code>whisper</code> C library <span class="citation" data-cites="cool_whisper">(coolbutuseless 2023)</span>. Although I don’t do any actual work with audio, especially human audio that one might want to do automatic speech recognition or transcription with, I dug into it to see if it would be possible to actually transcribe a full audio file.</p>
+<section id="compiling-installing-openblas" class="level2">
+<h2 class="anchored" data-anchor-id="compiling-installing-openblas">Compiling &amp; Installing OpenBLAS</h2>
+<p>Clone and compile OpenBLAS. If you’ve already compiled R on this machine, it should have all of the pre-requisites already installed.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># get it</span></span>
+<span id="cb1-2"><span class="bu" style="color: null;">cd</span> ~/software</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">git</span> clone https://github.com/xianyi/OpenBLAS</span></code></pre></div>
+<p>We are going to compile it in multi-threaded mode (<code>USE_THREAD=1</code>), and to use a dynamic architecture, where it will have the <em>gotoblas</em> symbols included (<code>DYNAMIC_ARCH=1</code>).</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># compile it</span></span>
+<span id="cb2-2"><span class="bu" style="color: null;">cd</span> OpenBLAS</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;">make</span> <span class="at" style="color: #657422;">-j</span> USE_THREAD=1 DYNAMIC_ARCH=1</span></code></pre></div>
+<p>You should see test output here, that indicates everything is OK.</p>
+<p>Now we create a directory to install OpenBLAS into. For my purposes, this is still going to be in <code>~/software</code>.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># install it</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;">mkdir</span> ~/software/libOpenBLAS</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;">make</span> <span class="at" style="color: #657422;">-j</span> PREFIX=~/software/libOpenBLAS USE_THREAD=1 DYNAMIC_ARCH=1</span></code></pre></div>
 </section>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>We are going to need a few packages besides <code>carelesswhisper</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># for transcription</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(carelesswhisper)</span>
-<span id="cb1-3"><span class="co" style="color: #5E5E5E;"># for converting from m4a</span></span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(av)</span>
-<span id="cb1-5"><span class="co" style="color: #5E5E5E;"># for audio processing</span></span>
-<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(tuneR)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'tuneR'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:av':
-
-    sine</code></pre>
-</div>
-</div>
-<p>We also need an audio file. I decided to download an episode of Holderness Family Laughs <span class="citation" data-cites="holderness_vacation">(Family 2023)</span>, and see if we can transcribe it. I used yt-dlp to download and convert to audio <span class="citation" data-cites="yt_dlp">(<span>“YT-DLP”</span> 2023)</span>.</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;">yt-dlp</span> https://youtu.be/DFM4Ey5oyhI <span class="at" style="color: #657422;">-x</span> <span class="at" style="color: #657422;">--audio-format</span><span class="op" style="color: #5E5E5E;">=</span>m4a</span></code></pre></div>
+<section id="telling-r-to-use-it" class="level2">
+<h2 class="anchored" data-anchor-id="telling-r-to-use-it">Telling R To Use It</h2>
+<p>If you’ve compiled your own version of R, it should be using it’s own internal BLAS and LAPACK libraries. You can see this using <code>sessionInfo()</code>.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">sessionInfo</span>()[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"BLAS"</span>, <span class="st" style="color: #20794D;">"LAPACK"</span>)]</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;"># mine shows</span></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;"># &gt; $BLAS</span></span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;"># &gt; [1] "/software/R-4.3.0/lib/libRblas.so"</span></span>
+<span id="cb4-6"><span class="co" style="color: #5E5E5E;">#</span></span>
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;"># &gt; $LAPACK</span></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;"># &gt; [1] "/software/R-4.3.0/lib/libRlapack.so"</span></span></code></pre></div>
+<p>So, now we want to backup the BLAS library, and then link it to our compiled OpenBLAS.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;">cp</span> ~/software/R-4.3.0/lib/libRblas.so ~/software/R-4.3.0/lib/libRblas.so.backup</span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;">ln</span> <span class="at" style="color: #657422;">-snf</span> ~/software/libOpenBLAS/lib/libopenblas.so ~/software/R-4.3.0/lib/libRblas.so</span></code></pre></div>
+<p>When you start R again, you should now see that it is using a different BLAS &amp; LAPACK library.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;">sessionInfo</span>()[<span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"BLAS"</span>, <span class="st" style="color: #20794D;">"LAPACK"</span>)]</span>
+<span id="cb7-2"></span>
+<span id="cb7-3"><span class="co" style="color: #5E5E5E;"># mine shows</span></span>
+<span id="cb7-4"><span class="co" style="color: #5E5E5E;"># &gt; $BLAS</span></span>
+<span id="cb7-5"><span class="co" style="color: #5E5E5E;"># &gt; [1] "~/software/libOpenBLAS/lib/libopenblas.so"</span></span>
+<span id="cb7-6"><span class="co" style="color: #5E5E5E;">#</span></span>
+<span id="cb7-7"><span class="co" style="color: #5E5E5E;"># &gt; $LAPACK</span></span>
+<span id="cb7-8"><span class="co" style="color: #5E5E5E;"># &gt; [1] "~/software/libOpenBLAS/lib/libopenblas.so"</span></span></code></pre></div>
 </section>
-<section id="conversion" class="level2">
-<h2 class="anchored" data-anchor-id="conversion">Conversion</h2>
-<p>Now, we don’t want to convert the whole thing, because it creates a giant piece of audio that will then have to be loaded into memory. Just our 5 minute Holderness episode is 69 MB on disk. So for longer pieces of audio it would be even worse. However, we can do piecewise conversion and transcription over the length of the file.</p>
-<p>When we do the conversion, we do have to keep a couple of things in mind about what <code>carelesswhisper</code> expects. It wants single channel, 16 KHz files. This can be done during conversion. The other thing it expects is a range of values between -1 and 1. This we can take care of after conversion.</p>
-<p>So we will write a function to do the conversion, read in the file, and do the transcription. We will also overlap the time steps by 2 seconds, so that if we cut a word off in a previous conversion, then we should get the full thing in the next one.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;"># generate time indexes for transcription</span></span>
-<span id="cb5-2">split_time <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(audio_length)</span>
-<span id="cb5-3">{</span>
-<span id="cb5-4">  n_piece <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">ceiling</span>(audio_length <span class="sc" style="color: #5E5E5E;">/</span> <span class="dv" style="color: #AD0000;">30</span>) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">2</span></span>
-<span id="cb5-5">  out_time <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">vector</span>(<span class="st" style="color: #20794D;">"list"</span>, n_piece)</span>
-<span id="cb5-6">  start_time <span class="ot" style="color: #003B4F;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
-<span id="cb5-7">  <span class="cf" style="color: #003B4F;">for</span> (i_piece <span class="cf" style="color: #003B4F;">in</span> <span class="fu" style="color: #4758AB;">seq_len</span>(n_piece)) {</span>
-<span id="cb5-8">    <span class="cf" style="color: #003B4F;">if</span> (start_time <span class="sc" style="color: #5E5E5E;">&gt;</span> audio_length) {</span>
-<span id="cb5-9">      <span class="cf" style="color: #003B4F;">break</span>()</span>
-<span id="cb5-10">    }</span>
-<span id="cb5-11">    out_time[[i_piece]] <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">start =</span> start_time,</span>
-<span id="cb5-12">                                         <span class="at" style="color: #657422;">end =</span> <span class="fu" style="color: #4758AB;">min</span>(<span class="fu" style="color: #4758AB;">c</span>(start_time <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">30</span>, audio_length)))</span>
-<span id="cb5-13">    start_time <span class="ot" style="color: #003B4F;">=</span> start_time <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">28</span></span>
-<span id="cb5-14">  }</span>
-<span id="cb5-15">  </span>
-<span id="cb5-16">  not_null <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map_lgl</span>(out_time, \(x){<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.null</span>(x)})</span>
-<span id="cb5-17">  out_time[not_null]</span>
-<span id="cb5-18">}</span>
-<span id="cb5-19"></span>
-<span id="cb5-20"><span class="co" style="color: #5E5E5E;"># rescale the values in the wav object</span></span>
-<span id="cb5-21">rescale_wav <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(wav_object)</span>
-<span id="cb5-22">{</span>
-<span id="cb5-23">  wav_values <span class="ot" style="color: #003B4F;">=</span> wav_object<span class="sc" style="color: #5E5E5E;">@</span>left</span>
-<span id="cb5-24">  wav_range <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">max</span>(<span class="fu" style="color: #4758AB;">abs</span>(wav_values))</span>
-<span id="cb5-25">  wav_sign <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sign</span>(wav_values)</span>
-<span id="cb5-26">  wav_fraction <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">abs</span>(wav_values) <span class="sc" style="color: #5E5E5E;">/</span> wav_range</span>
-<span id="cb5-27">  wav_convert <span class="ot" style="color: #003B4F;">=</span> wav_sign <span class="sc" style="color: #5E5E5E;">*</span> wav_fraction</span>
-<span id="cb5-28">  wav_convert</span>
-<span id="cb5-29">}</span>
-<span id="cb5-30"></span>
-<span id="cb5-31"><span class="co" style="color: #5E5E5E;"># do the actual conversion and transcription</span></span>
-<span id="cb5-32">inner_convert_transcribe <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(time_index, audio_file, whisper_model)</span>
-<span id="cb5-33">{</span>
-<span id="cb5-34">  out_wav <span class="ot" style="color: #003B4F;">=</span> av<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">av_audio_convert</span>(audio_file, <span class="at" style="color: #657422;">output =</span> <span class="st" style="color: #20794D;">"tmp.wav"</span>, <span class="at" style="color: #657422;">channels =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
-<span id="cb5-35">                                 <span class="at" style="color: #657422;">sample_rate =</span> <span class="dv" style="color: #AD0000;">16000</span>, <span class="at" style="color: #657422;">start_time =</span> time_index[<span class="st" style="color: #20794D;">"start"</span>],</span>
-<span id="cb5-36">                                 <span class="at" style="color: #657422;">total_time =</span> time_index[<span class="st" style="color: #20794D;">"end"</span>] <span class="sc" style="color: #5E5E5E;">-</span> time_index[<span class="st" style="color: #20794D;">"start"</span>],</span>
-<span id="cb5-37">                                 <span class="at" style="color: #657422;">verbose =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)</span>
-<span id="cb5-38">  in_audio <span class="ot" style="color: #003B4F;">=</span> tuneR<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">readWave</span>(<span class="st" style="color: #20794D;">"tmp.wav"</span>)</span>
-<span id="cb5-39">  scaled_audio <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rescale_wav</span>(in_audio)</span>
-<span id="cb5-40">  transcribed <span class="ot" style="color: #003B4F;">=</span> carelesswhisper<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">whisper</span>(whisper_model, scaled_audio)</span>
-<span id="cb5-41">  transcribed</span>
-<span id="cb5-42">}</span>
-<span id="cb5-43"></span>
-<span id="cb5-44"><span class="co" style="color: #5E5E5E;"># convert an actual file</span></span>
-<span id="cb5-45">convert_transcribe <span class="ot" style="color: #003B4F;">=</span> <span class="cf" style="color: #003B4F;">function</span>(audio_file)</span>
-<span id="cb5-46">{</span>
-<span id="cb5-47">  <span class="co" style="color: #5E5E5E;"># audio_file = "posts/2023-06-10-transcribing-a-file-using-carelesswhisper/20s vs 40s Vacation [DFM4Ey5oyhI].m4a"</span></span>
-<span id="cb5-48">  audio_info <span class="ot" style="color: #003B4F;">=</span> av<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">av_media_info</span>(audio_file)</span>
-<span id="cb5-49">  audio_length <span class="ot" style="color: #003B4F;">=</span> audio_info<span class="sc" style="color: #5E5E5E;">$</span>duration</span>
-<span id="cb5-50">  </span>
-<span id="cb5-51">  time_splits <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">split_time</span>(audio_length)</span>
-<span id="cb5-52">  whisper_model <span class="ot" style="color: #003B4F;">=</span> carelesswhisper<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">whisper_init</span>()</span>
-<span id="cb5-53">  transcribed_data <span class="ot" style="color: #003B4F;">=</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map</span>(time_splits,</span>
-<span id="cb5-54">                                inner_convert_transcribe,</span>
-<span id="cb5-55">                                audio_file,</span>
-<span id="cb5-56">                                whisper_model)</span>
-<span id="cb5-57">  <span class="fu" style="color: #4758AB;">file.remove</span>(<span class="st" style="color: #20794D;">"tmp.wav"</span>)</span>
-<span id="cb5-58">  transcribed_data</span>
-<span id="cb5-59">}</span></code></pre></div>
-</div>
-<p>OK, so we have our four functions, lets see if we can run through the entire 5 minutes. And see how long it takes.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">tictoc<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">tic</span>()</span>
-<span id="cb6-2">audio_file <span class="ot" style="color: #003B4F;">=</span> <span class="st" style="color: #20794D;">"20s vs 40s Vacation [DFM4Ey5oyhI].m4a"</span></span>
-<span id="cb6-3">holderness_transcribed <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">convert_transcribe</span>(audio_file)</span>
-<span id="cb6-4">tictoc<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">toc</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>292.956 sec elapsed</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">holderness_transcribed[<span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span>)]</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
-[1] "I've accrue 3.4 vacation days after working at my job for an entire year. If we stay up the entire time, that's like a 10 day vacation. Okay, so we have the whole week off, but really it's 2.5 days. Who are we kidding? It takes me a couple of days to unwind and I'd like to come back by Friday so I can go grocery shopping at the laundry done. I mean, I'm not going to just jump back into my workway. After being around all you people, I'm going to need a day alone on my phone just in the dark. Okay, three bikinis, a cover up, and some heels. I'll pack, to know how to eat!"
-
-[[2]]
-[1] "heels, I'll pack to know how to, I need this bag. These are my good hats, I can't just put my good hats in with clothes, it'll ruin. This is my supplement, that's the bag full of stuff I know the kids are gonna forget because they pack like it is. It's like 12 pair of underwear, one pair of socks, and a sweater. We're going to the beat. This is the snack bag, we're not buying snacks when we get to the beat. I'm at pain, $10 for a bag of chips. Yeah. Gotta bring my good shampoo, that travel shampoo does not cut it."
-
-[[3]]
-[1] "who does not cut it. We need a shampoo bag. Yes, I do. I price line this hotel. If we split this one room between the 12 of us, it'll be super affordable. Let's go girls. Let's just get the same house we went to last year. I mean, I know that it costs more than a car, but everyone will get their own bathroom. Everyone needs their own space. For their special morning time, right babe? If we sleep, shoulder to shoulder, we can at least get four people on the bed. And easily eight on the floor, right here. Cook on Housekeeping and get"</code></pre>
-</div>
-</div>
-<p>So this took just longer than the time of the video itself, which honestly isn’t too bad. The conversion of small bits of file, and then re-scaling to work with <code>whisper</code>, doesn’t seem to be imposing much overhead. Is the transcription perfect? No. Is it pretty decent? I think so, especially given that we can do it all locally, from our own audio file. The only other free way I know to do this is using “Voice Typing” in Google Docs, which is only accessible from the Chrome browser, and means putting your audio through Google’s servers.</p>
-<p>Also, <code>carelesswhisper</code> default is to use the smallest possible model. There may be other models that will work on your machine, depending on how much RAM you have available. The <code>carelesswhisper</code> README mentions how to use other speech recognition models from the <code>whisper</code> website <span class="citation" data-cites="cool_whisper">(coolbutuseless 2023)</span>.</p>
-
+<section id="why" class="level2">
+<h2 class="anchored" data-anchor-id="why">Why?</h2>
+<p>The default BLAS and LAPACK libraries that ship with R are not the most efficient versions. There are decent comparisons on the internet showing substantial speedups depending on the task you are performing. In my particular case, I have observed a speedup of 10X when doing a single-value-decomposition on moderately sized matrices (1600 x 1600). Given what I’m doing, that is definitely worth it.</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-cool_whisper" class="csl-entry">
-coolbutuseless. 2023. <span>“Carelesswhisper.”</span> <a href="https://github.com/coolbutuseless/carelesswhisper">https://github.com/coolbutuseless/carelesswhisper</a>.
-</div>
-<div id="ref-cool_mastodon" class="csl-entry">
-———. n.d. <a href="https://fosstodon.org/@coolbutuseless">https://fosstodon.org/@coolbutuseless</a>.
-</div>
-<div id="ref-holderness_vacation" class="csl-entry">
-Family, Holderness. 2023. <span>“20s Vs 40s Vaction.”</span> <a href="https://youtu.be/DFM4Ey5oyhI">https://youtu.be/DFM4Ey5oyhI</a>.
-</div>
-<div id="ref-yt_dlp" class="csl-entry">
-<span>“YT-DLP.”</span> 2023. <a href="https://github.com/yt-dlp/yt-dlp">https://github.com/yt-dlp/yt-dlp</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2023,
   author = {Robert M Flight},
-  title = {Transcribing {A} {File} {Using} Carelesswhisper},
-  date = {2023-06-11},
-  url = {https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper},
+  title = {Installing {OpenBLAS} for Self-Compiled {R}},
+  date = {2023-11-01},
+  url = {https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r},
   langid = {en}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2023" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2023. <span>“Transcribing A File Using
-Carelesswhisper.”</span> June 11, 2023. <a href="https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper">https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper</a>.
+Robert M Flight. 2023. <span>“Installing OpenBLAS for Self-Compiled
+R.”</span> November 1, 2023. <a href="https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r">https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
-  <category>audio</category>
-  <guid>https://rmflight.github.io/posts/2023-06-11-transcribing-a-file-using-carelesswhisper/index.html</guid>
-  <pubDate>Sun, 11 Jun 2023 04:00:00 GMT</pubDate>
+  <category>profiling</category>
+  <category>openblas</category>
+  <guid>https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r/index.html</guid>
+  <pubDate>Wed, 01 Nov 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Fast Kendall-tau Correlation with Rcpp</title>
