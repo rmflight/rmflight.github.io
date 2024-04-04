@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Robert M Flight">
-<meta name="dcterms.date" content="2023-11-01">
+<meta name="dcterms.date" content="2023-12-21">
 
-<title>Deciphering Life: One Bit at a Time - Installing OpenBLAS for self-compiled R</title>
+<title>Deciphering Life: One Bit at a Time - facets-as-subplots</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -172,12 +138,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Installing OpenBLAS for self-compiled R</h1>
-            <p class="subtitle lead"></p><p>How to compile, and make sure a self-compiled R uses OpenBLAS, which may be faster than the installed one.</p><p></p>
+      <h1 class="title">facets-as-subplots</h1>
+            <p class="subtitle lead"></p><p>Making Facets Look Closer to Sub-Plots</p><p></p>
                                 <div class="quarto-categories">
+                <div class="quarto-category">random-code-snippets</div>
+                <div class="quarto-category">ggplot2</div>
                 <div class="quarto-category">R</div>
-                <div class="quarto-category">profiling</div>
-                <div class="quarto-category">openblas</div>
               </div>
                   </div>
   </div>
@@ -195,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 1, 2023</p>
+        <p class="date">December 21, 2023</p>
       </div>
     </div>
     
@@ -211,9 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
-  <li><a href="#compiling-installing-openblas" id="toc-compiling-installing-openblas" class="nav-link" data-scroll-target="#compiling-installing-openblas">Compiling &amp; Installing OpenBLAS</a></li>
-  <li><a href="#telling-r-to-use-it" id="toc-telling-r-to-use-it" class="nav-link" data-scroll-target="#telling-r-to-use-it">Telling R To Use It</a></li>
-  <li><a href="#why" id="toc-why" class="nav-link" data-scroll-target="#why">Why?</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   </ul>
 </nav>
 </nav>
@@ -230,65 +195,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
-<p>When you compile R from scratch on Linux, it doesn’t use the system BLAS libraries, it uses one that is compiled itself. This BLAS library may be rather slow. If you want to compile and use OpenBLAS, you then tell R to use the newly compiled library.</p>
+<p>Use <code>strip.background</code> and <code>panel.border</code> to adjust a faceted plot to look closer to sub-plots.</p>
 </section>
-<section id="compiling-installing-openblas" class="level2">
-<h2 class="anchored" data-anchor-id="compiling-installing-openblas">Compiling &amp; Installing OpenBLAS</h2>
-<p>Clone and compile OpenBLAS. If you’ve already compiled R on this machine, it should have all of the pre-requisites already installed.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get it</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/software</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/xianyi/OpenBLAS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We are going to compile it in multi-threaded mode (<code>USE_THREAD=1</code>), and to use a dynamic architecture, where it will have the <em>gotoblas</em> symbols included (<code>DYNAMIC_ARCH=1</code>).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compile it</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> OpenBLAS</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j</span> USE_THREAD=1 DYNAMIC_ARCH=1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should see test output here, that indicates everything is OK.</p>
-<p>Now we create a directory to install OpenBLAS into. For my purposes, this is still going to be in <code>~/software</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install it</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/software/libOpenBLAS</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j</span> PREFIX=~/software/libOpenBLAS USE_THREAD=1 DYNAMIC_ARCH=1 install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>I’ve been using the <code>cowplot::theme_cowplot</code> a lot for my manuscript figures. In conjunction, I’ll use <code>patchwork</code> to arrange panels together when necessary.</p>
 </section>
-<section id="telling-r-to-use-it" class="level2">
-<h2 class="anchored" data-anchor-id="telling-r-to-use-it">Telling R To Use It</h2>
-<p>If you’ve compiled your own version of R, it should be using it’s own internal BLAS and LAPACK libraries. You can see this using <code>sessionInfo()</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()[<span class="fu">c</span>(<span class="st">"BLAS"</span>, <span class="st">"LAPACK"</span>)]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># mine shows</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; $BLAS</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; [1] "/software/R-4.3.0/lib/libRblas.so"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; $LAPACK</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; [1] "/software/R-4.3.0/lib/libRlapack.so"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>So, now we want to backup the BLAS library, and then link it to our compiled OpenBLAS.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ~/software/R-4.3.0/lib/libRblas.so ~/software/R-4.3.0/lib/libRblas.so.backup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-snf</span> ~/software/libOpenBLAS/lib/libopenblas.so ~/software/R-4.3.0/lib/libRblas.so</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When you start R again, you should now see that it is using a different BLAS &amp; LAPACK library.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()[<span class="fu">c</span>(<span class="st">"BLAS"</span>, <span class="st">"LAPACK"</span>)]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># mine shows</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; $BLAS</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; [1] "~/software/libOpenBLAS/lib/libopenblas.so"</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; $LAPACK</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; [1] "~/software/libOpenBLAS/lib/libopenblas.so"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="why" class="level2">
-<h2 class="anchored" data-anchor-id="why">Why?</h2>
-<p>The default BLAS and LAPACK libraries that ship with R are not the most efficient versions. There are decent comparisons on the internet showing substantial speedups depending on the task you are performing. In my particular case, I have observed a speedup of 10X when doing a single-value-decomposition on moderately sized matrices (1600 x 1600). Given what I’m doing, that is definitely worth it.</p>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{m flight2023,
   author = {M Flight, Robert},
-  title = {Installing {OpenBLAS} for Self-Compiled {R}},
-  date = {2023-11-01},
-  url = {https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r},
+  title = {Facets-as-Subplots},
+  date = {2023-12-21},
+  url = {https://rmflight.github.io/posts/2023-12-21-facetsassubplots},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-m flight2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-M Flight, Robert. 2023. <span>“Installing OpenBLAS for Self-Compiled
-R.”</span> November 1, 2023. <a href="https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r">https://rmflight.github.io/posts/2023-11-01-installing-openblas-for-selfcompiled-r</a>.
+M Flight, Robert. 2023. <span>“Facets-as-Subplots.”</span> December 21,
+2023. <a href="https://rmflight.github.io/posts/2023-12-21-facetsassubplots">https://rmflight.github.io/posts/2023-12-21-facetsassubplots</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
