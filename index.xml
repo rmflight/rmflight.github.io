@@ -9,8 +9,291 @@
 <link>https://rmflight.github.io/</link>
 <atom:link href="https://rmflight.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.4.533</generator>
-<lastBuildDate>Wed, 03 Apr 2024 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.3</generator>
+<lastBuildDate>Mon, 23 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Adding RStudio Addin Shortcuts to the Positron IDE</title>
+  <dc:creator>Robert M Flight</dc:creator>
+  <link>https://rmflight.github.io/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>If a package provides an RStudio addin, it turns out you can add them to Positron as well, and assign them to a custom keymapping.</p>
+<p>For example, the {tflow} package has commands to run targets make of a specific target, etc.</p>
+<p>The key, is to modify the file <code>keybindings.json</code>, and make use of the “workbench.action.executeCode.console”.</p>
+<p>Here I’ve posted some snippets from my own <code>keybindings.json</code> file, where I’ve enabled some from {tflow} and {targets} packages.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-2">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"key"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ctrl+t m"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-3">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"command"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"workbench.action.executeCode.console"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-4">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"args"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-5">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"langId"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-6">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"code"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"targets::tar_make() |&gt; flighttools::ft_notify_success_error() |&gt; flighttools::ft_beep_success_error()"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-7">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"focus"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span></span>
+<span id="cb1-8">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-9">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-10">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-11">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"key"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ctrl+t t"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-12">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"command"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"workbench.action.executeCode.console"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-13">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"args"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-14">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"langId"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-15">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"code"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tflow::rs_make_target_at_cursor() |&gt; flighttools::ft_notify_success_error() |&gt; flighttools::ft_beep_success_error()"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-16">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"focus"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span></span>
+<span id="cb1-17">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-18">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-19">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-20">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"key"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ctrl+t r"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-21">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"command"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"workbench.action.executeCode.console"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-22">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"args"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-23">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"langId"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-24">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"code"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"targets::rstudio_addin_tar_read()"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-25">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"focus"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span></span>
+<span id="cb1-26">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-27">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-28">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-29">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"key"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ctrl+t l"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-30">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"command"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"workbench.action.executeCode.console"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-31">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"args"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb1-32">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"langId"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"r"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-33">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"code"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"targets::rstudio_addin_tar_load()"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb1-34">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"focus"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span></span>
+<span id="cb1-35">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb1-36">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">,</span></span></code></pre></div></div>
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{m_flight2026,
+  author = {M Flight, Robert},
+  title = {Adding {RStudio} {Addin} {Shortcuts} to the {Positron} {IDE}},
+  date = {2026-11-23},
+  url = {https://rmflight.github.io/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-m_flight2026" class="csl-entry quarto-appendix-citeas">
+M Flight, Robert. 2026. <span>“Adding RStudio Addin Shortcuts to the
+Positron IDE.”</span> November 23, 2026. <a href="https://rmflight.github.io/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/">https://rmflight.github.io/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/</a>.
+</div></div></section></div> ]]></description>
+  <category>random-code-snippets</category>
+  <category>R</category>
+  <category>positron</category>
+  <guid>https://rmflight.github.io/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/</guid>
+  <pubDate>Mon, 23 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Weird Correlation Patterns</title>
   <dc:creator>Robert M Flight</dc:creator>
@@ -672,6 +955,7 @@ font-style: inherit;">20</span>)</span></code></pre></div>
 <p>And in fact, that is exactly what is happening in the C code for R’s covariance / correlation code, iterating over each pair of points (<code>k</code> and <code>n1</code>; snippet shown here from lines 108 - 118 of file src/library/stats/src/cov.c in R-4.3.0).</p>
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span> <span class="co" style="color: #5E5E5E;
@@ -679,6 +963,7 @@ background-color: null;
 font-style: inherit;">/* Kendall's tau */</span>                      \</span>
 <span id="cb5-2">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span>n1<span class="op" style="color: #5E5E5E;
@@ -696,6 +981,7 @@ background-color: null;
 font-style: inherit;">++)</span>                   \</span>
 <span id="cb5-3">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(!(</span>ISNAN<span class="op" style="color: #5E5E5E;
@@ -761,6 +1047,7 @@ font-style: inherit;">}</span>                                               \</
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x, y)</span>
 <span id="cb6-2">{</span>
 <span id="cb6-3">  n_x <span class="ot" style="color: #003B4F;
@@ -1010,6 +1297,7 @@ font-style: inherit;">20</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x, y)</span>
 <span id="cb9-2">{</span>
 <span id="cb9-3">  n_entry <span class="ot" style="color: #003B4F;
@@ -1029,8 +1317,10 @@ background-color: null;
 font-style: inherit;">0</span></span>
 <span id="cb9-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
@@ -1042,8 +1332,10 @@ background-color: null;
 font-style: inherit;">1</span>)) {</span>
 <span id="cb9-7">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (j <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">seq</span>(i <span class="sc" style="color: #5E5E5E;
@@ -1246,6 +1538,7 @@ font-style: inherit;">20</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x, y)</span>
 <span id="cb12-2">{</span>
 <span id="cb12-3"></span>
@@ -1253,6 +1546,7 @@ font-style: inherit;">function</span>(x, y)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb12-5">  {</span>
 <span id="cb12-6">    value_order <span class="ot" style="color: #003B4F;
@@ -1270,6 +1564,7 @@ font-style: inherit;">"radix"</span>)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x){</span>
 <span id="cb12-10">    n_entry <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -1297,8 +1592,10 @@ font-style: inherit;">2</span></span>
 <span id="cb12-15">  </span>
 <span id="cb12-16">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
@@ -1306,6 +1603,7 @@ background-color: null;
 font-style: inherit;">2</span>, n_entry)) {</span>
 <span id="cb12-17">      <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (x[i] <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!=</span> x[(i <span class="sc" style="color: #5E5E5E;
@@ -1318,6 +1616,7 @@ background-color: null;
 font-style: inherit;">=</span> 1L;</span>
 <span id="cb12-19">      } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> {</span>
 <span id="cb12-20">        match_self[idx] <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -1340,6 +1639,7 @@ font-style: inherit;">return</span>(match_self)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x, y)</span>
 <span id="cb12-28">  {</span>
 <span id="cb12-29">    n_entry <span class="ot" style="color: #003B4F;
@@ -1372,8 +1672,10 @@ font-style: inherit;">2</span></span>
 <span id="cb12-34">    </span>
 <span id="cb12-35">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
@@ -1381,6 +1683,7 @@ background-color: null;
 font-style: inherit;">2</span>, n_entry)) {</span>
 <span id="cb12-36">      <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> ((x[i] <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!=</span> x[(i <span class="sc" style="color: #5E5E5E;
@@ -1401,6 +1704,7 @@ background-color: null;
 font-style: inherit;">=</span> 1L</span>
 <span id="cb12-38">      } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> {</span>
 <span id="cb12-39">        match_self[idx] <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -1432,6 +1736,7 @@ font-style: inherit;">return</span>(match_self)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(ranks)</span>
 <span id="cb12-48">  {</span>
 <span id="cb12-49">  </span>
@@ -1520,6 +1825,7 @@ font-style: inherit;">5</span>))))</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x){</span>
 <span id="cb12-60">    notzero <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -1536,8 +1842,10 @@ font-style: inherit;">=</span> 1L</span>
 <span id="cb12-62">    </span>
 <span id="cb12-63">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
@@ -1547,6 +1855,7 @@ background-color: null;
 font-style: inherit;">length</span>(x))) {</span>
 <span id="cb12-64">      <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (x[i] <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
@@ -1589,6 +1898,7 @@ font-style: inherit;">return</span>(notzero)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x, y){</span>
 <span id="cb12-75">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1639,11 +1949,13 @@ font-style: inherit;">0</span></span>
 <span id="cb12-85">    </span>
 <span id="cb12-86">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> (i <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> n) {</span>
 <span id="cb12-87">      <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> ((k <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> n) <span class="sc" style="color: #5E5E5E;
@@ -1673,6 +1985,7 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb12-90">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> (idx <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
@@ -1707,6 +2020,7 @@ font-style: inherit;">1</span></span>
 <span id="cb12-95">      }</span>
 <span id="cb12-96">      <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> (i <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> k) {</span>
@@ -1719,6 +2033,7 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb12-98">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">while</span> (idx <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> sup) {</span>
@@ -2222,6 +2537,7 @@ Rcpp.”</span> May 29, 2023. <a href="https://rmflight.github.io/posts/2023-05-
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb1-2">{</span>
 <span id="cb1-3">  <span class="fu" style="color: #4758AB;
@@ -2241,6 +2557,7 @@ font-style: inherit;">length</span>(values)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb1-9">{</span>
 <span id="cb1-10">  <span class="fu" style="color: #4758AB;
@@ -2305,6 +2622,7 @@ background-color: null;
 font-style: inherit;">=</span> safe_builtin),</span>
 <span id="cb3-5">                         <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(.x){</span>
 <span id="cb3-6">                           targets<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -2859,12 +3177,14 @@ font-style: inherit;">tar_deparse_safe</span>(safe_builtin)</span></code></pre><
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb8-2">{</span>
 <span id="cb8-3">  internal_byhand <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb8-4">  {</span>
 <span id="cb8-5">    <span class="fu" style="color: #4758AB;
@@ -2895,6 +3215,7 @@ font-style: inherit;">safe_internal</span>(values)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb8-14">{</span>
 <span id="cb8-15">  safe_builtin <span class="ot" style="color: #003B4F;
@@ -2937,6 +3258,7 @@ background-color: null;
 font-style: inherit;">=</span> safe_builtin_v2),</span>
 <span id="cb9-3">                         <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(.x){</span>
 <span id="cb9-4">                           targets<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -3470,6 +3792,7 @@ font-style: inherit;">bind_rows</span>(hash_table, hash_table2))</span></code></
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb10-2">{</span>
 <span id="cb10-3">  <span class="fu" style="color: #4758AB;
@@ -3485,6 +3808,7 @@ font-style: inherit;">mean</span>(values)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb10-9">{</span>
 <span id="cb10-10">  safe_version <span class="ot" style="color: #003B4F;
@@ -3509,6 +3833,7 @@ font-style: inherit;">safe_version</span>(values)</span>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(values)</span>
 <span id="cb11-2">{</span>
 <span id="cb11-3">  <span class="fu" style="color: #4758AB;
@@ -5895,6 +6220,7 @@ font-style: inherit;">---</span></span>
 background-color: null;
 font-style: inherit;">date</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> last-modified</span></span>
@@ -5902,6 +6228,7 @@ font-style: inherit;"> last-modified</span></span>
 background-color: null;
 font-style: inherit;">date-format</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> YYYY-MM-DD HH:mm</span></span>
@@ -6072,12 +6399,14 @@ font-style: inherit;"># this would be an item under the navbar</span></span>
 background-color: null;
 font-style: inherit;">  </span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">-</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">text</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span><span class="st" style="color: #20794D;
@@ -6089,6 +6418,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">href</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> link</span></span></code></pre></div>
@@ -6466,6 +6796,7 @@ font-style: inherit;">spec()</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`</span> to retrieve the full column specification <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> this data.</span>
 <span id="cb11-12">ℹ Specify the column types or set <span class="st" style="color: #20794D;
 background-color: null;
@@ -6518,6 +6849,7 @@ font-style: inherit;">spec()</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`</span> to retrieve the full column specification <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> this data.</span>
 <span id="cb11-22">ℹ Specify the column types or set <span class="st" style="color: #20794D;
 background-color: null;
@@ -6842,6 +7174,7 @@ font-style: inherit;">0.312</span> seconds]</span></code></pre></div>
 background-color: null;
 font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(lipid_measurements){</span>
 <span id="cb18-2">  <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -8275,6 +8608,7 @@ font-style: inherit;">map_dfr</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rownames</span>(grp_matrix), <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(i_grp){</span>
 <span id="cb1-15">  tmp_logical <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -8463,66 +8797,6 @@ Robert M Flight. 2022. <span>“Pie Charts in RCy3.”</span> January 6,
   <category>R</category>
   <guid>https://rmflight.github.io/posts/2022-01-06-pie-charts-in-rcy3/</guid>
   <pubDate>Thu, 06 Jan 2022 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Reusing ggplot2 Colors</title>
-  <dc:creator>Robert M Flight</dc:creator>
-  <link>https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>If you are using {ggplot2} a lot in your code, and don’t want to bother with a custom color scheme (I mean, there are lots of good options), but you are also using non-ggplot2 type plots, and want to reuse the colors.</p>
-<p>I frequently encounter this when I’m doing principal component analysis (PCA) <strong>combined</strong> with heatmaps plotted by <code>{ComplexHeatmap}</code>. I’ve colored sample groups in the PCA using <code>{ggplot2}</code> defaults, and now I want those same colors in the <code>{ComplexHeatmap}</code> row or column annotations.</p>
-<p>The trick to this is extracting the <code>palette</code> from the color definition you want. For example, very commonly (in biology at least) we might have 2 classes of samples, cases and controls. So we need 2 colors.</p>
-<p>When we generated the {ggplot2} plot, we would do something like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(data_frame, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> var1, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> var2, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> groups))</span></code></pre></div>
-</div>
-<p>To generate the matching colors for something else, we can do:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">g_colors <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">scale_color_discrete</span>()<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">palette</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
-</div>
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{mflight2021,
-  author = {Robert M Flight},
-  title = {Reusing Ggplot2 {Colors}},
-  date = {2021-12-21},
-  url = {https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mflight2021" class="csl-entry quarto-appendix-citeas">
-Robert M Flight. 2021. <span>“Reusing Ggplot2 Colors.”</span> December
-21, 2021. <a href="https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors">https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors</a>.
-</div></div></section></div> ]]></description>
-  <category>random-code-snippets</category>
-  <category>ggplot2</category>
-  <category>visualization</category>
-  <guid>https://rmflight.github.io/posts/2021-12-21-reusing-ggplot2-colors/</guid>
-  <pubDate>Tue, 21 Dec 2021 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

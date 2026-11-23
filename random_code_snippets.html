@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.9.3">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deciphering Life: One Bit at a Time - Random Code Snippets</title>
+<title>Random Code Snippets – Deciphering Life: One Bit at a Time</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -33,17 +33,19 @@ ul.task-list li input[type="checkbox"] {
 <link href="./static/img/robertmflight_square.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-listing/list.min.js"></script>
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6172778a27b0bfa6b3b3f65992e46a92.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-a8da2436bdc5181cb83f6cd557cd86c4.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-ece4b5583a6e81d61d8324e0b8d9357d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-9728461b9aa55212ed34d66241c941be.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -52,7 +54,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -61,8 +69,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -75,9 +85,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -95,64 +105,254 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed fullcontent quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Deciphering Life: One Bit at a Time</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfCHWeFjznvcoPs_zge3fPO3AaRs1WgmyDwi9lREGNSBybWhA/viewform?usp=sf_link">
- <span class="menu-text">Subscribe</span></a>
+    <a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfCHWeFjznvcoPs_zge3fPO3AaRs1WgmyDwi9lREGNSBybWhA/viewform?usp=sf_link"> 
+<span class="menu-text">Subscribe</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://rmflight.github.io/#category=random-code-snippets">
- <span class="menu-text">RCS</span></a>
+    <a class="nav-link" href="https://rmflight.github.io/#category=random-code-snippets"> 
+<span class="menu-text">RCS</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/rmflight"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/rmflight"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://orcid.org/0000-0001-8141-7788">
- <span class="menu-text"><i class="ai  ai-orcid" title="" style="color:"></i></span></a>
+    <a class="nav-link" href="https://orcid.org/0000-0001-8141-7788"> 
+<span class="menu-text"><i class="ai  ai-orcid" title="" style="color:"></i></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://mastodon.social/@rmflight"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://mastodon.social/@rmflight"> <i class="bi bi-mastodon" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -163,6 +363,7 @@ ul.task-list li input[type="checkbox"] {
     
 <!-- main -->
 <main class="content" id="quarto-document-content">
+
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -179,7 +380,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
+
 
 
 
@@ -187,22 +390,53 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="quarto,R,random-code-snippets" data-listing-date-sort="1670475600000" data-listing-file-modified-sort="1670525353322" data-listing-reading-time-sort="0.415">
+<div class="quarto-post image-right" data-index="0" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNSJTJDcG9zaXRyb24=" data-listing-date-sort="1795410000000" data-listing-file-modified-sort="1795447778439" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="407">
+<div class="thumbnail"><a href="./posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html">
 <h3 class="no-anchor listing-title">
-Customizing the Displayed Date in Quarto Pubs
+<a href="./posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html" class="no-external">Adding RStudio Addin Shortcuts to the Positron IDE</a>
 </h3>
 <div class="listing-subtitle">
-<p>Making the date field more useful in quarto docs and publications.</p>
+<a href="./posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html" class="no-external">How to have add-ins available via keyboard shortcuts. </a>
 </div>
-<div class="listing-description">
-If you want to change how the date is displayed in your <code>{quarto}</code> documents, this is handy.
+<div class="delink listing-description"><a href="./posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html" class="no-external">
+If a package provides an RStudio addin, it turns out you can add them to Positron as well, and assign them to a custom keymapping.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html" class="no-external">
+<div class="listing-date">
+Nov 23, 2026
+</div>
+<div class="listing-author">
+Robert M Flight
 </div>
 </a>
 </div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="cXVhcnRvJTJDUiUyQ3JhbmRvbS1jb2RlLXNuaXBwZXRz" data-listing-date-sort="1670475600000" data-listing-file-modified-sort="1670525353322" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="83">
+<div class="thumbnail"><a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html" class="no-external">Customizing the Displayed Date in Quarto Pubs</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html" class="no-external">Making the date field more useful in quarto docs and publications. </a>
+</div>
+<div class="delink listing-description"><a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html" class="no-external">
+If you want to change how the date is displayed in your <code>{quarto}</code> documents, this is handy.
+</a></div>
+</div>
 <div class="metadata">
-<a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html">
+<a href="./posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html" class="no-external">
 <div class="listing-date">
 Dec 8, 2022
 </div>
@@ -212,22 +446,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="colormaps,visualization,heatmap,random-code-snippets" data-listing-date-sort="1643605200000" data-listing-file-modified-sort="1670116959991" data-listing-reading-time-sort="2.33">
+<div class="quarto-post image-right" data-index="2" data-categories="Y29sb3JtYXBzJTJDdmlzdWFsaXphdGlvbiUyQ2hlYXRtYXAlMkNyYW5kb20tY29kZS1zbmlwcGV0cw==" data-listing-date-sort="1643605200000" data-listing-file-modified-sort="1670116959991" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="466">
+<div class="thumbnail"><a href="./posts/2022-01-31-heatmap-colormaps/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2022-01-31-heatmap-colormaps/index.html">
 <h3 class="no-anchor listing-title">
-Heatmap Colormaps!
+<a href="./posts/2022-01-31-heatmap-colormaps/index.html" class="no-external">Heatmap Colormaps!</a>
 </h3>
 <div class="listing-subtitle">
-<p>Examples of good colormaps to use for heatmaps, both divergent and incremental.</p>
+<a href="./posts/2022-01-31-heatmap-colormaps/index.html" class="no-external">Examples of good colormaps to use for heatmaps, both divergent and incremental. </a>
 </div>
-<div class="listing-description">
-Nine times out of ten, you probably need just one of the <code>{viridis}</code> colormaps for values that are increasing in one direction. For…<code></code>
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2022-01-31-heatmap-colormaps/index.html" class="no-external">
+Nine times out of ten, you probably need just one of the <code>{viridis}</code> colormaps for values that are increasing in one direction. For example, correlation values that are all…<code></code>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2022-01-31-heatmap-colormaps/index.html">
+<a href="./posts/2022-01-31-heatmap-colormaps/index.html" class="no-external">
 <div class="listing-date">
 Jan 31, 2022
 </div>
@@ -237,22 +474,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="random-code-snippets,cairo,xquartz,development,github,R" data-listing-date-sort="1641445200000" data-listing-file-modified-sort="1670115270144" data-listing-reading-time-sort="0.83">
+<div class="quarto-post image-right" data-index="3" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNjYWlybyUyQ3hxdWFydHolMkNkZXZlbG9wbWVudCUyQ2dpdGh1YiUyQ1I=" data-listing-date-sort="1641445200000" data-listing-file-modified-sort="1670115270144" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="166">
+<div class="thumbnail"><a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html">
 <h3 class="no-anchor listing-title">
-Cairo and XQuartz in Mac GitHub Actions
+<a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html" class="no-external">Cairo and XQuartz in Mac GitHub Actions</a>
 </h3>
 <div class="listing-subtitle">
-<p>Including cairo and xquartz in MacOS github actions</p>
+<a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html" class="no-external">Including cairo and xquartz in MacOS github actions </a>
 </div>
-<div class="listing-description">
+<div class="delink listing-description"><a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html" class="no-external">
 I’ve been using GitHub actions to check and test some of my R packages on multiple architectures, which is nice because I work primarily on Linux.
-</div>
-</a>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html">
+<a href="./posts/2022-01-06-cairo-and-xquartz-in-mac-github-actions/index.html" class="no-external">
 <div class="listing-date">
 Jan 6, 2022
 </div>
@@ -262,22 +502,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="random-code-snippets,rcy3,cytoscape,R" data-listing-date-sort="1641445200000" data-listing-file-modified-sort="1670115516555" data-listing-reading-time-sort="2.05">
+<div class="quarto-post image-right" data-index="4" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNyY3kzJTJDY3l0b3NjYXBlJTJDUg==" data-listing-date-sort="1641445200000" data-listing-file-modified-sort="1670115516555" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="410">
+<div class="thumbnail"><a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html">
 <h3 class="no-anchor listing-title">
-Pie Charts in RCy3
+<a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html" class="no-external">Pie Charts in RCy3</a>
 </h3>
 <div class="listing-subtitle">
-<p>How to represent nodes as pie charts using Cytoscape and RCy3</p>
+<a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html" class="no-external">How to represent nodes as pie charts using Cytoscape and RCy3 </a>
 </div>
-<div class="listing-description">
+<div class="delink listing-description"><a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html" class="no-external">
 I have a package, <code>{categoryCompare2}</code> <span class="citation" data-cites="categorycompare2">(Flight 2022)</span> that I’ve been working on for a while, and recently wanted to make available on our labs r-universe <span class="citation" data-cites="moseleyruniverse">(<span>“The…</span></span>
-</div>
-</a>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html">
+<a href="./posts/2022-01-06-pie-charts-in-rcy3/index.html" class="no-external">
 <div class="listing-date">
 Jan 6, 2022
 </div>
@@ -287,22 +530,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="random-code-snippets,packages,dplyr,rlang,R,development" data-listing-date-sort="1641445200000" data-listing-file-modified-sort="1670115369748" data-listing-reading-time-sort="0.775">
+<div class="quarto-post image-right" data-index="5" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNwYWNrYWdlcyUyQ2RwbHlyJTJDcmxhbmclMkNSJTJDZGV2ZWxvcG1lbnQ=" data-listing-date-sort="1641445200000" data-listing-file-modified-sort="1670115369748" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="155">
+<div class="thumbnail"><a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html">
 <h3 class="no-anchor listing-title">
-Dplyr in Packages and Global Variables
+<a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html" class="no-external">Dplyr in Packages and Global Variables</a>
 </h3>
 <div class="listing-subtitle">
-<p>How to include dplyr in a package, and avoid warnings around global variables.</p>
+<a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html" class="no-external">How to include dplyr in a package, and avoid warnings around global variables. </a>
 </div>
-<div class="listing-description">
-I was recently cleaning up a development package so it would actually pass checks so it could be hosted on our labs new r-universe <span class="citation" data-cites="moseleyruniverse">(<span>“The ’Moseleybioinformaticslab’ Universe,”</span> n.…</span><code></code>
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html" class="no-external">
+I was recently cleaning up a development package so it would actually pass checks so it could be hosted on our labs new r-universe <span class="citation" data-cites="moseleyruniverse">(<span>“The ’Moseleybioinformaticslab’ Universe,”</span>…</span><code></code>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html">
+<a href="./posts/2022-01-06-dplyr-in-packages-and-global-variables/index.html" class="no-external">
 <div class="listing-date">
 Jan 6, 2022
 </div>
@@ -312,22 +558,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="random-code-snippets,ggplot2,visualization" data-listing-date-sort="1640062800000" data-listing-file-modified-sort="1670115155761" data-listing-reading-time-sort="0.775">
+<div class="quarto-post image-right" data-index="6" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNnZ3Bsb3QyJTJDdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1640062800000" data-listing-file-modified-sort="1670115155761" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="155">
+<div class="thumbnail"><a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html">
 <h3 class="no-anchor listing-title">
-Reusing ggplot2 Colors
+<a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html" class="no-external">Reusing ggplot2 Colors</a>
 </h3>
 <div class="listing-subtitle">
-<p>When you want to reuse ggplot2 default colors across plots.</p>
+<a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html" class="no-external">When you want to reuse ggplot2 default colors across plots. </a>
 </div>
-<div class="listing-description">
-If you are using {ggplot2} a lot in your…
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html" class="no-external">
+If you are using {ggplot2} a lot in your code, and don’t want to bother with a custom color scheme (I mean, there are lots of good options), but you are also using…
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html">
+<a href="./posts/2021-12-21-reusing-ggplot2-colors/index.html" class="no-external">
 <div class="listing-date">
 Dec 21, 2021
 </div>
@@ -337,22 +586,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="graphing,ggraph,visualization,random-code-snippets" data-listing-date-sort="1636606800000" data-listing-file-modified-sort="1670114751494" data-listing-reading-time-sort="23.135">
+<div class="quarto-post image-right" data-index="7" data-categories="Z3JhcGhpbmclMkNnZ3JhcGglMkN2aXN1YWxpemF0aW9uJTJDcmFuZG9tLWNvZGUtc25pcHBldHM=" data-listing-date-sort="1636606800000" data-listing-file-modified-sort="1670114751494" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4627">
+<div class="thumbnail"><a href="./posts/2021-11-11-zooming-ggraph-plots/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/2021-11-11-zooming-ggraph-plots/index_files/figure-html/plot_full-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-11-11-zooming-ggraph-plots/index.html">
 <h3 class="no-anchor listing-title">
-Zooming GGraph Plots
+<a href="./posts/2021-11-11-zooming-ggraph-plots/index.html" class="no-external">Zooming GGraph Plots</a>
 </h3>
 <div class="listing-subtitle">
-<p>Some code demonstrating how to zoom into portions of a ggraph.</p>
+<a href="./posts/2021-11-11-zooming-ggraph-plots/index.html" class="no-external">Some code demonstrating how to zoom into portions of a ggraph. </a>
 </div>
-<div class="listing-description">
+<div class="delink listing-description"><a href="./posts/2021-11-11-zooming-ggraph-plots/index.html" class="no-external">
 I was recently working with a <strong>largish</strong> graph that I am using the ggraph package, and I needed to zoom into a sub-region of the graph.
-</div>
-</a>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-11-11-zooming-ggraph-plots/index.html">
+<a href="./posts/2021-11-11-zooming-ggraph-plots/index.html" class="no-external">
 <div class="listing-date">
 Nov 11, 2021
 </div>
@@ -362,22 +614,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="packages,random-code-snippets" data-listing-date-sort="1635307200000" data-listing-file-modified-sort="1670114490044" data-listing-reading-time-sort="1.12">
+<div class="quarto-post image-right" data-index="8" data-categories="cGFja2FnZXMlMkNyYW5kb20tY29kZS1zbmlwcGV0cw==" data-listing-date-sort="1635307200000" data-listing-file-modified-sort="1670114490044" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="224">
+<div class="thumbnail"><a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html">
 <h3 class="no-anchor listing-title">
-R CMD Check and Non-PDF Vignettes
+<a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html" class="no-external">R CMD Check and Non-PDF Vignettes</a>
 </h3>
 <div class="listing-subtitle">
-<p>R CMD Check complaining about missing files? Here was my solution.</p>
+<a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html" class="no-external">R CMD Check complaining about missing files? Here was my solution. </a>
 </div>
-<div class="listing-description">
+<div class="delink listing-description"><a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html" class="no-external">
 If you’ve written an R package that you want hosted by CRAN (or even if not hosted), then you generally want to run the infamous <code>R CMD check</code> on your package.
-</div>
-</a>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html">
+<a href="./posts/2021-10-27-r-cmd-check-and-non-pdf-vignettes/index.html" class="no-external">
 <div class="listing-date">
 Oct 27, 2021
 </div>
@@ -387,22 +642,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="parsnip,tidymodels,machine-learning,random-forest,random-code-snippets" data-listing-date-sort="1630296000000" data-listing-file-modified-sort="1670114077828" data-listing-reading-time-sort="2.65">
+<div class="quarto-post image-right" data-index="9" data-categories="cGFyc25pcCUyQ3RpZHltb2RlbHMlMkNtYWNoaW5lLWxlYXJuaW5nJTJDcmFuZG9tLWZvcmVzdCUyQ3JhbmRvbS1jb2RlLXNuaXBwZXRz" data-listing-date-sort="1630296000000" data-listing-file-modified-sort="1670114077828" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="530">
+<div class="thumbnail"><a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html">
 <h3 class="no-anchor listing-title">
-Random Forest Classification Using Parsnip
+<a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html" class="no-external">Random Forest Classification Using Parsnip</a>
 </h3>
 <div class="listing-subtitle">
-<p>How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework.</p>
+<a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html" class="no-external">How to make sure you get a classification fit and not a probability fit from a random forest model using the tidymodels framework. </a>
 </div>
-<div class="listing-description">
-I’ve been working on a “machine learning” project, and in the process I’ve been learning to use the tidymodels framework <span class="citation" data-cites="tidymodelsSite">(<span>“Tidymodels”</span> 2021)</span>, which helps save you from leaking information from testing to training data, as well as creating…
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html" class="no-external">
+I’ve been working on a “machine learning” project, and in the process I’ve been learning to use the tidymodels framework <span class="citation" data-cites="tidymodelsSite">(<span>“Tidymodels”</span> 2021)</span>, which helps save you from…
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html">
+<a href="./posts/2021-08-30-random-forest-classification-using-parsnip/index.html" class="no-external">
 <div class="listing-date">
 Aug 30, 2021
 </div>
@@ -412,22 +670,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="random-code-snippets,visualization,graphing,dendrogram" data-listing-date-sort="1627963200000" data-listing-file-modified-sort="1670103897296" data-listing-reading-time-sort="1.31">
+<div class="quarto-post image-right" data-index="10" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkN2aXN1YWxpemF0aW9uJTJDZ3JhcGhpbmclMkNkZW5kcm9ncmFt" data-listing-date-sort="1627963200000" data-listing-file-modified-sort="1670103897296" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="262">
+<div class="thumbnail"><a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index_files/figure-html/plot_dendrogram-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html">
 <h3 class="no-anchor listing-title">
-Coloring Dendrogram Edges with ggraph
+<a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html" class="no-external">Coloring Dendrogram Edges with ggraph</a>
 </h3>
 <div class="listing-subtitle">
-<p>Here is how I got edges colored in a dendrogram with ggraph. Use “node.” in front of the node data column you want.</p>
+<a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html" class="no-external">Here is how I got edges colored in a dendrogram with ggraph. Use “node.” in front of the node data column you want. </a>
 </div>
-<div class="listing-description">
-I wanted to…<strong><code></code></strong>
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html" class="no-external">
+I wanted to color the dendrogram edges according to their class in ggraph, and I was getting stuck because of something that isn’t explicitly mentioned in the documentation…<strong><code></code></strong>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html">
+<a href="./posts/2021-08-03-coloring-dendrogram-edges-with-ggraph/index.html" class="no-external">
 <div class="listing-date">
 Aug 3, 2021
 </div>
@@ -437,22 +698,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="random-code-snippets,reproducibility,rmarkdown" data-listing-date-sort="1626926400000" data-listing-file-modified-sort="1670103786012" data-listing-reading-time-sort="1.87">
+<div class="quarto-post image-right" data-index="11" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNyZXByb2R1Y2liaWxpdHklMkNybWFya2Rvd24=" data-listing-date-sort="1626926400000" data-listing-file-modified-sort="1670103786012" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="374">
+<div class="thumbnail"><a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html">
 <h3 class="no-anchor listing-title">
-Keeping Figures in an Rmd – Word Document
+<a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html" class="no-external">Keeping Figures in an Rmd – Word Document</a>
 </h3>
 <div class="listing-subtitle">
-<p>How to make your rmarkdown to word conversion also generate a directory of figures.</p>
+<a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html" class="no-external">How to make your rmarkdown to word conversion also generate a directory of figures. </a>
 </div>
-<div class="listing-description">
-I’ve been working with a lot of collaborators who expect Word documents lately. I…
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html" class="no-external">
+I’ve been working with a lot of collaborators who expect Word documents lately. I don’t really like it, but it makes it a lot easier for them to edit and work with things…
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html">
+<a href="./posts/2021-07-22-keep-figures-in-a-word-document/index.html" class="no-external">
 <div class="listing-date">
 Jul 22, 2021
 </div>
@@ -462,22 +726,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="random-code-snippets,heatmap,visualization" data-listing-date-sort="1616731200000" data-listing-file-modified-sort="1670103033141" data-listing-reading-time-sort="2.335">
+<div class="quarto-post image-right" data-index="12" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHMlMkNoZWF0bWFwJTJDdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1616731200000" data-listing-file-modified-sort="1670103033141" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="467">
+<div class="thumbnail"><a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index_files/figure-html/create_heatmap-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html">
 <h3 class="no-anchor listing-title">
-Highlighting a Row of A ComplexHeatmap
+<a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html" class="no-external">Highlighting a Row of A ComplexHeatmap</a>
 </h3>
 <div class="listing-subtitle">
-<p>A simple way to highlight or bring attention to a row or column in a ComplexHeatmap.</p>
+<a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html" class="no-external">A simple way to highlight or bring attention to a row or column in a ComplexHeatmap. </a>
 </div>
-<div class="listing-description">
-The ComplexHeatmap Bioconductor package <span class="citation" data-cites="complexheatmapPub complexheatmapPackage complexheatmapRef">(Gu, Eils, and Schlesner 2016; Gu 2021a, 2021b)</span> has become my goto for visualizing sample-sample correlation heatmaps, which I use a lot. Recently, I…<strong></strong>
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html" class="no-external">
+The ComplexHeatmap Bioconductor package <span class="citation" data-cites="complexheatmapPub complexheatmapPackage complexheatmapRef">(Gu, Eils, and Schlesner 2016; Gu 2021a, 2021b)</span> has become my goto for visualizing sample-sample correlation heatmaps, which I use a…<strong></strong>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html">
+<a href="./posts/2021-03-26-highlighting-a-row-of-a-complexheatmap/index.html" class="no-external">
 <div class="listing-date">
 Mar 26, 2021
 </div>
@@ -487,22 +754,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="random-code-snippets" data-listing-date-sort="1614920400000" data-listing-file-modified-sort="1670102830141" data-listing-reading-time-sort="0.865">
+<div class="quarto-post image-right" data-index="13" data-categories="cmFuZG9tLWNvZGUtc25pcHBldHM=" data-listing-date-sort="1614920400000" data-listing-file-modified-sort="1670102830141" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="173">
+<div class="thumbnail"><a href="./posts/2021-03-05-randomcodesnippets/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2021-03-05-randomcodesnippets/index.html">
 <h3 class="no-anchor listing-title">
-Random Code Snippets
+<a href="./posts/2021-03-05-randomcodesnippets/index.html" class="no-external">Random Code Snippets</a>
 </h3>
 <div class="listing-subtitle">
-<p>Introducing random-code-snippets.</p>
+<a href="./posts/2021-03-05-randomcodesnippets/index.html" class="no-external">Introducing random-code-snippets. </a>
 </div>
-<div class="listing-description">
-I’ve been organizing a bunch of random code that I find myself re-using time and time again in a Github Repo <span class="citation" data-cites="rmflightResources">(Flight, n.d.)</span>. But the repo is not very searchable unless you are the one who…
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2021-03-05-randomcodesnippets/index.html" class="no-external">
+I’ve been organizing a bunch of random code that I find myself re-using time and time again in a Github Repo <span class="citation" data-cites="rmflightResources">(Flight, n.d.)</span>. But the repo is not very searchable unless you…
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2021-03-05-randomcodesnippets/index.html">
+<a href="./posts/2021-03-05-randomcodesnippets/index.html" class="no-external">
 <div class="listing-date">
 Mar 5, 2021
 </div>
@@ -512,22 +782,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="R,blogdown,development,random-code-snippets" data-listing-date-sort="1514350800000" data-listing-file-modified-sort="1670012637191" data-listing-reading-time-sort="0.845">
+<div class="quarto-post image-right" data-index="14" data-categories="UiUyQ2Jsb2dkb3duJTJDZGV2ZWxvcG1lbnQlMkNyYW5kb20tY29kZS1zbmlwcGV0cw==" data-listing-date-sort="1514350800000" data-listing-file-modified-sort="1670012637191" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169">
+<div class="thumbnail"><a href="./posts/2017-12-27-custom-deployment-script/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2017-12-27-custom-deployment-script/index.html">
 <h3 class="no-anchor listing-title">
-Custom Deployment Script
+<a href="./posts/2017-12-27-custom-deployment-script/index.html" class="no-external">Custom Deployment Script</a>
 </h3>
 <div class="listing-subtitle">
-<p>I don’t want to use Netlify for hosting, so I came up with this simple script to deploy my blog.</p>
+<a href="./posts/2017-12-27-custom-deployment-script/index.html" class="no-external">I don’t want to use Netlify for hosting, so I came up with this simple script to deploy my blog. </a>
 </div>
-<div class="listing-description">
+<div class="delink listing-description"><a href="./posts/2017-12-27-custom-deployment-script/index.html" class="no-external">
 Use a short bash script to do deployment from your own computer directly to your <code>*.github.io</code> domain.
-</div>
-</a>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2017-12-27-custom-deployment-script/index.html">
+<a href="./posts/2017-12-27-custom-deployment-script/index.html" class="no-external">
 <div class="listing-date">
 Dec 27, 2017
 </div>
@@ -537,22 +810,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="R,git,packages,development,programming,random-code-snippets" data-listing-date-sort="1391749200000" data-listing-file-modified-sort="1670008289809" data-listing-reading-time-sort="4.315">
+<div class="quarto-post image-right" data-index="15" data-categories="UiUyQ2dpdCUyQ3BhY2thZ2VzJTJDZGV2ZWxvcG1lbnQlMkNwcm9ncmFtbWluZyUyQ3JhbmRvbS1jb2RlLXNuaXBwZXRz" data-listing-date-sort="1391749200000" data-listing-file-modified-sort="1670008289809" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="863">
+<div class="thumbnail"><a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html">
 <h3 class="no-anchor listing-title">
-Package Version Increment Pre- and Post-Commit Hooks
+<a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html" class="no-external">Package Version Increment Pre- and Post-Commit Hooks</a>
 </h3>
 <div class="listing-subtitle">
-<p>Two git commit hooks for incrementing the package version as part of commits.</p>
+<a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html" class="no-external">Two git commit hooks for incrementing the package version as part of commits. </a>
 </div>
-<div class="listing-description">
+<div class="delink listing-description"><a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html" class="no-external">
 If you just want the hook scripts, check this gist. If you want to know some of the motivation behind writing them, and about the internals, then read on.
-</div>
-</a>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html">
+<a href="./posts/2014-02-07-package-version-increment-pre-and-post-commit-hooks/index.html" class="no-external">
 <div class="listing-date">
 Feb 7, 2014
 </div>
@@ -562,22 +838,25 @@ Robert M Flight
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="R,bioconductor,bioinformatics,cdf,affymetrix,microarray,random-code-snippets" data-listing-date-sort="1342152000000" data-listing-file-modified-sort="1669845214591" data-listing-reading-time-sort="3.5">
+<div class="quarto-post image-right" data-index="16" data-categories="UiUyQ2Jpb2NvbmR1Y3RvciUyQ2Jpb2luZm9ybWF0aWNzJTJDY2RmJTJDYWZmeW1ldHJpeCUyQ21pY3JvYXJyYXklMkNyYW5kb20tY29kZS1zbmlwcGV0cw==" data-listing-date-sort="1342152000000" data-listing-file-modified-sort="1669845214591" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="698">
+<div class="thumbnail"><a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
 <div class="body">
-<a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html">
 <h3 class="no-anchor listing-title">
-Creating Custom CDFs for Affymetrix Chips in Bioconductor
+<a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html" class="no-external">Creating Custom CDFs for Affymetrix Chips in Bioconductor</a>
 </h3>
 <div class="listing-subtitle">
-<p>Examples of messing with Affymetrix CDF data in Bioconductor.</p>
+<a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html" class="no-external">Examples of messing with Affymetrix CDF data in Bioconductor. </a>
 </div>
-<div class="listing-description">
-For those who don’t know, <strong>CDF</strong> files are chip definition format files…<strong></strong>
-</div>
-</a>
+<div class="delink listing-description"><a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html" class="no-external">
+For those who don’t know, <strong>CDF</strong> files are chip definition format files that define which probes on an Affymetrix microarray chip belong together, and are necessary to use any…<strong></strong>
+</a></div>
 </div>
 <div class="metadata">
-<a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html">
+<a href="./posts/2012-07-13-creating-custom-cdf-s-for-affymetrix-chips-in-bioconductor/index.html" class="no-external">
 <div class="listing-date">
 Jul 13, 2012
 </div>
@@ -588,259 +867,423 @@ Robert M Flight
 </div>
 </div>
 </div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
+<div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'alternate';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
-    }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rmflight\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
       });
     }
-  }
-});
-</script>
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
+
 
 
 
