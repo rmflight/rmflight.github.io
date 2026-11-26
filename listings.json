@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-11-26-packages-to-reinstall/index.html",
       "/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html",
       "/posts/2024-04-03-weird-correlation-patterns/index.html",
       "/posts/2023-11-01-installing-openblas-for-selfcompiled-r/index.html",
@@ -94,6 +95,7 @@
   {
     "listing": "/random_code_snippets.html",
     "items": [
+      "/posts/2026-11-26-packages-to-reinstall/index.html",
       "/posts/2026-11-23-adding-rstudio-addin-shortcuts-to-positron/index.html",
       "/posts/2022-12-08-customizing-the-displayed-date-in-quarto-pubs/index.html",
       "/posts/2022-01-31-heatmap-colormaps/index.html",
